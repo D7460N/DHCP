@@ -119,6 +119,7 @@ a:not([class]) {
       var(--txt-shadow-opacity));
   --txt-shadow-color: 0, 0, 0;
   --txt-shadow-opacity: 1.0;
+  --accent: #005a9c;
 }
 
 
@@ -149,8 +150,13 @@ a:not([class]) {
         var(--txt-shadow-opacity));
     --txt-shadow-color: 255, 255, 255;
     --txt-shadow-opacity: 0.3;
+    --accent: #66ccff;
   }
 }
+
+/* :root {
+  accent-color: light-dark(#005a9c, #66ccff);
+} */
 
 
 /* MARK: WRAPPER
@@ -171,11 +177,19 @@ app-container {
   overflow: hidden;
 }
 
-app-container:has(aside h4:not(:empty)) {
+app-container:has(aside input[type="text"][value]:not([value=""])) {
+  --app-container-grid-template-columns: 12rem 1fr 15rem;
+}
+
+app-container:has(aside input[type="text"][value]:not([value=""])) main {
+  margin-inline-end: 0;
+}
+
+/* app-container:has(aside h4:not(:empty)) {
   --app-container-grid-template-columns: 12rem 1fr 15rem;
 
   main {margin-inline-end: 0;}
-}
+} */
 
 /* @media (max-width: 800px) {
   app-container {
@@ -200,7 +214,6 @@ app-container>* {
   background-color:
     rgba(var(--bg-panel-color),
     var(--bg-panel-opacity));
-  overflow: hidden;
   align-content: start;
 }
 
@@ -212,6 +225,7 @@ app-banner {
   grid-column: 1 / -1;
   user-select: none;
   text-align: center;
+  overflow: hidden;
 }
 
 app-banner p {
@@ -219,7 +233,7 @@ app-banner p {
   font-size: 75%;
 }
 
-/* MARK: HEADER/FOOTER
+/* MARK: HEADER
 */
 header {
   display: grid;
@@ -227,7 +241,8 @@ header {
   grid-column: 1 / -1;
   user-select: none;
   border-radius: .3rem;
-  margin-inline: 1rem
+  margin-inline: 1rem;
+  overflow: hidden;
 }
 
 header {
@@ -247,7 +262,8 @@ nav {
   user-select: none;
   background-color: transparent;
   justify-content: var(--nav-justify-content);
-  margin-inline-start: 1rem
+  margin-inline-start: 1rem;
+  overflow: hidden;
 }
 
 /* rounded corner for MAIN */
@@ -267,6 +283,7 @@ nav details summary {
   padding-inline: 1rem;
   padding-block: .5rem;
   padding-inline-start: 0;
+  overflow: hidden;
 }
 
 nav details label {
@@ -336,11 +353,13 @@ hr {
 /* MARK: MAIN
 */
 main {
+  display: grid;
   grid-row: var(--grid-row-span);
   margin-block: var(--main-margin-block);
   margin-inline: var(--main-margin-inline);
   border-radius: var(--main-border-radius);
   margin-inline-end: 1rem;
+  overflow: hidden;
   /* resize: var(--main-resize-h); */
 }
 
@@ -349,9 +368,10 @@ main {
 */
 aside {
   display: none;
+  overflow: hidden;
 }
 
-aside:has(h4:not(:empty)) {
+aside:has(input[type="text"][value]:not([value=""])) {
   display: var(--aside-display);
   border-radius: .3rem;
   margin-inline-end: 1rem;
@@ -363,7 +383,7 @@ aside:has(h4:not(:empty)) {
 */
 h4 {
   display: var(--sub-header-display);
-  padding-left: 1rem;
+  padding: 1rem;
   letter-spacing: .05rem;
   /* color: ; */
 }
@@ -461,8 +481,12 @@ meta-data {
 }
 
 input {
-  display: none;
   accent-color: rgba(var(--accent));
+}
+
+header input,
+nav input {
+  display: none;
 }
 
 
@@ -519,110 +543,8 @@ html:after {
   background-size: 75% 75%;
 }
 
-
-/* MARK: SCROLLBARS
-*/
-*::-webkit-scrollbar {
-  display: block;
-  width: 1rem;
-}
-
-*::-webkit-scrollbar-button {
-  display: none;
-}
-
-*::-webkit-scrollbar-track {
-  background-color: rgba(48, 190, 255, 0.0);
-}
-
-*::-webkit-scrollbar-track-piece {
-  background-color: rgba(48, 190, 255, 0.0);
-}
-
-* {
-  --scrollbar-color: rgba(48, 190, 255, 0.0);
-}
-
-*:hover,
-*:focus,
-*:focus-within {
-  --scrollbar-color: rgba(var(--bg-accent-color), var(--bg-accent-opacity)) !important;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: rgba(48, 190, 255, 0.0);
-  border: 5px solid transparent;
-  border-radius: 1.5rem;
-  box-shadow: 0.25rem 0 0 0.25rem var(--scrollbar-color) inset;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scrollbar-color);
-  border: 0 solid transparent;
-  box-shadow: none;
-}
-
-/* MARK: FIREFOX
-*/
-/* Target elements, not :root{} */
-/* https://codeconvey.com/custom-scrollbar-css-for-all-browsers/ */
-section {
-  scrollbar-color: rgba(48, 190, 255, 0.0) rgba(48, 190, 255, 0.0);
-  /* Thumb and track color */
-  scrollbar-width: thin;
-  /* Track width */
-}
-
-section:hover {
-  scrollbar-color: rgba(48, 190, 255, 0.3) rgba(48, 190, 255, 0.0);
-}
-
-
-
-/* MARK: MENUS
-*/
-label[for='oneMenu'] {
-  position: relative;
-}
-
-label[for='oneMenu']:hover menu {
-  display: grid;
-}
-
-menu {
-  position: absolute;
-  top: 20px;
-  list-style: none;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
-}
-
-menu li {
-  list-style: none;
-  display: grid;
-}
-
-/* Default message for browsers that do not support :has() */
-.suport::before {
-  content: "Your browser does not support some advanced features (':has()' is not supported).";
-  display: block;
-}
-
-/* Change the message for browsers that support :has() */
-@supports (selector(:has(*))) {
-  .support::before {
-    content: "Great! Your browser supports advanced features (':has()' is supported).";
-  }
-}
-
 span-bold {
   font-weight: 900;
-}
-
-section div {
-  overflow: auto;
 }
 
 a {
@@ -645,6 +567,7 @@ article {
   overflow: hidden;
   opacity: 0;
   transition: opacity var(--transition-length) allow-discrete;
+  overflow: hidden;
 }
 
 nav:has(details:nth-of-type(1) label:nth-of-type(1) input:checked) ~ main article:nth-of-type(1),
@@ -668,7 +591,7 @@ nav:has(details:nth-of-type(2) label:nth-of-type(11) input:checked) ~ main artic
 article ul li {
   display: grid;
   /* minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(5rem, 1fr) */
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   padding: 0.5rem 1rem;
 }
 
@@ -681,11 +604,23 @@ article ul:has(+ section) {
 }
 
 article section ul li {
+  cursor: pointer;
   transition: background-color var(--transition-length);
 }
 
 article section ul li:hover {
     background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* LI active state */
+li:has(input:checked) {
+  background-color: rgba(var(--bg-active-color), 0.05);
+  color: rgba(var(--txt-active), 1.0);
+}
+
+/* Spinner visible when selected */
+li:has(input:checked) load-data {
+  display: grid;
 }
 
 /* MARK: TYPOGRAPHY
@@ -706,70 +641,6 @@ footer {
   grid-column: 1 / -1;
   user-select: none;
   border-radius: .3rem;
-  margin-inline: 1rem
-}
-
-/* MARK: LOADING ANIMATION
-*/
-.loading {
-  width: 5rem;
-  height: 5rem;
-  display: grid;
-  align-self: center;
-  justify-self: center;
-}
-
-.loading::before,
-.loading::after {
-  content: '';
-  display: block;
-  position: absolute;
-  width: 4rem;
-  height: 4rem;
-  background-color: rgba(0, 0, 0, 0.0);
-  border: 1rem solid rgba(102, 204, 255, 1.0);
-  opacity: 0.3;
-  border-radius: 50%;
-}
-
-.loading::before {
-  border-left: 1rem solid rgba(0, 0, 0, 0.0);
-  border-right: 1rem solid rgba(0, 0, 0, 0.0);
-  animation: spin01 3000ms infinite ease alternate;
-}
-
-.loading::after {
-  border-left: 1rem solid rgba(0, 0, 0, 0.0);
-  border-right: 1rem solid rgba(0, 0, 0, 0.0);
-  border-top: 1rem solid rgba(0, 0, 0, 0.0);
-  animation: spin02 4000ms infinite linear;
-}
-
-@keyframes spin01 {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(720deg);
-  }
-}
-
-@keyframes spin02 {
-  0% {
-    transform: rotate(720deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-iframe {
-  background-color: transparent;
-}
-
-iframe section article img {
-  mix-blend-mode: multiply;
-  opacity: 50% !important;
+  margin-inline: 1rem;
+  overflow: hidden;
 }

@@ -1,0 +1,60 @@
+/* MARK: SCROLLBARS
+*/
+*::-webkit-scrollbar {
+  display: block;
+  width: 1rem;
+}
+
+*::-webkit-scrollbar-button {
+  display: none;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: rgba(48, 190, 255, 0.0);
+}
+
+*::-webkit-scrollbar-track-piece {
+  background-color: rgba(48, 190, 255, 0.0);
+}
+
+* {
+  --scrollbar-color: rgba(48, 190, 255, 0.0);
+}
+
+*:hover,
+*:focus,
+*:focus-within {
+  --scrollbar-color: rgba(var(--bg-accent-color), var(--bg-accent-opacity)) !important;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(48, 190, 255, 0.0);
+  border: 5px solid transparent;
+  border-radius: 1.5rem;
+  box-shadow: 0.25rem 0 0 0.25rem var(--scrollbar-color) inset;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-color);
+  border: 0 solid transparent;
+  box-shadow: none;
+}
+
+/* MARK: FIREFOX
+*/
+/* Target elements, not :root{} */
+/* https://codeconvey.com/custom-scrollbar-css-for-all-browsers/ */
+section {
+  scrollbar-color: rgba(48, 190, 255, 0.0) rgba(48, 190, 255, 0.0);
+  /* Thumb and track color */
+  scrollbar-width: thin;
+  /* Track width */
+}
+
+section:hover {
+  scrollbar-color: rgba(48, 190, 255, 0.3) rgba(48, 190, 255, 0.0);
+}
+
+section div {
+  overflow: auto;
+}
