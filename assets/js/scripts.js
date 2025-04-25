@@ -1,13 +1,93 @@
-// https://medium.com/@fbnlsr/how-to-get-rid-of-the-flash-of-unstyled-content-d6b79bf5d75f
+// scripts.js
 
-// Helper function
-let domReady = (cb) => {
-  document.readyState === 'interactive' || document.readyState === 'complete'
+let domReady = (cb) =>
+  document.readyState === "interactive" || document.readyState === "complete"
     ? cb()
-    : document.addEventListener('DOMContentLoaded', cb);
-};
+    : document.addEventListener("DOMContentLoaded", cb)
 
 domReady(() => {
-  // Display body when DOM is loaded
-  document.body.style.opacity = '1.0';
-});
+  document.body.style.opacity = "1.0"
+})
+
+const ul = document.querySelector("main section ul")
+const aside = document.querySelector("aside")
+const form = aside.querySelector("form")
+
+const fieldKeys = [
+  "item-name",
+  "item-created",
+  "item-updated",
+  "item-author",
+  "item-modified",
+  "item-type",
+]
+
+const populateForm = (item) => {
+  fieldKeys.forEach((key) => {
+    const input = form.querySelector(`input[name="${key}"]`)
+    if (input) {
+      const val = item[key] || ""
+      input.value = val
+      input.setAttribute("value", val)
+    }
+  })
+
+  const checkbox = form.querySelector('input[name="is-critical"]')
+  if (checkbox) checkbox.checked = !!item["is-critical"]
+}
+
+const clearForm = () => {
+  fieldKeys.forEach((key) => {
+    const input = form.querySelector(`input[name="${key}"]`)
+    if (input) {
+      input.value = ""
+      input.setAttribute("value", "")
+    }
+  })
+
+  const checkbox = form.querySelector('input[name="is-critical"]')
+  if (checkbox) checkbox.checked = false
+}
+
+const createItem = (item) => {
+  const tpl = document.querySelector('template[data-template="list-item"]')
+  const li = tpl.content.firstElementChild.cloneNode(true)
+
+  li.querySelector("item-name a").textContent = item["item-name"]
+  li.querySelector("item-created").textContent = item["item-created"]
+  li.querySelector("item-updated").textContent = item["item-updated"]
+  li.querySelector("item-author").textContent = item["item-author"]
+  li.querySelector("item-modified").textContent = item["item-modified"]
+  li.querySelector("item-type").textContent = item["item-type"]
+
+  const radio = li.querySelector('input[type="radio"]')
+  const loadData = li.querySelector("load-data")
+
+  li.onclick = (e) => {
+    if (e.target.tagName === "A") e.preventDefault()
+
+    const current = form.querySelector('input[name="item-name"]')
+    if (current?.value === item["item-name"]) {
+      clearForm()
+      radio.checked = false
+      return
+    }
+
+    radio.checked = true
+    loadData?.removeAttribute("hidden")
+    populateForm(item)
+  }
+
+  return li
+}
+
+fetch("https://cdn.jsdelivr.net/gh/D7460N/DHCP@main/data/data.json")
+  .then((res) => res.json())
+  .then((data) => data.forEach((item) => ul.appendChild(createItem(item))))
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("sw.js")
+    .then((reg) => console.log("service worker registered", reg))
+    .catch((err) => console.log("service worker not registered", err))
+}
