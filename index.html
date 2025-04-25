@@ -13,6 +13,9 @@
     <link rel="canonical" href="https://d7460n.dev/">
     <link rel="icon" type="image/svg+xml" href="assets/images/brand/logo/logo.svg">
     <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/loading-data.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/scrollbars.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/forms.css">
     <title>DHCP Portal</title>
   </head>
 
@@ -95,6 +98,10 @@
               API Registration
               <input type="radio" name="nav">
             </label>
+            <label>
+              Type
+              <input type="radio" name="nav">
+            </label>
           </section>
         </details>
       </nav>
@@ -105,7 +112,6 @@
           <hr>
           <section>
             <p>SECTION 01</p>
-            <a class="twitter-timeline loading" data-chrome="noborders, noscrollbar, transparent, noheader, nofooter" data-theme="dark" href="https://twitter.com/dragontheory?ref_src=twsrc%5Etfw" data-aria-polite="polite"></a>
           </section>
         </article>
         <article>
@@ -144,24 +150,11 @@
               <span>Date Updated</span>
               <span>Created By</span>
               <span>Modified By</span>
+              <span>Type</span>
             </li>
           </ul>
           <section>
             <ul>
-              <li tabindex="0">
-                <item-name><a href="#">fonts.google.com</a></item-name>
-                <item-created>12/10/2024 10:45:43 AM</item-created>
-                <item-updated>12/16/2024 12:00:00 AM</item-updated>
-                <item-author>qwerty-01</item-author>
-                <item-modified>qwerty-01</item-modified>
-              </li>
-              <li tabindex="0">
-                <item-name><a href="#">host name</a></item-name>
-                <item-created>12/10/2024 10:45:43 AM</item-created>
-                <item-updated>12/16/2024 12:00:00 AM</item-updated>
-                <item-author>qwerty-01</item-author>
-                <item-modified>qwerty-01</item-modified>
-              </li>
             </ul>
           </section>
         </article>
@@ -232,26 +225,115 @@
       </main>
       <aside>
         <h4></h4>
-        <section>
-          <p>Sticky header/scrollable content (no js).</p>
-          <p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.</p>
-          <p>Adipiscing enim eu turpis egestas pretium aenean. Posuere morbi leo urna molestie at elementum eu facilisis. Aenean et tortor at risus viverra adipiscing at in. Egestas sed tempus urna et pharetra pharetra massa.</p>
-          <p>ASIDE content. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.</p>
-          <p>Adipiscing enim eu turpis egestas pretium aenean. Posuere morbi leo urna molestie at elementum eu facilisis. Aenean et tortor at risus viverra adipiscing at in. Egestas sed tempus urna et pharetra pharetra massa.</p>
-        </section>
+
+        <h4 aria-live="polite">DETAILS</h4>
+
+        <form>
+          <section>
+            <fieldset>
+              <legend>Option Metadata</legend>
+
+              <label for="item-name">Host Name</label>
+              <input type="text" name="item-name" id="item-name" required pattern="^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$" title="Valid hostnames must be alphanumeric and may include hyphens (not at the start or end).">
+
+              <label for="item-type">IP Address</label>
+              <input type="text" name="item-type" id="item-type" required pattern="^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.|$)){4}$" inputmode="numeric" title="Enter a valid IPv4 address (e.g., 192.168.0.1).">
+            </fieldset>
+
+            <fieldset>
+              <legend>Audit</legend>
+
+              <label for="item-author">Created By</label>
+              <input type="text" name="item-author" id="item-author" required pattern="^[a-zA-Z0-9\-_]{2,}$" title="Author must be at least 2 characters and alphanumeric.">
+
+              <label for="item-modified">Modified By</label>
+              <input type="text" name="item-modified" id="item-modified" required pattern="^[a-zA-Z0-9\-_]{2,}$" title="Modifier must be at least 2 characters and alphanumeric.">
+            </fieldset>
+
+            <fieldset>
+              <legend>Scope Settings</legend>
+
+              <label for="scope-name">Scope Name</label>
+              <input type="text" name="scope-name" id="scope-name" required pattern="^[\\w\\- ]{3,64}$" title="Alphanumeric, spaces, dashes (3–64 chars)">
+
+              <label for="ip-start">IP Range Start</label>
+              <input type="text" name="ip-start" id="ip-start" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$" inputmode="numeric" title="Enter valid IPv4 (e.g. 192.168.1.100)">
+
+              <label for="ip-end">IP Range End</label>
+              <input type="text" name="ip-end" id="ip-end" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$" inputmode="numeric">
+
+              <label for="subnet-mask">Subnet Mask</label>
+              <input type="text" name="subnet-mask" id="subnet-mask" required pattern="^((255|254|252|248|240|224|192|128|0)\\.){3}(255|254|252|248|240|224|192|128|0)$" title="e.g. 255.255.255.0">
+
+              <label for="lease-time">Default Lease Time (secs)</label>
+              <input type="number" name="lease-time" id="lease-time" required min="60" step="60" title="Minimum 1 minute">
+            </fieldset>
+
+            <fieldset>
+              <legend>Reservations</legend>
+
+              <label for="mac-address">MAC Address</label>
+              <input type="text" name="mac-address" id="mac-address" required pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="Format: XX:XX:XX:XX:XX:XX">
+
+              <label for="reserved-ip">Reserved IP</label>
+              <input type="text" name="reserved-ip" id="reserved-ip" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$">
+
+              <label for="client-name">Client Name</label>
+              <input type="text" name="client-name" id="client-name" pattern="^[\\w\\-]{2,64}$" title="Alphanumeric and dashes">
+            </fieldset>
+
+            <fieldset>
+              <legend>DHCP Options</legend>
+
+              <label for="option-code">Option Code</label>
+              <input type="number" name="option-code" id="option-code" required min="1" max="254">
+
+              <label for="option-name">Option Name</label>
+              <input type="text" name="option-name" id="option-name" required maxlength="64">
+
+              <label for="option-type">Option Type</label>
+              <select name="option-type" id="option-type" required>
+                <option value="">Select type</option>
+                <option value="ip">IP Address</option>
+                <option value="string">String</option>
+                <option value="uint32">Unsigned 32-bit</option>
+                <option value="boolean">Boolean</option>
+              </select>
+
+              <label for="option-value">Option Value</label>
+              <input type="text" name="option-value" id="option-value" required>
+            </fieldset>
+
+            <fieldset>
+              <legend>Audit</legend>
+
+              <label for="created-by">Created By</label>
+              <input type="text" name="created-by" id="created-by" required pattern="^[\\w\\-]{2,64}$">
+
+              <label for="updated-by">Modified By</label>
+              <input type="text" name="updated-by" id="updated-by" required pattern="^[\\w\\-]{2,64}$">
+
+              <label for="created-at">Created Date</label>
+              <input type="datetime-local" name="created-at" id="created-at" required>
+
+              <label for="updated-at">Updated Date</label>
+              <input type="datetime-local" name="updated-at" id="updated-at" required>
+            </fieldset>
+          </section>
+          <button type="submit" disabled>Save</button>
+        </form>
+        <p>Note: Ensure all fields are filled correctly before submitting.</p>
+        <p>Note: All fields marked with * are required.</p>
       </aside>
       <footer>
-        <powered-by>FOOTER</powered-by>
+        <powered-by>Powered by : :</powered-by>
         <app-version>v.0.00001</app-version>
       </footer>
       <app-banner>
         <p>banner</p>
       </app-banner>
     </app-container>
-
-    <script type="text/javascript" charset="utf-8" src="https://platform.twitter.com/widgets.js" async></script>
-    <script type="text/javascript" charset="utf-8" src="assets/js/scripts.js"></script>
-    <script type="text/javascript" charset="utf-8" src="assets/js/app.js"></script>
+    <script type="module" charset="utf-8" src="assets/js/scripts.js"></script>
     <noscript>
       <style>
         body {
@@ -259,6 +341,19 @@
         }
       </style>
     </noscript>
+    <load-data role="status" aria-live="polite" aria-busy="true" hidden></load-data>
+    <load-delay role="status" aria-live="polite" aria-atomic="true"></load-delay>
+    <template data-template="list-item">
+      <li tabindex="0">
+        <input type="radio" name="list-select" hidden>
+        <item-name><a href="#"></a></item-name>
+        <item-created></item-created>
+        <item-updated></item-updated>
+        <item-author></item-author>
+        <item-modified></item-modified>
+        <item-type></item-type>
+      </li>
+    </template>
   </body>
 
 </html>
