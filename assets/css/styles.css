@@ -526,7 +526,7 @@ body:before {
   z-index: -5;
 }
 
-html:after {
+/* html:after {
   content: "";
   position: fixed;
   top: 0;
@@ -538,10 +538,10 @@ html:after {
   background-image: url('https://d7460n-app-with-resizer.pages.dev/assets/images/logo.svg');
   background-repeat: no-repeat;
   background-position: center;
-  background-attachment: inherit;
+  background-attachment: inherit; */
   /* background-size: cover; */
-  background-size: 75% 75%;
-}
+  /* background-size: 75% 75%;
+} */
 
 span-bold {
   font-weight: 900;
@@ -581,9 +581,7 @@ nav:has(details:nth-of-type(2) label:nth-of-type(6) input:checked) ~ main articl
 nav:has(details:nth-of-type(2) label:nth-of-type(7) input:checked) ~ main article:nth-of-type(9),
 nav:has(details:nth-of-type(2) label:nth-of-type(8) input:checked) ~ main article:nth-of-type(10),
 nav:has(details:nth-of-type(2) label:nth-of-type(9) input:checked) ~ main article:nth-of-type(11),
-nav:has(details:nth-of-type(2) label:nth-of-type(10) input:checked) ~ main article:nth-of-type(12),
-nav:has(details:nth-of-type(2) label:nth-of-type(11) input:checked) ~ main article:nth-of-type(13)
- {
+nav:has(details:nth-of-type(2) label:nth-of-type(10) input:checked) ~ main article:nth-of-type(12) {
   display: grid;
   opacity: 1;
 }
@@ -629,7 +627,7 @@ h1 {
   font-size: 2rem;
   font-weight: bold;
   padding: 1rem;
-  letter-spacing: 0.0625rem;
+  letter-spacing: 0.125rem;
 }
 
 /* MARK: FOOTER
