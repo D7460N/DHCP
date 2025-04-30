@@ -1,0 +1,22 @@
+/* https://css-tricks.com/almanac/properties/a/accent-color/
+https://web.dev/articles/accent-color
+*/
+
+html { 
+  --brand: hotpink;
+  scrollbar-color: hotpink Canvas;
+}
+
+:root { accent-color: var(--brand); }
+:focus-visible { outline-color: var(--brand); }
+::selection { background-color: var(--brand); }
+::marker { color: var(--brand); }
+
+:is(
+  ::-webkit-calendar-picker-indicator,
+  ::-webkit-clear-button,
+  ::-webkit-inner-spin-button, 
+  ::-webkit-outer-spin-button
+) {
+  color: var(--brand);
+}
