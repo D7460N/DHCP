@@ -1,4 +1,9 @@
 /* https://www.bram.us/2025/01/29/view-transitions-page-interactivity/ */
+/* https://www.joshwcomeau.com/snippets/html/interpolate-size/ */
+html {
+  interpolate-size: allow-keywords;
+}
+
 
 @layer view-transitions {
 
