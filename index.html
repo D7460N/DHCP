@@ -11,7 +11,9 @@
     <!-- <meta name="color-scheme" content="dark light" /> -->
     <link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials">
     <link rel="canonical" href="https://d7460n.dev/">
+    <link rel="stylesheet" type="text/css" href="assets/css/themes.css">
     <link rel="icon" type="image/svg+xml" href="assets/images/brand/logo/logo.svg">
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
     <link rel="stylesheet" type="text/css" href="assets/css/loading-data.css">
     <link rel="stylesheet" type="text/css" href="assets/css/scrollbars.css">
@@ -20,7 +22,7 @@
     <title>DHCP Portal</title>
   </head>
 
-  <body style="opacity: 0.0; transition: opacity 1s ease-in-out;">
+  <body>
     <app-container>
       <app-banner>
         <p>banner</p>
@@ -342,13 +344,6 @@
       </app-banner>
     </app-container>
     <script type="module" charset="utf-8" src="assets/js/scripts.js"></script>
-    <noscript>
-      <style>
-        body {
-          opacity: 1.0;
-        }
-      </style>
-    </noscript>
     <load-data role="status" aria-live="polite" aria-busy="true" hidden></load-data>
     <load-delay role="status" aria-live="polite" aria-atomic="true"></load-delay>
     <template data-template="list-item">
