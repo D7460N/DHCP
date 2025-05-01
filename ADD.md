@@ -1,38 +1,4 @@
----
-title: "APPLICATION DESIGN DOCUMENT : :"
----
-
-```
-          _____             _____            _____
-         /\    \           /\    \          /\    \
-        /::\    \         /XX\    \        /%%\    \ LS
-       /::::\    \       /XXXX\    \      /%%%%\    \      _____      _____
-      /::::::\    \     /XXXXXX\    \    /%%%%%%\    \    /\    \    /\    \
-     /:::/\:::\    \   /XXX/\XXX\    \  /%%%/\%%%\    \  /..\    \  /;;\    \
-    /:::/__\:::\    \ /XXX/__\XXX\    \/%%%/  \%%%\    \ \...\    \ \;;;\    \
-   /::::\   \:::\    \\XXX\   \XXX\    \%%/    \%%%\    \/....\____\/;;;;\____\
-  /::::::\   \:::\    \\XXX\   \XXX\    \/    / \%%%\    \..../    /;;;;;/    /
- /:::/\:::\   \:::\    \\XXX\   \XXX\    \   /   \%%%\    \/\/____/;;;/\/____/
-/:::/  \:::\   \:::\____\\XXX\   \XXX\____\_/     \%%%\____\   / /;;;/    /
-\::/    \:::\  /:::/    / \XXX\   \XX/    / \      \%%/    /  /_/;;;/    /
- \/____/ \:::\/:::/    /   \XXX\   \/____/   \    /\\/____/  /\/;;;/    /
-          \::::::/    /X\   \XXX\    \%%%\    \  /...../    /;;;;;/    /
-           \::::/    /XXX\   \XXX\____\%%%\    \ \..../____/\;;;;/____/
-           /:::/    / \XXX\  /XXX/    /\%%%\    \ \...\____\ \;;;\____\
-        . /:::/    /   \XXX\/XXX/    /  \%%%\ . .\ \../    /  \;;/    /
-     .   /:::/    /.    \XXXXXX/    /    \%.%\    \ \/____/    \/____/
- . .    /:::/    /   .   \XXXX/    /     .\%%%\____\.   .
-        \::/    /     .   \XX/    /   .    \%%/    /      .
-         \/____/           \/____/          \/____/        _
-                       .            .                     (%)
-Lennert Stock            .    .                            ~
-
-
-```
-
 <h1 id="add">APPLICATION DESIGN DOCUMENT : :</h1>
-
-<br>
 
 > "Decoupling GUI and data logic enables a single, reusable UI for multiple sites/apps. With global support for the :has() CSS function, GUIs become "self-aware," leveraging CSS's passive reactivity to dynamically manage states without scripting. This approach is significantly faster and eliminates the need for JS polling or third-party dependencies, offloading JavaScript to handle heavier tasks. This marks a transformative shift in web design and development."
 
@@ -2008,3 +1974,32 @@ A fully capable Progressive Web Application can provide the following advantages
 <br>
 
 (WIP)
+
+```
+
+          _____             _____            _____
+         /\    \           /\    \          /\    \
+        /::\    \         /XX\    \        /%%\    \ LS
+       /::::\    \       /XXXX\    \      /%%%%\    \      _____      _____
+      /::::::\    \     /XXXXXX\    \    /%%%%%%\    \    /\    \    /\    \
+     /:::/\:::\    \   /XXX/\XXX\    \  /%%%/\%%%\    \  /..\    \  /;;\    \
+    /:::/__\:::\    \ /XXX/__\XXX\    \/%%%/  \%%%\    \ \...\    \ \;;;\    \
+   /::::\   \:::\    \\XXX\   \XXX\    \%%/    \%%%\    \/....\____\/;;;;\____\
+  /::::::\   \:::\    \\XXX\   \XXX\    \/    / \%%%\    \..../    /;;;;;/    /
+ /:::/\:::\   \:::\    \\XXX\   \XXX\    \   /   \%%%\    \/\/____/;;;/\/____/
+/:::/  \:::\   \:::\____\\XXX\   \XXX\____\_/     \%%%\____\   / /;;;/    /
+\::/    \:::\  /:::/    / \XXX\   \XX/    / \      \%%/    /  /_/;;;/    /
+ \/____/ \:::\/:::/    /   \XXX\   \/____/   \    /\\/____/  /\/;;;/    /
+          \::::::/    /X\   \XXX\    \%%%\    \  /...../    /;;;;;/    /
+           \::::/    /XXX\   \XXX\____\%%%\    \ \..../____/\;;;;/____/
+           /:::/    / \XXX\  /XXX/    /\%%%\    \ \...\____\ \;;;\____\
+        . /:::/    /   \XXX\/XXX/    /  \%%%\ . .\ \../    /  \;;/    /
+     .   /:::/    /.    \XXXXXX/    /    \%.%\    \ \/____/    \/____/
+ . .    /:::/    /   .   \XXXX/    /     .\%%%\____\.   .
+        \::/    /     .   \XX/    /   .    \%%/    /      .
+         \/____/           \/____/          \/____/        _
+                       .            .                     (%)
+                         .    .                            ~
+
+
+```
