@@ -83,14 +83,21 @@ form input:valid {
   border-block-end-color: green;
 }
 
-
+/* MARK: BUTTON CONTROL
+*/
+/* Form <button> is disabled - default */
 form button[type="submit"] {
   pointer-events: none;
   opacity: 0.5;
 }
 
-/* MARK: BUTTON CONTROL
-*/
+/* Form <button> is enabled only when ALL form inputs are valid */
+/* form:has(input:valid):has(select:valid):has(input:valid) {
+  pointer-events: auto;
+  opacity: 1;
+} */
+
+/* Form <button> is enabled only when OPTION TYPES form inputs are valid */
 form:has(input:valid):has(select:valid):has(input[name="ip-start"]:valid):has(input[name="mac-address"]:valid):has(input[name="option-code"]:valid) button[type="submit"] {
   pointer-events: auto;
   opacity: 1;

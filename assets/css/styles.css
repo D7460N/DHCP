@@ -2,26 +2,6 @@
 @import url('https://fonts.cdnfonts.com/css/agencyfb-2');
 @import url('https://fonts.googleapis.com/css?family=Electrolize');
 
-/* RESET
-*/
-*,
-* *,
-*:before,
-*:after,
-::after,
-::before {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-body,
-html,
-iframe,
-app-container {
-  background-color: var(--bg-color);
-}
-
 /*
 https://moderncss.dev/modern-css-for-dynamic-component-based-architecture/ */
 /* Baseline for default links */
@@ -72,7 +52,7 @@ a:not([class]) {
 /*  MARK: LAYOUT | Horizontal
 */
 @media (width >=600px) {
-  :root:has(#toggleLayout:checked) {
+  :root:has(header label:nth-of-type(1) input:checked) {
     --app-container-grid-template-columns: 12rem 1fr;
     /* --app-container-grid-template-columns: 12rem 1fr 15rem; */
     --app-container-grid-template-rows: auto auto 1fr auto auto;
@@ -87,70 +67,6 @@ a:not([class]) {
     --sub-header-display: grid;
     --grid-row-span: span 2;
     --aside-display: grid;
-  }
-}
-
-
-/* MARK: THEME | Dark
-*/
-:root {
-  --bg-color: 19, 20, 23;
-  --bg-opacity: 1.0;
-  --bg-02-color: 39, 49, 54;
-  --bg-02-opacity: 1.0;
-  --bg-panel-color: 255, 255, 255;
-  --bg-panel-opacity: 0.05;
-  --bg-active-color: 255, 255, 255;
-  --bg-active-opacity: 0.05;
-  --bg-accent-color: 48, 190, 255;
-  --bg-accent-opacity: 0.5;
-  --bg-grd: linear-gradient(180deg,
-      rgba(50, 70, 80, 0.9) 0,
-      #0d101b 100%);
-  --txt-color: 255, 255, 255;
-  --txt-opacity: 0.7;
-  --txt-active: 255, 255, 255;
-  --txt-active-opacity: 1.0;
-  --txt-link: 102, 204, 255;
-  --txt-link-opacity: .5;
-  --txt-muted: 255, 255, 255;
-  --txt-muted-opacity: 0.5;
-  --txt-shadow: -1px 1px rgba(var(--txt-shadow-color),
-      var(--txt-shadow-opacity));
-  --txt-shadow-color: 0, 0, 0;
-  --txt-shadow-opacity: 1.0;
-  --accent: #005a9c;
-}
-
-
-/* MARK THEME | Light
-*/
-@media (prefers-color-scheme: dark) {
-  :root:has(#toggleTheme:checked) {
-    --bg-color: 0, 0, 0;
-    --bg-opacity: 0.8;
-    --bg-02-color: 0, 0, 0;
-    --bg-02-opacity: 0.5;
-    --bg-panel-color: 255, 255, 255;
-    --bg-panel-opacity: 0.2;
-    --bg-active-color: 255, 255, 255;
-    --bg-active-opacity: 0.2;
-    --bg-grd: linear-gradient(180deg,
-        rgba(255, 255, 255, 0.7) 0,
-        rgba(255, 255, 255, 0.4) 100%);
-    --txt-color: 54, 54, 77;
-    --txt-opacity: 1.0;
-    --txt-link: 41, 41, 169;
-    --txt-link-opacity: .5;
-    --txt-active: 0, 0, 0;
-    --txt-active-opacity: 1.0;
-    --txt-muted: 0, 0, 0;
-    --txt-muted-opacity: 0.5;
-    --txt-shadow: -1px 1px 0 rgba(var(--txt-shadow-color),
-        var(--txt-shadow-opacity));
-    --txt-shadow-color: 255, 255, 255;
-    --txt-shadow-opacity: 0.3;
-    --accent: #66ccff;
   }
 }
 
@@ -177,6 +93,7 @@ app-container {
   overflow: hidden;
 }
 
+/* When <aside> has an input value that isn't empty, which also gives <aside> display: grid;, add a grid column to <app-container> */
 app-container:has(aside input[type="text"][value]:not([value=""])) {
   --app-container-grid-template-columns: 12rem 1fr 15rem;
 }
@@ -207,15 +124,6 @@ app-container:has(aside input[type="text"][value]:not([value=""])) main {
  }
 } */
 
-
-/* MARK: ALL PANELS
-*/
-app-container>* {
-  background-color:
-    rgba(var(--bg-panel-color),
-    var(--bg-panel-opacity));
-  align-content: start;
-}
 
 /* MARK: APP-BANNER
 */
@@ -260,16 +168,16 @@ nav {
   grid-auto-flow: var(--tab-grid-auto-flow);
   grid-row: var(--grid-row-span);
   user-select: none;
-  background-color: transparent;
   justify-content: var(--nav-justify-content);
   margin-inline-start: 1rem;
   overflow: hidden;
+  align-content: start;
 }
 
 /* rounded corner for MAIN */
-nav:not(:has(#radio01:checked))~main {
+/* nav:not(:has(#radio01:checked))~main {
   border-radius: .25rem;
-}
+} */
 
 nav details {
   display: grid;
@@ -360,6 +268,7 @@ main {
   border-radius: var(--main-border-radius);
   margin-inline-end: 1rem;
   overflow: hidden;
+  align-content: start;
   /* resize: var(--main-resize-h); */
 }
 
@@ -369,12 +278,13 @@ main {
 aside {
   display: none;
   overflow: hidden;
+  align-content: start;
+  border-radius: .3rem;
+  margin-inline-end: 1rem;
 }
 
 aside:has(input[type="text"][value]:not([value=""])) {
   display: var(--aside-display);
-  border-radius: .3rem;
-  margin-inline-end: 1rem;
 }
 
 /* aside {resize: var(--aside-resize-v);} */
@@ -385,7 +295,6 @@ h4 {
   display: var(--sub-header-display);
   padding: 1rem;
   letter-spacing: .05rem;
-  /* color: ; */
 }
 
 
@@ -446,6 +355,7 @@ section {
   display: grid;
   overflow: overlay;
   position: relative;
+  align-content: start;
   background:
     /* cover */
     linear-gradient(var(--bg-panel-color) 33%,
@@ -469,6 +379,7 @@ list-cell {
 
 main p,
 aside p {
+  /* margin-block-end: 1lh; */
   padding: 0 1rem 1rem;
 }
 
@@ -564,9 +475,8 @@ a:hover {
 */
 article {
   display: none;
-  overflow: hidden;
-  opacity: 0;
   transition: opacity var(--transition-length) allow-discrete;
+  align-content: start;
   overflow: hidden;
 }
 
@@ -583,7 +493,6 @@ nav:has(details:nth-of-type(2) label:nth-of-type(8) input:checked) ~ main articl
 nav:has(details:nth-of-type(2) label:nth-of-type(9) input:checked) ~ main article:nth-of-type(11),
 nav:has(details:nth-of-type(2) label:nth-of-type(10) input:checked) ~ main article:nth-of-type(12) {
   display: grid;
-  opacity: 1;
 }
 
 article ul li {

@@ -28,7 +28,6 @@ load-data {
 load-delay::after {
   content: 'This is taking longer than expected…';
   display: none; /* suppressed until animation kicks in */
-  opacity: 0;
   animation: delay-show 0s linear forwards;
   animation-delay: 1.5s; /* wait time before showing fallback */
   font-size: 1rem;
@@ -44,7 +43,6 @@ load-delay::after {
 @keyframes delay-show {
   to {
     display: block;
-    opacity: 1;
   }
 }
 
