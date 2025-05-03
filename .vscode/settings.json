@@ -2,11 +2,21 @@
   "editor.guides.bracketPairs": true,
   "editor.matchBrackets": "never",
   "cSpell.words": [
+    "allowdeletebranch",
+    "allowdeletetag",
+    "allowmodifytag",
+    "allownonascii",
+    "allowunannotated",
+    "basebranch",
     "bitsrc",
+    "checkpatch",
     "codepen",
+    "commitmsg",
     "csswg",
     "debugbear",
+    "denycreatebranch",
     "divless",
+    "echoback",
     "engageable",
     "FIELDSETS",
     "Flexbox",
@@ -25,11 +35,16 @@
     "Magento",
     "mgmt",
     "Mjölnir",
+    "newrev",
+    "oldrev",
+    "oneline",
+    "projectdesc",
     "QUIC",
     "reactiveness",
     "scriptable",
     "SDLC",
     "semrush",
+    "sendemail",
     "SERP",
     "smashingmagazine",
     "spammy",
@@ -41,6 +56,10 @@
     "WCAG",
     "WEBDX",
     "WHATWG",
-    "Wium"
-  ]
+    "Wium",
+    "worktree"
+  ],
+  "files.exclude": {
+    "**/.git": false
+  }
 }
