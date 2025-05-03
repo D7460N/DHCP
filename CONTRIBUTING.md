@@ -5,7 +5,8 @@ First of all, thank you for your contribution. Please ensure all contributions a
 Here's how you can contribute:
 
 1. Write your code in any of these online editors of your choice.
-https://github.com/D7460N/D7460N.dev/blob/main/snippets.md
+   https://github.com/D7460N/D7460N.dev/blob/main/snippets.md
+
    - [CodePen](https://codepen.io/)
    - [CodeSandbox](https://codesandbox.io/index2)
    - [Stackblitz](https://stackblitz.com/)
@@ -20,8 +21,8 @@ In order to create a Pull request
 - Fork this repository.
 - Create your snippets in any one of those online editors.
 - Once you are done with the code
-    - Create a folder and name it (follow `kebab-case` format) and add your `html` and `css` files.
-    - Go to `snippets.md` file. Add a nice name, precise description of what your code does and attach link to your code following this markdown [format](https://github.com/D7460N/D7460N.dev/blob/main/snippets.md).
+  - Create a folder and name it (follow `kebab-case` format) and add your `html` and `css` files.
+  - Go to `snippets.md` file. Add a nice name, precise description of what your code does and attach link to your code following this markdown [format](https://github.com/D7460N/D7460N.dev/blob/main/snippets.md).
 - Commit your changes.
 - Push to remote repository and then create a Pull request.
 - Give your Pull request a brief name that describes your snippet.
@@ -29,5 +30,4 @@ In order to create a Pull request
 
 ---
 
-<i>Barrowed from: https://github.com/chilupa/css-snippets</i>
-
+<i>Borrowed from: https://github.com/chilupa/css-snippets</i>

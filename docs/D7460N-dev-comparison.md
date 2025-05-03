@@ -6,7 +6,8 @@ This section provides direct, factual comparisons between common front-end frame
 
 ## Routing (Tab Views)
 
-### In React:
+### In React
+
 ```jsx
 const [tab, setTab] = useState('view1');
 return (
@@ -19,7 +20,8 @@ return (
 );
 ```
 
-### In D7460N:
+### In D7460N
+
 ```html
 <nav>
   <label><input type="radio" name="nav" checked>View 1</label>
@@ -29,7 +31,9 @@ return (
   <article>...</article>
   <article hidden>...</article>
 </main>
+
 ```
+
 ```css
 nav:has(input:nth-of-type(1):checked) ~ main article:nth-of-type(1) {
   display: block;
@@ -40,13 +44,15 @@ nav:has(input:nth-of-type(1):checked) ~ main article:nth-of-type(1) {
 
 ## Form Validation
 
-### In Vue:
+### In Vue
+
 ```html
 <input v-model="email" :class="{ error: !validEmail }">
 <p v-if="!validEmail">Invalid email</p>
 ```
 
-### In D7460N:
+### In D7460N
+
 ```html
 <form>
   <label>Email:
@@ -54,7 +60,9 @@ nav:has(input:nth-of-type(1):checked) ~ main article:nth-of-type(1) {
   </label>
   <p aria-live="polite">Must be a valid email.</p>
 </form>
+
 ```
+
 ```css
 form:has(:invalid) p {
   display: block;
@@ -65,17 +73,20 @@ form:has(:invalid) p {
 
 ## Detail Toggle
 
-### In Angular:
+### In Angular
+
 ```html
 <div *ngIf="showDetail">...</div>
 ```
 
-### In D7460N:
+### In D7460N
+
 ```html
 <aside hidden>
   <section><div></div></section>
 </aside>
 ```
+
 ```css
 aside:has(section:has(div:not(:empty))) {
   display: block;
@@ -99,6 +110,7 @@ No build steps. No abstractions. Just the platform.
 ---
 
 ## Related Docs
+
 - `routing.md`
 - `forms.md`
 - `layout.md`

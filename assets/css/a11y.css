@@ -1,4 +1,4 @@
-/* 
+/*
 https://www.joshwcomeau.com/snippets/react-components/visually-hidden/
 screen readers only. Verify by holding down the alt key.
 */
@@ -7,7 +7,8 @@ screen readers only. Verify by holding down the alt key.
   width: 1px;
   height: 1px;
   overflow: hidden;
-  clip: rect(0 0 0 0); /* Legacy property for Internet Explorer */
+  clip: rect(0 0 0 0);
+  /* Legacy property for Internet Explorer */
   clip-path: inset(50%);
   white-space: nowrap;
 }

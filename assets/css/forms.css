@@ -72,14 +72,14 @@ form:has(input[name="item-name"]:valid):has(input[name="item-type"]:valid):has(i
 
 /* Optional: style invalid/valid states */
 form input:invalid {
-  border-block-start-color: rgba(0,0,0,0.5);
-  border-inline-end-color: rgba(0,0,0,0.4);
+  border-block-start-color: rgba(0, 0, 0, 0.5);
+  border-inline-end-color: rgba(0, 0, 0, 0.4);
   border-block-end-color: red;
 }
 
 form input:valid {
-  border-block-start-color: rgba(0,0,0,0.5);
-  border-inline-end-color: rgba(0,0,0,0.5);
+  border-block-start-color: rgba(0, 0, 0, 0.5);
+  border-inline-end-color: rgba(0, 0, 0, 0.5);
   border-block-end-color: green;
 }
 
@@ -111,17 +111,17 @@ aside form fieldset {
   display: none;
 }
 
-nav:has(details:nth-of-type(1) label:nth-of-type(1) input:checked) ~ main:has(article:nth-of-type(1)) ~ aside form fieldset:nth-of-type(1),
-nav:has(details:nth-of-type(1) label:nth-of-type(2) input:checked) ~ main:has(article:nth-of-type(2)) ~ aside form fieldset:nth-of-type(2),
-nav:has(details:nth-of-type(2) label:nth-of-type(1) input:checked) ~ main:has(article:nth-of-type(3)) ~ aside form fieldset:nth-of-type(3),
-nav:has(details:nth-of-type(2) label:nth-of-type(2) input:checked) ~ main:has(article:nth-of-type(4)) ~ aside form fieldset:nth-of-type(4),
-nav:has(details:nth-of-type(2) label:nth-of-type(3) input:checked) ~ main:has(article:nth-of-type(5)) ~ aside form fieldset:nth-of-type(5),
-nav:has(details:nth-of-type(2) label:nth-of-type(4) input:checked) ~ main:has(article:nth-of-type(6)) ~ aside form fieldset:nth-of-type(6),
-nav:has(details:nth-of-type(2) label:nth-of-type(5) input:checked) ~ main:has(article:nth-of-type(7)) ~ aside form fieldset:nth-of-type(7),
-nav:has(details:nth-of-type(2) label:nth-of-type(6) input:checked) ~ main:has(article:nth-of-type(8)) ~ aside form fieldset:nth-of-type(8),
-nav:has(details:nth-of-type(2) label:nth-of-type(7) input:checked) ~ main:has(article:nth-of-type(9)) ~ aside form fieldset:nth-of-type(9),
-nav:has(details:nth-of-type(2) label:nth-of-type(8) input:checked) ~ main:has(article:nth-of-type(10)) ~ aside form fieldset:nth-of-type(10),
-nav:has(details:nth-of-type(2) label:nth-of-type(9) input:checked) ~ main:has(article:nth-of-type(11)) ~ aside form fieldset:nth-of-type(11),
-nav:has(details:nth-of-type(2) label:nth-of-type(10) input:checked) ~ main:has(article:nth-of-type(12)) ~ aside form fieldset:nth-of-type(12) {
+nav:has(details:nth-of-type(1) label:nth-of-type(1) input:checked)~main:has(article:nth-of-type(1))~aside form fieldset:nth-of-type(1),
+nav:has(details:nth-of-type(1) label:nth-of-type(2) input:checked)~main:has(article:nth-of-type(2))~aside form fieldset:nth-of-type(2),
+nav:has(details:nth-of-type(2) label:nth-of-type(1) input:checked)~main:has(article:nth-of-type(3))~aside form fieldset:nth-of-type(3),
+nav:has(details:nth-of-type(2) label:nth-of-type(2) input:checked)~main:has(article:nth-of-type(4))~aside form fieldset:nth-of-type(4),
+nav:has(details:nth-of-type(2) label:nth-of-type(3) input:checked)~main:has(article:nth-of-type(5))~aside form fieldset:nth-of-type(5),
+nav:has(details:nth-of-type(2) label:nth-of-type(4) input:checked)~main:has(article:nth-of-type(6))~aside form fieldset:nth-of-type(6),
+nav:has(details:nth-of-type(2) label:nth-of-type(5) input:checked)~main:has(article:nth-of-type(7))~aside form fieldset:nth-of-type(7),
+nav:has(details:nth-of-type(2) label:nth-of-type(6) input:checked)~main:has(article:nth-of-type(8))~aside form fieldset:nth-of-type(8),
+nav:has(details:nth-of-type(2) label:nth-of-type(7) input:checked)~main:has(article:nth-of-type(9))~aside form fieldset:nth-of-type(9),
+nav:has(details:nth-of-type(2) label:nth-of-type(8) input:checked)~main:has(article:nth-of-type(10))~aside form fieldset:nth-of-type(10),
+nav:has(details:nth-of-type(2) label:nth-of-type(9) input:checked)~main:has(article:nth-of-type(11))~aside form fieldset:nth-of-type(11),
+nav:has(details:nth-of-type(2) label:nth-of-type(10) input:checked)~main:has(article:nth-of-type(12))~aside form fieldset:nth-of-type(12) {
   display: grid;
 }

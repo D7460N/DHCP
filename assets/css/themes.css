@@ -63,10 +63,10 @@
 
 /* MARK: ALL PANELS
 */
-app-container > * {
+app-container>* {
   background-color:
     rgba(var(--bg-panel-color),
-    var(--bg-panel-opacity));
+      var(--bg-panel-opacity));
 }
 
 /* MARK: NAV

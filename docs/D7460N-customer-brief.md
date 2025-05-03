@@ -16,14 +16,14 @@ D7460N is a front-end web architecture designed to reduce project complexity, co
 
 ## Why It Matters
 
-| Benefit                   | Explanation                                                                 |
-|--------------------------|-----------------------------------------------------------------------------|
-| **Faster delivery**      | No build process or framework overhead — developers start coding instantly  |
-| **Lower maintenance**    | No upgrades or dependencies to patch or refactor                            |
-| **Fully accessible**     | Meets WCAG 2.1 AA and Section 508 natively, no add-ons needed                |
-| **Security first**       | Minimal JavaScript = smaller attack surface                                 |
-| **Easier audits**        | Semantic, readable HTML improves transparency and validation                |
-| **Lower total cost**     | Smaller files, less tooling, no licenses, easier to scale                   |
+| Benefit               | Explanation                                                                |
+| --------------------- | -------------------------------------------------------------------------- |
+| **Faster delivery**   | No build process or framework overhead — developers start coding instantly |
+| **Lower maintenance** | No upgrades or dependencies to patch or refactor                           |
+| **Fully accessible**  | Meets WCAG 2.1 AA and Section 508 natively, no add-ons needed              |
+| **Security first**    | Minimal JavaScript = smaller attack surface                                |
+| **Easier audits**     | Semantic, readable HTML improves transparency and validation               |
+| **Lower total cost**  | Smaller files, less tooling, no licenses, easier to scale                  |
 
 ---
 
@@ -58,6 +58,7 @@ Yes. It is modular, declarative, and built for growth — without increasing com
 ---
 
 ## Need More?
+
 See the [D7460N Developer Guide](../d7460n-dev-guide/index.md) or request a demo with working examples.
 
 > This architecture helps teams ship faster, stay compliant, and reduce long-term risk — using only the capabilities already built into every modern browser.

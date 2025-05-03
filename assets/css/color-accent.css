@@ -2,7 +2,7 @@
 https://web.dev/articles/accent-color
 */
 
-html { 
+html {
   --brand: hotpink;
   scrollbar-color: hotpink Canvas;
 }
@@ -15,7 +15,7 @@ html {
 :is(
   ::-webkit-calendar-picker-indicator,
   ::-webkit-clear-button,
-  ::-webkit-inner-spin-button, 
+  ::-webkit-inner-spin-button,
   ::-webkit-outer-spin-button
 ) {
   color: var(--brand);

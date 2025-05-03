@@ -231,7 +231,7 @@ button {
   user-select: none;
   cursor: pointer;
   border: none;
-  background-color: rgba(255,255,255,0.1);
+  background-color: rgba(255, 255, 255, 0.1);
   color: inherit;
   text-align: center;
   transition: background-color var(--transition-length);
@@ -239,7 +239,7 @@ button {
 }
 
 button:hover {
-  background-color: rgba(255,255,255,0.15);
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 demo-buttons {
@@ -254,7 +254,7 @@ demo-buttons {
 
 hr {
   margin: 1rem 0;
-  border: solid 0.0625rem rgba(0,0,0,0.1);
+  border: solid 0.0625rem rgba(0, 0, 0, 0.1);
 }
 
 
@@ -450,8 +450,8 @@ body:before {
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: inherit; */
-  /* background-size: cover; */
-  /* background-size: 75% 75%;
+/* background-size: cover; */
+/* background-size: 75% 75%;
 } */
 
 span-bold {
@@ -480,18 +480,18 @@ article {
   overflow: hidden;
 }
 
-nav:has(details:nth-of-type(1) label:nth-of-type(1) input:checked) ~ main article:nth-of-type(1),
-nav:has(details:nth-of-type(1) label:nth-of-type(2) input:checked) ~ main article:nth-of-type(2),
-nav:has(details:nth-of-type(2) label:nth-of-type(1) input:checked) ~ main article:nth-of-type(3),
-nav:has(details:nth-of-type(2) label:nth-of-type(2) input:checked) ~ main article:nth-of-type(4),
-nav:has(details:nth-of-type(2) label:nth-of-type(3) input:checked) ~ main article:nth-of-type(5),
-nav:has(details:nth-of-type(2) label:nth-of-type(4) input:checked) ~ main article:nth-of-type(6),
-nav:has(details:nth-of-type(2) label:nth-of-type(5) input:checked) ~ main article:nth-of-type(7),
-nav:has(details:nth-of-type(2) label:nth-of-type(6) input:checked) ~ main article:nth-of-type(8),
-nav:has(details:nth-of-type(2) label:nth-of-type(7) input:checked) ~ main article:nth-of-type(9),
-nav:has(details:nth-of-type(2) label:nth-of-type(8) input:checked) ~ main article:nth-of-type(10),
-nav:has(details:nth-of-type(2) label:nth-of-type(9) input:checked) ~ main article:nth-of-type(11),
-nav:has(details:nth-of-type(2) label:nth-of-type(10) input:checked) ~ main article:nth-of-type(12) {
+nav:has(details:nth-of-type(1) label:nth-of-type(1) input:checked)~main article:nth-of-type(1),
+nav:has(details:nth-of-type(1) label:nth-of-type(2) input:checked)~main article:nth-of-type(2),
+nav:has(details:nth-of-type(2) label:nth-of-type(1) input:checked)~main article:nth-of-type(3),
+nav:has(details:nth-of-type(2) label:nth-of-type(2) input:checked)~main article:nth-of-type(4),
+nav:has(details:nth-of-type(2) label:nth-of-type(3) input:checked)~main article:nth-of-type(5),
+nav:has(details:nth-of-type(2) label:nth-of-type(4) input:checked)~main article:nth-of-type(6),
+nav:has(details:nth-of-type(2) label:nth-of-type(5) input:checked)~main article:nth-of-type(7),
+nav:has(details:nth-of-type(2) label:nth-of-type(6) input:checked)~main article:nth-of-type(8),
+nav:has(details:nth-of-type(2) label:nth-of-type(7) input:checked)~main article:nth-of-type(9),
+nav:has(details:nth-of-type(2) label:nth-of-type(8) input:checked)~main article:nth-of-type(10),
+nav:has(details:nth-of-type(2) label:nth-of-type(9) input:checked)~main article:nth-of-type(11),
+nav:has(details:nth-of-type(2) label:nth-of-type(10) input:checked)~main article:nth-of-type(12) {
   display: grid;
 }
 
@@ -516,7 +516,7 @@ article section ul li {
 }
 
 article section ul li:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 /* LI active state */

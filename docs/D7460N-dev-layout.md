@@ -3,10 +3,14 @@
 ## Holy Grail Grid (Full-Bleed)
 
 All D7460N apps begin with a single root wrapper:
+
 ```html
 <app-container>
+
 ```
+
 This container is styled with:
+
 ```css
 display: grid;
 grid-template-columns: auto 1fr auto;
@@ -15,7 +19,8 @@ overflow: hidden;
 ```
 
 ### Region Structure
-```
+
+```html
 <app-container>
   <header>
   <nav>
@@ -52,7 +57,7 @@ overflow: hidden;
 - Scroll logic is never scripted
 
 ## Related
+
 - `/layout/README.md`
 - `styles/readme.md`
 - `forms.md` – how forms fit into layout
-

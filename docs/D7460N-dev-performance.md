@@ -13,6 +13,7 @@ D7460N emphasizes native browser capabilities to reduce load time, memory usage,
 - Uses only static HTML, scoped CSS, and async JS fetch
 
 ### Benchmarked Wins
+
 - **First Meaningful Paint**: < 1.5s on cold mobile
 - **Total Transfer Size**: < 100KB with full styles + content
 - **Time to Interactive**: immediate, even with data injection
@@ -45,6 +46,7 @@ D7460N emphasizes native browser capabilities to reduce load time, memory usage,
 ---
 
 ## Related Docs
+
 - `layout.md` – intrinsic layout and scroll enforcement
 - `routing.md` – declarative navigation without JS
 - `data.md` – async fetch without dependency loaders

@@ -1,8 +1,6 @@
-<!--START_SECTION:waka-->
-<!--END_SECTION:waka-->
 <p align="center">
 <img
-  src="assets/images/logo.svg"
+  src="assets/images/brand/logo.svg"
   alt="D7460N"
   title="D7460N"
   width="400" />

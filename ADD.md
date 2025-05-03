@@ -4,8 +4,7 @@
 
 > Less JS in the browser means less security risk for users.
 
-> No JS mode. 
-
+> No JS mode.
 
 <h2 id="toc">TABLE OF CONTENTS : :</h2>
 
@@ -91,7 +90,7 @@
 
 <b>D7460N UI</b> - Minimal professional passively-reactive HTML/CSS seed/template for building fast, robust, adaptable, and scalable web applications and websites. All native. Minimal 3rd party dependencies.
 
-<b>D7460N Theory</b> - Modern CSS will supplant much of the GUI logic JS does today. Decoupling GUI logic from data logic allows both to thrive. These combined will change the way see, interact, design and develope the <em>Wild Wild Web</em>
+<b>D7460N Theory</b> - Modern CSS will supplant much of the GUI logic JS does today. Decoupling GUI logic from data logic allows both to thrive. These combined will change the way see, interact, design and develop the <em>Wild Wild Web</em>
 
 Let the CSS renaissance begin . . .
 
@@ -100,27 +99,32 @@ Let the CSS renaissance begin . . .
 <br>
 
 > <b>Separation of Concerns</b> (GUI logic from data logic)
-> * JS framework agnostic
-> * no monolithic "opinionated" (AKA controlled) development decision trees
+>
+> - JS framework agnostic
+> - no monolithic "opinionated" (AKA controlled) development decision trees
 
 > <b>Modern CSS functionality</b>
-> * no preprocessors
-> * much less LOE
-> * 100 to 1K times faster rendering speed than JS equivalents
+>
+> - no preprocessors
+> - much less LOE
+> - 100 to 1K times faster rendering speed than JS equivalents
 
 > <b>Future proofed</b>
-> * vanilla/native to the browser
-> * no extra deployment or build steps required to get around non-native JS framework browser incompatibility
-> * no version upgrade purgatory
-> * no vendor lock
-> * minimal dependencies
-> * no NPM/NVM security vulnerabilities
+>
+> - vanilla/native to the browser
+> - no extra deployment or build steps required to get around non-native JS framework browser incompatibility
+> - no version upgrade purgatory
+> - no vendor lock
+> - minimal dependencies
+> - no NPM/NVM security vulnerabilities
 
->  <b>No/build/compile/serve process required</b>
-> * faster and more productive development
+> <b>No/build/compile/serve process required</b>
+>
+> - faster and more productive development
 
 > <b>No training requirement</b> for third party software (js frameworks)
-> * time and taxpayer savings
+>
+> - time and taxpayer savings
 
 ---
 
@@ -748,7 +752,7 @@ Such as:
 <details>
   <summary id="ux2"><h3>UX TO REMEMBER</h3></summary>
 
-- **Link padding** increases click-space for buttons. 
+- **Link padding** increases click-space for buttons.
 - **No dead ends** - Provide end-users and obvious way forward and a way back. A way forward example would be, links to the support desk on `404` pages. A way back example would be a consistent visible "anchor" to the web application home page such as the conventional web application logo in the upper left corner.
 - **Link Offsite References** - Whenever an offsite source is reference, link to the reference.
 - **Off-site links open in new browser tab/window** - Open off-site links in a new browser tab or window with `target="_new"`.
@@ -766,8 +770,17 @@ Offsite link HTML example : :
 
 ```html
 <p>
-  This is a paragraph with an
-  <a href="https://off-site-list.html" target="_blank">off-site-link</a>.
+  This
+  is
+  a
+  paragraph
+  with
+  an
+  <a
+    href="https://off-site-list.html"
+    target="_blank"
+    >off-site-link</a
+  >.
 </p>
 ```
 
@@ -1400,25 +1413,115 @@ HTML : :
   <app-panel>
     <panel-list>
       <list-item>
-        <list-cell>List item 01 column 01</list-cell>
-        <list-cell>List item 01 column 02</list-cell>
-        <list-cell>List item 01 column 03</list-cell>
-        <list-cell>List item 01 column 04</list-cell>
-        <list-cell>List item 01 column 05</list-cell>
+        <list-cell
+          >List
+          item
+          01
+          column
+          01</list-cell
+        >
+        <list-cell
+          >List
+          item
+          01
+          column
+          02</list-cell
+        >
+        <list-cell
+          >List
+          item
+          01
+          column
+          03</list-cell
+        >
+        <list-cell
+          >List
+          item
+          01
+          column
+          04</list-cell
+        >
+        <list-cell
+          >List
+          item
+          01
+          column
+          05</list-cell
+        >
       </list-item>
       <list-item>
-        <list-cell>List item 02 column 01</list-cell>
-        <list-cell>List item 02 column 02</list-cell>
-        <list-cell>List item 02 column 03</list-cell>
-        <list-cell>List item 02 column 04</list-cell>
-        <list-cell>List item 02 column 05</list-cell>
+        <list-cell
+          >List
+          item
+          02
+          column
+          01</list-cell
+        >
+        <list-cell
+          >List
+          item
+          02
+          column
+          02</list-cell
+        >
+        <list-cell
+          >List
+          item
+          02
+          column
+          03</list-cell
+        >
+        <list-cell
+          >List
+          item
+          02
+          column
+          04</list-cell
+        >
+        <list-cell
+          >List
+          item
+          02
+          column
+          05</list-cell
+        >
       </list-item>
       <list-item>
-        <list-cell>List item 03 column 01</list-cell>
-        <list-cell>List item 03 column 02</list-cell>
-        <list-cell>List item 03 column 03</list-cell>
-        <list-cell>List item 03 column 04</list-cell>
-        <list-cell>List item 03 column 05</list-cell>
+        <list-cell
+          >List
+          item
+          03
+          column
+          01</list-cell
+        >
+        <list-cell
+          >List
+          item
+          03
+          column
+          02</list-cell
+        >
+        <list-cell
+          >List
+          item
+          03
+          column
+          03</list-cell
+        >
+        <list-cell
+          >List
+          item
+          03
+          column
+          04</list-cell
+        >
+        <list-cell
+          >List
+          item
+          03
+          column
+          05</list-cell
+        >
       </list-item>
     </panel-list>
   </app-panel>
@@ -1521,7 +1624,9 @@ For example, in D7460N Template's case, that would be : :
 HTML : :
 
 ```html
-<html lang="en">
+<html
+  lang="en"
+>
   <!-- set to overflow: hidden; -->
   <body>
     <!-- set to overflow: hidden; -->
@@ -1531,11 +1636,31 @@ HTML : :
         <!-- set to overflow: hidden; -->
         <ul>
           <!-- set to overflow: auto; -->
-          <li>List item one</li>
-          <li>List item two</li>
-          <li>List item three</li>
-          <li>List item four</li>
-          <li>List item five</li>
+          <li>
+            List
+            item
+            one
+          </li>
+          <li>
+            List
+            item
+            two
+          </li>
+          <li>
+            List
+            item
+            three
+          </li>
+          <li>
+            List
+            item
+            four
+          </li>
+          <li>
+            List
+            item
+            five
+          </li>
         </ul>
       </main>
     </app-container>
@@ -1627,7 +1752,7 @@ The default D7460N Template automatically shows a minimal CSS only loading anima
 
 [~ CSS Container Queries | MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_container_queries)
 
-> A new approach to responsive design is upon us and follows a Component-Driven (CDD) pattern. CDD is not a new concept. For decades, modularization has been a fundamental principle of software engineering.<br> 
+> A new approach to responsive design is upon us and follows a Component-Driven (CDD) pattern. CDD is not a new concept. For decades, modularization has been a fundamental principle of software engineering.<br>
 
 [~ A Complete Guide To CSS Container Queries | lambdatest.com](https://www.lambdatest.com/blog/css-container-queries/)
 
@@ -1689,7 +1814,6 @@ https://codepen.io/dragontheory/details/jOvBLaW
 > Typography is a very important aspect of a website, setting the tone and adding aesthetic appeal. The use of typographic elements like scale, spacing, and size can impact usability, readability, and accessibility. In this article, we’ll focus on the first element: scale.
 
 https://blog.logrocket.com/fluid-vs-responsive-typography-css-clamp/
-
 
 </details>
 
@@ -1788,9 +1912,9 @@ D7460N Template is a static Single Page Application (SPA) GUI with a MICRO-FRONT
 
 > Jamstack is an architectural approach that decouples the web experience layer from data and business logic, improving flexibility, scalability, performance, and maintainability.
 >
->Jamstack removes the need for business logic to dictate the web experience.
+> Jamstack removes the need for business logic to dictate the web experience.
 >
->It enables a composable architecture for the web where custom logic and 3rd party services are consumed through APIs.
+> It enables a composable architecture for the web where custom logic and 3rd party services are consumed through APIs.
 
 https://jamstack.org/
 

@@ -27,9 +27,11 @@ load-data {
 /* Delay message (shown via ::after, not visible by default) */
 load-delay::after {
   content: 'This is taking longer than expected…';
-  display: none; /* suppressed until animation kicks in */
+  display: none;
+  /* suppressed until animation kicks in */
   animation: delay-show 0s linear forwards;
-  animation-delay: 1.5s; /* wait time before showing fallback */
+  animation-delay: 1.5s;
+  /* wait time before showing fallback */
   font-size: 1rem;
   color: rgba(var(--txt-color), 0.8);
   text-align: center;
@@ -47,17 +49,17 @@ load-delay::after {
 }
 
 /* Trigger spinner and delay message only when an LI is selected */
-app-container:has(main li input:checked):not(:has(aside input[value]:not([value=""]))) ~ load-data {
+app-container:has(main li input:checked):not(:has(aside input[value]:not([value=""])))~load-data {
   display: grid;
 }
 
-app-container:has(main li input:checked):not(:has(aside input[value]:not([value=""]))) ~ load-delay::after {
+app-container:has(main li input:checked):not(:has(aside input[value]:not([value=""])))~load-delay::after {
   animation-name: delay-show;
 }
 
 /* Hide both when form is populated (data has arrived) */
-app-container:has(aside input[value]:not([value=""])) ~ load-data,
-app-container:has(aside input[value]:not([value=""])) ~ load-delay::after {
+app-container:has(aside input[value]:not([value=""]))~load-data,
+app-container:has(aside input[value]:not([value=""]))~load-delay::after {
   display: none;
   animation-name: none;
 }

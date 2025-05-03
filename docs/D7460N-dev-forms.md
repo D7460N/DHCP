@@ -3,6 +3,7 @@
 ## Form Structure
 
 All forms live inside a `<section>` element, scoped within `<article>` under `<main>`.
+
 ```html
 <main>
   <article>
@@ -25,6 +26,7 @@ All forms live inside a `<section>` element, scoped within `<article>` under `<m
 - Native browser validation is required (`required`, `pattern`, etc.)
 - No JavaScript used to control or override validation logic
 - Feedback states controlled using:
+
 ```css
 form:has(:invalid) button[type=submit] {
   opacity: 0.5;
@@ -50,6 +52,7 @@ form:has(:valid) button[type=submit] {
 - Do not inject or toggle messages via script
 
 ## Example
+
 ```html
 <form>
   <fieldset>
@@ -65,6 +68,7 @@ form:has(:valid) button[type=submit] {
 ```
 
 ## Related
+
 - `/forms/readme.md`
 - `styles/readme.md` – validation and focus styling
 - `layout.md` – how forms fit in the visual hierarchy
