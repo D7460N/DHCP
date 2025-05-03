@@ -82,3 +82,60 @@ button {
 iframe {
   background-color: var(--bg-color);
 }
+
+/* MARK: LOOK/FEEL
+*/
+body {
+  background-color: rgba(var(--bg-color), var(--bg-opacity));
+  color: rgba(var(--txt-color), var(--txt-opacity));
+  font-family: 'Oxanium', 'Electrolize', sans-serif;
+  font-size: 1rem;
+  text-shadow: var(--txt-shadow);
+}
+
+html:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100dvh;
+  z-index: -5;
+  background: var(--bg-grd);
+}
+
+body:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100dvh;
+  background-attachment: initial;
+  background-color: transparent;
+  background-image: url('https://d7460n-app-with-resizer.pages.dev/assets/images/pattern.png');
+  background-size: 4.6875rem;
+  background-repeat: repeat;
+  z-index: -5;
+}
+
+/* html:after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -10;
+  height: 100dvh;
+  background-color: rgba(var(--bg-02-color), var(--bg-02-opacity));
+  background-image: url('https://d7460n-app-with-resizer.pages.dev/assets/images/logo.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: inherit; */
+/* background-size: cover; */
+/* background-size: 75% 75%;
+} */
+
+input {
+  accent-color: rgba(var(--accent));
+}

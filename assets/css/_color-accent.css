@@ -2,9 +2,9 @@
 https://web.dev/articles/accent-color
 */
 
-html {
-  --brand: hotpink;
-  scrollbar-color: hotpink Canvas;
+:root {
+  --brand: #66ccff;
+  scrollbar-color: var(--brand) Canvas;
 }
 
 :root { accent-color: var(--brand); }

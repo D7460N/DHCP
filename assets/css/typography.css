@@ -1,0 +1,22 @@
+/* MARK: TYPOGRAPHY
+*/
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 1rem;
+  letter-spacing: 0.125rem;
+}
+
+h4 {
+  display: var(--sub-header-display);
+  padding: 1rem;
+  letter-spacing: .05rem;
+}
+
+meta-data {
+  font-size: 75%;
+  opacity: 0.5;
+  font-stretch: normal;
+  font-style: italic;
+  letter-spacing: 0.04rem;
+}

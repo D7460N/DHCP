@@ -1,0 +1,7 @@
+/* MARK: RESPONSIVE
+*/
+@media (width <=600px) {
+  header label:first-of-type demo-buttons {
+    display: none;
+  }
+}
