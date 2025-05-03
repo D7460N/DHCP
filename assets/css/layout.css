@@ -1,0 +1,49 @@
+/* MARK: LAYOUT | Vertical
+*/
+:root {
+  --app-container-grid-template-rows:
+    auto auto auto 1fr auto auto;
+  /* auto auto 1fr minmax(1rem, 7rem) minmax(1rem, 7rem); */
+  --nav-justify-content: start;
+  --nav-border-radius: .25rem .25rem 0 0;
+  --main-margin-block: -1rem 0;
+  --main-margin-inline: 1rem;
+  --main-border-radius: 0 .3rem .3rem .3rem;
+  --tab-grid-auto-flow: column;
+  --sub-header-display: none;
+  --grid-gap: 1rem;
+  --aside-display: none;
+  --transition-length: 250ms;
+}
+
+/* MARK: LAYOUT | Vertical SMALL SCREENS
+*/
+@media (width <=400px) {
+  :root {
+    --nav-justify-content: auto;
+    --nav-border-radius: .25rem;
+    --tab-grid-auto-flow: column;
+    --main-border-radius: .3rem;
+  }
+}
+
+/*  MARK: LAYOUT | Horizontal
+*/
+@media (width >=600px) {
+  :root:has(header label:nth-of-type(1) input:checked) {
+    --app-container-grid-template-columns: 12rem 1fr;
+    /* --app-container-grid-template-columns: 12rem 1fr 15rem; */
+    --app-container-grid-template-rows: auto auto 1fr auto auto;
+    --nav-border-radius: .25rem 0 0 .25rem;
+    --nav-justify-content: auto;
+    --main-margin-inline: -1rem 0;
+    --main-margin-block: 0 0;
+    --main-resize-h: horizontal;
+    --main-border-radius: .3rem;
+    --aside-resize-v: vertical;
+    --tab-grid-auto-flow: row;
+    --sub-header-display: grid;
+    --grid-row-span: span 2;
+    --aside-display: grid;
+  }
+}
