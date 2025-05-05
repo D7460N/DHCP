@@ -62,5 +62,7 @@
   ],
   "files.exclude": {
     "**/.git": false
-  }
+  },
+  "window.autoDetectColorScheme": true,
+  "workbench.preferredDarkColorTheme": "One Dark Pro Darker"
 }

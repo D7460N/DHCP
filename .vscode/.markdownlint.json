@@ -1,0 +1,20 @@
+{
+  "MD003": { "style": "atx_closed" },
+  "MD007": { "indent": 4 },
+  "no-hard-tabs": false,
+  "MD013": { "line_length": 80 },
+  "MD029": false,
+  "MD036": false,
+  "MD041": false,
+  "MD046": false,
+  "MD047": false,
+  "MD048": false,
+  "MD049": false,
+  "MD050": false,
+  "MD051": false,
+  "MD052": false,
+  "MD053": false,
+  "MD054": false,
+  "MD056": false,
+  "MD055": false
+}

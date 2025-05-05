@@ -1,5 +1,13 @@
 /* MARK: TYPOGRAPHY
 */
+:root{
+  --font-family: 'Poppins', sans-serif;
+  --font-size: 1rem;
+  --line-height: 1.5;
+  --letter-spacing: 0.05rem;
+  --txt-shadow-color: 0, 0, 0;
+  --txt-shadow-opacity: 0.3;
+}
 h1 {
   font-size: 2rem;
   font-weight: bold;
@@ -13,10 +21,11 @@ h4 {
   letter-spacing: .05rem;
 }
 
-meta-data {
+small {
   font-size: 75%;
-  opacity: 0.5;
+  opacity: 0.7;
   font-stretch: normal;
   font-style: italic;
   letter-spacing: 0.04rem;
+  line-height: 1.3;
 }

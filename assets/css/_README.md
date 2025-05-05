@@ -4,6 +4,12 @@
 
 This directory contains all global and scoped CSS styles used in the D7460N architecture. All styling enforces layout, visibility, interactivity, spacing, and heuristics **without using classes, IDs, or inline styles**.
 
+**HTML** = Structure  
+
+**CSS** = UI logic  
+
+**JS** = Data transmission, API, and fetch calls.
+
 ## Style Architecture
 
 Styles are separated using [@layer](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer):
@@ -42,3 +48,17 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 - `/layout/readme.md`: structural enforcement
 - `/components/readme.md`: tag semantics
 - `d7460n-dev-guide/forms.md`: validation logic
+
+## Tofix
+
+- map data to correct form in JS
+- `<aside>` and vertical layout
+- light theme
+
+// TODO
+
+## Todo
+
+- add item JS/data logiic
+- delete item JS/data logiic
+- edit item JS/data logiic

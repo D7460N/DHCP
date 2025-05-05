@@ -1,6 +1,8 @@
 /* MARK: THEME | Dark
 */
 :root {
+  accent-color: light-dark(#005A9C, #66CCFF);
+
   --bg-color: 19, 20, 23;
   --bg-opacity: 1.0;
   --bg-02-color: 39, 49, 54;
@@ -26,7 +28,7 @@
       var(--txt-shadow-opacity));
   --txt-shadow-color: 0, 0, 0;
   --txt-shadow-opacity: 1.0;
-  --accent: #005a9c;
+  --accent: #005A9C;
 }
 
 
@@ -57,7 +59,7 @@
         var(--txt-shadow-opacity));
     --txt-shadow-color: 255, 255, 255;
     --txt-shadow-opacity: 0.3;
-    --accent: #66ccff;
+    --accent: #66CCFF;
   }
 }
 
