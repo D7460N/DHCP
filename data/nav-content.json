@@ -1,4 +1,25 @@
 {
+  "manage": {
+    "title": "Manage",
+    "intro": "Manage DHCP records and allocations."
+  },
+  "faqs": {
+    "title": "Frequently Asked Questions",
+    "intro": "Common questions and answers about the DHCP system."
+  },
+  "api-registration": {
+    "title": "API Registration",
+    "intro": "Register and manage API integrations."
+  },
+  "audit": {
+    "title": "Audit",
+    "intro": "Review historical changes and access logs."
+  },
+  "option-set": {
+    "title": "Option Set",
+    "intro": "A set of DHCP options grouped for common configurations.",
+    "items": []
+  },
   "option-types": {
     "title": "Option Types",
     "intro": "These are all defined DHCP Option Types in the system.",
@@ -28,27 +49,6 @@
         "item-type": "string"
       }
     ]
-  },
-  "option-set": {
-    "title": "Option Set",
-    "intro": "A set of DHCP options grouped for common configurations.",
-    "items": []
-  },
-  "manage": {
-    "title": "Manage",
-    "intro": "Manage DHCP records and allocations."
-  },
-  "faqs": {
-    "title": "Frequently Asked Questions",
-    "intro": "Common questions and answers about the DHCP system."
-  },
-  "api-registration": {
-    "title": "API Registration",
-    "intro": "Register and manage API integrations."
-  },
-  "audit": {
-    "title": "Audit",
-    "intro": "Review historical changes and access logs."
   },
   "scope-type": {
     "title": "Scope Type",
