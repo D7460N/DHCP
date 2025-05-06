@@ -13,6 +13,7 @@ h1 {
   font-weight: bold;
   padding: 1rem;
   letter-spacing: 0.125rem;
+  text-transform: uppercase;
 }
 
 h4 {

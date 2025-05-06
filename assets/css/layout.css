@@ -233,8 +233,11 @@ article {
   align-content: start;
   overflow: hidden;
 }
-
-nav:has(details:nth-of-type(1) label:nth-of-type(1) input:checked)~main article:nth-of-type(1),
+/* Show only the tab whose nav input is checked AND h1 is not empty */
+article:has(h1:not(:empty)) {
+  display: grid;
+}
+/* nav:has(details:nth-of-type(1) label:nth-of-type(1) input:checked)~main article:nth-of-type(1),
 nav:has(details:nth-of-type(1) label:nth-of-type(2) input:checked)~main article:nth-of-type(2),
 nav:has(details:nth-of-type(2) label:nth-of-type(1) input:checked)~main article:nth-of-type(3),
 nav:has(details:nth-of-type(2) label:nth-of-type(2) input:checked)~main article:nth-of-type(4),
@@ -247,7 +250,7 @@ nav:has(details:nth-of-type(2) label:nth-of-type(8) input:checked)~main article:
 nav:has(details:nth-of-type(2) label:nth-of-type(9) input:checked)~main article:nth-of-type(11),
 nav:has(details:nth-of-type(2) label:nth-of-type(10) input:checked)~main article:nth-of-type(12) {
   display: grid;
-}
+} */
 
 article ul li {
   display: grid;
