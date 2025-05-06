@@ -1,0 +1,77 @@
+{
+  "option-types": {
+    "title": "Option Types",
+    "intro": "These are all defined DHCP Option Types in the system.",
+    "items": [
+      {
+        "item-name": "Router",
+        "item-created": "2024-01-01",
+        "item-updated": "2024-04-01",
+        "item-author": "admin",
+        "item-modified": "jdoe",
+        "item-type": "ip"
+      },
+      {
+        "item-name": "DNS Server",
+        "item-created": "2024-01-05",
+        "item-updated": "2024-04-02",
+        "item-author": "sysadmin",
+        "item-modified": "mjane",
+        "item-type": "ip"
+      },
+      {
+        "item-name": "Domain Name",
+        "item-created": "2024-01-10",
+        "item-updated": "2024-04-03",
+        "item-author": "networkteam",
+        "item-modified": "sdoe",
+        "item-type": "string"
+      }
+    ]
+  },
+  "option-set": {
+    "title": "Option Set",
+    "intro": "A set of DHCP options grouped for common configurations.",
+    "items": []
+  },
+  "manage": {
+    "title": "Manage",
+    "intro": "Manage DHCP records and allocations."
+  },
+  "faqs": {
+    "title": "Frequently Asked Questions",
+    "intro": "Common questions and answers about the DHCP system."
+  },
+  "api-registration": {
+    "title": "API Registration",
+    "intro": "Register and manage API integrations."
+  },
+  "audit": {
+    "title": "Audit",
+    "intro": "Review historical changes and access logs."
+  },
+  "scope-type": {
+    "title": "Scope Type",
+    "intro": "Define and manage scope types in the DHCP network."
+  },
+  "server-types": {
+    "title": "Server Types",
+    "intro": "Available server roles and categories."
+  },
+  "servers": {
+    "title": "Servers",
+    "intro": "DHCP server inventory and configurations."
+  },
+  "credentials": {
+    "title": "Credentials & Background Jobs",
+    "intro": "Manage credentials and recurring background jobs."
+  },
+  "variables": {
+    "title": "Variables",
+    "intro": "Custom variables available to DHCP scripts and automation."
+  },
+  "settings": {
+    "title": "Settings",
+    "intro": "General DHCP configuration and application settings."
+  }
+}
