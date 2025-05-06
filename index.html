@@ -106,8 +106,8 @@
       </nav>
       <main>
         <article>
-          <h1>MANAGE</h1>
-          <p>Description about MANAGE can be added here.</p>
+          <h1></h1>
+          <p></p>
           <hr>
           <section>
             <p>SCROLLABLE CONTENT SECTION</p>
@@ -116,8 +116,8 @@
           </section>
         </article>
         <article>
-          <h1>FREQUENTLY ASKED QUESTIONS</h1>
-          <p>Description about FAQs can be added here.</p>
+          <h1></h1>
+          <p></p>
           <hr>
           <section>
             <p>SCROLLABLE CONTENT SECTION</p>
@@ -126,8 +126,8 @@
           </section>
         </article>
         <article>
-          <h1>API REGISTRATION</h1>
-          <p>Description about API REGISTRATION can be added here.</p>
+          <h1></h1>
+          <p></p>
           <hr>
           <section>
             <p>SCROLLABLE CONTENT SECTION</p>
@@ -136,8 +136,8 @@
           </section>
         </article>
         <article>
-          <h1>AUDIT</h1>
-          <p>Description about AUDIT can be added here.</p>
+          <h1></h1>
+          <p></p>
           <hr>
           <section>
             <p>SCROLLABLE CONTENT SECTION</p>
@@ -146,8 +146,8 @@
           </section>
         </article>
         <article>
-          <h1>OPTION SET</h1>
-          <p>Description about OPTION SET can be added here.</p>
+          <h1></h1>
+          <p></p>
           <hr>
           <section>
             <p>SCROLLABLE CONTENT SECTION</p>
@@ -156,8 +156,8 @@
           </section>
         </article>
         <article>
-          <h1>OPTION TYPES</h1>
-          <p>Description about OPTION TYPES can be added here.</p>
+          <h1></h1>
+          <p></p>
           <hr>
           <p>Create a new Option Type : : <button type="button">New Option Type</button></p>
           <ul aria-hidden="true">
@@ -175,10 +175,21 @@
             <ul>
             </ul>
           </section>
+          <template>
+            <li tabindex="0">
+              <input type="radio" name="list-select" hidden>
+              <item-name></item-name>
+              <item-created></item-created>
+              <item-updated></item-updated>
+              <item-author></item-author>
+              <item-modified></item-modified>
+              <item-type></item-type>
+            </li>
+          </template>
         </article>
         <article>
-          <h1>SCOPE TYPE</h1>
-          <p>Description about SCOPE TYPE can be added here.</p>
+          <h1></h1>
+          <p></p>
           <hr>
           <section>
             <p>SCROLLABLE CONTENT SECTION</p>
@@ -187,8 +198,8 @@
           </section>
         </article>
         <article>
-          <h1>SERVER TYPES</h1>
-          <p>Description about SERVER TYPES can be added here.</p>
+          <h1></h1>
+          <p></p>
           <hr>
           <section>
             <p>SCROLLABLE CONTENT SECTION</p>
@@ -197,18 +208,18 @@
           </section>
         </article>
         <article>
-          <h1>SERVERS</h1>
+          <h1></h1>
           <p>Description about SERVERS can be added here.</p>
           <hr>
           <section>
-            <p>SCROLLABLE CONTENT SECTION</p>
+            <p></p>
             <p>Additional information about SERVERS can be added here.</p>
             <p>Further details regarding the SERVERS process can be included in this section.</p>
           </section>
         </article>
         <article>
-          <h1>CREDENTIALS & BACKGROUND JOBS</h1>
-          <p>Description about CREDENTIALS & BACKGROUND JOBS can be added here.</p>
+          <h1></h1>
+          <p></p>
           <hr>
           <section>
             <p>SCROLLABLE CONTENT SECTION</p>
@@ -217,8 +228,8 @@
           </section>
         </article>
         <article>
-          <h1>VARIABLES</h1>
-          <p>Description about VARIABLES can be added here.</p>
+          <h1></h1>
+          <p></p>
           <hr>
           <section>
             <p>SCROLLABLE CONTENT SECTION</p>
@@ -227,8 +238,8 @@
           </section>
         </article>
         <article>
-          <h1>SETTINGS</h1>
-          <p>Description about SETTINGS can be added here.</p>
+          <h1></h1>
+          <p></p>
           <hr>
           <section>
             <p>SCROLLABLE CONTENT SECTION</p>
@@ -245,7 +256,7 @@
         <form>
           <section>
             <fieldset>
-              <legend>Option Metadata</legend>
+              <legend>MANAGE</legend>
 
               <label for="item-name">Host Name</label>
               <input type="text" name="item-name" id="item-name" required pattern="^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$" title="Valid hostnames must be alphanumeric and may include hyphens (not at the start or end).">
@@ -255,17 +266,53 @@
             </fieldset>
 
             <fieldset>
-              <legend>Audit</legend>
+              <legend>FAQs</legend>
 
-              <label for="item-author">Created By</label>
-              <input type="text" name="item-author" id="item-author" required pattern="^[a-zA-Z0-9\-_]{2,}$" title="Author must be at least 2 characters and alphanumeric.">
+              <label for="item-name">Host Name</label>
+              <input type="text" name="item-name" id="item-name" required pattern="^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$" title="Valid hostnames must be alphanumeric and may include hyphens (not at the start or end).">
 
-              <label for="item-modified">Modified By</label>
-              <input type="text" name="item-modified" id="item-modified" required pattern="^[a-zA-Z0-9\-_]{2,}$" title="Modifier must be at least 2 characters and alphanumeric.">
+              <label for="item-type">IP Address</label>
+              <input type="text" name="item-type" id="item-type" required pattern="^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.|$)){4}$" inputmode="numeric" title="Enter a valid IPv4 address (e.g., 192.168.0.1).">
             </fieldset>
 
             <fieldset>
-              <legend>Scope Settings</legend>
+              <legend>API REGISTRATION</legend>
+
+              <label for="item-name">Host Name</label>
+              <input type="text" name="item-name" id="item-name" required pattern="^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$" title="Valid hostnames must be alphanumeric and may include hyphens (not at the start or end).">
+
+              <label for="item-type">IP Address</label>
+              <input type="text" name="item-type" id="item-type" required pattern="^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.|$)){4}$" inputmode="numeric" title="Enter a valid IPv4 address (e.g., 192.168.0.1).">
+            </fieldset>
+
+            <fieldset>
+              <legend>AUDIT</legend>
+
+              <label for="created-by">Created By</label>
+              <input type="text" name="created-by" id="created-by" required pattern="^[\\w\\-]{2,64}$">
+
+              <label for="updated-by">Modified By</label>
+              <input type="text" name="updated-by" id="updated-by" required pattern="^[\\w\\-]{2,64}$">
+
+              <label for="created-at">Created Date</label>
+              <input type="datetime-local" name="created-at" id="created-at" required>
+
+              <label for="updated-at">Updated Date</label>
+              <input type="datetime-local" name="updated-at" id="updated-at" required>
+            </fieldset>
+
+            <fieldset>
+              <legend>OPTION SET</legend>
+
+              <label for="item-name">Host Name</label>
+              <input type="text" name="item-name" id="item-name" required pattern="^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$" title="Valid hostnames must be alphanumeric and may include hyphens (not at the start or end).">
+
+              <label for="item-type">IP Address</label>
+              <input type="text" name="item-type" id="item-type" required pattern="^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.|$)){4}$" inputmode="numeric" title="Enter a valid IPv4 address (e.g., 192.168.0.1).">
+            </fieldset>
+
+            <fieldset>
+              <legend>OPTION TYPES</legend>
 
               <label for="scope-name">Scope Name</label>
               <input type="text" name="scope-name" id="scope-name" required pattern="^[\\w\\- ]{3,64}$" title="Alphanumeric, spaces, dashes (3–64 chars)">
@@ -284,7 +331,7 @@
             </fieldset>
 
             <fieldset>
-              <legend>Reservations</legend>
+              <legend>SCOPE TYPE</legend>
 
               <label for="mac-address">MAC Address</label>
               <input type="text" name="mac-address" id="mac-address" required pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="Format: XX:XX:XX:XX:XX:XX">
@@ -297,7 +344,7 @@
             </fieldset>
 
             <fieldset>
-              <legend>DHCP Options</legend>
+              <legend>SERVER TYPES</legend>
 
               <label for="option-code">Option Code</label>
               <input type="number" name="option-code" id="option-code" required min="1" max="254">
@@ -319,20 +366,58 @@
             </fieldset>
 
             <fieldset>
-              <legend>Audit</legend>
+              <legend>SERVERS</legend>
 
-              <label for="created-by">Created By</label>
-              <input type="text" name="created-by" id="created-by" required pattern="^[\\w\\-]{2,64}$">
+              <label for="mac-address">MAC Address</label>
+              <input type="text" name="mac-address" id="mac-address" required pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="Format: XX:XX:XX:XX:XX:XX">
 
-              <label for="updated-by">Modified By</label>
-              <input type="text" name="updated-by" id="updated-by" required pattern="^[\\w\\-]{2,64}$">
+              <label for="reserved-ip">Reserved IP</label>
+              <input type="text" name="reserved-ip" id="reserved-ip" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$">
 
-              <label for="created-at">Created Date</label>
-              <input type="datetime-local" name="created-at" id="created-at" required>
-
-              <label for="updated-at">Updated Date</label>
-              <input type="datetime-local" name="updated-at" id="updated-at" required>
+              <label for="client-name">Client Name</label>
+              <input type="text" name="client-name" id="client-name" pattern="^[\\w\\-]{2,64}$" title="Alphanumeric and dashes">
             </fieldset>
+
+            <fieldset>
+              <legend>CREDENTIALS and BACKGROUND JOBS</legend>
+
+              <label for="mac-address">MAC Address</label>
+              <input type="text" name="mac-address" id="mac-address" required pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="Format: XX:XX:XX:XX:XX:XX">
+
+              <label for="reserved-ip">Reserved IP</label>
+              <input type="text" name="reserved-ip" id="reserved-ip" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$">
+
+              <label for="client-name">Client Name</label>
+              <input type="text" name="client-name" id="client-name" pattern="^[\\w\\-]{2,64}$" title="Alphanumeric and dashes">
+            </fieldset>
+
+            <fieldset>
+              <legend>VARIABLES</legend>
+
+              <label for="mac-address">MAC Address</label>
+              <input type="text" name="mac-address" id="mac-address" required pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="Format: XX:XX:XX:XX:XX:XX">
+
+              <label for="reserved-ip">Reserved IP</label>
+              <input type="text" name="reserved-ip" id="reserved-ip" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$">
+
+              <label for="client-name">Client Name</label>
+              <input type="text" name="client-name" id="client-name" pattern="^[\\w\\-]{2,64}$" title="Alphanumeric and dashes">
+            </fieldset>
+
+            <fieldset>
+              <legend>SETTINGS</legend>
+
+              <label for="mac-address">MAC Address</label>
+              <input type="text" name="mac-address" id="mac-address" required pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="Format: XX:XX:XX:XX:XX:XX">
+
+              <label for="reserved-ip">Reserved IP</label>
+              <input type="text" name="reserved-ip" id="reserved-ip" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$">
+
+              <label for="client-name">Client Name</label>
+              <input type="text" name="client-name" id="client-name" pattern="^[\\w\\-]{2,64}$" title="Alphanumeric and dashes">
+            </fieldset>
+
+
           </section>
           <button type="submit" disabled>Save</button>
         </form>
@@ -350,17 +435,6 @@
     <script type="module" charset="utf-8" src="assets/js/scripts.js"></script>
     <load-data role="status" aria-live="polite" aria-busy="true" hidden></load-data>
     <load-delay role="status" aria-live="polite" aria-atomic="true"></load-delay>
-    <template data-template="list-item">
-      <li tabindex="0">
-        <input type="radio" name="list-select" hidden>
-        <item-name><a href="#"></a></item-name>
-        <item-created></item-created>
-        <item-updated></item-updated>
-        <item-author></item-author>
-        <item-modified></item-modified>
-        <item-type></item-type>
-      </li>
-    </template>
   </body>
 
 </html>
