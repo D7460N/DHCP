@@ -62,3 +62,59 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 - add item JS/data logiic
 - delete item JS/data logiic
 - edit item JS/data logiic
+
+## Single Page Application (SPA)
+
+`<header>` = sticks to the top of the viewport  
+`<nav>` = page navigation  
+`<main>` = Main relevant focussable content  
+`<aside>` = details of whatever content is in `<main>`  
+`<section>` = scrollable  
+`<footer>` = sticks to the bottom of the viewport  
+
+### HOLY GRAIL LAYOUT
+
+```txt
+
+                                                                : <header>                                                : <viewport>
+                                                             ___: - - - - -                                            ___: - - - - -
+                                                            /   : Sticks to top of viewport                           /   : No scrollbar
+                                                           /                                                         /
+ _________________________________________________________/________________________________________________________ /
+|                                                                                                                  |      : <aside>
+| <app-logo>                                        <header>                                           <user-name> |   ___: - - - -
+|__________________________________________________________________________________________________________________|  /   : Content
+|           <nav>           |                        <main>                        |            <aside>            | /    : aware.
+|  <h2></h2>                | ____________________________________________________ | <h2></h2>                     |/     : - - - -
+|  <label><input></label>   ||                      <article>                     ||                               |      : Opens when
+|  <label><input></label>   ||  <h1></h1>                                         || <form>                        |      : data is
+|                           || __________________________________________________ || _____________________________ |      : present.
+|  <h2></h2>                |||                     <section>                    ||||          <section>          ||
+| _________________________ ||| <h2></h2>                                        ||||                             ||
+||        <section>        ||||                                                  ||||  <fieldset>                 ||      : <section>
+||                         |||| <p></p>                                          ||||    <label><input></label>   ||   ___: - - - -
+|| <label><input></label>  ||||                                                  ||||  </fieldset>                ||  /   : Scrollable
+|| <label><input></label>  ||||                                                  ||||                             || /
+|| <label><input></label>  ||||                                                  ||||  <fieldset>                 ||/
+|| <label><input></label>  ||||                                                  ||||    <label><input></label>   ||
+|| <label><input></label>  ||||                                                  ||||                             ||
+|| <label><input></label>  ||||                                                  ||||  <fieldset>                 ||
+|| <label><input></label>  ||||                                                  ||||    <label><input></label>   ||
+||                         ||||                                                  ||||  </fieldset>                ||
+||                         ||||                                                  ||||                             ||
+||                         ||||                Horizontal resize <aside> :____   ||||  <fieldset>                 ||
+||                         ||||                                               \  ||||    <label><input></label>   ||
+||                         ||||                                                \ ||||  </fieldset>                ||
+||                         ||||_________________________________________________\||||_____________________________||
+||_________________________|||____________________________________________________|| </form>                       |
+|__ ________________________|______________________________________________________|_______________________________|
+|                                                                                                                  |
+| <powered-by>                                      <footer>                                         <app-version> |
+|__________________________________________________________________________________________________________________|
+                                                         \
+                                                          \    : <footer>
+                                                           \___: - - - -
+                                                               : Sticks to bottom of view port
+
+
+```
