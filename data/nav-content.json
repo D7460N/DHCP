@@ -20,10 +20,10 @@
     "intro": "A set of DHCP options grouped for common configurations.",
     "items": []
   },
-  "option-types": {
-    "title": "Option Types",
-    "intro": "These are all defined DHCP Option Types in the system.",
-    "items": [
+"option-types": {
+  "title": "Option Types",
+  "intro": "These are all defined DHCP Option Types in the system.",
+  "items": [
       {
         "item-name": "Router",
         "item-created": "2024-01-01",
@@ -46,6 +46,62 @@
         "item-updated": "2024-04-03",
         "item-author": "networkteam",
         "item-modified": "sdoe",
+        "item-type": "string"
+      },
+      {
+        "item-name": "Subnet Mask",
+        "item-created": "2024-01-15",
+        "item-updated": "2024-04-04",
+        "item-author": "admin",
+        "item-modified": "jdoe",
+        "item-type": "ip"
+      },
+      {
+        "item-name": "Broadcast Address",
+        "item-created": "2024-01-20",
+        "item-updated": "2024-04-05",
+        "item-author": "sysadmin",
+        "item-modified": "mjane",
+        "item-type": "ip"
+      },
+      {
+        "item-name": "NTP Servers",
+        "item-created": "2024-01-25",
+        "item-updated": "2024-04-06",
+        "item-author": "networkteam",
+        "item-modified": "sdoe",
+        "item-type": "ip"
+      },
+      {
+        "item-name": "MTU Size",
+        "item-created": "2024-02-01",
+        "item-updated": "2024-04-07",
+        "item-author": "admin",
+        "item-modified": "mjane",
+        "item-type": "number"
+      },
+      {
+        "item-name": "Static Routes",
+        "item-created": "2024-02-05",
+        "item-updated": "2024-04-08",
+        "item-author": "sysadmin",
+        "item-modified": "jdoe",
+        "item-type": "route"
+      },
+      {
+        "item-name": "TFTP Server Name",
+        "item-created": "2024-02-10",
+        "item-updated": "2024-04-09",
+        "item-author": "networkteam",
+        "item-modified": "sdoe",
+        "item-type": "string"
+      },
+      {
+        "item-name": "Boot File Name",
+        "item-created": "2024-02-15",
+        "item-updated": "2024-04-10",
+        "item-author": "admin",
+        "item-modified": "mjane",
         "item-type": "string"
       }
     ]
