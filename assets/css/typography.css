@@ -1,6 +1,6 @@
 /* MARK: TYPOGRAPHY
 */
-:root{
+:root {
   --font-family: 'Poppins', sans-serif;
   --font-size: 1rem;
   --line-height: 1.5;
@@ -8,6 +8,7 @@
   --txt-shadow-color: 0, 0, 0;
   --txt-shadow-opacity: 0.3;
 }
+
 h1 {
   font-size: 2rem;
   font-weight: bold;

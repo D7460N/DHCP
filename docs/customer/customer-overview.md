@@ -46,13 +46,13 @@ D7460N is a front-end web architecture designed to reduce project complexity, co
 
 ## Common Questions
 
-**Q: Can developers I already have use this?**  
+**Q: Can developers I already have use this?**<br>
 Yes. It requires no new tools. All devs familiar with HTML, CSS, and JS can be productive immediately.
 
-**Q: Can this integrate with what we already have?**  
+**Q: Can this integrate with what we already have?**<br>
 Yes. It complements backend frameworks and can wrap around existing APIs or services.
 
-**Q: Is this scalable for future features?**  
+**Q: Is this scalable for future features?**<br>
 Yes. It is modular, declarative, and built for growth — without increasing complexity.
 
 ---

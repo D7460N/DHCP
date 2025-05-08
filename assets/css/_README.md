@@ -4,9 +4,9 @@
 
 This directory contains all global and scoped CSS styles used in the D7460N architecture. All styling enforces layout, visibility, interactivity, spacing, and heuristics **without using classes, IDs, or inline styles**.
 
-**HTML** = Structure  
+**HTML** = Structure<br>
 
-**CSS** = UI logic  
+**CSS** = UI logic<br>
 
 **JS** = Data transmission, API, and fetch calls.
 
@@ -34,7 +34,7 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 
 ## Spacing Rules
 
-- Margins and padding are only applied to content-carrying elements like `<h1>`–`<h6>`, `<p>`, and custom tags like `<item-name>`
+- Margins and padding are only applied to content-carrying elements like `<h1>`-`<h6>`, `<p>`, and custom tags like `<item-name>`
 - Containers (e.g., `<article>`, `<section>`) do **not** carry spacing rules
 - This supports layout flexibility and consistent inheritance
 
@@ -65,12 +65,29 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 
 ## Single Page Application (SPA)
 
-`<header>` = sticks to the top of the viewport  
-`<nav>` = page navigation  
-`<main>` = Main relevant focussable content  
-`<aside>` = details of whatever content is in `<main>`  
-`<section>` = scrollable  
-`<footer>` = sticks to the bottom of the viewport  
+`<header>` = sticks to the top of the viewport<br>
+`<nav>` = page navigation<br>
+`<article>` = main content area<br>
+`<app-logo>` = logo<br>
+`<user-name>` = user name<br>
+`<app-version>` = app version<br>
+`<powered-by>` = powered by D7460N<br>
+`<app-container>` = root wrapper for the app<br>
+`<app-item>` = custom element for item data binding<br>
+`<item-name>` = custom element for item name binding<br>
+`<form>` = form element for data entry<br>
+`<fieldset>` = fieldset for grouping form elements<br>
+`<label>` = label for form elements<br>
+`<input>` = input element for data entry<br>
+`<details>` = details element for expandable content<br>
+`<summary>` = summary element for details<br>
+`<h1>`-`<h6>` = headings for semantic structure<br>
+`<p>` = paragraph for text content<br>
+`<nav>` = navigation element for links<br>
+`<main>` = Main relevant focussable content<br>
+`<aside>` = details of whatever content is in `<main>`<br>
+`<section>` = scrollable<br>
+`<footer>` = sticks to the bottom of the viewport
 
 ### HOLY GRAIL LAYOUT
 

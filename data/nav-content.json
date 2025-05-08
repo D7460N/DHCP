@@ -20,10 +20,10 @@
     "intro": "A set of DHCP options grouped for common configurations.",
     "items": []
   },
-"option-types": {
-  "title": "Option Types",
-  "intro": "These are all defined DHCP Option Types in the system.",
-  "items": [
+  "option-types": {
+    "title": "Option Types",
+    "intro": "These are all defined DHCP Option Types in the system.",
+    "items": [
       {
         "item-name": "Router",
         "item-created": "2024-01-01",

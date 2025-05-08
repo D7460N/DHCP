@@ -49,17 +49,17 @@ load-delay::after {
 }
 
 /* Trigger spinner and delay message only when an LI is selected */
-app-container:has(main li input:checked):not(:has(aside input[value]:not([value=""])))~load-data {
+app-container:has(main li input:checked):not(:has(aside input[value]:not([value=""]))) ~ load-data {
   display: grid;
 }
 
-app-container:has(main li input:checked):not(:has(aside input[value]:not([value=""])))~load-delay::after {
+app-container:has(main li input:checked):not(:has(aside input[value]:not([value=""]))) ~ load-delay::after {
   animation-name: delay-show;
 }
 
 /* Hide both when form is populated (data has arrived) */
-app-container:has(aside input[value]:not([value=""]))~load-data,
-app-container:has(aside input[value]:not([value=""]))~load-delay::after {
+app-container:has(aside input[value]:not([value=""])) ~ load-data,
+app-container:has(aside input[value]:not([value=""])) ~ load-delay::after {
   display: none;
   animation-name: none;
 }

@@ -2,24 +2,24 @@
 
 ## Your data your way | Fast/easy/secure
 
-Data/framework/resolution/platform/browser agnostic,  
-minimal,  
-scalable,  
-accessible,  
-customizable,  
-simantic,  
-standards compliant,  
-responsive,  
-self-aware,  
-modern CSS/HTML/SPA/PWA,  
-micro-frontend,  
+Data/framework/resolution/platform/browser agnostic,<br>
+minimal,<br>
+scalable,<br>
+accessible,<br>
+customizable,<br>
+simantic,<br>
+standards compliant,<br>
+responsive,<br>
+self-aware,<br>
+modern CSS/HTML/SPA/PWA,<br>
+micro-frontend,<br>
 GUI template
 
 ---
 
 ## TO RUN
 
-Download, extract, and double-click `index.html`  
+Download, extract, and double-click `index.html`<br>
 to load D7460N into default browser.
 
 Done.

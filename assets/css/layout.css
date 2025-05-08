@@ -347,6 +347,7 @@ article {
   align-content: start;
   overflow: hidden;
 }
+
 /* Show only the tab whose nav input is checked AND h1 is not empty */
 article:has(h1:not(:empty)) {
   display: grid;
