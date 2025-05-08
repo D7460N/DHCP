@@ -70,6 +70,6 @@ This allows screen readers to perceive the DOM state naturally without needing J
 
 ## Related
 
-- `forms.md` – native form accessibility
-- `styles/readme.md` – contrast, focus, visibility
-- `layout.md` – landmark regions and DOM structure
+- `forms.md` - native form accessibility
+- `styles/readme.md` - contrast, focus, visibility
+- `layout.md` - landmark regions and DOM structure

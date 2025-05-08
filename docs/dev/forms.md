@@ -70,5 +70,5 @@ form:has(:valid) button[type=submit] {
 ## Related
 
 - `/forms/readme.md`
-- `styles/readme.md` – validation and focus styling
-- `layout.md` – how forms fit in the visual hierarchy
+- `styles/readme.md` - validation and focus styling
+- `layout.md` - how forms fit in the visual hierarchy

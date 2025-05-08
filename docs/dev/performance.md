@@ -47,6 +47,6 @@ D7460N emphasizes native browser capabilities to reduce load time, memory usage,
 
 ## Related Docs
 
-- `layout.md` – intrinsic layout and scroll enforcement
-- `routing.md` – declarative navigation without JS
-- `data.md` – async fetch without dependency loaders
+- `layout.md` - intrinsic layout and scroll enforcement
+- `routing.md` - declarative navigation without JS
+- `data.md` - async fetch without dependency loaders

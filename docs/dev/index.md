@@ -16,14 +16,14 @@ Welcome to the developer implementation guide for the D7460N architecture. This 
 
 ## Sections
 
-- [`layout.md`](layout.md) – How layout is scaffolded using Holy Grail pattern and scroll containment
-- [`components.md`](components.md) – Custom elements and how they’re used for UI data binding
-- [`forms.md`](forms.md) – CSS-only validation and accessible forms
-- [`routing.md`](routing.md) – Navigation using radio buttons and `:has()`
-- [`data.md`](data.md) – JSON structure and fetch logic
-- [`performance.md`](performance.md) – Why this approach loads faster
-- [`accessibility.md`](accessibility.md) – How it passes WCAG/508 without JS
-- [`comparison.md`](comparison.md) – How it maps to tasks in React/Vue (no opinions, just parity)
+- [`layout.md`](layout.md) - How layout is scaffolded using Holy Grail pattern and scroll containment
+- [`components.md`](components.md) - Custom elements and how they're used for UI data binding
+- [`forms.md`](forms.md) - CSS-only validation and accessible forms
+- [`routing.md`](routing.md) - Navigation using radio buttons and `:has()`
+- [`data.md`](data.md) - JSON structure and fetch logic
+- [`performance.md`](performance.md) - Why this approach loads faster
+- [`accessibility.md`](accessibility.md) - How it passes WCAG/508 without JS
+- [`comparison.md`](comparison.md) - How it maps to tasks in React/Vue (no opinions, just parity)
 
 ---
 
@@ -39,4 +39,4 @@ Welcome to the developer implementation guide for the D7460N architecture. This 
 
 For details, see the full [ADD Document](../ADD.md) or open `/docs/` for project-wide guidance.
 
-> This guide is designed to get you building right away — not to explain why. If you’re here to ship fast, you’re in the right place.
+> This guide is designed to get you building right away — not to explain why. If you're here to ship fast, you're in the right place.

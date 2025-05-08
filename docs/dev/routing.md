@@ -48,5 +48,5 @@ nav:has(input:nth-of-type(2):checked) ~ main article:nth-of-type(2) {
 - Works with screen readers (no JS required)
 
 ## Related
-- `layout.md` – layout regions and structure
-- `styles/readme.md` – `:has()` logic and visibility rules
+- `layout.md` - layout regions and structure
+- `styles/readme.md` - `:has()` logic and visibility rules

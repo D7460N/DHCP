@@ -81,5 +81,5 @@ When populated, CSS `:has(section:has(div:not(:empty)))` toggles `<aside>` to be
 ## Related
 
 - `/data/readme.md`
-- `forms.md` – for editable form-to-data structure
-- `components.md` – for tag naming and hierarchy
+- `forms.md` - for editable form-to-data structure
+- `components.md` - for tag naming and hierarchy

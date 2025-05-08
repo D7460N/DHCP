@@ -2,7 +2,7 @@
 
 (For Presentation Export)
 
-This scaffold outlines a modular presentation deck suitable for clients, customers, or internal briefings. Each section below maps to 1–2 slides.
+This scaffold outlines a modular presentation deck suitable for clients, customers, or internal briefings. Each section below maps to 1-2 slides.
 
 ---
 
