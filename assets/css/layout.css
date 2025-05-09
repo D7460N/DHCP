@@ -48,6 +48,10 @@
   }
 }
 
+[hidden] {
+  display: none;
+}
+
 /* MARK: WRAPPER
 */
 app-container {
@@ -189,10 +193,10 @@ nav label input {
   display: none;
 }
 
-
-app-logo,
-powered-by,
-app-version,
+header app-logo,
+header app-user,
+footer powered-by,
+footer app-version,
 demo-buttons {
   padding: 1rem;
 }
@@ -209,6 +213,101 @@ main {
   overflow: hidden;
   align-content: start;
   /* resize: var(--main-resize-h); */
+}
+
+/* MARK:ARTICLE
+*/
+main article {
+  display: none;
+  transition: opacity var(--transition-length) allow-discrete;
+  align-content: start;
+  overflow: hidden;
+}
+
+/* Show only the tab whose nav input is checked AND h1 is not empty */
+main article:has(h1:not(:empty)) {
+  display: grid;
+}
+
+main article > p {display: none;}
+
+main article > p:not(:empty) {
+  display: grid;
+}
+
+main article select {display: none;}
+
+main article select:has(option:not(:empty)) {
+  display: grid;
+}
+
+main article > ul {display: none;}
+
+main article > ul:has(h1:not(:empty)) {
+  display: grid;
+}
+
+/* Select the UL inside <article> that is BEFORE <section> in the DOM */
+main article > ul:has(+ section) {
+  list-style-type: none;
+  margin-block-start: 1rem;
+  font-weight: bolder;
+  letter-spacing: 0.0625rem;
+}
+
+main article section ul {
+  display: none;
+}
+
+main article section ul:has(li *:not(:empty)) {
+  display: grid;
+  /* minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(5rem, 1fr) */
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  padding: 0.5rem 1rem;
+}
+
+main article section ul li {
+  cursor: pointer;
+  transition: background-color var(--transition-length);
+}
+
+main article section ul li:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* LI active state */
+main article section ul li:has(input:checked) {
+  background-color: rgba(var(--bg-active-color), 0.05);
+  color: rgba(var(--txt-active), 1.0);
+}
+
+/* Spinner visible when selected */
+main article section ul li:has(input:checked) load-data {
+  display: grid;
+}
+
+/* MARK: SECTION
+*/
+main article section {
+  display: grid;
+  overflow: overlay;
+  position: relative;
+  align-content: start;
+  background:
+    /* cover */
+    linear-gradient(var(--bg-panel-color) 33%,
+      rgba(var(--bg-panel-color), 0.0)),
+    linear-gradient(rgba(var(--bg-panel-color), 0.0),
+      var(--bg-panel-color) 66%) 0 100%,
+    /* drop-shadow */
+    radial-gradient(farthest-side at 50% 0,
+      rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.0)),
+    radial-gradient(farthest-side at 50% 100%,
+      rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.0)) 0 100%;
+  background-color: rgba(var(--bg-panel-color), --bg-panel-opacity);
+  background-repeat: no-repeat;
+  background-attachment: local, local, scroll, scroll;
+  background-size: 100% 36px, 100% 36px, 100% 5px, 100% 5px;
 }
 
 /* MARK: ASIDE
@@ -332,84 +431,68 @@ form:has(input:valid):has(select:valid):has(input[name="ip-start"]:valid):has(in
   opacity: 1;
 }
 
+/* MARK: SELECT
+*/
+/* Enter into custom mode */
+aside form select,
+aside form ::picker(select) {
+  appearance: base-select;
+  font: -webkit-small-control;
+}
+
+aside form option::checkmark,
+aside form select::picker-icon {
+  display: none;
+}
+
+/* Styling the options list */
+aside form ::picker(select) {
+  border-radius: 0.5rem;
+  padding: 0;
+  box-shadow: 0px 12.8px 28.8px rgba(0, 0, 0, 0.13), 0px 0px 9.2px rgba(0, 0, 0, 0.11);
+  border: 1px solid #ececec;
+}
+
+aside form option {
+  grid-template-columns: 1.5rem 1fr auto;
+  padding: 0.5rem 1rem;
+  /*  remove when patch is in  */
+  place-items: start;
+}
+
+aside form option,
+aside form selectedcontent {
+  display: grid;
+  gap: 1rem;
+  font-size: 1rem;
+  align-items: center;
+}
+
+/* Style what you see before you open the select dropdown */
+aside form selectedcontent {
+  padding: 0.5rem;
+  grid-template-columns: 1.5rem auto;
+
+  .symbol,
+  .currency-long {
+    display: none
+  }
+}
+
+aside form select {
+  border: none;
+  border-radius: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  padding: 0 1rem 0 0.5rem;
+  width: 8.25rem;
+}
+
 /* MARK: FIELDSETS
 */
 /* Hide all fieldsets by default */
 aside form section fieldset {
   display: none;
-}
-
-/* MARK:ARTICLE
-*/
-article {
-  display: none;
-  transition: opacity var(--transition-length) allow-discrete;
-  align-content: start;
-  overflow: hidden;
-}
-
-/* Show only the tab whose nav input is checked AND h1 is not empty */
-article:has(h1:not(:empty)) {
-  display: grid;
-}
-
-article ul li {
-  display: grid;
-  /* minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(5rem, 1fr) */
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  padding: 0.5rem 1rem;
-}
-
-/* Select the UL inside <article> that is BEFORE <section> in the DOM */
-article ul:has(+ section) {
-  list-style-type: none;
-  margin-block-start: 1rem;
-  font-weight: bolder;
-  letter-spacing: 0.0625rem;
-}
-
-article section ul li {
-  cursor: pointer;
-  transition: background-color var(--transition-length);
-}
-
-article section ul li:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* LI active state */
-article section ul li:has(input:checked) {
-  background-color: rgba(var(--bg-active-color), 0.05);
-  color: rgba(var(--txt-active), 1.0);
-}
-
-/* Spinner visible when selected */
-article section ul li:has(input:checked) load-data {
-  display: grid;
-}
-
-/* MARK: SECTION
-*/
-section {
-  display: grid;
-  overflow: overlay;
-  position: relative;
-  align-content: start;
-  background:
-    /* cover */
-    linear-gradient(var(--bg-panel-color) 33%,
-      rgba(var(--bg-panel-color), 0.0)),
-    linear-gradient(rgba(var(--bg-panel-color), 0.0),
-      var(--bg-panel-color) 66%) 0 100%,
-    /* drop-shadow */
-    radial-gradient(farthest-side at 50% 0,
-      rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.0)),
-    radial-gradient(farthest-side at 50% 100%,
-      rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.0)) 0 100%;
-  background-color: rgba(var(--bg-panel-color), --bg-panel-opacity);
-  background-repeat: no-repeat;
-  background-attachment: local, local, scroll, scroll;
-  background-size: 100% 36px, 100% 36px, 100% 5px, 100% 5px;
 }
 
 /* MARK: FOOTER
@@ -423,4 +506,12 @@ footer {
   border-radius: .3rem;
   margin-inline: 1rem;
   overflow: hidden;
+}
+
+/* MARK: IMAGES
+*/
+img,
+figure {
+  width: 100%;
+  height: auto;
 }
