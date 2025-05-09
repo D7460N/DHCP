@@ -1,14 +1,14 @@
 const API_MAP = {
   "manage": "manage",
   "faqs": "faqs",
-  "option-types": "option-types",
+  "option-types": "items",
   "api-registration": "api-registration",
   "audit": "audit",
   "option-set": "option-set",
   "scope-type": "scope-type",
   "server-types": "server-types",
   "servers": "servers",
-  "credentials": "credentials",
+  "credentials-and-background-jobs": "credentials-and-background-jobs",
   "variables": "variables",
   "settings": "settings"
 };
@@ -16,7 +16,7 @@ const API_MAP = {
 const API_ROOT = "https://67d944ca00348dd3e2aa65f4.mockapi.io"
 const AUTHOR = "D7460N"
 
-const ul = document.querySelector("main ul")
+const ul = document.querySelector("main article ul")
 const aside = document.querySelector("aside")
 const form = aside.querySelector("form")
 const [inputName, inputType, inputAuthor, inputModified, inputCreated, inputUpdated] = form.querySelectorAll("input")
@@ -84,6 +84,9 @@ function render() {
   const intro = items[0]?.intro || ""
   h1.textContent = title
   p.textContent = intro
+
+  // Only show UL when on the items endpoint and there is data
+  ul.style.display = (currentEndpoint === "items" && items.length > 0) ? "block" : "none"
 }
 
 ul.addEventListener("click", (e) => {
