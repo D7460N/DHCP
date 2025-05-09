@@ -1,7 +1,7 @@
 const API_MAP = {
   "manage": "manage",
   "faqs": "faqs",
-  "option-types": "items",
+  "option-types": "option-types",
   "api-registration": "api-registration",
   "audit": "audit",
   "option-set": "option-set",
