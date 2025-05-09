@@ -17,6 +17,9 @@ const API_MAP = {
 // Root URL for the mock API
 const API_ROOT = "https://67d944ca00348dd3e2aa65f4.mockapi.io"
 const AUTHOR = "D7460N" // Default author for new and updated records
+const VERSION = "0.0.1" // Version of the application
+const APP_NAME = "D7460N DHCP" // Name of the application
+const APP_DESC = "Let the CSS renaissance begin." // Description of the application
 
 // DOM elements
 const ul = document.querySelector("main article ul")
