@@ -108,57 +108,26 @@
           <h1></h1>
           <p></p>
           <hr>
-          <section>
-            <p>SCROLLABLE CONTENT SECTION</p>
-            <p>Additional information about MANAGE can be added here.</p>
-            <p>Further details regarding the MANAGE process can be included in this section.</p>
-          </section>
-        </article>
-        <article>
-          <h1></h1>
-          <p></p>
-          <hr>
-          <section>
-            <p>SCROLLABLE CONTENT SECTION</p>
-            <p>Additional information about FAQs can be added here.</p>
-            <p>Further details regarding the FAQs process can be included in this section.</p>
-          </section>
-        </article>
-        <article>
-          <h1></h1>
-          <p></p>
-          <hr>
-          <section>
-            <p>SCROLLABLE CONTENT SECTION</p>
-            <p>Additional information about API REGISTRATION can be added here.</p>
-            <p>Further details regarding the API registration process can be included in this section.</p>
-          </section>
-        </article>
-        <article>
-          <h1></h1>
-          <p></p>
-          <hr>
-          <section>
-            <p>SCROLLABLE CONTENT SECTION</p>
-            <p>Additional information about AUDIT can be added here.</p>
-            <p>Further details regarding the AUDIT process can be included in this section.</p>
-          </section>
-        </article>
-        <article>
-          <h1></h1>
-          <p></p>
-          <hr>
-          <section>
-            <p>SCROLLABLE CONTENT SECTION</p>
-            <p>Additional information about OPTION SET can be added here.</p>
-            <p>Further details regarding the OPTION SET process can be included in this section.</p>
-          </section>
-        </article>
-        <article>
-          <h1></h1>
-          <p></p>
-          <hr>
           <p>Create a new Option Type : : <button type="button">New Option Type</button></p>
+          <input type="search" placeholder="Filter by name..." data-filter>
+          <select data-sort>
+            <option value="itemName-asc">Name ↑</option>
+            <option value="itemName-desc">Name ↓</option>
+            <option value="itemCreated-asc">Created ↑</option>
+            <option value="itemCreated-desc">Created ↓</option>
+            <option value="itemUpdated-asc">Updated ↑</option>
+            <option value="itemUpdated-desc">Updated ↓</option>
+          </select>
+
+          <select data-filter-type>
+            <option value="">All Types</option>
+            <option value="Host">Host</option>
+            <option value="IP">IP</option>
+            <option value="URL">URL</option>
+            <option value="File">File</option>
+            <option value="Service">Service</option>
+          </select>
+
           <ul aria-hidden="true">
             <li>
               <span>Name</span>
@@ -185,66 +154,6 @@
               <item-type></item-type>
             </li>
           </template>
-        </article>
-        <article>
-          <h1></h1>
-          <p></p>
-          <hr>
-          <section>
-            <p>SCROLLABLE CONTENT SECTION</p>
-            <p>Additional information about SCOPE TYPE can be added here.</p>
-            <p>Further details regarding the SCOPE TYPE process can be included in this section.</p>
-          </section>
-        </article>
-        <article>
-          <h1></h1>
-          <p></p>
-          <hr>
-          <section>
-            <p>SCROLLABLE CONTENT SECTION</p>
-            <p>Additional information about SERVER TYPES can be added here.</p>
-            <p>Further details regarding the SERVER TYPES process can be included in this section.</p>
-          </section>
-        </article>
-        <article>
-          <h1></h1>
-          <p>Description about SERVERS can be added here.</p>
-          <hr>
-          <section>
-            <p></p>
-            <p>Additional information about SERVERS can be added here.</p>
-            <p>Further details regarding the SERVERS process can be included in this section.</p>
-          </section>
-        </article>
-        <article>
-          <h1></h1>
-          <p></p>
-          <hr>
-          <section>
-            <p>SCROLLABLE CONTENT SECTION</p>
-            <p>Additional information about CREDENTIALS & BACKGROUND JOBS can be added here.</p>
-            <p>Further details regarding the CREDENTIALS & BACKGROUND JOBS process can be included in this section.</p>
-          </section>
-        </article>
-        <article>
-          <h1></h1>
-          <p></p>
-          <hr>
-          <section>
-            <p>SCROLLABLE CONTENT SECTION</p>
-            <p>Additional information about VARIABLES can be added here.</p>
-            <p>Further details regarding the VARIABLES process can be included in this section.</p>
-          </section>
-        </article>
-        <article>
-          <h1></h1>
-          <p></p>
-          <hr>
-          <section>
-            <p>SCROLLABLE CONTENT SECTION</p>
-            <p>Additional information about SETTINGS can be added here.</p>
-            <p>Further details regarding the SETTINGS process can be included in this section.</p>
-          </section>
         </article>
       </main>
       <aside>
@@ -313,6 +222,12 @@
             <fieldset>
               <legend>OPTION TYPES</legend>
 
+              <input name="itemName" placeholder="Name" required>
+              <input name="itemType" placeholder="Type" required>
+              <input name="itemAuthor" placeholder="Author" readonly>
+              <input name="itemModified" placeholder="Modified By" readonly>
+
+
               <label for="scope-name">Scope Name</label>
               <input type="text" name="scope-name" id="scope-name" required pattern="^[\\w\\- ]{3,64}$" title="Alphanumeric, spaces, dashes (3-64 chars)">
 
@@ -352,12 +267,15 @@
               <input type="text" name="option-name" id="option-name" required maxlength="64">
 
               <label for="option-type">Option Type</label>
-              <select name="option-type" id="option-type" required>
-                <option value="">Select type</option>
+
+              <select name="option-type" id="option-type" class="option-type" aria-label="Option Type:" required>
+                <selectedcontent></selectedcontent>
+                <option value="Select type" selected>Select type</option>
                 <option value="ip">IP Address</option>
                 <option value="string">String</option>
                 <option value="uint32">Unsigned 32-bit</option>
                 <option value="boolean">Boolean</option>
+                <option value="mac">MAC Address</option>
               </select>
 
               <label for="option-value">Option Value</label>
@@ -418,7 +336,9 @@
 
 
           </section>
-          <button type="submit" disabled>Save</button>
+          <button data-delete type="button">Delete</button>
+          <button data-reset type="reset">Reset</button>
+          <button data-submit type="submit" disabled>Save</button>
         </form>
         <p>Note: Ensure all fields are filled correctly before submitting.</p>
         <p>Note: All fields marked with * are required.</p>
@@ -431,7 +351,7 @@
         <p>banner</p>
       </app-banner>
     </app-container>
-    <script type="module" charset="utf-8" src="assets/js/scripts.js"></script>
+    <script type="module" charset="utf-8" src="assets/js/scripts2.js"></script>
     <load-data role="status" aria-live="polite" aria-busy="true" hidden></load-data>
     <load-delay role="status" aria-live="polite" aria-atomic="true"></load-delay>
   </body>
