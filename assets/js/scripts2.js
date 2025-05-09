@@ -1,3 +1,4 @@
+// Mapping of tab names to their corresponding API endpoints
 const API_MAP = {
   "manage": "manage",
   "faqs": "faqs",
@@ -13,25 +14,32 @@ const API_MAP = {
   "settings": "settings"
 };
 
+// Root URL for the mock API
 const API_ROOT = "https://67d944ca00348dd3e2aa65f4.mockapi.io"
-const AUTHOR = "D7460N"
+const AUTHOR = "D7460N" // Default author for new and updated records
 
+// DOM elements
 const ul = document.querySelector("main article ul")
+ul.onclick = selectItem // Attach click handler to list for selecting an item
+
 const aside = document.querySelector("aside")
 const form = aside.querySelector("form")
+form.onsubmit = submitForm // Attach form submission handler
+
 const [inputName, inputType, inputAuthor, inputModified, inputCreated, inputUpdated] = form.querySelectorAll("input")
 const [submitBtn, deleteBtn] = form.querySelectorAll("button")
-const h1 = document.querySelector("h1")
-const p = document.querySelector("h1 + p")
-const statusBanner = document.querySelector("load-data")
+deleteBtn.onclick = deleteItem // Attach delete handler to delete button
 
+const h1 = document.querySelector("h1") // Title of current section
+const p = document.querySelector("h1 + p") // Intro paragraph of current section
+const statusBanner = document.querySelector("load-data") // Live region for status messages
+
+// App state
 let items = []
 let activeItem = null
-let currentEndpoint = API_MAP["option-types"]
+let currentEndpoint = API_MAP["option-types"] // Start with default tab
 
-const navLabels = document.querySelectorAll("nav input[type='radio']")
-navLabels.forEach(label => label.addEventListener("change", handleNav))
-
+// Handle navigation changes from radio button tabs
 function handleNav(e) {
   const section = e.target.closest("label")?.textContent.trim().toLowerCase().replace(/ /g, "-")
   if (section && API_MAP[section]) {
@@ -45,8 +53,10 @@ function handleNav(e) {
   }
 }
 
+// Initial load
 load(`${API_ROOT}/${currentEndpoint}`)
 
+// Fetch data from the current endpoint and update the UI
 async function load(url) {
   try {
     statusBanner.hidden = false
@@ -65,6 +75,7 @@ async function load(url) {
   }
 }
 
+// Render all DOM elements based on current data
 function render() {
   const lis = Array.from(ul.children)
   lis.forEach((li, i) => {
@@ -79,23 +90,25 @@ function render() {
     }
   })
 
-  // Dynamically update page heading and intro paragraph from first item in fetched data
+  // Update title and paragraph based on metadata in first record
   const title = items[0]?.title || ""
   const intro = items[0]?.intro || ""
   h1.textContent = title
   p.textContent = intro
 
-  // Only show UL when on the items endpoint and there is data
+  // Only show list if on items endpoint and it contains data
   ul.style.display = (currentEndpoint === "items" && items.length > 0) ? "block" : "none"
 }
 
-ul.addEventListener("click", (e) => {
+// Handle user selecting an item from the list
+function selectItem(e) {
   const li = e.target.closest("li")
   if (!li) return
   const id = li.getAttribute("aria-label")
   const item = items.find(i => (i.id || `item-${items.indexOf(i)}`) === id)
   if (!item) return
 
+  // Populate form inputs with selected item's data
   inputName.value = item.itemName || item["item-name"] || ""
   inputType.value = item.itemType || item["item-type"] || ""
   inputAuthor.value = item.itemAuthor || item["item-author"] || ""
@@ -105,9 +118,10 @@ ul.addEventListener("click", (e) => {
 
   activeItem = item
   aside.hidden = false
-})
+}
 
-submitBtn.addEventListener("click", async (e) => {
+// Submit handler for creating or updating items
+async function submitForm(e) {
   e.preventDefault()
   if (!form.reportValidity()) return
   const now = new Date().toISOString()
@@ -121,12 +135,14 @@ submitBtn.addEventListener("click", async (e) => {
   }
   try {
     if (activeItem && activeItem.id) {
+      // Update existing item
       await fetch(`${API_ROOT}/${currentEndpoint}/${activeItem.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       })
     } else {
+      // Create new item
       await fetch(`${API_ROOT}/${currentEndpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -142,9 +158,10 @@ submitBtn.addEventListener("click", async (e) => {
     statusBanner.hidden = false
     statusBanner.textContent = "Failed to save data. Try again later."
   }
-})
+}
 
-deleteBtn.addEventListener("click", async () => {
+// Delete the currently selected item
+async function deleteItem() {
   if (!activeItem?.id) return
   try {
     await fetch(`${API_ROOT}/${currentEndpoint}/${activeItem.id}`, { method: "DELETE" })
@@ -157,4 +174,4 @@ deleteBtn.addEventListener("click", async () => {
     statusBanner.hidden = false
     statusBanner.textContent = "Failed to delete item. Please try again later."
   }
-})
+}
