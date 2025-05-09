@@ -8,7 +8,7 @@ const API_MAP = {
   "scope-type": "scope-type",
   "server-types": "server-types",
   "servers": "servers",
-  "credentials-and-background-jobs": "credentials-and-background-jobs",
+  "credentials": "credentials",
   "variables": "variables",
   "settings": "settings"
 };
