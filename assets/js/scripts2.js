@@ -1,65 +1,69 @@
 // Mapping of tab names to their corresponding API endpoints
 const API_MAP = {
-  "manage": "manage",
-  "faqs": "faqs",
-  "option-types": "option-types",
-  "api-registration": "api-registration",
-  "audit": "audit",
-  "option-set": "option-set",
-  "scope-type": "scope-type",
-  "server-types": "server-types",
-  "servers": "servers",
-  "credentials-and-background-jobs": "credentials-and-background-jobs",
-  "variables": "variables",
-  "settings": "settings"
+  "manage": "manage", // Tab for managing DHCP entries
+  "faqs": "faqs", // Frequently asked questions
+  "option-types": "option-types", // DHCP option type definitions
+  "api-registration": "api-registration", // Tab for API configuration
+  "audit": "audit", // Tab for system audit logs
+  "option-set": "option-set", // Groups of options for reuse
+  "scope-type": "scope-type", // IP scope classifications
+  "server-types": "server-types", // Server role types
+  "servers": "servers", // DHCP server inventory
+  "credentials": "credentials", // Scheduled tasks and login credentials
+  "variables": "variables", // Dynamic or static configuration values
+  "settings": "settings" // Application-level configuration
 };
 
 // Root URL for the mock API
 const API_ROOT = "https://67d944ca00348dd3e2aa65f4.mockapi.io"
 const AUTHOR = "D7460N" // Default author for new and updated records
-const VERSION = "0.0.1" // Version of the application
-const APP_NAME = "D7460N DHCP" // Name of the application
-const APP_DESC = "Let the CSS renaissance begin." // Description of the application
 
-// DOM elements
-const ul = document.querySelector("main article ul")
-ul.onclick = selectItem // Attach click handler to list for selecting an item
+// DOM elements and logic wiring
+const ul = document.querySelector("main article ul") // UL used to list entries on the "option-types" tab
+ul.onclick = selectItem // Clicking on a list item loads it into the form for editing
 
-const aside = document.querySelector("aside")
-const form = aside.querySelector("form")
-form.onsubmit = submitForm // Attach form submission handler
+const aside = document.querySelector("aside") // The aside panel contains the editable form
+const form = aside.querySelector("form") // Form in the aside panel
+form.onsubmit = submitForm // Submits new or updated items to the API
 
+// Input fields for form data binding
 const [inputName, inputType, inputAuthor, inputModified, inputCreated, inputUpdated] = form.querySelectorAll("input")
-const [submitBtn, deleteBtn] = form.querySelectorAll("button")
-deleteBtn.onclick = deleteItem // Attach delete handler to delete button
+const [submitBtn, deleteBtn] = form.querySelectorAll("button") // Buttons for form submission and deletion
+deleteBtn.onclick = deleteItem // Triggers item deletion
 
-const h1 = document.querySelector("h1") // Title of current section
-const p = document.querySelector("h1 + p") // Intro paragraph of current section
-const statusBanner = document.querySelector("load-data") // Live region for status messages
+const h1 = document.querySelector("h1") // Main heading of the active tab
+const p = document.querySelector("h1 + p") // Intro paragraph below the heading
+const statusBanner = document.querySelector("load-data") // Status message display block
 
-// App state
-let items = []
-let activeItem = null
-let currentEndpoint = API_MAP["option-types"] // Start with default tab
+// Initial application state
+let items = [] // Loaded item data
+let activeItem = null // Currently selected item
+let currentEndpoint = API_MAP["option-types"] // Default starting tab is "option-types"
 
-// Handle navigation changes from radio button tabs
+// Listen for tab (radio button) changes and fetch associated data dynamically
+// This allows users to switch between sections and have the corresponding data pulled automatically
+const navInputs = document.querySelectorAll("nav input[type='radio']")
+navInputs.forEach(input => input.onchange = handleNav)
+
+// Handles navigation by determining selected tab and fetching its JSON
 function handleNav(e) {
   const section = e.target.closest("label")?.textContent.trim().toLowerCase().replace(/ /g, "-")
   if (section && API_MAP[section]) {
     currentEndpoint = API_MAP[section]
-    load(`${API_ROOT}/${currentEndpoint}`)
+    load(`${API_ROOT}/${currentEndpoint}`) // Load content for the selected section
   } else {
     items = []
-    render()
+    render() // Clear render and notify about missing data source
     statusBanner.hidden = false
     statusBanner.textContent = `No data mapping for section: ${section}`
   }
 }
 
-// Initial load
+// Load initial content (default tab)
 load(`${API_ROOT}/${currentEndpoint}`)
 
-// Fetch data from the current endpoint and update the UI
+// Fetches JSON data from a given API URL, updates internal state, and triggers rendering.
+// Handles both success and error cases with appropriate user feedback via a live status banner.
 async function load(url) {
   try {
     statusBanner.hidden = false
@@ -67,25 +71,26 @@ async function load(url) {
     const res = await fetch(url)
     if (!res.ok) throw new Error(`HTTP error ${res.status}`)
     items = await res.json()
-    render()
+    render() // Reflect new data in the UI
     statusBanner.hidden = true
   } catch (err) {
     console.error("Data load failed:", err)
     items = []
-    render()
+    render() // Clear any old data from UI
     statusBanner.hidden = false
     statusBanner.textContent = "Error loading data. Please check your connection or try again later."
   }
 }
 
-// Render all DOM elements based on current data
+// Maps the fetched data to UI elements including list items, heading, and intro paragraph.
+// Also conditionally toggles visibility of the list based on current tab and data availability.
 function render() {
-  const lis = Array.from(ul.children)
+  const lis = Array.from(ul.children) // List items in the article UL
   lis.forEach((li, i) => {
-    const span = li.querySelector("span")
-    const item = items[i]
+    const span = li.querySelector("span") // The span inside each li
+    const item = items[i] // Item from API
     if (item && span) {
-      span.textContent = item.itemName || item["item-name"] || "Unnamed"
+      span.textContent = item.itemName || item["item-name"] || "Unnamed" // Assign label
       li.setAttribute("aria-label", item.id || `item-${i}`)
     } else {
       span.textContent = ""
@@ -93,17 +98,17 @@ function render() {
     }
   })
 
-  // Update title and paragraph based on metadata in first record
+  // Title and intro paragraph
   const title = items[0]?.title || ""
   const intro = items[0]?.intro || ""
   h1.textContent = title
   p.textContent = intro
 
-  // Only show list if on items endpoint and it contains data
+  // Only display UL if tab is "items" and data exists
   ul.style.display = (currentEndpoint === "items" && items.length > 0) ? "block" : "none"
 }
 
-// Handle user selecting an item from the list
+// Populates the aside form when a list item is clicked
 function selectItem(e) {
   const li = e.target.closest("li")
   if (!li) return
@@ -111,7 +116,7 @@ function selectItem(e) {
   const item = items.find(i => (i.id || `item-${items.indexOf(i)}`) === id)
   if (!item) return
 
-  // Populate form inputs with selected item's data
+  // Assign item properties to form fields
   inputName.value = item.itemName || item["item-name"] || ""
   inputType.value = item.itemType || item["item-type"] || ""
   inputAuthor.value = item.itemAuthor || item["item-author"] || ""
@@ -120,13 +125,13 @@ function selectItem(e) {
   inputUpdated.value = item.itemUpdated || item["item-updated"] || ""
 
   activeItem = item
-  aside.hidden = false
+  aside.hidden = false // Show the editing panel
 }
 
-// Submit handler for creating or updating items
+// Processes form submission to either update an existing item or create a new one based on whether activeItem.id is present
 async function submitForm(e) {
   e.preventDefault()
-  if (!form.reportValidity()) return
+  if (!form.reportValidity()) return // Skip invalid form
   const now = new Date().toISOString()
   const data = {
     itemName: inputName.value.trim(),
@@ -155,7 +160,7 @@ async function submitForm(e) {
     activeItem = null
     form.reset()
     aside.hidden = true
-    await load(`${API_ROOT}/${currentEndpoint}`)
+    await load(`${API_ROOT}/${currentEndpoint}`) // Reload list
   } catch (err) {
     console.error("Submit failed:", err)
     statusBanner.hidden = false
@@ -163,7 +168,7 @@ async function submitForm(e) {
   }
 }
 
-// Delete the currently selected item
+// Sends DELETE request for the currently selected item
 async function deleteItem() {
   if (!activeItem?.id) return
   try {
@@ -171,7 +176,7 @@ async function deleteItem() {
     activeItem = null
     form.reset()
     aside.hidden = true
-    await load(`${API_ROOT}/${currentEndpoint}`)
+    await load(`${API_ROOT}/${currentEndpoint}`) // Refresh list
   } catch (err) {
     console.error("Delete failed:", err)
     statusBanner.hidden = false
