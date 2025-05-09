@@ -1,0 +1,62 @@
+[
+  {
+    "id": "fa83540a-d486-4d96-ab78-b9648dbe703d",
+    "title": "Manage",
+    "intro": "Manage DHCP records and allocations."
+  },
+  {
+    "id": "62cdcca0-0443-47e6-b0e2-68fe61645659",
+    "title": "Frequently Asked Questions",
+    "intro": "Common questions and answers about the DHCP system."
+  },
+  {
+    "id": "4a9c7a4d-6c14-4ea3-838a-3e2f80430abe",
+    "title": "API Registration",
+    "intro": "Register and manage API integrations."
+  },
+  {
+    "id": "28369b2b-ce1a-49d0-ad98-aa8bc2deb746",
+    "title": "Audit",
+    "intro": "Review historical changes and access logs."
+  },
+  {
+    "id": "c0df6440-7ae0-42e4-9142-b7f39784c87c",
+    "title": "Option Set",
+    "intro": "A set of DHCP options grouped for common configurations."
+  },
+  {
+    "id": "53db0b4c-61e1-4b0d-b4d2-694ad6711df7",
+    "title": "Option Types",
+    "intro": "These are all defined DHCP Option Types in the system."
+  },
+  {
+    "id": "2038d584-8615-4468-892d-077f413c8230",
+    "title": "Scope Type",
+    "intro": "Define and manage scope types in the DHCP network."
+  },
+  {
+    "id": "660ef721-977f-40de-8498-90dcaedd8c1f",
+    "title": "Server Types",
+    "intro": "Available server roles and categories."
+  },
+  {
+    "id": "6219f760-d894-4c67-b47f-b7908f90b47b",
+    "title": "Servers",
+    "intro": "DHCP server inventory and configurations."
+  },
+  {
+    "id": "4cf846af-1fb1-48d7-a836-b43c11f81e45",
+    "title": "Credentials & Background Jobs",
+    "intro": "Manage credentials and recurring background jobs."
+  },
+  {
+    "id": "ee8e9008-0e16-4b67-b046-69457ecca342",
+    "title": "Variables",
+    "intro": "Custom variables available to DHCP scripts and automation."
+  },
+  {
+    "id": "cce66ea3-d64f-4a9d-9003-2f7db8a46afb",
+    "title": "Settings",
+    "intro": "General DHCP configuration and application settings."
+  }
+]
