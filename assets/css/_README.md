@@ -1,4 +1,30 @@
-# /css/README.md
+# CSS Architecture
+
+## Purpose
+
+Controls all layout, visual state, responsiveness, and accessibility behavior — no classes, no IDs, no inline styles.
+
+## Strategy
+
+CSS is organized using `@layer`:
+- `reset` — Normalize browser defaults
+- `layout` — Grid system and containers
+- `typography` — Element styling (`h1`, `p`, etc.)
+- `heuristics` — Visual logic (`:has()`, `:empty`)
+- `diagnostics` — Optional dev overlays
+
+## Visibility Logic
+
+- `:has()` + `[hidden]` manage visibility
+- `:empty` hides empty tags
+- No class toggling or JS-controlled `style.display`
+
+## Layout
+
+- Holy Grail layout with scrollable `<section>`
+- All parents have `overflow: hidden` to contain scroll
+- Responsive by default (no media queries unless needed)
+
 
 ## Purpose
 

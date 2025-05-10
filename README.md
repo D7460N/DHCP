@@ -1,37 +1,42 @@
-# D7460N UI
+# D7460N Web UI Architecture
 
-## Your data your way | Fast/easy/secure
+A lightweight, dependency-free, standards-first UI framework built with:
+- Native HTML, CSS, JS (ES Modules)
+- No build tools, no transpilers, no frameworks
+- Responsive, accessible, and declarative by design
 
-Data/framework/resolution/platform/browser agnostic,<br>
-minimal,<br>
-scalable,<br>
-accessible,<br>
-customizable,<br>
-simantic,<br>
-standards compliant,<br>
-responsive,<br>
-self-aware,<br>
-modern CSS/HTML/SPA/PWA,<br>
-micro-frontend,<br>
-GUI template
+## ✨ Highlights
 
----
+- 🔹 No dependencies: 100% browser-native
+- 🔹 Dynamic JSON data via `fetch()`
+- 🔹 Declarative single-page navigation via `<input type="radio">` + CSS `:has()`
+- 🔹 No IDs, classes, or custom attributes in markup
+- 🔹 Custom CSS visibility logic (`:empty`, `:has`, `[hidden]`)
+- 🔹 Clean separation of config, UI logic, and API services
 
-## TO RUN
+## 🚀 To Run
 
-Download, extract, and double-click `index.html`<br>
-to load D7460N into default browser.
+1. Download and extract the project.
+2. Open `index.html` in any modern browser (Chrome, Edge, Firefox, Safari).
 
-Done.
+Done. No build step. No server. No problem.
 
-* no building
-* no compiling
-* no serving
-* no 3rd party plug-ins
-* no worries
+## 📂 Structure
 
----
+| Directory | Purpose |
+|----------|---------|
+| `/assets/js/` | Modular JS by concern (`config`, `view`, `api`, `formController`, etc.) |
+| `/assets/css/` | CSS layers for layout, typography, heuristics |
+| `/data/` | Mock JSON APIs for each tab |
+| `/docs/` | Dev guides, presentation decks, accessibility docs |
+| `/assets/images/` | SVG brand and GUI assets |
 
-Please see [CONTRIBUTING.md](https://github.com/D7460N/D7460N.dev/blob/main/snippets.md) that you are looking for.
+## 🛠️ Developer Tips
 
-Please refer to [Contribution Guidelines](https://github.com/D7460N/D7460N.dev/blob/main/CONTRIBUTING.md) before creating Pull requests. And lastly, don't hesitate. Feel free to shoot me questions :smile:
+- Clear cache with `Ctrl+Shift+R` to avoid stale module loads
+- Confirm service worker in DevTools → Application → Unregister if testing fresh state
+- Ensure all scripts load in order: config → utils → refs → api → view → form → app
+
+## 🙋 Need Help?
+
+See the internal guide under `/docs/dev/` or open an issue in your team GitHub repo.
