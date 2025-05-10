@@ -1,10 +1,11 @@
-// dom.js
+// refs.js
 
 // This file contains all DOM element references used across the app.
 // Centralizing these queries makes it easy to manage and avoids duplication.
 
 // Main content list for displaying tab-related items
-export const ul = document.querySelector("main article ul");
+export const ul = document.querySelector("section ul");
+
 
 // Sidebar form used for viewing and editing selected items
 export const aside = document.querySelector("aside");

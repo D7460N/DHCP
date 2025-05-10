@@ -1,5 +1,7 @@
-{
-  "id": "1f64485e-f115-4a28-a3c0-d9863fad3ee8",
-  "title": "Scope Type",
-  "intro": "Define and manage scope types in the DHCP network."
-}
+[
+  {
+    "id": "1f64485e-f115-4a28-a3c0-d9863fad3ee8",
+    "title": "Scope Type",
+    "intro": "Define and manage scope types in the DHCP network."
+  }
+]

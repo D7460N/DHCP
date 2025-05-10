@@ -1,5 +1,53 @@
-{
-  "id": "98ac2178-01ce-471d-9b57-d7c2e4b9d225",
-  "title": "Frequently Asked Questions",
-  "intro": "Common questions and answers about the DHCP system."
-}
+[
+  {
+    "id": "98ac2178-01ce-471d-9b57-d7c2e4b9d225",
+    "title": "Frequently Asked Questions",
+    "intro": "Common questions and answers about the DHCP system.",
+    "faq": [
+      {
+        "question": "What is DHCP?",
+        "answer": "DHCP (Dynamic Host Configuration Protocol) is a network service that automatically assigns IP addresses and related configuration to devices on a network."
+      },
+      {
+        "question": "What is a DHCP scope?",
+        "answer": "A DHCP scope defines a pool of IP addresses that the server can lease to clients on a subnet."
+      },
+      {
+        "question": "Can multiple DHCP servers exist on the same subnet?",
+        "answer": "Yes, but they must be configured to avoid IP range overlaps to prevent conflicts."
+      },
+      {
+        "question": "How can I reserve an IP address for a device?",
+        "answer": "Create a reservation by binding the device's MAC address to a specific IP in the DHCP configuration."
+      },
+      {
+        "question": "What happens if a DHCP server goes offline?",
+        "answer": "Clients retain their lease until expiration. Backup or failover servers should take over if configured."
+      },
+      {
+        "question": "Can I assign static IPs with DHCP?",
+        "answer": "Yes, use DHCP reservations to assign static IPs while still using DHCP for management."
+      },
+      {
+        "question": "What is DHCP lease time?",
+        "answer": "Lease time is how long a client can use an assigned IP before it must renew or release it."
+      },
+      {
+        "question": "How do I see currently leased IPs?",
+        "answer": "Use the admin interface or query the DHCP lease database or logs, depending on your server OS."
+      },
+      {
+        "question": "Can I exclude specific IPs from a DHCP range?",
+        "answer": "Yes, most DHCP servers allow IP exclusions to prevent leasing of certain addresses."
+      },
+      {
+        "question": "How do I audit DHCP activity?",
+        "answer": "Enable logging on the server and regularly review lease logs, reservations, and event logs."
+      },
+      {
+        "question": "Is it safe to run DHCP over VPN or WAN links?",
+        "answer": "Use DHCP relay or IP helpers to manage scope routing securely across subnets."
+      }
+    ]
+  }
+]

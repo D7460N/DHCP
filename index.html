@@ -143,17 +143,30 @@
             <ul>
             </ul>
           </section>
+
           <template>
             <li tabindex="0">
-              <input type="radio" name="list-select" hidden>
+              <input type="radio" name="list-item" hidden>
               <item-name></item-name>
+              <item-hostname></item-hostname>
+              <item-ip></item-ip>
+              <item-os></item-os>
+              <item-type></item-type>
               <item-created></item-created>
               <item-updated></item-updated>
               <item-author></item-author>
               <item-modified></item-modified>
-              <item-type></item-type>
+              <item-question></item-question>
+              <item-answer></item-answer>`
+              <item-client-id></item-client-id>
+              <item-client-secret></item-client-secret>
+              <item-uptime-display></item-uptime-display>
+              <item-is-active></item-is-active>
+              <item-created-at></item-created-at>
+              <item-last-used></item-last-used>
             </li>
           </template>
+
         </article>
       </main>
       <aside>
@@ -268,7 +281,7 @@
 
               <label for="option-type">Option Type</label>
 
-              <select name="option-type" id="option-type" class="option-type" aria-label="Option Type:" required>
+              <select name="option-type" id="option-type" aria-label="Option Type:" required>
                 <selectedcontent></selectedcontent>
                 <option value="Select type" selected>Select type</option>
                 <option value="ip">IP Address</option>
@@ -352,7 +365,7 @@
       </app-banner>
     </app-container>
 
-     <!-- Contains constants used by every other module. -->
+    <!-- Contains constants used by every other module. -->
     <script type="module" src="/assets/js/config.js"></script>
     <!-- Utility functions like setContent, used by view, api, etc. -->
     <script type="module" src="/assets/js/utils.js"></script>

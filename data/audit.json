@@ -1,5 +1,7 @@
-{
-  "id": "1bc05fe5-daff-48d4-8e3a-3bd1ea9dc109",
-  "title": "Audit",
-  "intro": "Review historical changes and access logs."
-}
+[
+  {
+    "id": "1bc05fe5-daff-48d4-8e3a-3bd1ea9dc109",
+    "title": "Audit",
+    "intro": "Review historical changes and access logs."
+  }
+]

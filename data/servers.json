@@ -1,5 +1,7 @@
-{
-  "id": "b65b7a1c-8d8b-4edb-ad19-e328749aeec3",
-  "title": "Servers",
-  "intro": "DHCP server inventory and configurations."
-}
+[
+  {
+    "id": "b65b7a1c-8d8b-4edb-ad19-e328749aeec3",
+    "title": "Servers",
+    "intro": "DHCP server inventory and configurations."
+  }
+]

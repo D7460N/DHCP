@@ -1,5 +1,87 @@
-{
-  "id": "d2d2ebe4-1852-40a6-ad94-235eee41dff0",
-  "title": "Server Types",
-  "intro": "Available server roles and categories."
-}
+[
+  {
+    "id": "d2d2ebe4-1852-40a6-ad94-235eee41dff0",
+    "title": "Server Types",
+    "intro": "These are categories for classifying DHCP server roles.",
+    "items": [
+      {
+        "itemName": "Edge",
+        "itemType": "Category",
+        "itemAuthor": "admin",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2024-12-04T10:00:00Z",
+        "id": "3700a7f2-6c97-4e19-80b1-91cb192263a1",
+        "roleTags": ["perimeter", "public", "firewall-facing"],
+        "isActive": true,
+        "isDefault": false,
+        "sortOrder": 1,
+        "envScope": ["prod"]
+      },
+      {
+        "itemName": "Core",
+        "itemType": "Category",
+        "itemAuthor": "admin",
+        "itemCreated": "2024-12-01T11:00:00Z",
+        "itemUpdated": "2024-12-04T11:00:00Z",
+        "id": "82e0282f-7e55-4b57-8d5d-2d89e4cb9877",
+        "roleTags": ["backbone", "infrastructure", "high-availability"],
+        "isActive": true,
+        "isDefault": true,
+        "sortOrder": 0,
+        "envScope": ["dev", "test01", "test02", "test03", "prod"]
+      },
+      {
+        "itemName": "Relay Agent",
+        "itemType": "Category",
+        "itemAuthor": "admin",
+        "itemCreated": "2024-12-01T12:00:00Z",
+        "itemUpdated": "2024-12-04T12:00:00Z",
+        "id": "99bc25d6-9134-4939-8804-c9cfda7d91f2",
+        "roleTags": ["forwarding", "broadcast", "segmented-network"],
+        "isActive": true,
+        "isDefault": false,
+        "sortOrder": 2,
+        "envScope": ["test01", "test02", "prod"]
+      },
+      {
+        "itemName": "Failover Partner",
+        "itemType": "Category",
+        "itemAuthor": "admin",
+        "itemCreated": "2024-12-01T13:00:00Z",
+        "itemUpdated": "2024-12-04T13:00:00Z",
+        "id": "d513b17d-3b38-4037-b3a3-4b7dd2bfb848",
+        "roleTags": ["redundancy", "load-balancing", "state-sync"],
+        "isActive": true,
+        "isDefault": false,
+        "sortOrder": 3,
+        "envScope": ["prod", "test03"]
+      },
+      {
+        "itemName": "Test Lab",
+        "itemType": "Category",
+        "itemAuthor": "admin",
+        "itemCreated": "2024-12-01T14:00:00Z",
+        "itemUpdated": "2024-12-04T14:00:00Z",
+        "id": "fcbf71f5-ea47-47fd-97ec-e8c6e23b2a9d",
+        "roleTags": ["sandbox", "non-production", "isolated"],
+        "isActive": false,
+        "isDefault": false,
+        "sortOrder": 5,
+        "envScope": ["dev", "test01"]
+      },
+      {
+        "itemName": "Virtual Appliance",
+        "itemType": "Category",
+        "itemAuthor": "admin",
+        "itemCreated": "2024-12-01T15:00:00Z",
+        "itemUpdated": "2024-12-04T15:00:00Z",
+        "id": "30d9c35e-d1e4-437c-9f87-c95fc1274b2b",
+        "roleTags": ["cloud", "vm-hosted", "scalable"],
+        "isActive": true,
+        "isDefault": false,
+        "sortOrder": 4,
+        "envScope": ["dev", "test02", "prod"]
+      }
+    ]
+  }
+]

@@ -1,37 +1,39 @@
-// load.js
+// api.js
 
 // Responsible for fetching data from the API and updating the UI
 // This module centralizes all logic related to external data requests
 
-import { setContent } from './utils.js'; // Utility for safe content updates
 import { render } from './view.js'; // DOM update logic
-import { statusBanner } from './refs.js'; // Element for live status feedback
+import { setContent } from './utils.js'; // Utility for safe content updates
+import { h1, p } from './refs.js'; // Element for live status feedback
 
 export let items = []; // Shared data array that other modules rely on
+export let meta = { title: "", intro: "" }; // Stores title and intro for current tab
 
-// Load JSON data from a given endpoint and update UI accordingly
+// Fetch JSON data from a URL endpoint and update the UI accordingly
+// This function is designed to handle both object and array structures
 export async function load(url) {
   try {
-    // Indicate that loading is in progress
-    statusBanner.hidden = false;
-    statusBanner.textContent = "Loading data...";
-
     // Perform the fetch request
     const res = await fetch(url);
     if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+    const json = await res.json();
 
-    // Parse and store the fetched data
-    items = await res.json();
+    // Smart hybrid: support both object and array structures
+    const data = Array.isArray(json) ? json[0] : json;
 
-    // Update the interface with new data
+    // Store items and metadata
+    items = Object.values(data).find(v => Array.isArray(v)) || [];
+    meta.title = data.title || "";
+    meta.intro = data.intro || "";
+
     render();
-    statusBanner.hidden = true;
   } catch (err) {
     // Handle any errors during fetch
-    console.error("Data load failed:", err);
+    console.error("Failed to load data:", err);
     items = [];
+    meta.title = "";
+    meta.intro = "";
     render();
-    statusBanner.hidden = false;
-    statusBanner.textContent = "Error loading data. Please check your connection or try again later.";
   }
 }
