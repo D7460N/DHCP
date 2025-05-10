@@ -257,16 +257,22 @@ main article > ul:has(+ section) {
 
 main article section ul {
   display: none;
+  list-style-type: none;
+  grid-auto-flow: column;
 }
 
 main article section ul:has(li *:not(:empty)) {
   display: grid;
+  grid-auto-flow: row;
   /* minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(5rem, 1fr) */
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; */
   padding: 0.5rem 1rem;
 }
 
 main article section ul li {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: .5rem;
   cursor: pointer;
   transition: background-color var(--transition-length);
 }
@@ -284,6 +290,12 @@ main article section ul li:has(input:checked) {
 /* Spinner visible when selected */
 main article section ul li:has(input:checked) load-data {
   display: grid;
+}
+main article section ul li> * {
+  display: none;
+}
+main article section ul li> *:not(:empty) {
+  display: inline-grid;
 }
 
 /* MARK: SECTION
