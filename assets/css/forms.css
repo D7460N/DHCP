@@ -1,0 +1,56 @@
+form {
+  display: none;
+}
+
+form:has(input:not(:placeholder-shown)) {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+label {
+  display: grid;
+  font-weight: bold;
+  gap: 0.5rem;
+}
+
+input,
+select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:invalid:not(:placeholder-shown),
+select:invalid {
+  border-color: red;
+}
+
+.error {
+  color: red;
+  font-size: 0.85rem;
+  display: none;
+}
+
+input:invalid:not(:placeholder-shown) + .error {
+  display: block;
+}
+
+button {
+  padding: 0.75rem;
+  border: none;
+  background-color: #0066cc;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover,
+button:focus-visible {
+  background-color: #005bb5;
+}
