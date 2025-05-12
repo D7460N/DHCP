@@ -1,3 +1,5 @@
+/* MARK: FORMS
+*/
 form {
   display: none;
 }
@@ -10,12 +12,16 @@ form:has(input:not(:placeholder-shown)) {
   border-radius: 8px;
 }
 
+/* MARK: LABELS
+*/
 label {
   display: grid;
   font-weight: bold;
   gap: 0.5rem;
 }
 
+/* MARK: INPUTS
+*/
 input,
 select {
   padding: 0.5rem;
@@ -23,6 +29,58 @@ select {
   border-radius: 4px;
   width: 100%;
   box-sizing: border-box;
+}
+
+button {
+  padding: 0.75rem;
+  border: none;
+  background-color: #0066cc;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover,
+button:focus-visible {
+  background-color: #005bb5;
+}
+
+/* MARK: VALIDATION
+*/
+/* Highlight required but invalid fields — only when user interacts with the submit button */
+form:has(button[type="submit"]:focus, button[type="submit"]:hover) input:invalid,
+form:has(button[type="submit"]:focus, button[type="submit"]:hover) select:invalid {
+  outline: 2px solid red;
+}
+
+/* Highlight valid fields */
+input:valid,
+select:valid {
+  outline: 2px solid limegreen;
+}
+
+/* Improve focus visibility */
+input:focus,
+select:focus {
+  outline: 2px solid #FF5959;
+  outline-offset: 2px;
+}
+
+/* Disable submit unless all fields are valid */
+form:has(:invalid) button[type="submit"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Show confirmation message when form is fully valid */
+form:has(:valid):not(:has(:invalid))::after {
+  content: '✓ Ready to submit';
+  display: block;
+  color: limegreen;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 input:invalid:not(:placeholder-shown),
@@ -40,17 +98,14 @@ input:invalid:not(:placeholder-shown) + .error {
   display: block;
 }
 
-button {
-  padding: 0.75rem;
-  border: none;
-  background-color: #0066cc;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
-}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
 
-button:hover,
-button:focus-visible {
-  background-color: #005bb5;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

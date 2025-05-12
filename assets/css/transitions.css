@@ -1,7 +1,7 @@
 :root {
-  --transition-behavior: allow-discrete;;
-  --transition-length: 500ms;
-  --transition-property: visibility, opacity, display, transform;
+  --transition-behavior: allow-discrete;
+  --transition-length: 250ms;
+  --transition-property: visibility, opacity, display, transform, background-color;
   --transition-timing-function: ease-in-out;
 }
 
@@ -48,16 +48,18 @@ https://12daysofweb.dev/2024/calc-size-and-interpolate-size/ */
   }
 }
 
-/* MARK: ASIDE
-*/
-aside {
-  transition: width var(--transition-length) allow-discrete, opacity var(--transition-length) allow-discrete;
-}
-
 /* MARK:ARTICLE
 */
 main article {
   transition: opacity var(--transition-length) allow-discrete;
+}
+
+
+
+/* MARK: ASIDE
+*/
+aside {
+  transition: width var(--transition-length) allow-discrete, opacity var(--transition-length) allow-discrete;
 }
 
 /* MARK: BUTTONS
