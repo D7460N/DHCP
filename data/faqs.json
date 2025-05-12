@@ -3,7 +3,7 @@
     "id": "98ac2178-01ce-471d-9b57-d7c2e4b9d225",
     "title": "Frequently Asked Questions",
     "intro": "Common questions and answers about the DHCP system.",
-    "faq": [
+    "items": [
       {
         "question": "What is DHCP?",
         "answer": "DHCP (Dynamic Host Configuration Protocol) is a network service that automatically assigns IP addresses and related configuration to devices on a network."

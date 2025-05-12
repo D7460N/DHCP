@@ -217,6 +217,7 @@ main {
 
 /* MARK:ARTICLE
 */
+/* Hide <article> by default */
 main article {
   display: none;
   transition: opacity var(--transition-length) allow-discrete;
@@ -224,30 +225,43 @@ main article {
   overflow: hidden;
 }
 
-/* Show only the tab whose nav input is checked AND h1 is not empty */
+/* Show <article> when <article><h1> has content */
 main article:has(h1:not(:empty)) {
   display: grid;
 }
 
-main article > p {display: none;}
+/* main article > ul:has(h1:not(:empty)) {
+  display: grid;
+} */
 
+/* Hide <p> by default */
+main article > p {
+  display: none;
+}
+
+/* Show <p> when <p> has content */
 main article > p:not(:empty) {
   display: grid;
 }
 
-main article select {display: none;}
+/* Hide <select> by default */
+main article select {
+  display: none;
+}
 
+/* Show <select> when <select> has content */
 main article select:has(option:not(:empty)) {
   display: grid;
 }
 
-main article > ul {display: none;}
-
-main article > ul:has(h1:not(:empty)) {
-  display: grid;
+/* MARK: UL LI TABLES
+*/
+/* Hide <ul> and <section><ul> by default */
+main article > ul {
+  display: none;
 }
 
-/* Select the UL inside <article> that is BEFORE <section> in the DOM */
+/* Style UL LI table header <ul> BEFORE <section> */
 main article > ul:has(+ section) {
   list-style-type: none;
   margin-block-start: 1rem;
@@ -264,14 +278,12 @@ main article section ul {
 main article section ul:has(li *:not(:empty)) {
   display: grid;
   grid-auto-flow: row;
-  /* minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(3rem, 1fr) minmax(5rem, 1fr) */
-  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; */
-  padding: 0.5rem 1rem;
+
 }
 
 main article section ul li {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr));
   gap: .5rem;
   cursor: pointer;
   transition: background-color var(--transition-length);
@@ -291,11 +303,29 @@ main article section ul li:has(input:checked) {
 main article section ul li:has(input:checked) load-data {
   display: grid;
 }
-main article section ul li> * {
+
+main article section ul li > * {
+  display: none;
+  padding: .5rem;
+  /* white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; */
+}
+
+main article section ul li > *:not(:empty) {
+  display: inline-grid;
+}
+
+main article input[type="search"] {
   display: none;
 }
-main article section ul li> *:not(:empty) {
-  display: inline-grid;
+
+main article input[type="search"]:not(:empty) {
+  display: grid;
+}
+
+main article input[type="search"]:not(:placeholder-shown) {
+  display: grid;
 }
 
 /* MARK: SECTION
@@ -325,7 +355,7 @@ main article section {
 /* MARK: ASIDE
 */
 aside {
-  width: 0;
+  /* width: 0; */
   display: none;
   overflow: hidden;
   align-content: start;
@@ -461,7 +491,7 @@ aside form select::picker-icon {
 aside form ::picker(select) {
   border-radius: 0.5rem;
   padding: 0;
-  box-shadow: 0px 12.8px 28.8px rgba(0, 0, 0, 0.13), 0px 0px 9.2px rgba(0, 0, 0, 0.11);
+  box-shadow: 0 12.8px 28.8px rgba(0, 0, 0, 0.13), 0 0 9.2px rgba(0, 0, 0, 0.11);
   border: 1px solid #ececec;
 }
 

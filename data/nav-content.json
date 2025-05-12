@@ -2,19 +2,23 @@
   {
     "manage": {
       "title": "Manage",
-      "intro": "Manage DHCP records and allocations."
+      "intro": "Manage DHCP records and allocations.",
+      "items": []
     },
     "faqs": {
       "title": "Frequently Asked Questions",
-      "intro": "Common questions and answers about the DHCP system."
+      "intro": "Common questions and answers about the DHCP system.",
+      "items": []
     },
     "api-registration": {
       "title": "API Registration",
-      "intro": "Register and manage API integrations."
+      "intro": "Register and manage API integrations.",
+      "items": []
     },
     "audit": {
       "title": "Audit",
-      "intro": "Review historical changes and access logs."
+      "intro": "Review historical changes and access logs.",
+      "items": []
     },
     "option-set": {
       "title": "Option Set",
@@ -109,27 +113,33 @@
     },
     "scope-type": {
       "title": "Scope Type",
-      "intro": "Define and manage scope types in the DHCP network."
+      "intro": "Define and manage scope types in the DHCP network.",
+      "items": []
     },
     "server-types": {
       "title": "Server Types",
-      "intro": "Available server roles and categories."
+      "intro": "Available server roles and categories.",
+      "items": []
     },
     "servers": {
       "title": "Servers",
-      "intro": "DHCP server inventory and configurations."
+      "intro": "DHCP server inventory and configurations.",
+      "items": []
     },
     "credentials": {
       "title": "Credentials & Background Jobs",
-      "intro": "Manage credentials and recurring background jobs."
+      "intro": "Manage credentials and recurring background jobs.",
+      "items": []
     },
     "variables": {
       "title": "Variables",
-      "intro": "Custom variables available to DHCP scripts and automation."
+      "intro": "Custom variables available to DHCP scripts and automation.",
+      "items": []
     },
     "settings": {
       "title": "Settings",
-      "intro": "General DHCP configuration and application settings."
+      "intro": "General DHCP configuration and application settings.",
+      "items": []
     }
   }
 ]
