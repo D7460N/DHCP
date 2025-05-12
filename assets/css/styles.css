@@ -32,7 +32,6 @@ button {
   background-color: rgba(255, 255, 255, 0.1);
   color: inherit;
   text-align: center;
-  transition: background-color var(--transition-length);
   border-radius: .3rem;
 }
 
@@ -77,7 +76,6 @@ a {
   text-decoration: none;
 
   box-shadow: 0 1px 0 rgba(0, 255, 255, 0.0);
-  transition: all var(--transition-length);
 }
 
 a:hover {

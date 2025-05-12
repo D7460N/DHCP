@@ -13,7 +13,6 @@
   --sub-header-display: none;
   --grid-gap: 1rem;
   --aside-display: none;
-  --transition-length: 250ms;
 }
 
 /* MARK: LAYOUT | Vertical SMALL SCREENS
@@ -220,7 +219,6 @@ main {
 /* Hide <article> by default */
 main article {
   display: none;
-  transition: opacity var(--transition-length) allow-discrete;
   align-content: start;
   overflow: hidden;
 }
@@ -286,7 +284,6 @@ main article section ul li {
   grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr));
   gap: .5rem;
   cursor: pointer;
-  transition: background-color var(--transition-length);
 }
 
 main article section ul li:hover {
@@ -361,7 +358,6 @@ aside {
   align-content: start;
   border-radius: .3rem;
   margin-inline-end: 1rem;
-  transition: width var(--transition-length) allow-discrete, opacity var(--transition-length) allow-discrete;
 }
 
 aside:has(form section fieldset input[value]:not([value=""])) {
