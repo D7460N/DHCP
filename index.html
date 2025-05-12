@@ -140,30 +140,46 @@
           </ul>
           <section>
             <p>SCROLLABLE UL/LI list</p>
+            <!-- Entry point for JS looped LIs and data hooks -->
+            <!-- TODO: Dynamicly generated table styled headers based on JSON object keys -->
             <ul>
             </ul>
           </section>
 
+          <!-- Manually created data-hooks for JS looped LIs -->
+          <!-- TODO: Dynamicly generate data-hooks based on JSON object keys -->
           <template>
             <li tabindex="0">
+              <!-- Hidden radio input tracks and styles each item -->
               <input type="radio" name="list-item" hidden>
-              <item-name></item-name>
-              <item-hostname></item-hostname>
-              <item-ip></item-ip>
-              <item-os></item-os>
-              <item-type></item-type>
-              <item-created></item-created>
-              <item-updated></item-updated>
-              <item-author></item-author>
-              <item-modified></item-modified>
-              <item-question></item-question>
               <item-answer></item-answer>
+              <item-author></item-author>
               <item-client-id></item-client-id>
+              <item-client-name></item-client-name>
               <item-client-secret></item-client-secret>
-              <item-uptime-display></item-uptime-display>
-              <item-is-active></item-is-active>
+              <item-created></item-created>
               <item-created-at></item-created-at>
+              <item-description></item-description>
+              <item-env-scope></item-env-scope>
+              <item-hostname></item-hostname>
+              <item-id></item-id>
+              <item-ip></item-ip>
+              <item-is-active></item-is-active>
+              <item-is-default></item-is-default>
               <item-last-used></item-last-used>
+              <item-modified></item-modified>
+              <item-name></item-name>
+              <item-os></item-os>
+              <item-question></item-question>
+              <item-role-tags></item-role-tags>
+              <item-record></item-record>
+              <item-scopes></item-scopes>
+              <item-status></item-status>
+              <item-type></item-type>
+              <item-updated></item-updated>
+              <item-uptime-display></item-uptime-display>
+              <item-uptime-seconds></item-uptime-seconds>
+              <item-value></item-value>
             </li>
           </template>
 
@@ -172,212 +188,43 @@
       <aside>
         <h4></h4>
 
-        <h4 aria-live="polite">DETAILS</h4>
+        <h4 aria-live="polite"></h4>
 
         <!-- <form id="dhcp-edit-form">
-  <fieldset>
-    <legend>Edit DHCP Variable</legend>
+        <fieldset>
+          <legend>Edit DHCP Variable</legend>
 
-    <label for="name">Name
-      <input id="name" type="text" required pattern="^[a-zA-Z0-9_]+$">
-      <span class="error">Only alphanumeric and underscores allowed.</span>
-    </label>
+          <label for="name">Name
+            <input id="name" type="text" required pattern="^[a-zA-Z0-9_]+$">
+            <span class="error">Only alphanumeric and underscores allowed.</span>
+          </label>
 
-    <label for="value">Value
-      <input id="value" type="text" required>
-      <span class="error">Value cannot be empty.</span>
-    </label>
+          <label for="value">Value
+            <input id="value" type="text" required>
+            <span class="error">Value cannot be empty.</span>
+          </label>
 
-    <label for="description">Description
-      <input id="description" type="text">
-    </label>
+          <label for="description">Description
+            <input id="description" type="text">
+          </label>
 
-    <label for="type">Type
-      <select id="type" required>
-        <option value="integer">Integer</option>
-        <option value="ipv4">IPv4 Address</option>
-        <option value="string">String</option>
-      </select>
-    </label>
+          <label for="type">Type
+            <select id="type" required>
+              <option value="integer">Integer</option>
+              <option value="ipv4">IPv4 Address</option>
+              <option value="string">String</option>
+            </select>
+          </label>
 
-    <button type="submit">Save Changes</button>
-  </fieldset>
-</form> -->
+          <button type="submit">Save Changes</button>
+        </fieldset>
+      </form> -->
 
         <form>
           <section>
             <fieldset>
-              <legend>MANAGE</legend>
-
-              <label for="item-name">Host Name</label>
-              <input type="text" name="item-name" id="item-name" required pattern="^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$" title="Valid hostnames must be alphanumeric and may include hyphens (not at the start or end).">
-
-              <label for="item-type">IP Address</label>
-              <input type="text" name="item-type" id="item-type" required pattern="^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.|$)){4}$" inputmode="numeric" title="Enter a valid IPv4 address (e.g., 192.168.0.1).">
+              <legend></legend>
             </fieldset>
-
-            <fieldset>
-              <legend>FAQs</legend>
-
-              <label for="item-name">Host Name</label>
-              <input type="text" name="item-name" id="item-name" required pattern="^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$" title="Valid hostnames must be alphanumeric and may include hyphens (not at the start or end).">
-
-              <label for="item-type">IP Address</label>
-              <input type="text" name="item-type" id="item-type" required pattern="^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.|$)){4}$" inputmode="numeric" title="Enter a valid IPv4 address (e.g., 192.168.0.1).">
-            </fieldset>
-
-            <fieldset>
-              <legend>API REGISTRATION</legend>
-
-              <label for="item-name">Host Name</label>
-              <input type="text" name="item-name" id="item-name" required pattern="^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$" title="Valid hostnames must be alphanumeric and may include hyphens (not at the start or end).">
-
-              <label for="item-type">IP Address</label>
-              <input type="text" name="item-type" id="item-type" required pattern="^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.|$)){4}$" inputmode="numeric" title="Enter a valid IPv4 address (e.g., 192.168.0.1).">
-            </fieldset>
-
-            <fieldset>
-              <legend>AUDIT</legend>
-
-              <label for="created-by">Created By</label>
-              <input type="text" name="created-by" id="created-by" required pattern="^[\\w\\-]{2,64}$">
-
-              <label for="updated-by">Modified By</label>
-              <input type="text" name="updated-by" id="updated-by" required pattern="^[\\w\\-]{2,64}$">
-
-              <label for="created-at">Created Date</label>
-              <input type="datetime-local" name="created-at" id="created-at" required>
-
-              <label for="updated-at">Updated Date</label>
-              <input type="datetime-local" name="updated-at" id="updated-at" required>
-            </fieldset>
-
-            <fieldset>
-              <legend>OPTION SET</legend>
-
-              <label for="item-name">Host Name</label>
-              <input type="text" name="item-name" id="item-name" required pattern="^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$" title="Valid hostnames must be alphanumeric and may include hyphens (not at the start or end).">
-
-              <label for="item-type">IP Address</label>
-              <input type="text" name="item-type" id="item-type" required pattern="^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.|$)){4}$" inputmode="numeric" title="Enter a valid IPv4 address (e.g., 192.168.0.1).">
-            </fieldset>
-
-            <fieldset>
-              <legend>OPTION TYPES</legend>
-
-              <input name="itemName" placeholder="Name" required>
-              <input name="itemType" placeholder="Type" required>
-              <input name="itemAuthor" placeholder="Author" readonly>
-              <input name="itemModified" placeholder="Modified By" readonly>
-
-
-              <label for="scope-name">Scope Name</label>
-              <input type="text" name="scope-name" id="scope-name" required pattern="^[\\w\\- ]{3,64}$" title="Alphanumeric, spaces, dashes (3-64 chars)">
-
-              <label for="ip-start">IP Range Start</label>
-              <input type="text" name="ip-start" id="ip-start" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$" inputmode="numeric" title="Enter valid IPv4 (e.g. 192.168.1.100)">
-
-              <label for="ip-end">IP Range End</label>
-              <input type="text" name="ip-end" id="ip-end" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$" inputmode="numeric">
-
-              <label for="subnet-mask">Subnet Mask</label>
-              <input type="text" name="subnet-mask" id="subnet-mask" required pattern="^((255|254|252|248|240|224|192|128|0)\\.){3}(255|254|252|248|240|224|192|128|0)$" title="e.g. 255.255.255.0">
-
-              <label for="lease-time">Default Lease Time (secs)</label>
-              <input type="number" name="lease-time" id="lease-time" required min="60" step="60" title="Minimum 1 minute">
-            </fieldset>
-
-            <fieldset>
-              <legend>SCOPE TYPE</legend>
-
-              <label for="mac-address">MAC Address</label>
-              <input type="text" name="mac-address" id="mac-address" required pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="Format: XX:XX:XX:XX:XX:XX">
-
-              <label for="reserved-ip">Reserved IP</label>
-              <input type="text" name="reserved-ip" id="reserved-ip" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$">
-
-              <label for="client-name">Client Name</label>
-              <input type="text" name="client-name" id="client-name" pattern="^[\\w\\-]{2,64}$" title="Alphanumeric and dashes">
-            </fieldset>
-
-            <fieldset>
-              <legend>SERVER TYPES</legend>
-
-              <label for="option-code">Option Code</label>
-              <input type="number" name="option-code" id="option-code" required min="1" max="254">
-
-              <label for="option-name">Option Name</label>
-              <input type="text" name="option-name" id="option-name" required maxlength="64">
-
-              <label for="option-type">Option Type</label>
-
-              <select name="option-type" id="option-type" aria-label="Option Type:" required>
-                <selectedcontent></selectedcontent>
-                <option value="Select type" selected>Select type</option>
-                <option value="ip">IP Address</option>
-                <option value="string">String</option>
-                <option value="uint32">Unsigned 32-bit</option>
-                <option value="boolean">Boolean</option>
-                <option value="mac">MAC Address</option>
-              </select>
-
-              <label for="option-value">Option Value</label>
-              <input type="text" name="option-value" id="option-value" required>
-            </fieldset>
-
-            <fieldset>
-              <legend>SERVERS</legend>
-
-              <label for="mac-address">MAC Address</label>
-              <input type="text" name="mac-address" id="mac-address" required pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="Format: XX:XX:XX:XX:XX:XX">
-
-              <label for="reserved-ip">Reserved IP</label>
-              <input type="text" name="reserved-ip" id="reserved-ip" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$">
-
-              <label for="client-name">Client Name</label>
-              <input type="text" name="client-name" id="client-name" pattern="^[\\w\\-]{2,64}$" title="Alphanumeric and dashes">
-            </fieldset>
-
-            <fieldset>
-              <legend>CREDENTIALS and BACKGROUND JOBS</legend>
-
-              <label for="mac-address">MAC Address</label>
-              <input type="text" name="mac-address" id="mac-address" required pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="Format: XX:XX:XX:XX:XX:XX">
-
-              <label for="reserved-ip">Reserved IP</label>
-              <input type="text" name="reserved-ip" id="reserved-ip" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$">
-
-              <label for="client-name">Client Name</label>
-              <input type="text" name="client-name" id="client-name" pattern="^[\\w\\-]{2,64}$" title="Alphanumeric and dashes">
-            </fieldset>
-
-            <fieldset>
-              <legend>VARIABLES</legend>
-
-              <label for="mac-address">MAC Address</label>
-              <input type="text" name="mac-address" id="mac-address" required pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="Format: XX:XX:XX:XX:XX:XX">
-
-              <label for="reserved-ip">Reserved IP</label>
-              <input type="text" name="reserved-ip" id="reserved-ip" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$">
-
-              <label for="client-name">Client Name</label>
-              <input type="text" name="client-name" id="client-name" pattern="^[\\w\\-]{2,64}$" title="Alphanumeric and dashes">
-            </fieldset>
-
-            <fieldset>
-              <legend>SETTINGS</legend>
-
-              <label for="mac-address">MAC Address</label>
-              <input type="text" name="mac-address" id="mac-address" required pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="Format: XX:XX:XX:XX:XX:XX">
-
-              <label for="reserved-ip">Reserved IP</label>
-              <input type="text" name="reserved-ip" id="reserved-ip" required pattern="^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.|$)){4}$">
-
-              <label for="client-name">Client Name</label>
-              <input type="text" name="client-name" id="client-name" pattern="^[\\w\\-]{2,64}$" title="Alphanumeric and dashes">
-            </fieldset>
-
-
           </section>
           <button data-delete type="button">Delete</button>
           <button data-reset type="reset">Reset</button>
@@ -385,6 +232,106 @@
         </form>
         <p>Note: Ensure all fields are filled correctly before submitting.</p>
         <p>Note: All fields marked with * are required.</p>
+        <template id="form-fields-template">
+          <label>
+            Host Name
+            <input type="text" name="item-name" required>
+          </label>
+
+          <label>
+            IP Address
+            <input type="text" name="item-type" required>
+          </label>
+
+          <label>
+            Created By
+            <input type="text" name="item-created-by" required>
+          </label>
+
+          <label>
+            Modified By
+            <input type="text" name="item-updated-by" required>
+          </label>
+
+          <label>
+            Created Date
+            <input type="datetime-local" name="item-created-at" required>
+          </label>
+
+          <label>
+            Updated Date
+            <input type="datetime-local" name="item-updated-at" required>
+          </label>
+
+          <label>
+            Scope Name
+            <input type="text" name="item-scope-name" required>
+          </label>
+
+          <label>
+            IP Range Start
+            <input type="text" name="item-ip-start" required>
+          </label>
+
+          <label>
+            IP Range End
+            <input type="text" name="item-ip-end" required>
+          </label>
+
+          <label>
+            Subnet Mask
+            <input type="text" name="item-subnet-mask" required>
+          </label>
+
+          <label>
+            Default Lease Time (secs)
+            <input type="number" name="item-lease-time" min="60" step="60" required>
+          </label>
+
+          <label>
+            MAC Address
+            <input type="text" name="item-mac-address" required>
+          </label>
+
+          <label>
+            Reserved IP
+            <input type="text" name="item-reserved-ip" required>
+          </label>
+
+          <label>
+            Client Name
+            <input type="text" name="item-client-name">
+          </label>
+
+          <label>
+            Option Code
+            <input type="number" name="item-option-code" min="1" max="254" required>
+          </label>
+
+          <label>
+            Option Name
+            <input type="text" name="item-option-name" maxlength="64" required>
+          </label>
+
+          <label>
+            Option Type
+            <select name="item-option-type" required>
+              <selectedcontent></selectedcontent>
+              <option value="Select type" selected>Select type</option>
+              <option value="ip">IP Address</option>
+              <option value="string">String</option>
+              <option value="uint32">Unsigned 32-bit</option>
+              <option value="boolean">Boolean</option>
+              <option value="mac">MAC Address</option>
+            </select>
+          </label>
+
+          <label>
+            Option Value
+            <input type="text" name="item-option-value" required>
+          </label>
+        </template>
+
       </aside>
       <footer>
         <powered-by>Powered by : :</powered-by>
