@@ -1,0 +1,202 @@
+@layer diagnostics {
+  :root {
+    --diagnostic-font: 12px monospace;
+    --diagnostic-z: 999999;
+    --diagnostic-pass-bg: #0a0;
+    --diagnostic-pass-fg: #fff;
+    --diagnostic-fail-bg: #c00;
+    --diagnostic-warn-bg: #fc0;
+    --diagnostic-neutral-bg: #333;
+  }
+
+  * {
+    outline: 1px dashed #999 !important;
+  }
+
+  /* ✅ PASS: Layout presence */
+  app-container:has(nav, main, aside)::before {
+    content: '✅ Holy Grail Layout Detected';
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--diagnostic-z);
+    background: var(--diagnostic-pass-bg);
+    color: var(--diagnostic-pass-fg);
+    font: var(--diagnostic-font);
+    padding: 0.25rem 0.5rem;
+    pointer-events: none;
+  }
+
+  /* ❌ FAIL: Layout elements missing */
+  app-container:not(:has(nav))::before {
+    content: '❌ Missing <nav>';
+    background: var(--diagnostic-warn-bg);
+    color: black;
+  }
+
+  app-container:not(:has(main))::after {
+    content: '❌ Missing <main>';
+    position: fixed;
+    top: 1.5rem;
+    left: 0;
+    z-index: var(--diagnostic-z);
+    background: var(--diagnostic-warn-bg);
+    color: black;
+    padding: 0.25rem 0.5rem;
+    font: var(--diagnostic-font);
+    pointer-events: none;
+  }
+
+  body:has(header)::before {
+    content: '✅ <header> Present';
+    position: fixed;
+    top: 3rem;
+    left: 0;
+    z-index: var(--diagnostic-z);
+    background: var(--diagnostic-pass-bg);
+    color: var(--diagnostic-pass-fg);
+    padding: 0.25rem 0.5rem;
+    font: var(--diagnostic-font);
+    pointer-events: none;
+  }
+
+  body:not(:has(header))::before {
+    content: '❌ Missing <header>';
+    background: var(--diagnostic-fail-bg);
+    color: white;
+  }
+
+  body:has(footer)::after {
+    content: '✅ <footer> Present';
+    position: fixed;
+    top: 4.5rem;
+    left: 0;
+    z-index: var(--diagnostic-z);
+    background: var(--diagnostic-pass-bg);
+    color: var(--diagnostic-pass-fg);
+    padding: 0.25rem 0.5rem;
+    font: var(--diagnostic-font);
+    pointer-events: none;
+  }
+
+  body:not(:has(footer))::after {
+    content: '❌ Missing <footer>';
+    background: var(--diagnostic-fail-bg);
+    color: white;
+  }
+
+  main:has(h1)::before {
+    content: '✅ <main> contains <h1>';
+    position: fixed;
+    top: 6rem;
+    left: 0;
+    z-index: var(--diagnostic-z);
+    background: var(--diagnostic-pass-bg);
+    color: var(--diagnostic-pass-fg);
+    padding: 0.25rem 0.5rem;
+    font: var(--diagnostic-font);
+    pointer-events: none;
+  }
+
+  main:not(:has(h1))::before {
+    content: '❌ <main> missing <h1>';
+    background: var(--diagnostic-fail-bg);
+    color: white;
+  }
+
+  /* ❌ Failing accessibility structure */
+  a:not([aria-label]):not(:has(img)):not(:has(span))::after {
+    content: '❌ Unlabeled link';
+    position: absolute;
+    background: var(--diagnostic-fail-bg);
+    color: white;
+    font: var(--diagnostic-font);
+    padding: 0.1rem 0.25rem;
+    z-index: var(--diagnostic-z);
+  }
+
+  input:not([type='hidden']):not(:has(+ label))::after {
+    content: '❌ Input missing label';
+    position: absolute;
+    background: var(--diagnostic-fail-bg);
+    color: white;
+    font: var(--diagnostic-font);
+    padding: 0.1rem 0.25rem;
+    z-index: var(--diagnostic-z);
+  }
+
+  img:not([alt])::after {
+    content: '❌ Missing alt';
+    position: absolute;
+    background: var(--diagnostic-fail-bg);
+    color: white;
+    font: var(--diagnostic-font);
+    padding: 0.1rem 0.25rem;
+    z-index: var(--diagnostic-z);
+  }
+
+  table:not(:has(caption))::before {
+    content: '❌ Missing <caption>';
+    position: absolute;
+    background: var(--diagnostic-warn-bg);
+    color: black;
+    font: var(--diagnostic-font);
+    padding: 0.1rem 0.25rem;
+    z-index: var(--diagnostic-z);
+  }
+
+  h1 + h3::after,
+  h2 + h4::after,
+  h3 + h5::after,
+  h4 + h6::after {
+    content: '❌ Heading level skipped';
+    position: absolute;
+    background: var(--diagnostic-warn-bg);
+    color: black;
+    font: var(--diagnostic-font);
+    padding: 0.1rem 0.25rem;
+    z-index: var(--diagnostic-z);
+  }
+
+  nav:has(nav)::after {
+    content: '❌ Nested <nav>';
+    position: absolute;
+    background: magenta;
+    color: white;
+    font: var(--diagnostic-font);
+    padding: 0.1rem 0.25rem;
+    z-index: var(--diagnostic-z);
+  }
+
+  /* ✅ Simulated screen reader path */
+  header::before,
+  nav::before,
+  main::before,
+  aside::before,
+  footer::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--diagnostic-neutral-bg);
+    color: white;
+    font: var(--diagnostic-font);
+    padding: 0.1rem 0.25rem;
+    z-index: var(--diagnostic-z);
+  }
+
+  header::before { content: '🧭 SR: Header'; }
+  nav::before    { content: '🧭 SR: Nav'; }
+  main::before   { content: '🧭 SR: Main'; }
+  aside::before  { content: '🧭 SR: Aside'; }
+  footer::before { content: '🧭 SR: Footer'; }
+
+  /* 🧊 3D Isometric Mode (auto) */
+  @media (prefers-contrast: more) {
+    app-container {
+      transform: rotateX(15deg) rotateY(25deg) scale(0.9);
+      transform-style: preserve-3d;
+      perspective: 2000px;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
