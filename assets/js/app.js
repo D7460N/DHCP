@@ -16,7 +16,7 @@ import { load } from './api.js';
 let currentEndpoint = API_MAP["option-types"];
 
 // Bind click handler to the UL element to allow item selection
-ul.onclick = handleSelectItem;
+ul.onchange = handleSelectItem;
 
 // Bind form submission to either update or create new records
 form.onsubmit = (e) => handleFormSubmit(e, currentEndpoint);

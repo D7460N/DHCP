@@ -4,8 +4,10 @@
 // This module is responsible for managing user CRUD interactions with the API-bound data form
 
 import {
-  inputName, inputType, inputAuthor, inputModified,
-  inputCreated, inputUpdated, form, aside, statusBanner
+  form,
+  aside,
+  statusBanner,
+  deleteBtn
 } from './refs.js';
 
 import { AUTHOR, API_ROOT } from './config.js';
@@ -15,51 +17,81 @@ export let activeItem = null; // Tracks the item currently being edited or viewe
 
 // Handles selecting an item from the UL list and displaying its data in the sidebar form
 export function handleSelectItem(e) {
-  const li = e.target.closest("li"); // Find the closest <li> ancestor of the click target
-  if (!li) return;
-  const id = li.getAttribute("aria-label"); // Extract the identifier from the <li>
-  const item = items.find(i => (i.id || `item-${items.indexOf(i)}`) === id); // Find the item by ID or fallback
-  if (!item) return;
+  const radio = e.target.closest("li")?.querySelector("input[type='radio']");
+  if (!radio || !radio.checked) return;
 
-  // Populate the form fields with values from the selected item
-  inputName.value = item.itemName || item["item-name"] || "";
-  inputType.value = item.itemType || item["item-type"] || "";
-  inputAuthor.value = item.itemAuthor || item["item-author"] || "";
-  inputModified.value = item.itemModified || item["item-modified"] || "";
-  inputCreated.value = item.itemCreated || item["item-created"] || "";
-  inputUpdated.value = item.itemUpdated || item["item-updated"] || "";
+  const li = radio.closest("li");
+  const listItems = Array.from(form.closest("app-container").querySelectorAll("ul li"));
+  const index = listItems.indexOf(li);
+  if (index === -1 || !items[index]) return;
 
-  activeItem = item; // Store the selected item in global state
-  aside.hidden = false; // Reveal the sidebar form for editing
+  const item = items[index];
+
+  const fieldset = form.querySelector("fieldset");
+  const legend = fieldset.querySelector("legend");
+  legend.textContent = item.itemName || item["item-name"] || "Details";
+
+  // Fill <item-*> fields
+  const editableFields = fieldset.querySelectorAll("[name]");
+  editableFields.forEach(el => {
+    const name = el.getAttribute("name");
+    if (!name) return;
+    const key = name.replace(/^item-/, '').replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+    const value = item[key];
+    if (value !== undefined) {
+      el.textContent = value;
+      el.setAttribute("value", value);
+    } else {
+      el.textContent = "";
+      el.removeAttribute("value");
+    }
+  });
+
+  activeItem = item;
+  // aside visibility is handled by CSS via :has() logic
+}
+
+function getFieldValue(name) {
+  const field = form.querySelector(`[name='${name}']`);
+  return field ? field.textContent.trim() : "";
 }
 
 // Handles form submission for creating or updating an item
 export async function handleFormSubmit(e, currentEndpoint) {
-  e.preventDefault(); // Prevent default form submission behavior
-  if (!form.reportValidity()) return; // Stop if form fields are invalid
+  e.preventDefault();
+  if (!form.reportValidity()) return;
 
-  const now = new Date().toISOString(); // Generate current timestamp
+  const now = new Date().toISOString();
 
-  // Construct a new item payload from form values
   const data = {
-    itemName: inputName.value.trim(),
-    itemType: inputType.value.trim(),
-    itemAuthor: inputAuthor.value || AUTHOR,
+    itemName: getFieldValue("item-name"),
+    itemType: getFieldValue("item-type"),
+    itemAuthor: getFieldValue("item-created-by") || AUTHOR,
     itemModified: AUTHOR,
-    itemCreated: inputCreated.value || now,
-    itemUpdated: now
+    itemCreated: getFieldValue("item-created-at") || now,
+    itemUpdated: now,
+    scopeName: getFieldValue("item-scope-name"),
+    ipStart: getFieldValue("item-ip-start"),
+    ipEnd: getFieldValue("item-ip-end"),
+    subnetMask: getFieldValue("item-subnet-mask"),
+    leaseTime: getFieldValue("item-lease-time"),
+    macAddress: getFieldValue("item-mac-address"),
+    reservedIp: getFieldValue("item-reserved-ip"),
+    clientName: getFieldValue("item-client-name"),
+    optionCode: getFieldValue("item-option-code"),
+    optionName: getFieldValue("item-option-name"),
+    optionType: getFieldValue("item-option-type"),
+    optionValue: getFieldValue("item-option-value")
   };
 
   try {
     if (activeItem && activeItem.id) {
-      // If editing an existing item, send a PUT request to update
       await fetch(`${API_ROOT}/${currentEndpoint}/${activeItem.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       });
     } else {
-      // If creating a new item, send a POST request to add
       await fetch(`${API_ROOT}/${currentEndpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -67,14 +99,11 @@ export async function handleFormSubmit(e, currentEndpoint) {
       });
     }
 
-    // After save, reset form and reload data
     activeItem = null;
     form.reset();
-    aside.hidden = true;
     await load(`${API_ROOT}/${currentEndpoint}`);
 
   } catch (err) {
-    // If the save fails, display an error
     console.error("Submit failed:", err);
     statusBanner.hidden = false;
     statusBanner.textContent = "Failed to save data. Try again later.";
@@ -83,20 +112,16 @@ export async function handleFormSubmit(e, currentEndpoint) {
 
 // Handles deletion of the currently selected item
 export async function handleDeleteItem(currentEndpoint) {
-  if (!activeItem?.id) return; // Exit if no item is currently selected
+  if (!activeItem?.id) return;
   try {
-    // Perform delete request to remove the item from the backend
     await fetch(`${API_ROOT}/${currentEndpoint}/${activeItem.id}`, {
       method: "DELETE"
     });
 
-    // Clear the form and reload updated list
     activeItem = null;
     form.reset();
-    aside.hidden = true;
     await load(`${API_ROOT}/${currentEndpoint}`);
   } catch (err) {
-    // If deletion fails, notify the user
     console.error("Delete failed:", err);
     statusBanner.hidden = false;
     statusBanner.textContent = "Failed to delete item. Please try again later.";
