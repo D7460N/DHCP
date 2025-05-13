@@ -142,59 +142,16 @@
             <p>SCROLLABLE UL/LI list</p>
             <!-- Entry point for JS looped LIs and data hooks -->
             <!-- TODO: Dynamicly generated table styled headers based on JSON object keys -->
-            <ul>
-            </ul>
+            <ul></ul>
           </section>
-
-          <!-- Manually created data-hooks for JS looped LIs -->
-          <!-- TODO: Dynamicly generate data-hooks based on JSON object keys -->
-          <template>
-            <li tabindex="0">
-              <!-- Hidden radio input tracks and styles each item -->
-              <input type="radio" name="list-item" hidden>
-              <item-answer></item-answer>
-              <item-author></item-author>
-              <item-client-id></item-client-id>
-              <item-client-name></item-client-name>
-              <item-client-secret></item-client-secret>
-              <item-created></item-created>
-              <item-created-at></item-created-at>
-              <item-description></item-description>
-              <item-env-scope></item-env-scope>
-              <item-hostname></item-hostname>
-              <item-id></item-id>
-              <item-ip></item-ip>
-              <item-is-active></item-is-active>
-              <item-is-default></item-is-default>
-              <item-last-used></item-last-used>
-              <item-modified></item-modified>
-              <item-name></item-name>
-              <item-os></item-os>
-              <item-question></item-question>
-              <item-role-tags></item-role-tags>
-              <item-record></item-record>
-              <item-scopes></item-scopes>
-              <item-status></item-status>
-              <item-type></item-type>
-              <item-updated></item-updated>
-              <item-uptime-display></item-uptime-display>
-              <item-uptime-seconds></item-uptime-seconds>
-              <item-value></item-value>
-            </li>
-          </template>
-
         </article>
       </main>
       <aside>
         <h4></h4>
-
-        <h4 aria-live="polite"></h4>
-
         <form>
+          <h4 aria-live="polite"></h4>
           <section>
-            <fieldset>
-              <legend></legend>
-            </fieldset>
+            <fieldset></fieldset>
           </section>
           <button data-delete type="button">Delete</button>
           <button data-reset type="reset">Reset</button>
@@ -202,106 +159,6 @@
         </form>
         <p>Note: Ensure all fields are filled correctly before submitting.</p>
         <p>Note: All fields marked with * are required.</p>
-        <template id="form-fields-template">
-          <label>
-            Host Name
-            <input type="text" name="item-name" required>
-          </label>
-
-          <label>
-            IP Address
-            <input type="text" name="item-type" required>
-          </label>
-
-          <label>
-            Created By
-            <input type="text" name="item-created-by" required>
-          </label>
-
-          <label>
-            Modified By
-            <input type="text" name="item-updated-by" required>
-          </label>
-
-          <label>
-            Created Date
-            <input type="datetime-local" name="item-created-at" required>
-          </label>
-
-          <label>
-            Updated Date
-            <input type="datetime-local" name="item-updated-at" required>
-          </label>
-
-          <label>
-            Scope Name
-            <input type="text" name="item-scope-name" required>
-          </label>
-
-          <label>
-            IP Range Start
-            <input type="text" name="item-ip-start" required>
-          </label>
-
-          <label>
-            IP Range End
-            <input type="text" name="item-ip-end" required>
-          </label>
-
-          <label>
-            Subnet Mask
-            <input type="text" name="item-subnet-mask" required>
-          </label>
-
-          <label>
-            Default Lease Time (secs)
-            <input type="number" name="item-lease-time" min="60" step="60" required>
-          </label>
-
-          <label>
-            MAC Address
-            <input type="text" name="item-mac-address" required>
-          </label>
-
-          <label>
-            Reserved IP
-            <input type="text" name="item-reserved-ip" required>
-          </label>
-
-          <label>
-            Client Name
-            <input type="text" name="item-client-name">
-          </label>
-
-          <label>
-            Option Code
-            <input type="number" name="item-option-code" min="1" max="254" required>
-          </label>
-
-          <label>
-            Option Name
-            <input type="text" name="item-option-name" maxlength="64" required>
-          </label>
-
-          <label>
-            Option Type
-            <select name="item-option-type" required>
-              <selectedcontent></selectedcontent>
-              <option value="Select type" selected>Select type</option>
-              <option value="ip">IP Address</option>
-              <option value="string">String</option>
-              <option value="uint32">Unsigned 32-bit</option>
-              <option value="boolean">Boolean</option>
-              <option value="mac">MAC Address</option>
-            </select>
-          </label>
-
-          <label>
-            Option Value
-            <input type="text" name="item-option-value" required>
-          </label>
-        </template>
-
       </aside>
       <footer>
         <powered-by>Powered by : :</powered-by>
@@ -313,19 +170,7 @@
     </app-container>
 
     <!-- Contains constants used by every other module. -->
-    <script type="module" src="assets/js/config.js"></script>
-    <!-- Utility functions like setContent, used by view, api, etc. -->
-    <script type="module" src="assets/js/utils.js"></script>
-    <!-- DOM element exports needed by both formController and view. -->
-    <script type="module" src="assets/js/refs.js"></script>
-    <!-- Loads data; depends on config and view. -->
-    <script type="module" src="assets/js/api.js"></script>
-    <!-- Renders UI using refs, utils, and api. -->
-    <script type="module" src="assets/js/view.js"></script>
-    <!-- Handles form submission and validation; depends on refs, utils, and api. -->
-    <script type="module" src="assets/js/formController.js"></script>
-    <!-- Final entry point. Ties everything together. -->
-    <script type="module" src="assets/js/app.js"></script>
+    <script type="module" src="assets/js/scripts.js"></script>
 
     <load-data role="status" aria-live="polite" aria-busy="true" hidden></load-data>
     <load-delay role="status" aria-live="polite" aria-atomic="true"></load-delay>
