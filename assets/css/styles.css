@@ -5,14 +5,6 @@
 /* MARK: LINKS
 */
 /*
-https://moderncss.dev/modern-css-for-dynamic-component-based-architecture/ */
-/* Baseline for default links */
-a:not([class]) {
-  /* Relatively sized thickness and offset */
-  text-decoration-thickness: max(0.08em, 1px);
-  text-underline-offset: 0.15em;
-}
-
 /* rounded corner for MAIN */
 /* nav:not(:has(#radio01:checked))~main {
   border-radius: .25rem;
@@ -55,12 +47,11 @@ hr {
 label {
   display: grid;
   grid-auto-flow: column;
+  cursor: pointer;
 }
 
 label:hover,
 label:has(> input:checked) {
-  background-color: rgba(var(--bg-active-color),
-      var(--bg-active-opacity));
   color: rgba(var(--txt-active),
       var(--txt-active-opacity));
 }

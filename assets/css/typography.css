@@ -9,17 +9,33 @@
   --txt-shadow-opacity: 0.3;
 }
 
-h1 {
-  font-size: 2rem;
+/* https://moderncss.dev/modern-css-for-dynamic-component-based-architecture/ */
+/* Baseline for default links */
+a:not([class]) {
+  /* Relatively sized thickness and offset */
+  text-decoration-thickness: max(0.08em, 1px);
+  text-underline-offset: 0.15em;
+}
+
+/* https://moderncss.dev/modern-css-for-dynamic-component-based-architecture/#container-query-fluid-type */
+:is(h1, h2, h3, h4) {
   font-weight: bold;
   padding: 1rem;
   letter-spacing: 0.125rem;
   text-transform: uppercase;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+:is(h2, h3) {
+  font-size: clamp(1.25rem, 5cqi, 1.5rem);
 }
 
 h4 {
   display: var(--sub-header-display);
-  padding: 1rem;
   letter-spacing: .05rem;
 }
 

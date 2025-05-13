@@ -13,6 +13,7 @@
   --sub-header-display: none;
   --grid-gap: 1rem;
   --aside-display: none;
+  /* container: inline-size; */
 }
 
 /* MARK: LAYOUT | Vertical SMALL SCREENS
@@ -69,12 +70,12 @@ app-container {
   overflow: hidden;
 }
 
-/* When <aside> has an input value that isn't empty, which also gives <aside> display: grid;, add a grid column to <app-container> */
-app-container:has(aside input[type="text"][value]:not([value=""])) {
+/* When <aside> has an fieldset that is not empty, which also gives <aside> display: grid;, add a grid column to <app-container> */
+app-container:has(aside form section fieldset:not(:empty)) {
   --app-container-grid-template-columns: 12rem 1fr 15rem;
 }
 
-app-container:has(aside input[type="text"][value]:not([value=""])) main {
+app-container:has(aside form section fieldset:not(:empty)) main {
   margin-inline-end: 0;
 }
 
@@ -273,7 +274,7 @@ main article section ul {
   grid-auto-flow: column;
 }
 
-main article section ul:has(li *:not(:empty)) {
+main article section ul:has(li label *:not(:empty)) {
   display: grid;
   grid-auto-flow: row;
 
@@ -360,9 +361,10 @@ aside {
   margin-inline-end: 1rem;
 }
 
-aside:has(form section fieldset input[value]:not([value=""])) {
+aside:has(form section fieldset:not(:empty)) {
   display: grid;
 }
+
 
 /* MARK: FORMS
 */
@@ -371,6 +373,13 @@ form {
   gap: 1rem;
   max-width: 40rem;
   padding: 1rem;
+}
+
+/* MARK: FIELDSETS
+*/
+/* Hide all fieldsets by default */
+aside form section fieldset {
+  display: grid;
 }
 
 /* Visually hide fieldset/legend, keep accessible */
@@ -524,13 +533,6 @@ aside form select {
   grid-template-columns: 1fr 1fr auto;
   padding: 0 1rem 0 0.5rem;
   width: 8.25rem;
-}
-
-/* MARK: FIELDSETS
-*/
-/* Hide all fieldsets by default */
-aside form section fieldset {
-  display: none;
 }
 
 /* MARK: FOOTER
