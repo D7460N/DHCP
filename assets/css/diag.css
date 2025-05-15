@@ -1,0 +1,285 @@
+@layer diagnostics {
+  :root {
+    --diagnostic-font: 12px monospace;
+    --diagnostic-z: 999999;
+    --diagnostic-pass-bg: #0a0;
+    --diagnostic-pass-fg: #fff;
+    --diagnostic-fail-bg: #c00;
+    --diagnostic-warn-bg: #fc0;
+    --diagnostic-neutral-bg: #333;
+  }
+
+  * {
+    outline: 1px dashed #999 !important;
+  }
+
+  *:before,
+  *:after,
+  ::after,
+  ::before {
+    border-radius: 0.25rem;
+  }
+
+  /* ✅ PASS: Layout presence */
+  app-container:has(nav, main, aside)::before {
+    content: '✅ Holy Grail Layout Detected';
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--diagnostic-z);
+    background: var(--diagnostic-pass-bg);
+    color: var(--diagnostic-pass-fg);
+    font: var(--diagnostic-font);
+    padding: 0.25rem 0.5rem;
+    pointer-events: none;
+  }
+
+  /* ❌ FAIL: Layout elements missing */
+  app-container:not(:has(nav))::before {
+    content: '❌ Missing <nav>';
+    background: var(--diagnostic-warn-bg);
+    color: black;
+  }
+
+  app-container:not(:has(main))::after {
+    content: '❌ Missing <main>';
+    position: fixed;
+    top: 1.5rem;
+    left: 0;
+    z-index: var(--diagnostic-z);
+    background: var(--diagnostic-warn-bg);
+    color: black;
+    padding: 0.25rem 0.5rem;
+    font: var(--diagnostic-font);
+    pointer-events: none;
+  }
+
+  /* ✅ Simulated screen reader path */
+  header::before,
+  nav::before,
+  main::before,
+  aside::before,
+  footer::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--diagnostic-neutral-bg);
+    color: white;
+    font: var(--diagnostic-font);
+    padding: 0.1rem 0.25rem;
+    z-index: var(--diagnostic-z);
+  }
+
+  header::before { content: '🧭 SR: Header'; }
+  nav::before    { content: '🧭 SR: Nav'; }
+  main::before   { content: '🧭 SR: Main'; }
+  aside::before  { content: '🧭 SR: Aside'; }
+  footer::before { content: '🧭 SR: Footer'; }
+
+  /* 🧊 3D Isometric Mode (auto) */
+  @media (prefers-contrast: more) {
+    app-container {
+      transform: rotateX(15deg) rotateY(25deg) scale(0.9);
+      transform-style: preserve-3d;
+      perspective: 2000px;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  /* === Additional Diagnostics === */
+  @container (min-width: 300px) and (max-width: 599px) {
+    main::before {
+      content: '📏 Container width: SMALL (300-599px)';
+      position: fixed;
+      top: 12rem;
+      left: 0;
+      background: teal;
+      color: white;
+      font: var(--diagnostic-font);
+      padding: 0.25rem 0.5rem;
+      z-index: var(--diagnostic-z);
+    }
+  }
+
+  @container (min-width: 600px) {
+    main::before {
+      content: '📏 Container width: LARGE (≥600px)';
+      position: fixed;
+      top: 12rem;
+      left: 0;
+      background: darkblue;
+      color: white;
+      font: var(--diagnostic-font);
+      padding: 0.25rem 0.5rem;
+      z-index: var(--diagnostic-z);
+    }
+  }
+
+  @container (aspect-ratio < 1) {
+    main::after {
+      content: '📐 Portrait layout (aspect-ratio < 1)';
+      position: fixed;
+      top: 13.5rem;
+      left: 0;
+      background: darkgreen;
+      color: white;
+      font: var(--diagnostic-font);
+      padding: 0.25rem 0.5rem;
+      z-index: var(--diagnostic-z);
+    }
+  }
+
+  @container style(--theme: dark) {
+    body::before {
+      content: '🌑 Dark Theme Active';
+      position: fixed;
+      top: 15rem;
+      left: 0;
+      background: #222;
+      color: #fff;
+      font: var(--diagnostic-font);
+      padding: 0.25rem 0.5rem;
+      z-index: var(--diagnostic-z);
+    }
+  }
+
+  @container (min-height: 500px) {
+    section:has(ul:empty)::after {
+      content: '⚠️ Scroll area ≥500px but empty';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: var(--diagnostic-warn-bg);
+      color: black;
+      font: var(--diagnostic-font);
+      padding: 0.1rem 0.25rem;
+      z-index: var(--diagnostic-z);
+    }
+  }
+
+  :root:has(body:has(:not(section[style*="overflow: auto"])))::before {
+    content: '❌ Scroll control violation: Only <section> should scroll';
+    position: fixed;
+    top: 16.5rem;
+    left: 0;
+    background: orange;
+    color: black;
+    font: var(--diagnostic-font);
+    padding: 0.25rem 0.5rem;
+    z-index: var(--diagnostic-z);
+  }
+
+  div:not([hidden]):not(:has(*))::after,
+  span:not([hidden]):not(:has(*))::after {
+    content: '⚠️ Non-semantic element';
+    position: absolute;
+    background: magenta;
+    color: white;
+    font: var(--diagnostic-font);
+    padding: 0.1rem 0.25rem;
+    z-index: var(--diagnostic-z);
+  }
+
+  button:not(:focus-visible)::after,
+  a[href]:not(:focus-visible)::after {
+    content: '⚠️ No visible focus';
+    position: absolute;
+    background: red;
+    color: white;
+    font: var(--diagnostic-font);
+    padding: 0.1rem 0.25rem;
+    z-index: var(--diagnostic-z);
+  }
+
+  @container (max-height: 300px) {
+    main::after {
+      content: '📉 Warning: <main> height ≤ 300px';
+      position: fixed;
+      top: 18rem;
+      left: 0;
+      background: crimson;
+      color: white;
+      font: var(--diagnostic-font);
+      padding: 0.25rem 0.5rem;
+      z-index: var(--diagnostic-z);
+    }
+  }
+
+  @container (max-height: 200px) {
+    aside::after {
+      content: '📉 <aside> height too low (≤ 200px)';
+      position: fixed;
+      top: 19.5rem;
+      left: 0;
+      background: darkred;
+      color: white;
+      font: var(--diagnostic-font);
+      padding: 0.25rem 0.5rem;
+      z-index: var(--diagnostic-z);
+    }
+  }
+
+  label:has([style*="text-overflow: ellipsis"]):has(:not(:hover):not(:active))::after {
+    content: '✂️ Possibly truncated label';
+    position: absolute;
+    background: orange;
+    color: black;
+    font: var(--diagnostic-font);
+    padding: 0.1rem 0.25rem;
+    z-index: var(--diagnostic-z);
+    top: 100%;
+    left: 0;
+  }
+
+  input:not([autocomplete]):not([type="hidden"])::after {
+    content: '⚠️ Missing autocomplete';
+    position: absolute;
+    background: darkorange;
+    color: black;
+    font: var(--diagnostic-font);
+    padding: 0.1rem 0.25rem;
+    z-index: var(--diagnostic-z);
+  }
+
+  @container style(--density: compact) {
+    html::after {
+      content: '🎛️ UI density: compact';
+      position: fixed;
+      top: 21rem;
+      left: 0;
+      background: navy;
+      color: white;
+      font: var(--diagnostic-font);
+      padding: 0.25rem 0.5rem;
+      z-index: var(--diagnostic-z);
+    }
+  }
+
+  @container style(--user-mode: high-contrast) {
+    html::after {
+      content: '🌈 High Contrast Mode Enabled';
+      position: fixed;
+      top: 22.5rem;
+      left: 0;
+      background: black;
+      color: yellow;
+      font: var(--diagnostic-font);
+      padding: 0.25rem 0.5rem;
+      z-index: var(--diagnostic-z);
+    }
+  }
+
+  @container style(--reduced-motion: true) {
+    html::after {
+      content: '🎚️ Motion Reduction Active';
+      position: fixed;
+      top: 24rem;
+      left: 0;
+      background: gray;
+      color: white;
+      font: var(--diagnostic-font);
+      padding: 0.25rem 0.5rem;
+      z-index: var(--diagnostic-z);
+    }
+  }
+}

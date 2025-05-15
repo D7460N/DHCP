@@ -13,6 +13,13 @@
     outline: 1px dashed #999 !important;
   }
 
+  *:before,
+  *:after,
+  ::after,
+  ::before {
+    border-radius: 0.15rem;
+  }
+
   /* ✅ PASS: Layout presence */
   app-container:has(nav, main, aside)::before {
     content: '✅ Holy Grail Layout Detected';
