@@ -138,6 +138,6 @@ body:before {
 /* background-size: 75% 75%;
 } */
 
-input {
-  accent-color: rgba(var(--accent));
+form fieldset label:focus {
+  color: rgba(var(--txt-color), 1.0)
 }

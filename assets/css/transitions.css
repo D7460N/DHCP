@@ -1,11 +1,14 @@
-@view-transition {
-  navigation: auto;
+/* https://adactio.com/journal/21896 */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
 }
 
 :root {
   --transition-behavior: allow-discrete;
-  --transition-length: 250ms;
-  --transition-property: visibility, opacity, display, transform, background-color;
+  --transition-duration: 250ms;
+  --transition-property: visibility, opacity, display, transform, background-color, color;
   --transition-timing-function: ease-in-out;
 }
 
@@ -26,7 +29,7 @@
 *,
 * * {
   transition-property: var(--transition-property);
-  transition-duration: var(--transition-length);
+  transition-duration: var(--transition-duration);
   transition-timing-function: var(--transition-timing-function);
   transition-behavior: var(--transition-behavior);
 }
@@ -55,7 +58,7 @@ https://12daysofweb.dev/2024/calc-size-and-interpolate-size/ */
 /* MARK:ARTICLE
 */
 main article {
-  transition: opacity var(--transition-length) allow-discrete;
+  transition: opacity var(--transition-durationh) allow-discrete;
 }
 
 
@@ -63,15 +66,15 @@ main article {
 /* MARK: ASIDE
 */
 aside {
-  transition: width var(--transition-length) allow-discrete, opacity var(--transition-length) allow-discrete;
+  transition: width var(--transition-duration) allow-discrete, opacity var(--transition-duration) allow-discrete;
 }
 
 /* MARK: BUTTONS
 */
 button {
-  transition: background-color var(--transition-length);
+  transition: background-color var(--transition-duration);
 }
 
 a {
-  transition: all var(--transition-length);
+  transition: all var(--transition-duration);
 }

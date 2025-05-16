@@ -1,20 +1,20 @@
 /* MARK: FORMS
 */
-form {
+aside form {
   display: none;
 }
 
-form:has(input:not(:placeholder-shown)) {
+aside form:has(input:not(:placeholder-shown)) {
   display: grid;
   gap: 1rem;
   padding: 1rem;
   background: #f9f9f9;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
 }
 
 /* MARK: LABELS
 */
-label {
+aside form label {
   display: grid;
   font-weight: bold;
   gap: 0.5rem;
@@ -22,11 +22,11 @@ label {
 
 /* MARK: INPUTS
 */
-input,
-select {
+aside input,
+aside select {
   padding: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   width: 100%;
   box-sizing: border-box;
 }
@@ -38,7 +38,7 @@ button {
   color: white;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
 }
 
 button:hover,

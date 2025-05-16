@@ -17,7 +17,7 @@
   *:after,
   ::after,
   ::before {
-    border-radius: 0.25rem;
+    border-radius: var(--border-radius);
   }
 
   /* ✅ PASS: Layout presence */

@@ -7,7 +7,7 @@
 /*
 /* rounded corner for MAIN */
 /* nav:not(:has(#radio01:checked))~main {
-  border-radius: .25rem;
+  border-radius: var(--border-radius);
 } */
 
 /* MARK: BUTTONS
@@ -24,7 +24,7 @@ button {
   background-color: rgba(255, 255, 255, 0.1);
   color: inherit;
   text-align: center;
-  border-radius: .3rem;
+  border-radius: var(--border-radius);
 }
 
 button:hover {
@@ -47,11 +47,12 @@ hr {
 label {
   display: grid;
   grid-auto-flow: column;
-  cursor: pointer;
+  cursor: auto;
 }
 
-label:hover,
+label:has(:not([contentEditable="false"])):hover,
 label:has(> input:checked) {
+  cursor: pointer;
   color: rgba(var(--txt-active),
       var(--txt-active-opacity));
 }

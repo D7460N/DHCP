@@ -1,3 +1,12 @@
+:root {
+  --outline-size: 0.25em;
+  --outline-style: dotted;
+  --outline-width: 0.0625em;
+  --outline-offset: -0.0625em;
+  --outline-color: var(--accent);
+  --outline-border-radius: var(--border-radius);
+}
+
 /*
 https://www.joshwcomeau.com/snippets/react-components/visually-hidden/
 screen readers only. Verify by holding down the alt key.
@@ -8,7 +17,6 @@ screen readers only. Verify by holding down the alt key.
   height: 0.0625rem;
   overflow: hidden;
   clip: rect(0 0 0 0);
-  /* Legacy property for Internet Explorer */
   clip-path: inset(50%);
   white-space: nowrap;
 }
@@ -18,6 +26,12 @@ screen readers only. Verify by holding down the alt key.
 
   outline: var(--outline-width, var(--outline-size)) var(--outline-style, solid) var(--outline-color, currentColor);
   outline-offset: var(--outline-offset, var(--outline-size));
+}
+
+a:focus-visible {
+  outline-offset: 0.25em;
+  outline-width: 0.25em;
+  outline-color: currentColor;
 }
 
 /* https://css-tricks.com/almanac/properties/a/accent-color/

@@ -44,17 +44,14 @@
 */
 /* Target elements, not :root{} */
 /* https://codeconvey.com/custom-scrollbar-css-for-all-browsers/ */
+fieldset,
 section {
   scrollbar-color: rgba(48, 190, 255, 0.0) rgba(48, 190, 255, 0.0);
   /* Thumb and track color */
   scrollbar-width: thin;
   /* Track width */
 }
-
+fieldset:hover,
 section:hover {
   scrollbar-color: rgba(48, 190, 255, 0.3) rgba(48, 190, 255, 0.0);
-}
-
-section div {
-  overflow: auto;
 }
