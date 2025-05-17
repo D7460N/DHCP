@@ -58,7 +58,7 @@ https://12daysofweb.dev/2024/calc-size-and-interpolate-size/ */
 /* MARK:ARTICLE
 */
 main article {
-  transition: opacity var(--transition-durationh) allow-discrete;
+  transition: opacity var(--transition-duration) allow-discrete;
 }
 
 

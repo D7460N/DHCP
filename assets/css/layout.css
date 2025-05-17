@@ -288,7 +288,7 @@ main article section ul li {
 }
 
 main article section ul li:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(var(--bg-active-color), 0.05);
 }
 
 /* LI active state */
@@ -428,7 +428,7 @@ form input[type="search"] {
   padding: 0.5rem;
   border: 1px solid rgba(var(--txt-color), 0.2);
   border-radius: var(--border-radius);
-  background-color: rgba(var(--bg-color), 0.1);
+  background-color: rgba(var(--bg-active-color), 0.05);
   color: rgba(var(--txt-color), 1);
 }
 
