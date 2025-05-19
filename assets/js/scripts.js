@@ -259,7 +259,13 @@ form.onsubmit = e => {
     method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  }).then(() => load(`${BASE_URL}${tab}`));
+  })
+    .then(() => confirmAction('Record saved.', { type: 'alert' }))
+    .then(() => load(`${BASE_URL}${tab}`))
+    .catch(err => {
+      console.error('Failed to save record:', err);
+      confirmAction('Error saving record.', { type: 'alert' });
+    });
 };
 
 // === Form Reset ===
