@@ -9,8 +9,7 @@ const ul = document.querySelector('main article section ul');
 const form = document.querySelector('aside form');
 const fieldset = form.querySelector('fieldset');
 const newButton = document.querySelector('button');
-
-form.oninput = () => {}; // Reserved for future extension
+const resetButton = form.querySelector('[data-reset]');
 
 // === Utility: Format ISO Date to datetime-local ===
 function formatDateForInput(str) {
@@ -20,7 +19,9 @@ function formatDateForInput(str) {
 }
 
 
-form.oninput = () => {}; // Reserved for future extension
+form.oninput = () => {
+  toggleResetButton();
+};
 
 // === Live Mirror Handler: Inline oninput for native form inputs ===
 function mirrorToSelectedRow(event) {
@@ -147,6 +148,7 @@ function load(endpoint) {
       });
 
       snapshotForm();
+      toggleResetButton();
     })
     .catch(err => console.error('Failed to load data:', err));
 }
@@ -170,20 +172,47 @@ function updateFormFromSelectedRow() {
   });
 
   snapshotForm();
+  toggleResetButton();
 }
 
 // === Track Form Original State ===
-let originalSnapshot = '';
+let originalData = {};
+let snapshotLi = null;
 function snapshotForm() {
-  const items = fieldset.querySelectorAll('input, select');
-  originalSnapshot = Array.from(items).map(el => el.value).join('|');
+  originalData = {};
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    originalData[el.name] = el.value;
+  });
+  snapshotLi = document.querySelector('ul li input[type="radio"]:checked')?.closest('li');
+  toggleResetButton();
 }
 function hasUnsavedChanges() {
-  const items = fieldset.querySelectorAll('input, select');
-  const current = Array.from(items).map(el => el.value).join('|');
-  return current !== originalSnapshot;
+  return Array.from(fieldset.querySelectorAll('input[name], select[name]')).some(el => el.value !== originalData[el.name]);
 }
 window.onbeforeunload = () => hasUnsavedChanges() ? true : undefined;
+
+function toggleResetButton() {
+  if (!resetButton) return;
+  resetButton.disabled = !hasUnsavedChanges();
+}
+
+function restoreForm() {
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
+      el.value = originalData[el.name];
+    }
+  });
+
+  if (snapshotLi) {
+    snapshotLi.querySelectorAll('span[data-key]').forEach(span => {
+      const key = span.getAttribute('data-key');
+      if (Object.prototype.hasOwnProperty.call(originalData, key)) {
+        span.textContent = originalData[key];
+      }
+    });
+  }
+  toggleResetButton();
+}
 
 // === Initial Tab Fetch ===
 const selected = document.querySelector('nav input[name="nav"]:checked');
@@ -234,9 +263,12 @@ form.onsubmit = e => {
 };
 
 // === Form Reset ===
-form.onreset = () => {
+form.onreset = e => {
+  e.preventDefault();
   if (!confirm('Reset all changes?')) return;
-  updateFormFromSelectedRow();
+  restoreForm();
+  snapshotForm();
+  toggleResetButton();
 };
 
 // === Delete Handler ===
