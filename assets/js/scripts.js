@@ -1,6 +1,5 @@
-// === scripts.js ===
-// Purpose: Fetch JSON, define custom elements, and inject content into UL/LI and FORM
-// HTML and CSS are in charge of layout, visibility, and user interaction
+// === scripts.js (REWRITTEN: No Custom Elements, Fully Native Inputs) ===
+// Purpose: Fetch JSON, inject content into UL/LI and FORM using native HTML form elements only
 
 // === Constants ===
 const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/';
@@ -13,67 +12,87 @@ const newButton = document.querySelector('button');
 
 form.oninput = () => {}; // Reserved for future extension
 
-// === Normalize Keys into Custom Tag Names ===
-function normalizeKeyToTag(key) {
-  let prefixed = /^item/i.test(key) ? key : `item-${key}`;
-  prefixed = prefixed.replace(/[^a-zA-Z0-9]/g, '-');
-  prefixed = prefixed.replace(/([a-z0-9])([A-Z])/g, '$1-$2');
-  let tag = prefixed.toLowerCase().replace(/-+/g, '-').replace(/^-|-$/g, '');
-  if (!/^[a-z][a-z0-9\-]*-[a-z0-9\-]+$/.test(tag)) {
-    throw new Error(`Invalid tag name: ${tag}`);
-  }
-  return tag;
+// === Utility: Format ISO Date to datetime-local ===
+function formatDateForInput(str) {
+  const d = new Date(str);
+  if (isNaN(d)) return '';
+  return d.toISOString().slice(0, 16);
 }
 
-// === Custom Element Registry ===
-const definedTags = new Map();
 
-// === Define Form-Associated Custom Elements ===
-function defineCustomElement(tagName, originalKey = tagName) {
-  let finalTag = tagName;
-  if (definedTags.has(tagName)) {
-    const priorKey = definedTags.get(tagName);
-    if (priorKey !== originalKey) {
-      let suffix = 1;
-      while (definedTags.has(`${tagName}-${suffix}`)) suffix++;
-      finalTag = `${tagName}-${suffix}`;
-      console.warn(`Collision detected for "${tagName}". Redefined as <${finalTag}> for key "${originalKey}".`);
+form.oninput = () => {}; // Reserved for future extension
+
+// === Live Mirror Handler: Inline oninput for native form inputs ===
+function mirrorToSelectedRow(event) {
+  const input = event.target;
+  const key = input.name;
+  const selectedLi = document.querySelector('ul li input[type="radio"]:checked')?.closest('li');
+  if (!selectedLi) return;
+
+  const mirror = selectedLi.querySelector(`span[data-key="${key}"]`);
+  if (mirror && !input.readOnly) {
+    mirror.textContent = input.value;
+  }
+}
+
+
+// === Utility: Create Input from Key and Value ===
+function createInputFromKey(key, value) {
+  const inputName = key;
+  const val = value?.trim?.() ?? '';
+  let element;
+
+  const lowercaseVal = val.toLowerCase();
+  const dhcpTypes = ['host', 'ip', 'url', 'file', 'service'];
+
+  if (dhcpTypes.includes(lowercaseVal)) {
+    element = document.createElement('select');
+    element.name = inputName;
+    element.required = true;
+
+    const emptyOpt = document.createElement('option');
+    emptyOpt.value = '';
+    emptyOpt.textContent = 'Select Type';
+    element.appendChild(emptyOpt);
+
+    dhcpTypes.forEach(opt => {
+      const o = document.createElement('option');
+      o.value = o.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
+      if (opt === lowercaseVal) o.selected = true;
+      element.appendChild(o);
+    });
+  } else {
+    element = document.createElement('input');
+    element.name = inputName;
+    element.value = val;
+
+    if (key === 'id' || /^[a-f0-9\-]{36}$/.test(val)) {
+      element.type = 'hidden';
+      element.oninput = mirrorToSelectedRow;
+      return element;
+    }
+
+    if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/.test(val)) {
+      element.type = 'datetime-local';
+      element.readOnly = true;
+      element.tabIndex = -1;
+      element.value = formatDateForInput(val);
+    } else if (/author|modified|created|updated/.test(key)) {
+      element.type = 'text';
+      element.readOnly = true;
+      element.tabIndex = -1;
     } else {
-      return tagName;
+      element.type = 'text';
+      element.required = val !== '';
+      element.pattern = '.+';
     }
   }
 
-  class EditableField extends HTMLElement {
-    static formAssociated = true;
-    constructor() {
-      super();
-      this._internals = this.attachInternals();
-      this.contentEditable = true;
-      this.spellcheck = false;
-      this.onfocus = () => this._internals.setFormValue(this.textContent);
-      this.onblur = () => this._internals.setFormValue(this.textContent);
-      this.oninput = () => {
-        this._internals.setFormValue(this.textContent);
-        const selectedLi = document.querySelector('ul li input[type="radio"]:checked')?.closest('li');
-        if (selectedLi) {
-          const mirror = selectedLi.querySelector(finalTag);
-          if (mirror) mirror.textContent = this.textContent;
-        }
-      };
-    }
-    set data(val) {
-      this.textContent = val ?? '';
-      this._internals.setFormValue(val ?? '');
-    }
-    get value() {
-      return this.textContent;
-    }
-  }
-
-  customElements.define(finalTag, EditableField);
-  definedTags.set(finalTag, originalKey);
-  return finalTag;
+  // ✅ Always apply mirroring if editable
+  element.oninput = mirrorToSelectedRow;
+  return element;
 }
+
 
 // === Load Data from API and Render into UI ===
 function load(endpoint) {
@@ -83,22 +102,17 @@ function load(endpoint) {
     .then(([data]) => {
       console.log('[LOADED]', data);
 
-// ✅ ID Integrity Check
-const seen = new Set();
-const duplicates = [];
-
-for (const item of data.items) {
-  if (seen.has(item.id)) {
-    duplicates.push(item.id);
-  }
-  seen.add(item.id);
-}
-
-if (duplicates.length) {
-  console.error('[DUPLICATE ID DETECTED]', duplicates);
-  alert(`Duplicate IDs found: ${duplicates.join(', ')}`);
-  return; // ❌ Stop rendering
-}
+      const seen = new Set();
+      const duplicates = [];
+      for (const item of data.items) {
+        if (seen.has(item.id)) duplicates.push(item.id);
+        seen.add(item.id);
+      }
+      if (duplicates.length) {
+        console.error('[DUPLICATE ID DETECTED]', duplicates);
+        alert(`Duplicate IDs found: ${duplicates.join(', ')}`);
+        return;
+      }
 
       ul.innerHTML = '';
       fieldset.innerHTML = '';
@@ -118,20 +132,14 @@ if (duplicates.length) {
         input.type = 'radio';
         input.name = 'list-item';
         input.hidden = true;
-        label.appendChild(input);
         input.oninput = () => updateFormFromSelectedRow();
+        label.appendChild(input);
 
         for (const [key, value] of Object.entries(item)) {
-          try {
-            const tag = normalizeKeyToTag(key);
-            const finalTag = defineCustomElement(tag, key);
-            if (!finalTag || !customElements.get(finalTag)) throw new Error(`Custom element <${finalTag}> is not defined.`);
-            const liEl = document.createElement(finalTag);
-            liEl.textContent = value;
-            label.appendChild(liEl);
-          } catch (err) {
-            console.error(`Error rendering <li> for key "${key}":`, err);
-          }
+          const span = document.createElement('span');
+          span.setAttribute('data-key', key);
+          span.textContent = value;
+          label.appendChild(span);
         }
 
         li.appendChild(label);
@@ -143,56 +151,47 @@ if (duplicates.length) {
     .catch(err => console.error('Failed to load data:', err));
 }
 
-// === Insert New Blank Row for Creation ===
-function createNewRow() {
-  const li = document.createElement('li');
-  li.tabIndex = 0;
+// === Reflect LI Data Into Form (Native Inputs) ===
+function updateFormFromSelectedRow() {
+  fieldset.innerHTML = '';
+  const selectedRow = document.querySelector('ul li input[type="radio"]:checked')?.closest('li');
+  if (!selectedRow) return;
 
-  const label = document.createElement('label');
-  const input = document.createElement('input');
-  input.type = 'radio';
-  input.name = 'list-item';
-  input.hidden = true;
-  input.checked = true;
-  input.oninput = () => updateFormFromSelectedRow();
-  label.appendChild(input);
+  selectedRow.querySelectorAll('label > span[data-key]').forEach(source => {
+    const key = source.getAttribute('data-key');
+    const value = source.textContent;
 
-  const editableKeys = ['itemName', 'itemType', 'itemAuthor'];
+    const label = document.createElement('label');
+    label.textContent = key.replace(/^item-/, '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) + ': ';
 
-  editableKeys.forEach(key => {
-    const tag = normalizeKeyToTag(key);
-    const finalTag = defineCustomElement(tag, key);
-    const liEl = document.createElement(finalTag);
-    liEl.textContent = '';
-    label.appendChild(liEl);
+    const input = createInputFromKey(key, value);
+    label.appendChild(input);
+    fieldset.appendChild(label);
   });
 
-  li.appendChild(label);
-  ul.appendChild(li);
-  li.querySelector('input[type="radio"]').checked = true;
-  updateFormFromSelectedRow();
+  snapshotForm();
 }
 
 // === Track Form Original State ===
 let originalSnapshot = '';
 function snapshotForm() {
-  const items = document.querySelectorAll('form [contenteditable]');
-  originalSnapshot = Array.from(items).map(el => el.textContent).join('|');
+  const items = fieldset.querySelectorAll('input, select');
+  originalSnapshot = Array.from(items).map(el => el.value).join('|');
 }
 function hasUnsavedChanges() {
-  const items = document.querySelectorAll('form [contenteditable]');
-  const current = Array.from(items).map(el => el.textContent).join('|');
+  const items = fieldset.querySelectorAll('input, select');
+  const current = Array.from(items).map(el => el.value).join('|');
   return current !== originalSnapshot;
 }
 window.onbeforeunload = () => hasUnsavedChanges() ? true : undefined;
 
-// === Initial Tab Fetch on Page Load ===
+// === Initial Tab Fetch ===
 const selected = document.querySelector('nav input[name="nav"]:checked');
 const label = selected?.closest('label');
 const tab = label?.textContent.trim().toLowerCase().replace(/\s+/g, '-');
 if (tab) load(`${BASE_URL}${tab}`);
 
-// === Tab Switch Logic with Unsaved Change Check ===
+// === Tab Switch Logic ===
 document.querySelectorAll('nav input[name="nav"]').forEach(input => {
   input.onchange = () => {
     if (!input.checked) return;
@@ -203,33 +202,29 @@ document.querySelectorAll('nav input[name="nav"]').forEach(input => {
   };
 });
 
-// === Add New Row on Button Click ===
+// === New Row Placeholder (NO FORM POPULATED YET) ===
 newButton.onclick = () => {
   if (hasUnsavedChanges() && !confirm('You have unsaved changes. Discard them?')) return;
-  createNewRow();
+  alert('Row creation UI not yet implemented in rewritten script.');
 };
 
-// === Save Handler (POST or PUT) ===
+// === Form Submit ===
 form.onsubmit = e => {
   e.preventDefault();
   const selected = document.querySelector('ul li input[type="radio"]:checked');
-  const id = selected?.closest('li')?.querySelector('item-id')?.textContent?.trim();
+  const id = selected?.closest('li')?.querySelector('span[data-key="id"]')?.textContent?.trim();
   const tab = document.querySelector('nav input[name="nav"]:checked')?.closest('label')?.textContent.trim().toLowerCase().replace(/\s+/g, '-');
   if (!tab) return;
+
   const data = {};
-  fieldset.querySelectorAll('[contenteditable]').forEach(el => {
-    const key = definedTags.get(el.tagName.toLowerCase());
-    if (key) data[key] = el.textContent.trim();
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    if (!el.readOnly) data[el.name] = el.value.trim();
   });
+
   const method = id ? 'PUT' : 'POST';
   const url = id ? `${BASE_URL}${tab}/${id}` : `${BASE_URL}${tab}`;
 
-  console.log('[FORM SUBMIT]');
-  console.log('  ID:', id);
-  console.log('  TAB:', tab);
-  console.log('  METHOD:', method);
-  console.log('  URL:', url);
-  console.log('  PAYLOAD:', data);
+  console.log('[FORM SUBMIT]', { method, url, data });
 
   fetch(url, {
     method,
@@ -238,7 +233,7 @@ form.onsubmit = e => {
   }).then(() => load(`${BASE_URL}${tab}`));
 };
 
-// === Reset Handler ===
+// === Form Reset ===
 form.onreset = () => {
   if (!confirm('Reset all changes?')) return;
   updateFormFromSelectedRow();
@@ -247,52 +242,16 @@ form.onreset = () => {
 // === Delete Handler ===
 document.querySelector('[data-delete]').onclick = () => {
   const selected = document.querySelector('ul li input[type="radio"]:checked');
-  const id = selected?.closest('li')?.querySelector('item-id')?.textContent?.trim();
+  const id = selected?.closest('li')?.querySelector('span[data-key="id"]')?.textContent?.trim();
   const tab = document.querySelector('nav input[name="nav"]:checked')?.closest('label')?.textContent.trim().toLowerCase().replace(/\s+/g, '-');
 
   confirmAction('Delete this record?', { type: 'confirm' }).then(ok => {
     if (!selected || !id || !tab || !ok) return;
-
-    console.log('[DELETE]');
-    console.log('  ID:', id);
-    console.log('  TAB:', tab);
-    console.log('  URL:', `${BASE_URL}${tab}/${id}`);
-
-    fetch(`${BASE_URL}${tab}/${id}`, { method: 'DELETE' })
-      .then(() => load(`${BASE_URL}${tab}`));
+    fetch(`${BASE_URL}${tab}/${id}`, { method: 'DELETE' }).then(() => load(`${BASE_URL}${tab}`));
   });
 };
 
-
-// === Reflect LI Data Into Form ===
-function updateFormFromSelectedRow() {
-  fieldset.innerHTML = '';
-  const selectedRow = document.querySelector('ul li input[type="radio"]:checked')?.closest('li');
-  if (!selectedRow) return;
-  fieldset.innerHTML = '';
-  selectedRow.querySelectorAll('label > *:not(input)').forEach(source => {
-    const tag = source.tagName?.toLowerCase?.();
-    if (!tag || !/^[a-z][a-z0-9\-]*-[a-z0-9\-]+$/.test(tag)) return;
-    if (!customElements.get(tag)) return;
-    try {
-      const formEl = document.createElement(tag);
-      const readOnlyTags = ['item-created', 'item-updated', 'item-modified', 'item-author'];
-      formEl.contentEditable = !readOnlyTags.includes(tag);
-      formEl.spellcheck = false;
-      formEl.textContent = source.textContent;
-      formEl.oninput = () => {
-        source.textContent = formEl.textContent;
-      };
-      const wrap = document.createElement('label'); wrap.textContent = tag.replace(/^item-/, '') + ': '; wrap.appendChild(formEl); fieldset.appendChild(wrap);
-    } catch (e) {
-      console.warn(`Failed to create element <${tag}>:`, e);
-    }
-  });
-  snapshotForm();
-}
-
-
-// === Modal Prompt Handler ===
+// === Modal Confirmation ===
 function confirmAction(message, { type = 'confirm' } = {}) {
   return new Promise(resolve => {
     let modal = document.getElementById('modal-confirm');
