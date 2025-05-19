@@ -9,11 +9,9 @@ const ul = document.querySelector('main article section ul'); // Target list con
 const form = document.querySelector('aside form'); // Main editable form
 const fieldset = form.querySelector('fieldset'); // Form field grouping
 const newButton = document.querySelector('button'); // New row button
+const resetButton = form.querySelector('[data-reset]'); // Reset button reference
 
-form.oninput = () => {
-  const resetBtn = form.querySelector('button[type="reset"]');
-  if (resetBtn) resetBtn.disabled = !hasUnsavedChanges();
-}; // Reserved for future extension (placeholder)
+form.oninput = () => toggleResetButton(); // Reserved for future extension (placeholder)
 
 // === Utility: Format ISO Date to input[type="datetime-local"] value ===
 function formatDateForInput(str) {
@@ -144,8 +142,7 @@ function load(endpoint) {
       });
 
       snapshotForm();
-      const resetBtn = form.querySelector('button[type="reset"]');
-      if (resetBtn) resetBtn.disabled = true;
+      toggleResetButton();
     })
     .catch(err => console.error('Failed to load data:', err));
 }
@@ -179,10 +176,10 @@ function snapshotForm() {
   originalSnapshot = Array.from(items).map(el => el.value).join('|');
 
   // Explicitly set initial button state correctly after snapshot
-  const resetBtn = form.querySelector('button[type="reset"]');
   const submitBtn = form.querySelector('button[type="submit"]');
-  resetBtn.disabled = true;
   submitBtn.disabled = !form.checkValidity(); // crucial fix
+
+  toggleResetButton();
 }
 
 
@@ -190,6 +187,10 @@ function hasUnsavedChanges() {
   const items = fieldset.querySelectorAll('input, select');
   const current = Array.from(items).map(el => el.value).join('|');
   return current !== originalSnapshot;
+}
+
+function toggleResetButton() {
+  resetButton.disabled = !hasUnsavedChanges();
 }
 window.onbeforeunload = () => hasUnsavedChanges() ? true : undefined;
 
@@ -232,6 +233,8 @@ newButton.onclick = () => {
 
   snapshotForm();
 
+  toggleResetButton();
+
   const submitBtn = form.querySelector('button[type="submit"]');
   submitBtn.disabled = false;
 };
@@ -266,10 +269,9 @@ form.onsubmit = e => {
 form.onreset = () => {
   if (!confirm('Reset all changes?')) return;
   updateFormFromSelectedRow();
-  const resetBtn = form.querySelector('button[type="reset"]');
   const submitBtn = form.querySelector('button[type="submit"]');
-  resetBtn.disabled = true;
   submitBtn.disabled = true;
+  toggleResetButton();
 };
 
 
