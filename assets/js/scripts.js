@@ -13,6 +13,12 @@ const newButton = document.querySelector('button'); // New row button
 form.oninput = () => {
   const resetBtn = form.querySelector('button[type="reset"]');
   if (resetBtn) resetBtn.disabled = !hasUnsavedChanges();
+
+  if (hasUnsavedChanges()) {
+    form.setAttribute('data-dirty', 'true');
+  } else {
+    form.removeAttribute('data-dirty');
+  }
 }; // Reserved for future extension (placeholder)
 
 // === Utility: Format ISO Date to input[type="datetime-local"] value ===
@@ -183,6 +189,7 @@ function snapshotForm() {
   const submitBtn = form.querySelector('button[type="submit"]');
   resetBtn.disabled = true;
   submitBtn.disabled = !form.checkValidity(); // crucial fix
+  form.removeAttribute('data-dirty');
 }
 
 
@@ -260,6 +267,8 @@ form.onsubmit = e => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   }).then(() => load(`${BASE_URL}${tab}`));
+
+  form.removeAttribute('data-dirty');
 };
 
 // === Form Reset ===
@@ -270,6 +279,7 @@ form.onreset = () => {
   const submitBtn = form.querySelector('button[type="submit"]');
   resetBtn.disabled = true;
   submitBtn.disabled = true;
+  form.removeAttribute('data-dirty');
 };
 
 
