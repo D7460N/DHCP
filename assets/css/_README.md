@@ -85,9 +85,9 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 
 ## Todo
 
-- add item JS/data logiic
-- delete item JS/data logiic
-- edit item JS/data logiic
+- add item JS/data logic
+- delete item JS/data logic
+- edit item JS/data logic
 
 ## Single Page Application (SPA)
 
