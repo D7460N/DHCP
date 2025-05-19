@@ -22,7 +22,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/typography.css">
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
     <link rel="stylesheet" type="text/css" href="assets/css/a11y.css">
-    <!-- <link rel="stylesheet" type="text/css" href="assets/css/forms.css"> -->
+    <link rel="stylesheet" type="text/css" href="assets/css/forms.css">
     <title>DHCP Portal</title>
   </head>
 
@@ -142,7 +142,7 @@
           <section>
             <p>SCROLLABLE UL/LI list</p>
             <!-- Entry point for JS looped LIs and data hooks -->
-            <!-- TODO: Dynamicly generated table styled headers based on JSON object keys -->
+            <!-- TODO: Dynamically generated table styled headers based on JSON object keys -->
             <ul></ul>
           </section>
         </article>
@@ -151,12 +151,12 @@
         <h4 aria-live="polite">DETAILS</h4>
         <form>
           <fieldset></fieldset>
+          <small><strong>NOTE:</strong> All fields must validate before submitting.</small>
+          <small><strong>NOTE:</strong> All fields marked with <strong>*</strong> are required.</small>
           <button data-delete type="button">Delete</button>
           <button data-reset type="reset">Reset</button>
           <button data-submit type="submit" disabled>Save</button>
         </form>
-        <p>Note: Ensure all fields are filled correctly before submitting.</p>
-        <p>Note: All fields marked with * are required.</p>
       </aside>
       <footer>
         <powered-by>Powered by : :</powered-by>
@@ -169,15 +169,6 @@
 
     <!-- Contains constants used by every other module. -->
     <script type="module" src="assets/js/scripts.js"></script>
-
-    <div id="modal-confirm">
-      <div class="modal-backdrop"></div>
-      <div class="modal-content">
-        <p></p>
-        <div class="modal-buttons"></div>
-      </div>
-    </div>
-
     <load-data role="status" aria-live="polite" aria-busy="true" hidden></load-data>
     <load-delay role="status" aria-live="polite" aria-atomic="true"></load-delay>
   </body>

@@ -73,7 +73,8 @@ app-container {
 
 /* When <aside> has an fieldset that is not empty, which also gives <aside> display: grid;, add a grid column to <app-container> */
 app-container:has(aside form fieldset:not(:empty)) {
-  --app-container-grid-template-columns: 12rem 1fr 15rem;
+  --app-container-grid-template-columns: 12rem 1fr 20rem;
+  grid-template-columns: var(--app-container-grid-template-columns);
 }
 
 app-container:has(aside form fieldset:not(:empty)) main {
@@ -247,6 +248,7 @@ main article > p:not(:empty) {
 /* Hide <select> by default */
 main article select {
   display: none;
+  margin-inline: 1rem;
 }
 
 /* Show <select> when <select> has content */
@@ -283,8 +285,14 @@ main article section ul:has(li label *:not(:empty)) {
 
 main article section ul li {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr));
+  grid-template-columns: 1fr;
   cursor: pointer;
+}
+
+main article section ul li label {
+  /* https://www.youtube.com/watch?v=EeM5wnhO9iI */
+  grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
+  gap: 1rem;
 }
 
 main article section ul li:hover {
@@ -302,16 +310,28 @@ main article section ul li:has(input:checked) load-data {
   display: grid;
 }
 
-main article section ul li > * {
+main article section ul li label {
   display: none;
-  padding: .5rem;
-  word-break:break-all;
+  word-break: break-all;
+  text-wrap: pretty;
   /* white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; */
 }
 
-main article section ul li > *:not(:empty) {
+main article section ul li label span {
+  padding: .5rem;
+}
+
+main article section ul li label span:first-of-type {
+  padding-inline-start: 1rem;
+}
+
+main article section ul li label span:last-of-type {
+  padding-inline-end: 1rem;
+}
+
+main article section ul li label:not(:empty) {
   display: inline-grid;
 }
 
@@ -354,7 +374,6 @@ main article section {
 /* MARK: ASIDE
 */
 aside {
-  /* width: 0; */
   display: none;
   overflow: hidden;
   align-content: start;
@@ -364,183 +383,33 @@ aside {
 
 aside:has(form fieldset:not(:empty)) {
   display: grid;
+      grid-template-rows: auto 1fr;
 }
 
-
-/* MARK: FORMS
-*/
-form {
+aside form {
   display: grid;
-  gap: 1rem;
-  max-width: 45rem;
-  overflow: hidden;
 }
 
-/* MARK: FIELDSETS
-*/
-/* Hide all fieldsets by default */
+aside form small,
 aside form fieldset {
-  display: grid;
-  overflow: auto;
+  grid-column: 1 / -1;
 }
 
-/* Visually hide fieldset/legend, keep accessible */
-aside form fieldset {
-  border: none;
-  margin: 0;
-  padding: 0;
-}
 
-aside form fieldset * {
-  text-transform: capitalize;
-}
+/* Place buttons horizontally */
+aside form button[data-delete] { grid-column: 1; }
+aside form button[data-reset]  { grid-column: 2; }
+aside form button[data-submit] { grid-column: 3; }
 
-aside form legend {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* Field label + input layout */
-form fieldset label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  margin-block-end: 0.25rem;
-  margin-block-start: 1rem;
-  margin-inline: 1rem;
-}
-
-form input[type="text"],
-form input[type="email"],
-form input[type="number"],
-form input[type="url"],
-form input[type="password"],
-form input[type="search"] {
-  width: 100%;
-  font-size: 1rem;
-  padding: 0.5rem;
-  border: 1px solid rgba(var(--txt-color), 0.2);
-  border-radius: var(--border-radius);
-  background-color: rgba(var(--bg-active-color), 0.05);
-  color: rgba(var(--txt-color), 1);
-}
-
-/* Checkbox layout */
-form input[type="checkbox"] {
-  margin-right: 0.5rem;
-  vertical-align: middle;
-}
-
-/* MARK: VALIDATION
-*/
-/* Disabled by default */
-form button[type="submit"] {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-/* Enable only if all inputs are valid */
-form:has(input[name="item-name"]:valid):has(input[name="item-type"]:valid):has(input[name="item-author"]:valid):has(input[name="item-modified"]:valid) button[type="submit"] {
-  pointer-events: auto;
-  opacity: 1;
-}
-
-/* Optional: style invalid/valid states */
-form input:invalid {
-  border-block-start-color: rgba(0, 0, 0, 0.5);
-  border-inline-end-color: rgba(0, 0, 0, 0.4);
-  border-block-end-color: red;
-}
-
-form input:valid {
-  border-block-start-color: rgba(0, 0, 0, 0.5);
-  border-inline-end-color: rgba(0, 0, 0, 0.5);
-  border-block-end-color: green;
-}
-
-/* MARK: BUTTON CONTROL
-*/
-/* Form <button> is disabled - default */
-form button[type="submit"] {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-/* Form <button> is enabled only when ALL form inputs are valid */
-/* form:has(input:valid):has(select:valid):has(input:valid) {
-  pointer-events: auto;
-  opacity: 1;
-} */
-
-/* Form <button> is enabled only when OPTION TYPES form inputs are valid */
-form:has(input:valid):has(select:valid):has(input[name="ip-start"]:valid):has(input[name="mac-address"]:valid):has(input[name="option-code"]:valid) button[type="submit"] {
-  pointer-events: auto;
-  opacity: 1;
-}
-
-/* MARK: SELECT
-*/
-/* Enter into custom mode */
-aside form select,
-aside form ::picker(select) {
-  appearance: base-select;
-  font: -webkit-small-control;
-}
-
-aside form option::checkmark,
-aside form select::picker-icon {
-  display: none;
-}
-
-/* Styling the options list */
-aside form ::picker(select) {
-  border-radius: var(--border-radius);
-  padding: 0;
-  box-shadow: 0 12.8px 28.8px rgba(0, 0, 0, 0.13), 0 0 9.2px rgba(0, 0, 0, 0.11);
-  border: 1px solid #ececec;
-}
-
-aside form option {
-  grid-template-columns: 1.5rem 1fr auto;
-  padding: 0.5rem 1rem;
-  /*  remove when patch is in  */
-  place-items: start;
-}
-
-aside form option,
-aside form selectedcontent {
-  display: grid;
+/* Optional: Align buttons left */
+aside form {
+  grid-template-columns: 1fr auto auto;
+  grid-template-rows: auto 1fr auto auto;
   gap: 1rem;
-  font-size: 1rem;
+  justify-content: start;
   align-items: center;
 }
 
-/* Style what you see before you open the select dropdown */
-aside form selectedcontent {
-  padding: 0.5rem;
-  grid-template-columns: 1.5rem auto;
-
-  .symbol,
-  .currency-long {
-    display: none
-  }
-}
-
-aside form select {
-  border: none;
-  border-radius: var(--border-radius);
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  padding: 0 1rem 0 0.5rem;
-  width: 8.25rem;
-}
 
 /* MARK: FOOTER
 */
@@ -555,37 +424,58 @@ footer {
   overflow: hidden;
 }
 
-/* MARK: IMAGES
-*/
-img,
-figure {
-  width: 100%;
-  height: auto;
-}
-
-/* https://adactio.com/journal/21896 */
-figcaption {
-  max-inline-size: max-content;
-  margin-inline: auto;
+br {
+  display: block;
+  margin: .5rem;
 }
 
 
-aside form fieldset label [contenteditable] {
+.modal-confirm {
+  position: absolute;
+  inset: 0;
   display: grid;
-  border-inline-start: solid 1px rgba(255, 255, 255, 0.2);
-  border-block-end: solid 1px rgba(255, 255, 255, 0.2);
-  border-inline-end: solid 1px rgba(0, 0, 0, 1.0);
-  border-block-start: solid 1px rgba(0, 0, 0, 1.0);
-  background-color: rgba(0, 0, 0, 0.1);
+  place-items: center;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.modal-confirm.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal-confirm .modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+}
+
+.modal-confirm .modal-content {
+  position: relative;
+  background: rgba(var(--bg-panel-color), 0.9);
+  padding: 1rem;
   border-radius: var(--border-radius);
-  padding: 0.5rem;
+  display: grid;
+  gap: 1rem;
+  max-width: 20rem;
 }
 
-aside form fieldset label [contenteditable] {
-  margin-block-start: 0.1rem;
+.modal-confirm .modal-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
 }
 
-aside form fieldset label [contenteditable="false"] {
-  border: solid 0.0625rem transparent;
-  background-color: rgba(0, 0, 0, 0.0);
+.modal-confirm button {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  border: none;
+  background-color: rgba(var(--button-bg-color), 0.1);
+  color: white;
+}
+
+.modal-confirm button:hover {
+  background-color: rgba(var(--button-bg-color), 0.5);
 }
