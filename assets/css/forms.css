@@ -1,9 +1,7 @@
 :root {
-  --input-border-color: rgba(0, 0, 0, 0.2);
-  --form-bg-color: rgba(255, 255, 255, 0.05);
-  --text-color: black;
-  --button-bg-color: #0066cc;
-  --button-bg-hover: #005bb5;
+  --input-border-color: 255, 255, 255;
+  --input-bg-color: 0, 0, 0;
+  --button-bg-color: 102, 204, 255;
   --valid-border-color: var(--valid-border-color);
   --invalid-border-color: var(--invalid-border-color);
   --invalid-placeholder-color: var(--invalid-placeholder-color);
@@ -11,10 +9,18 @@
   --after-color: var(--after-color);
 }
 
+article select {
+  border-color: rgba(var(--input-border-color), 0.1);
+  width: fit-content;
+  padding: .5rem 1rem;
+  border-radius: var(--border-radius);
+  background-color: rgba(var(--input-bg-color), 0.1);
+  justify-self: end;
+}
+
 /* MARK: FORMS */
 aside form {
   display: grid;
-  gap: 1rem;
   max-width: 45rem;
   overflow: hidden;
   position: relative;
@@ -38,8 +44,8 @@ aside form select {
   border-radius: var(--border-radius);
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid var(--input-border-color);
-  background-color: var(--form-bg-color);
+  border: 0.0625rem solid rgba(var(--input-border-color), 0.1);
+  background-color: rgba(var(--input-bg-color), 0.1);
   font-size: 1rem;
 }
 
@@ -47,8 +53,7 @@ aside form select {
 aside form button {
   padding: 0.75rem;
   border: none;
-  background-color: var(--button-bg-color);
-  color: white;
+  background-color: rgba(var(--button-bg-color), 0.25);
   font-weight: bold;
   cursor: pointer;
   border-radius: var(--border-radius);
@@ -56,7 +61,8 @@ aside form button {
 
 aside form button:hover,
 aside form button:focus-visible {
-  background-color: var(--button-bg-hover);
+  background-color: rgba(var(--button-bg-color), 0.5);
+  color: rgba(var(--txt-active));
 }
 
 /* MARK: VALIDATION */
@@ -75,12 +81,36 @@ aside form:has([data-dirty="true"]):has(:valid):not(:has(:invalid))::after {
 aside form input:valid,
 aside form select:valid {
   border-color: limegreen;
+  position: absolute;
+  bottom: -2rem;
+  left: 0;
+}
+
+aside form input:valid,
+aside form select:valid {
+  border-color: limegreen;
 }
 
 aside form input:invalid,
 aside form select:invalid {
   border-color: red;
 }
+
+aside form input:invalid:not(:placeholder-shown)::placeholder {
+  color: crimson;
+  font-style: italic;
+}
+
+aside form:has(:invalid) button[type="submit"] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+
+
+
+
+
 
 aside form input:invalid:not(:placeholder-shown)::placeholder {
   color: crimson;
@@ -120,31 +150,38 @@ aside form input:invalid:not(:placeholder-shown) + .error {
 }
 
 /* MARK: SELECT */
+/* https://codepen.io/una/pen/MWMmYxb?editors=1100 */
 aside form select,
 aside form ::picker(select) {
   appearance: base-select;
   font: -webkit-small-control;
 }
 
-aside form option::checkmark,
+aside form select {
+  border: solid 0.0625rem rgba(var(--input-border-color), 0.1);
+  border-radius: var(--border-radius);
+  display: grid;
+}
+
+aside form select option::checkmark,
 aside form select::picker-icon {
   display: none;
 }
 
-aside form ::picker(select) {
+aside form select ::picker(select) {
   border-radius: var(--border-radius);
   padding: 0;
   box-shadow: 0 12.8px 28.8px rgba(0, 0, 0, 0.13), 0 0 9.2px rgba(0, 0, 0, 0.11);
   border: 1px solid #ececec;
 }
 
-aside form option {
+aside form select option {
   grid-template-columns: 1.5rem 1fr auto;
   padding: 0.5rem 1rem;
   place-items: start;
 }
 
-aside form option,
+aside form select option,
 aside form selectedcontent {
   display: grid;
   gap: 1rem;
@@ -157,15 +194,6 @@ aside form selectedcontent {
   grid-template-columns: 1.5rem auto;
 }
 
-aside form select {
-  border: none;
-  border-radius: var(--border-radius);
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  padding: 0 1rem 0 0.5rem;
-  width: 8.25rem;
-}
-
 /* MARK: FIELDSETS */
 aside form fieldset {
   display: grid;
@@ -173,10 +201,6 @@ aside form fieldset {
   border: none;
   margin: 0;
   padding: 0;
-}
-
-aside form fieldset * {
-  text-transform: capitalize;
 }
 
 aside form legend {
@@ -195,6 +219,7 @@ aside form fieldset label {
   display: block;
   font-size: 0.875rem;
   font-weight: 500;
+  text-transform: capitalize;
   margin-block-end: 0.25rem;
   margin-block-start: 1rem;
   margin-inline: 1rem;
@@ -203,4 +228,11 @@ aside form fieldset label {
 aside form input[type="checkbox"] {
   margin-right: 0.5rem;
   vertical-align: middle;
+}
+
+/* MARK: DISABLED BUTTONS */
+aside form button:disabled {
+  background-color: rgba(var(--button-bg-color), 0.1);
+  opacity: 0.5;
+  cursor: not-allowed;
 }

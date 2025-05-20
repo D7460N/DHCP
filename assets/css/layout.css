@@ -74,6 +74,7 @@ app-container {
 /* When <aside> has an fieldset that is not empty, which also gives <aside> display: grid;, add a grid column to <app-container> */
 app-container:has(aside form fieldset:not(:empty)) {
   --app-container-grid-template-columns: 12rem 1fr 20rem;
+  grid-template-columns: var(--app-container-grid-template-columns);
 }
 
 app-container:has(aside form fieldset:not(:empty)) main {
@@ -247,6 +248,7 @@ main article > p:not(:empty) {
 /* Hide <select> by default */
 main article select {
   display: none;
+  margin-inline: 1rem;
 }
 
 /* Show <select> when <select> has content */
@@ -283,8 +285,14 @@ main article section ul:has(li label *:not(:empty)) {
 
 main article section ul li {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr));
+  grid-template-columns: 1fr;
   cursor: pointer;
+}
+
+main article section ul li label {
+  /* https://www.youtube.com/watch?v=EeM5wnhO9iI */
+  grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
+  gap: 1rem;
 }
 
 main article section ul li:hover {
@@ -302,9 +310,8 @@ main article section ul li:has(input:checked) load-data {
   display: grid;
 }
 
-main article section ul li > * {
+main article section ul li label {
   display: none;
-  padding: .5rem;
   word-break: break-all;
   text-wrap: pretty;
   /* white-space: nowrap;
@@ -312,7 +319,19 @@ main article section ul li > * {
   text-overflow: ellipsis; */
 }
 
-main article section ul li > *:not(:empty) {
+main article section ul li label span {
+  padding: .5rem;
+}
+
+main article section ul li label span:first-of-type {
+  padding-inline-start: 1rem;
+}
+
+main article section ul li label span:last-of-type {
+  padding-inline-end: 1rem;
+}
+
+main article section ul li label:not(:empty) {
   display: inline-grid;
 }
 
@@ -355,7 +374,6 @@ main article section {
 /* MARK: ASIDE
 */
 aside {
-  /* width: 0; */
   display: none;
   overflow: hidden;
   align-content: start;
@@ -365,4 +383,99 @@ aside {
 
 aside:has(form fieldset:not(:empty)) {
   display: grid;
+      grid-template-rows: auto 1fr;
+}
+
+aside form {
+  display: grid;
+}
+
+aside form small,
+aside form fieldset {
+  grid-column: 1 / -1;
+}
+
+
+/* Place buttons horizontally */
+aside form button[data-delete] { grid-column: 1; }
+aside form button[data-reset]  { grid-column: 2; }
+aside form button[data-submit] { grid-column: 3; }
+
+/* Optional: Align buttons left */
+aside form {
+  grid-template-columns: 1fr auto auto;
+  grid-template-rows: auto 1fr auto auto;
+  gap: 1rem;
+  justify-content: start;
+  align-items: center;
+}
+
+
+/* MARK: FOOTER
+*/
+footer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-auto-flow: column;
+  grid-column: 1 / -1;
+  user-select: none;
+  border-radius: var(--border-radius);
+  margin-inline: 1rem;
+  overflow: hidden;
+}
+
+br {
+  display: block;
+  margin: .5rem;
+}
+
+
+.modal-confirm {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.modal-confirm.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal-confirm .modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+}
+
+.modal-confirm .modal-content {
+  position: relative;
+  background: rgba(var(--bg-panel-color), 0.9);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  display: grid;
+  gap: 1rem;
+  max-width: 20rem;
+}
+
+.modal-confirm .modal-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.modal-confirm button {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  border: none;
+  background-color: rgba(var(--button-bg-color), 0.1);
+  color: white;
+}
+
+.modal-confirm button:hover {
+  background-color: rgba(var(--button-bg-color), 0.5);
 }
