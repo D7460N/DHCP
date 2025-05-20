@@ -11,7 +11,7 @@ const fieldset = form.querySelector('fieldset'); // Form field grouping
 const newButton = document.querySelector('button'); // New row button
 const resetButton = form.querySelector('[data-reset]'); // Reset button reference
 
-form.oninput = () => toggleResetButton(); // Reserved for future extension (placeholder)
+form.oninput = toggleResetButton; // run after any input event
 
 // === Utility: Format ISO Date to input[type="datetime-local"] value ===
 function formatDateForInput(str) {
@@ -183,6 +183,12 @@ function snapshotForm() {
 }
 
 
+function restoreForm() {
+  updateFormFromSelectedRow();
+  toggleResetButton();
+}
+
+
 function hasUnsavedChanges() {
   const items = fieldset.querySelectorAll('input, select');
   const current = Array.from(items).map(el => el.value).join('|');
@@ -190,7 +196,13 @@ function hasUnsavedChanges() {
 }
 
 function toggleResetButton() {
-  resetButton.disabled = !hasUnsavedChanges();
+  const dirty = hasUnsavedChanges();
+  resetButton.disabled = !dirty;
+  if (dirty) {
+    form.setAttribute('data-dirty', '');
+  } else {
+    form.removeAttribute('data-dirty');
+  }
 }
 window.onbeforeunload = () => hasUnsavedChanges() ? true : undefined;
 
@@ -274,10 +286,9 @@ form.onsubmit = e => {
 // === Form Reset ===
 form.onreset = () => {
   if (!confirm('Reset all changes?')) return;
-  updateFormFromSelectedRow();
+  restoreForm();
   const submitBtn = form.querySelector('button[type="submit"]');
   submitBtn.disabled = true;
-  toggleResetButton();
 };
 
 
