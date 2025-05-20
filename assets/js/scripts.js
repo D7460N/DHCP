@@ -11,9 +11,16 @@ const fieldset = form.querySelector('fieldset');
 const newButton = document.querySelector('button');
 const resetButton = form.querySelector('[data-reset]');
 
-// Toggle reset button whenever form input changes
-form.oninput = () => toggleResetButton();
-toggleResetButton();
+// Toggle reset button based on form changes
+function toggleResetButton() {
+  if (!resetButton) return;
+  resetButton.disabled = !hasUnsavedChanges();
+  form.dataset.dirty = hasUnsavedChanges();
+}
+
+form.oninput = () => {
+  toggleResetButton();
+};
 
 // === Utility: Format ISO Date to input[type="datetime-local"] value ===
 function formatDateForInput(str) {
@@ -166,7 +173,7 @@ function updateFormFromSelectedRow() {
     label.appendChild(input);
     fieldset.appendChild(label);
   });
-  
+
   snapshotForm();
 }
 
@@ -185,6 +192,24 @@ function hasUnsavedChanges() {
   return Array.from(fieldset.querySelectorAll('input[name], select[name]')).some(el => el.value !== originalData[el.name]);
 }
 window.onbeforeunload = () => hasUnsavedChanges() ? true : undefined;
+
+function restoreForm() {
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
+      el.value = originalData[el.name];
+    }
+  });
+
+  if (snapshotLi) {
+    snapshotLi.querySelectorAll('span[data-key]').forEach(span => {
+      const key = span.getAttribute('data-key');
+      if (Object.prototype.hasOwnProperty.call(originalData, key)) {
+        span.textContent = originalData[key];
+      }
+    });
+  }
+  toggleResetButton();
+}
 
 function toggleResetButton() {
   if (!resetButton) return;
@@ -227,32 +252,45 @@ document.querySelectorAll('nav input[name="nav"]').forEach(input => {
   };
 });
 
-// === New Row Placeholder (NO FORM POPULATED YET) ===
+// === New Row Creation ===
 newButton.onclick = () => {
   if (hasUnsavedChanges() && !confirm('You have unsaved changes. Discard them?')) return;
 
   fieldset.innerHTML = '';
-  const sampleFields = {
-    "Name": "",
-    "Type": "Host",
-    "Created By": "Current User",
-    "Date Created": new Date().toISOString()
-  };
 
-  Object.entries(sampleFields).forEach(([key, value]) => {
-    const label = document.createElement('label');
-    label.textContent = key + ': ';
-    const input = createInputFromKey(key.toLowerCase().replace(/ /g, '-'), value);
-    label.appendChild(input);
-    fieldset.appendChild(label);
+  const templateRow = ul.querySelector('li');
+  if (!templateRow) return;
+
+  const li = document.createElement('li');
+  li.tabIndex = 0;
+
+  const label = document.createElement('label');
+  const radio = document.createElement('input');
+  radio.type = 'radio';
+  radio.name = 'list-item';
+  radio.hidden = true;
+  radio.oninput = () => updateFormFromSelectedRow();
+  label.appendChild(radio);
+
+  templateRow.querySelectorAll('span[data-key]').forEach(spanT => {
+    const key = spanT.getAttribute('data-key');
+    const span = document.createElement('span');
+    span.setAttribute('data-key', key);
+    span.textContent = '';
+    label.appendChild(span);
+
+    const formLabel = document.createElement('label');
+    formLabel.textContent = key.replace(/^item-/, '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) + ': ';
+    const input = createInputFromKey(key, '');
+    formLabel.appendChild(input);
+    fieldset.appendChild(formLabel);
   });
 
+  li.appendChild(label);
+  ul.appendChild(li);
+  radio.checked = true;
+
   snapshotForm();
-
-  toggleResetButton();
-
-  const submitBtn = form.querySelector('button[type="submit"]');
-  submitBtn.disabled = false;
 };
 
 
@@ -318,6 +356,7 @@ document.querySelector('[data-delete]').onclick = () => {
 function confirmAction(message, { type = 'confirm' } = {}) {
   return new Promise(resolve => {
     let modal = document.getElementById('modal-confirm');
+    const container = document.querySelector('app-container');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'modal-confirm';
@@ -327,7 +366,8 @@ function confirmAction(message, { type = 'confirm' } = {}) {
           <p></p>
           <div class="modal-buttons"></div>
         </div>`;
-      const container = document.querySelector('app-container') || document.body;
+      container.appendChild(modal);
+    } else if (!container.contains(modal)) {
       container.appendChild(modal);
     }
 
