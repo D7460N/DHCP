@@ -5,13 +5,15 @@
 const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/'; // Base API URL
 
 // === DOM Element References ===
-const ul = document.querySelector('main article section ul'); // Target list container
-const form = document.querySelector('aside form'); // Main editable form
-const fieldset = form.querySelector('fieldset'); // Form field grouping
-const newButton = document.querySelector('button'); // New row button
-const resetButton = form.querySelector('[data-reset]'); // Reset button reference
+const ul = document.querySelector('main article section ul');
+const form = document.querySelector('aside form');
+const fieldset = form.querySelector('fieldset');
+const newButton = document.querySelector('button');
+const resetButton = form.querySelector('[data-reset]');
 
-form.oninput = () => toggleResetButton(); // Reserved for future extension (placeholder)
+// Toggle reset button whenever form input changes
+form.oninput = () => toggleResetButton();
+toggleResetButton();
 
 // === Utility: Format ISO Date to input[type="datetime-local"] value ===
 function formatDateForInput(str) {
@@ -20,7 +22,7 @@ function formatDateForInput(str) {
   return d.toISOString().slice(0, 16); // Trims to format: YYYY-MM-DDTHH:MM
 }
 
-// === Live Mirror Handler: Reflect form edits into list view ===
+// === Live Mirror Handler: Inline oninput for native form inputs ===
 function mirrorToSelectedRow(event) {
   const input = event.target;
   const key = input.name;
@@ -164,35 +166,49 @@ function updateFormFromSelectedRow() {
     label.appendChild(input);
     fieldset.appendChild(label);
   });
-
+  
   snapshotForm();
 }
 
-
 // === Track Form Original State ===
-let originalSnapshot = '';
+let originalData = {};
+let snapshotLi = null;
 function snapshotForm() {
-  const items = fieldset.querySelectorAll('input, select');
-  originalSnapshot = Array.from(items).map(el => el.value).join('|');
-
-  // Explicitly set initial button state correctly after snapshot
-  const submitBtn = form.querySelector('button[type="submit"]');
-  submitBtn.disabled = !form.checkValidity(); // crucial fix
-
+  originalData = {};
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    originalData[el.name] = el.value;
+  });
+  snapshotLi = document.querySelector('ul li input[type="radio"]:checked')?.closest('li');
   toggleResetButton();
 }
-
-
 function hasUnsavedChanges() {
-  const items = fieldset.querySelectorAll('input, select');
-  const current = Array.from(items).map(el => el.value).join('|');
-  return current !== originalSnapshot;
-}
-
-function toggleResetButton() {
-  resetButton.disabled = !hasUnsavedChanges();
+  return Array.from(fieldset.querySelectorAll('input[name], select[name]')).some(el => el.value !== originalData[el.name]);
 }
 window.onbeforeunload = () => hasUnsavedChanges() ? true : undefined;
+
+function toggleResetButton() {
+  if (!resetButton) return;
+  const dirty = hasUnsavedChanges();
+  resetButton.disabled = !dirty;
+  form.dataset.dirty = dirty ? 'true' : 'false';
+}
+
+function restoreForm() {
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
+      el.value = originalData[el.name];
+    }
+  });
+
+  if (snapshotLi) {
+    snapshotLi.querySelectorAll('span[data-key]').forEach(span => {
+      const key = span.getAttribute('data-key');
+      if (Object.prototype.hasOwnProperty.call(originalData, key)) {
+        span.textContent = originalData[key];
+      }
+    });
+  }
+}
 
 // === Initial Tab Fetch ===
 const selected = document.querySelector('nav input[name="nav"]:checked');
@@ -272,14 +288,12 @@ form.onsubmit = e => {
 };
 
 // === Form Reset ===
-form.onreset = () => {
+form.onreset = e => {
+  e.preventDefault();
   if (!confirm('Reset all changes?')) return;
-  updateFormFromSelectedRow();
-  const submitBtn = form.querySelector('button[type="submit"]');
-  submitBtn.disabled = true;
-  toggleResetButton();
+  restoreForm();
+  snapshotForm();
 };
-
 
 // === Delete Handler ===
 document.querySelector('[data-delete]').onclick = () => {
@@ -313,9 +327,8 @@ function confirmAction(message, { type = 'confirm' } = {}) {
           <p></p>
           <div class="modal-buttons"></div>
         </div>`;
-
-      // ❗️ Correct appending location within <app-container>
-      document.querySelector('app-container').appendChild(modal);
+      const container = document.querySelector('app-container') || document.body;
+      container.appendChild(modal);
     }
 
     modal.querySelector('p').textContent = message;
