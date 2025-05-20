@@ -70,20 +70,13 @@ aside form:has([data-dirty="true"]):has(:valid):not(:has(:invalid))::after {
   content: '✓ Ready to submit';
   display: block;
   color: var(--after-color);
-  font-weight: bold;
   margin-top: 0.5rem;
   animation: fadeIn 0.5s ease-in-out;
-  position: absolute;
-  bottom: -2rem;
-  left: 0;
 }
 
 aside form input:valid,
 aside form select:valid {
   border-color: limegreen;
-  position: absolute;
-  bottom: -2rem;
-  left: 0;
 }
 
 aside form input:valid,
