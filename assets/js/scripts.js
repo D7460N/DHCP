@@ -9,8 +9,18 @@ const ul = document.querySelector('main article section ul');
 const form = document.querySelector('aside form');
 const fieldset = form.querySelector('fieldset');
 const newButton = document.querySelector('button');
+const resetButton = form.querySelector('[data-reset]');
 
-form.oninput = () => {}; // Reserved for future extension
+// Toggle reset button based on form changes
+function toggleResetButton() {
+  if (!resetButton) return;
+  resetButton.disabled = !hasUnsavedChanges();
+  form.dataset.dirty = hasUnsavedChanges();
+}
+
+form.oninput = () => {
+  toggleResetButton();
+};
 
 // === Utility: Format ISO Date to datetime-local ===
 function formatDateForInput(str) {
@@ -20,7 +30,6 @@ function formatDateForInput(str) {
 }
 
 
-form.oninput = () => {}; // Reserved for future extension
 
 // === Live Mirror Handler: Inline oninput for native form inputs ===
 function mirrorToSelectedRow(event) {
@@ -173,17 +182,38 @@ function updateFormFromSelectedRow() {
 }
 
 // === Track Form Original State ===
-let originalSnapshot = '';
+let originalData = {};
+let snapshotLi = null;
 function snapshotForm() {
-  const items = fieldset.querySelectorAll('input, select');
-  originalSnapshot = Array.from(items).map(el => el.value).join('|');
+  originalData = {};
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    originalData[el.name] = el.value;
+  });
+  snapshotLi = document.querySelector('ul li input[type="radio"]:checked')?.closest('li');
+  toggleResetButton();
 }
 function hasUnsavedChanges() {
-  const items = fieldset.querySelectorAll('input, select');
-  const current = Array.from(items).map(el => el.value).join('|');
-  return current !== originalSnapshot;
+  return Array.from(fieldset.querySelectorAll('input[name], select[name]')).some(el => el.value !== originalData[el.name]);
 }
 window.onbeforeunload = () => hasUnsavedChanges() ? true : undefined;
+
+function restoreForm() {
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
+      el.value = originalData[el.name];
+    }
+  });
+
+  if (snapshotLi) {
+    snapshotLi.querySelectorAll('span[data-key]').forEach(span => {
+      const key = span.getAttribute('data-key');
+      if (Object.prototype.hasOwnProperty.call(originalData, key)) {
+        span.textContent = originalData[key];
+      }
+    });
+  }
+  toggleResetButton();
+}
 
 // === Initial Tab Fetch ===
 const selected = document.querySelector('nav input[name="nav"]:checked');
@@ -202,10 +232,45 @@ document.querySelectorAll('nav input[name="nav"]').forEach(input => {
   };
 });
 
-// === New Row Placeholder (NO FORM POPULATED YET) ===
+// === New Row Creation ===
 newButton.onclick = () => {
   if (hasUnsavedChanges() && !confirm('You have unsaved changes. Discard them?')) return;
-  alert('Row creation UI not yet implemented in rewritten script.');
+
+  fieldset.innerHTML = '';
+
+  const templateRow = ul.querySelector('li');
+  if (!templateRow) return;
+
+  const li = document.createElement('li');
+  li.tabIndex = 0;
+
+  const label = document.createElement('label');
+  const radio = document.createElement('input');
+  radio.type = 'radio';
+  radio.name = 'list-item';
+  radio.hidden = true;
+  radio.oninput = () => updateFormFromSelectedRow();
+  label.appendChild(radio);
+
+  templateRow.querySelectorAll('span[data-key]').forEach(spanT => {
+    const key = spanT.getAttribute('data-key');
+    const span = document.createElement('span');
+    span.setAttribute('data-key', key);
+    span.textContent = '';
+    label.appendChild(span);
+
+    const formLabel = document.createElement('label');
+    formLabel.textContent = key.replace(/^item-/, '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) + ': ';
+    const input = createInputFromKey(key, '');
+    formLabel.appendChild(input);
+    fieldset.appendChild(formLabel);
+  });
+
+  li.appendChild(label);
+  ul.appendChild(li);
+  radio.checked = true;
+
+  snapshotForm();
 };
 
 // === Form Submit ===
@@ -230,13 +295,21 @@ form.onsubmit = e => {
     method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  }).then(() => load(`${BASE_URL}${tab}`));
+  })
+    .then(() => confirmAction('Record saved.', { type: 'alert' }))
+    .then(() => load(`${BASE_URL}${tab}`))
+    .catch(err => {
+      console.error('Failed to save record:', err);
+      confirmAction('Error saving record.', { type: 'alert' });
+    });
 };
 
 // === Form Reset ===
-form.onreset = () => {
+form.onreset = e => {
+  e.preventDefault();
   if (!confirm('Reset all changes?')) return;
-  updateFormFromSelectedRow();
+  restoreForm();
+  snapshotForm();
 };
 
 // === Delete Handler ===
@@ -255,6 +328,7 @@ document.querySelector('[data-delete]').onclick = () => {
 function confirmAction(message, { type = 'confirm' } = {}) {
   return new Promise(resolve => {
     let modal = document.getElementById('modal-confirm');
+    const container = document.querySelector('app-container');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'modal-confirm';
@@ -264,7 +338,9 @@ function confirmAction(message, { type = 'confirm' } = {}) {
           <p></p>
           <div class="modal-buttons"></div>
         </div>`;
-      document.body.appendChild(modal);
+      container.appendChild(modal);
+    } else if (!container.contains(modal)) {
+      container.appendChild(modal);
     }
 
     modal.querySelector('p').textContent = message;
