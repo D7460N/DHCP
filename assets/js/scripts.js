@@ -9,8 +9,11 @@ const ul = document.querySelector('main article section ul');
 const form = document.querySelector('aside form');
 const fieldset = form.querySelector('fieldset');
 const newButton = document.querySelector('button');
+const resetButton = form.querySelector('[data-reset]');
 
-form.oninput = () => {}; // Reserved for future extension
+// Toggle reset button whenever form input changes
+form.oninput = () => toggleResetButton();
+toggleResetButton();
 
 // === Utility: Format ISO Date to datetime-local ===
 function formatDateForInput(str) {
@@ -20,7 +23,6 @@ function formatDateForInput(str) {
 }
 
 
-form.oninput = () => {}; // Reserved for future extension
 
 // === Live Mirror Handler: Inline oninput for native form inputs ===
 function mirrorToSelectedRow(event) {
@@ -173,17 +175,44 @@ function updateFormFromSelectedRow() {
 }
 
 // === Track Form Original State ===
-let originalSnapshot = '';
+let originalData = {};
+let snapshotLi = null;
 function snapshotForm() {
-  const items = fieldset.querySelectorAll('input, select');
-  originalSnapshot = Array.from(items).map(el => el.value).join('|');
+  originalData = {};
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    originalData[el.name] = el.value;
+  });
+  snapshotLi = document.querySelector('ul li input[type="radio"]:checked')?.closest('li');
+  toggleResetButton();
 }
 function hasUnsavedChanges() {
-  const items = fieldset.querySelectorAll('input, select');
-  const current = Array.from(items).map(el => el.value).join('|');
-  return current !== originalSnapshot;
+  return Array.from(fieldset.querySelectorAll('input[name], select[name]')).some(el => el.value !== originalData[el.name]);
 }
 window.onbeforeunload = () => hasUnsavedChanges() ? true : undefined;
+
+function toggleResetButton() {
+  if (!resetButton) return;
+  const dirty = hasUnsavedChanges();
+  resetButton.disabled = !dirty;
+  form.dataset.dirty = dirty ? 'true' : 'false';
+}
+
+function restoreForm() {
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
+      el.value = originalData[el.name];
+    }
+  });
+
+  if (snapshotLi) {
+    snapshotLi.querySelectorAll('span[data-key]').forEach(span => {
+      const key = span.getAttribute('data-key');
+      if (Object.prototype.hasOwnProperty.call(originalData, key)) {
+        span.textContent = originalData[key];
+      }
+    });
+  }
+}
 
 // === Initial Tab Fetch ===
 const selected = document.querySelector('nav input[name="nav"]:checked');
@@ -230,13 +259,21 @@ form.onsubmit = e => {
     method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  }).then(() => load(`${BASE_URL}${tab}`));
+  })
+    .then(() => confirmAction('Record saved.', { type: 'alert' }))
+    .then(() => load(`${BASE_URL}${tab}`))
+    .catch(err => {
+      console.error('Failed to save record:', err);
+      confirmAction('Error saving record.', { type: 'alert' });
+    });
 };
 
 // === Form Reset ===
-form.onreset = () => {
+form.onreset = e => {
+  e.preventDefault();
   if (!confirm('Reset all changes?')) return;
-  updateFormFromSelectedRow();
+  restoreForm();
+  snapshotForm();
 };
 
 // === Delete Handler ===
@@ -264,7 +301,8 @@ function confirmAction(message, { type = 'confirm' } = {}) {
           <p></p>
           <div class="modal-buttons"></div>
         </div>`;
-      document.body.appendChild(modal);
+      const container = document.querySelector('app-container') || document.body;
+      container.appendChild(modal);
     }
 
     modal.querySelector('p').textContent = message;
