@@ -175,6 +175,7 @@ function updateFormFromSelectedRow() {
   });
 
   snapshotForm();
+  toggleResetButton();
 }
 
 // === Track Form Original State ===
