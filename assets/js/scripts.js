@@ -5,13 +5,22 @@
 const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/'; // Base API URL
 
 // === DOM Element References ===
-const ul = document.querySelector('main article section ul'); // Target list container
-const form = document.querySelector('aside form'); // Main editable form
-const fieldset = form.querySelector('fieldset'); // Form field grouping
-const newButton = document.querySelector('button'); // New row button
-const resetButton = form.querySelector('[data-reset]'); // Reset button reference
+const ul = document.querySelector('main article section ul');
+const form = document.querySelector('aside form');
+const fieldset = form.querySelector('fieldset');
+const newButton = document.querySelector('button');
+const resetButton = form.querySelector('[data-reset]');
 
-form.oninput = toggleResetButton; // run after any input event
+// Toggle reset button based on form changes
+function toggleResetButton() {
+  if (!resetButton) return;
+  resetButton.disabled = !hasUnsavedChanges();
+  form.dataset.dirty = hasUnsavedChanges();
+}
+
+form.oninput = () => {
+  toggleResetButton();
+};
 
 // === Utility: Format ISO Date to input[type="datetime-local"] value ===
 function formatDateForInput(str) {
@@ -20,7 +29,7 @@ function formatDateForInput(str) {
   return d.toISOString().slice(0, 16); // Trims to format: YYYY-MM-DDTHH:MM
 }
 
-// === Live Mirror Handler: Reflect form edits into list view ===
+// === Live Mirror Handler: Inline oninput for native form inputs ===
 function mirrorToSelectedRow(event) {
   const input = event.target;
   const key = input.name;
@@ -169,40 +178,63 @@ function updateFormFromSelectedRow() {
   toggleResetButton();
 }
 
-
 // === Track Form Original State ===
-let originalSnapshot = '';
+let originalData = {};
+let snapshotLi = null;
 function snapshotForm() {
-  const items = fieldset.querySelectorAll('input, select');
-  originalSnapshot = Array.from(items).map(el => el.value).join('|');
-
-  // Explicitly set initial button state correctly after snapshot
-  const submitBtn = form.querySelector('button[type="submit"]');
-  submitBtn.disabled = !form.checkValidity(); // crucial fix
+  originalData = {};
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    originalData[el.name] = el.value;
+  });
+  snapshotLi = document.querySelector('ul li input[type="radio"]:checked')?.closest('li');
+  toggleResetButton();
 }
-
+function hasUnsavedChanges() {
+  return Array.from(fieldset.querySelectorAll('input[name], select[name]')).some(el => el.value !== originalData[el.name]);
+}
+window.onbeforeunload = () => hasUnsavedChanges() ? true : undefined;
 
 function restoreForm() {
-  updateFormFromSelectedRow();
-}
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
+      el.value = originalData[el.name];
+    }
+  });
 
-
-function hasUnsavedChanges() {
-  const items = fieldset.querySelectorAll('input, select');
-  const current = Array.from(items).map(el => el.value).join('|');
-  return current !== originalSnapshot;
+  if (snapshotLi) {
+    snapshotLi.querySelectorAll('span[data-key]').forEach(span => {
+      const key = span.getAttribute('data-key');
+      if (Object.prototype.hasOwnProperty.call(originalData, key)) {
+        span.textContent = originalData[key];
+      }
+    });
+  }
+  toggleResetButton();
 }
 
 function toggleResetButton() {
+  if (!resetButton) return;
   const dirty = hasUnsavedChanges();
   resetButton.disabled = !dirty;
-  if (dirty) {
-    form.setAttribute('data-dirty', '');
-  } else {
-    form.removeAttribute('data-dirty');
+  form.dataset.dirty = dirty ? 'true' : 'false';
+}
+
+function restoreForm() {
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
+      el.value = originalData[el.name];
+    }
+  });
+
+  if (snapshotLi) {
+    snapshotLi.querySelectorAll('span[data-key]').forEach(span => {
+      const key = span.getAttribute('data-key');
+      if (Object.prototype.hasOwnProperty.call(originalData, key)) {
+        span.textContent = originalData[key];
+      }
+    });
   }
 }
-window.onbeforeunload = () => hasUnsavedChanges() ? true : undefined;
 
 // === Initial Tab Fetch ===
 const selected = document.querySelector('nav input[name="nav"]:checked');
@@ -221,32 +253,45 @@ document.querySelectorAll('nav input[name="nav"]').forEach(input => {
   };
 });
 
-// === New Row Placeholder (NO FORM POPULATED YET) ===
+// === New Row Creation ===
 newButton.onclick = () => {
   if (hasUnsavedChanges() && !confirm('You have unsaved changes. Discard them?')) return;
 
   fieldset.innerHTML = '';
-  const sampleFields = {
-    "Name": "",
-    "Type": "Host",
-    "Created By": "Current User",
-    "Date Created": new Date().toISOString()
-  };
 
-  Object.entries(sampleFields).forEach(([key, value]) => {
-    const label = document.createElement('label');
-    label.textContent = key + ': ';
-    const input = createInputFromKey(key.toLowerCase().replace(/ /g, '-'), value);
-    label.appendChild(input);
-    fieldset.appendChild(label);
+  const templateRow = ul.querySelector('li');
+  if (!templateRow) return;
+
+  const li = document.createElement('li');
+  li.tabIndex = 0;
+
+  const label = document.createElement('label');
+  const radio = document.createElement('input');
+  radio.type = 'radio';
+  radio.name = 'list-item';
+  radio.hidden = true;
+  radio.oninput = () => updateFormFromSelectedRow();
+  label.appendChild(radio);
+
+  templateRow.querySelectorAll('span[data-key]').forEach(spanT => {
+    const key = spanT.getAttribute('data-key');
+    const span = document.createElement('span');
+    span.setAttribute('data-key', key);
+    span.textContent = '';
+    label.appendChild(span);
+
+    const formLabel = document.createElement('label');
+    formLabel.textContent = key.replace(/^item-/, '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) + ': ';
+    const input = createInputFromKey(key, '');
+    formLabel.appendChild(input);
+    fieldset.appendChild(formLabel);
   });
 
+  li.appendChild(label);
+  ul.appendChild(li);
+  radio.checked = true;
+
   snapshotForm();
-
-  toggleResetButton();
-
-  const submitBtn = form.querySelector('button[type="submit"]');
-  submitBtn.disabled = false;
 };
 
 
@@ -282,14 +327,12 @@ form.onsubmit = e => {
 };
 
 // === Form Reset ===
-form.onreset = () => {
+form.onreset = e => {
+  e.preventDefault();
   if (!confirm('Reset all changes?')) return;
   restoreForm();
-  toggleResetButton();
-  const submitBtn = form.querySelector('button[type="submit"]');
-  submitBtn.disabled = true;
+  snapshotForm();
 };
-
 
 // === Delete Handler ===
 document.querySelector('[data-delete]').onclick = () => {
@@ -314,6 +357,7 @@ document.querySelector('[data-delete]').onclick = () => {
 function confirmAction(message, { type = 'confirm' } = {}) {
   return new Promise(resolve => {
     let modal = document.getElementById('modal-confirm');
+    const container = document.querySelector('app-container');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'modal-confirm';
@@ -323,9 +367,9 @@ function confirmAction(message, { type = 'confirm' } = {}) {
           <p></p>
           <div class="modal-buttons"></div>
         </div>`;
-
-      // ❗️ Correct appending location within <app-container>
-      document.querySelector('app-container').appendChild(modal);
+      container.appendChild(modal);
+    } else if (!container.contains(modal)) {
+      container.appendChild(modal);
     }
 
     modal.querySelector('p').textContent = message;
