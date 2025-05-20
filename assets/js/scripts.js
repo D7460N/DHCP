@@ -11,13 +11,6 @@ const fieldset = form.querySelector('fieldset');
 const newButton = document.querySelector('button');
 const resetButton = form.querySelector('[data-reset]');
 
-// Toggle reset button based on form changes
-function toggleResetButton() {
-  if (!resetButton) return;
-  resetButton.disabled = !hasUnsavedChanges();
-  form.dataset.dirty = hasUnsavedChanges();
-}
-
 form.oninput = () => {
   toggleResetButton();
 };
@@ -193,24 +186,6 @@ function hasUnsavedChanges() {
   return Array.from(fieldset.querySelectorAll('input[name], select[name]')).some(el => el.value !== originalData[el.name]);
 }
 window.onbeforeunload = () => hasUnsavedChanges() ? true : undefined;
-
-function restoreForm() {
-  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
-    if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
-      el.value = originalData[el.name];
-    }
-  });
-
-  if (snapshotLi) {
-    snapshotLi.querySelectorAll('span[data-key]').forEach(span => {
-      const key = span.getAttribute('data-key');
-      if (Object.prototype.hasOwnProperty.call(originalData, key)) {
-        span.textContent = originalData[key];
-      }
-    });
-  }
-  toggleResetButton();
-}
 
 function toggleResetButton() {
   if (!resetButton) return;
