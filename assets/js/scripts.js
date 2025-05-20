@@ -2,7 +2,7 @@
 // Purpose: Fetch JSON, inject content into UL/LI and FORM using native HTML form elements only
 
 // === Constants ===
-const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/';
+const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/'; // Base API URL
 
 // === DOM Element References ===
 const ul = document.querySelector('main article section ul');
@@ -22,14 +22,12 @@ form.oninput = () => {
   toggleResetButton();
 };
 
-// === Utility: Format ISO Date to datetime-local ===
+// === Utility: Format ISO Date to input[type="datetime-local"] value ===
 function formatDateForInput(str) {
   const d = new Date(str);
   if (isNaN(d)) return '';
-  return d.toISOString().slice(0, 16);
+  return d.toISOString().slice(0, 16); // Trims to format: YYYY-MM-DDTHH:MM
 }
-
-
 
 // === Live Mirror Handler: Inline oninput for native form inputs ===
 function mirrorToSelectedRow(event) {
@@ -44,8 +42,7 @@ function mirrorToSelectedRow(event) {
   }
 }
 
-
-// === Utility: Create Input from Key and Value ===
+// === Utility: Build appropriate input/select based on key-value ===
 function createInputFromKey(key, value) {
   const inputName = key;
   const val = value?.trim?.() ?? '';
@@ -97,11 +94,9 @@ function createInputFromKey(key, value) {
     }
   }
 
-  // ✅ Always apply mirroring if editable
-  element.oninput = mirrorToSelectedRow;
+  element.oninput = mirrorToSelectedRow; // Enable live mirroring
   return element;
 }
-
 
 // === Load Data from API and Render into UI ===
 function load(endpoint) {
@@ -156,11 +151,12 @@ function load(endpoint) {
       });
 
       snapshotForm();
+      toggleResetButton();
     })
     .catch(err => console.error('Failed to load data:', err));
 }
 
-// === Reflect LI Data Into Form (Native Inputs) ===
+// === Reflect LI Data Into Form ===
 function updateFormFromSelectedRow() {
   fieldset.innerHTML = '';
   const selectedRow = document.querySelector('ul li input[type="radio"]:checked')?.closest('li');
@@ -213,6 +209,30 @@ function restoreForm() {
     });
   }
   toggleResetButton();
+}
+
+function toggleResetButton() {
+  if (!resetButton) return;
+  const dirty = hasUnsavedChanges();
+  resetButton.disabled = !dirty;
+  form.dataset.dirty = dirty ? 'true' : 'false';
+}
+
+function restoreForm() {
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
+      el.value = originalData[el.name];
+    }
+  });
+
+  if (snapshotLi) {
+    snapshotLi.querySelectorAll('span[data-key]').forEach(span => {
+      const key = span.getAttribute('data-key');
+      if (Object.prototype.hasOwnProperty.call(originalData, key)) {
+        span.textContent = originalData[key];
+      }
+    });
+  }
 }
 
 // === Initial Tab Fetch ===
@@ -273,6 +293,7 @@ newButton.onclick = () => {
   snapshotForm();
 };
 
+
 // === Form Submit ===
 form.onsubmit = e => {
   e.preventDefault();
@@ -318,11 +339,18 @@ document.querySelector('[data-delete]').onclick = () => {
   const id = selected?.closest('li')?.querySelector('span[data-key="id"]')?.textContent?.trim();
   const tab = document.querySelector('nav input[name="nav"]:checked')?.closest('label')?.textContent.trim().toLowerCase().replace(/\s+/g, '-');
 
+  if (!selected || !id || !tab) {
+    alert('Select a valid record to delete.');
+    return;
+  }
+
   confirmAction('Delete this record?', { type: 'confirm' }).then(ok => {
-    if (!selected || !id || !tab || !ok) return;
-    fetch(`${BASE_URL}${tab}/${id}`, { method: 'DELETE' }).then(() => load(`${BASE_URL}${tab}`));
+    if (!ok) return;
+    fetch(`${BASE_URL}${tab}/${id}`, { method: 'DELETE' })
+      .then(() => load(`${BASE_URL}${tab}`));
   });
 };
+
 
 // === Modal Confirmation ===
 function confirmAction(message, { type = 'confirm' } = {}) {
