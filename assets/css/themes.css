@@ -91,7 +91,7 @@ body:before {
   height: 100dvh;
   background-attachment: initial;
   background-color: transparent;
-  background-image: url('assets/images/app/pattern.png');
+  background-image: url('/assets/images/app/pattern.png');
   background-size: 4.6875rem;
   background-repeat: repeat;
   z-index: -5;
