@@ -11,7 +11,8 @@
     <meta name="color-scheme" content="dark light">
     <link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials">
     <link rel="canonical" href="https://d7460n.dev/">
-    <link rel="icon" type="image/svg+xml" href="assets/images/brand/logo/logo.svg">
+    <base href="/">
+    <link rel="icon" type="image/svg+xml" href="assets/images/brand/logo.svg">
     <link rel="stylesheet" type="text/css" href="assets/css/themes.css">
     <link rel="stylesheet" type="text/css" href="assets/css/layout.css">
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
@@ -23,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
     <link rel="stylesheet" type="text/css" href="assets/css/a11y.css">
     <link rel="stylesheet" type="text/css" href="assets/css/forms.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/fonts.css">
     <title>DHCP Portal</title>
   </head>
 
@@ -32,7 +34,7 @@
         <p>banner</p>
       </app-banner>
       <header>
-        <app-logo>DHCP Portal</app-logo>
+        <app-logo><a href="/" aria-label="Go to DHCP Portal Home">LOGO</a>DHCP Portal</app-logo>
         <label>
           <input type="checkbox" checked>
           <demo-buttons>Layouts</demo-buttons>
