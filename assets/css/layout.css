@@ -129,6 +129,7 @@ header {
   user-select: none;
   border-radius: var(--border-radius);
   margin-inline: 1rem;
+  align-items: center;
   overflow: hidden;
 }
 
