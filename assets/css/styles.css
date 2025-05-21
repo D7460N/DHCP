@@ -50,22 +50,6 @@ hr {
 
 /* aside {resize: var(--aside-resize-v);} */
 
-/* MARK: LABELS
-*/
-label {
-  display: grid;
-  grid-auto-flow: column;
-  cursor: auto;
-}
-
-nav details label:hover,
-nav details label:has(> input:checked) {
-  background-color: rgba(var(--bg-active-color), 0.05);
-  cursor: pointer;
-  color: rgba(var(--txt-active),
-      var(--txt-active-opacity));
-}
-
 main p,
 aside p {
   /* margin-block-end: 1lh; */

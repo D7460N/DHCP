@@ -5,7 +5,7 @@
 const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/'; // Base API URL
 
 // === DOM Element References ===
-const ul = document.querySelector('main article section ul');
+const ul = document.querySelector('main article ul:last-of-type');
 const form = document.querySelector('aside form');
 const fieldset = form.querySelector('fieldset');
 const newButton = document.querySelector('button');

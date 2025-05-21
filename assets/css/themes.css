@@ -63,28 +63,6 @@
   }
 }
 
-/* MARK: ALL PANELS
-*/
-app-container > * {
-  background-color:
-    rgba(var(--bg-panel-color),
-      var(--bg-panel-opacity));
-}
-
-/* MARK: NAV
-*/
-nav {
-  --bg-panel-opacity: 0;
-}
-
-button {
-  --bg-panel-opacity: 0.1;
-}
-
-iframe {
-  background-color: var(--bg-color);
-}
-
 /* MARK: LOOK/FEEL
 */
 body {
@@ -134,6 +112,55 @@ body:before {
 /* background-size: 75% 75%;
 } */
 
+/* MARK: ALL PANELS
+*/
+app-container > * {
+  background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
+}
+
+button {
+  --bg-panel-opacity: 0.1;
+}
+
+iframe {
+  background-color: var(--bg-color);
+}
+
+/* MARK: NAV
+*/
+nav {
+  --bg-panel-opacity: 0;
+}
+
+nav details label:hover,
+nav details label:has(> input:checked) {
+  background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
+  color: rgba(var(--txt-active), var(--txt-active-opacity));
+  cursor: pointer;
+}
+
+/* MARK: FORMS
+*/
 form fieldset label:focus {
   color: rgba(var(--txt-color), 1.0)
 }
+
+/*
+div {
+background: */
+    /* cover */
+    /* linear-gradient(var(--bg-panel-color) 33%,
+      rgba(var(--bg-panel-color), 0.0)),
+    linear-gradient(rgba(var(--bg-panel-color), 0.0),
+      var(--bg-panel-color) 66%) 0 100%, */
+    /* drop-shadow */
+    /* radial-gradient(farthest-side at 50% 0,
+      rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.0)),
+    radial-gradient(farthest-side at 50% 100%,
+      rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.0)) 0 100%;
+  background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
+  background-repeat: no-repeat;
+  background-attachment: local, local, scroll, scroll;
+  background-size: 100% 36px, 100% 36px, 100% 5px, 100% 5px;
+}
+*/

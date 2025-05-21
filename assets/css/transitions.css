@@ -8,7 +8,7 @@
 :root {
   --transition-behavior: allow-discrete;
   --transition-duration: 250ms;
-  --transition-property: visibility, opacity, display, transform, background-color, color;
+  --transition-property: visibility, opacity, display, transform, background-color, border-color, color;
   --transition-timing-function: ease-in-out;
 }
 

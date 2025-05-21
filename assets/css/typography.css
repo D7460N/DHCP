@@ -73,6 +73,6 @@ dd,
 p,
 figure,
 blockquote {
-  hanging-punctuation: first last;
+  /* hanging-punctuation: first last; */
   text-wrap: pretty;
 }

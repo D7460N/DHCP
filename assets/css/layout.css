@@ -180,7 +180,11 @@ nav details {
 }
 
 nav details section {
+  display: grid;
   grid-auto-flow: var(--tab-grid-auto-flow);
+  overflow: overlay;
+  position: relative;
+  align-content: start;
 }
 
 nav label {
@@ -255,34 +259,15 @@ main article select:has(option:not(:empty)) {
 
 /* MARK: UL LI TABLES
 */
-/* Hide <ul> and <section><ul> by default */
 main article > ul {
   display: none;
-}
-
-main article > ul li {
-  display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
-    gap: 1rem;
-}
-
-main article > ul li span {
-    padding: .5rem;
-    word-break: break-all;
-    text-wrap: pretty;
-    font-weight: 600;
-}
-
-main article > ul li span:first-of-type {
-    padding-inline-start: 1rem;
-}
-
-/* Style UL LI table header <ul> BEFORE <section> */
-main article > ul:has(+ section) {
   list-style-type: none;
   margin-block-start: 1rem;
-  font-weight: bolder;
   letter-spacing: 0.0625rem;
+}
+
+main article ul:first-of-type {
+  font-weight: 600;
 }
 
 /* Show header row when list populated */
@@ -290,68 +275,84 @@ main article > ul:has(span:not(:empty)) {
   display: grid;
 }
 
-/* Style UL LI table header <ul> INSIDE <section> */
-main article section ul {
-  display: none;
-  list-style-type: none;
-  grid-auto-flow: column;
+main article > ul li {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
+  gap: 1rem;
 }
 
-main article section ul:has(li label *:not(:empty)) {
-  display: grid;
+main article > ul li span {
+  padding: .5rem;
+  word-break: break-all;
+  text-wrap: pretty;
+}
+
+main article > ul li span:first-of-type {
+  padding-inline-start: 1rem;
+}
+
+/* Style UL LI table header <ul> INSIDE <section> */
+main article ul:last-of-type {
+  display: none;
+  overflow: overlay;
+  list-style-type: none;
   grid-auto-flow: row;
 
+  overflow: overlay;
+  position: relative;
+  align-content: start;
 }
 
-main article section ul li {
+main article ul:last-of-type li {
   display: grid;
   grid-template-columns: 1fr;
   cursor: pointer;
 }
 
-main article section ul li label {
+main article ul:last-of-type li label {
   /* https://www.youtube.com/watch?v=EeM5wnhO9iI */
   grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
   gap: 1rem;
 }
 
-main article section ul li:hover {
+main article ul:last-of-type li:hover {
   background-color: rgba(var(--bg-active-color), 0.05);
 }
 
 /* LI active state */
-main article section ul li:has(input:checked) {
+main article ul:last-of-type li:has(input:checked) {
   background-color: rgba(var(--bg-active-color), 0.05);
   color: rgba(var(--txt-active), 1.0);
 }
 
 /* Spinner visible when selected */
-main article section ul li:has(input:checked) load-data {
+main article ul:last-of-type li:has(input:checked) load-data {
   display: grid;
 }
 
-main article section ul li label {
+main article ul:last-of-type li label {
   display: none;
-  word-break: break-all;
+  cursor: pointer;
+  word-break: break-word;
   text-wrap: pretty;
   /* white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; */
 }
 
-main article section ul li label span {
+main article ul:last-of-type li label span {
   padding: .5rem;
 }
 
-main article section ul li label span:first-of-type {
+main article ul:last-of-type li label span:first-of-type {
   padding-inline-start: 1rem;
 }
 
-main article section ul li label span:last-of-type {
+main article ul:last-of-type li label span:last-of-type {
   padding-inline-end: 1rem;
 }
 
-main article section ul li label:not(:empty) {
+main article ul:last-of-type li label:not(:empty) {
   display: inline-grid;
 }
 
@@ -365,30 +366,6 @@ main article input[type="search"]:not(:empty) {
 
 main article input[type="search"]:not(:placeholder-shown) {
   display: grid;
-}
-
-/* MARK: SECTION
-*/
-main article section {
-  display: grid;
-  overflow: overlay;
-  position: relative;
-  align-content: start;
-  background:
-    /* cover */
-    linear-gradient(var(--bg-panel-color) 33%,
-      rgba(var(--bg-panel-color), 0.0)),
-    linear-gradient(rgba(var(--bg-panel-color), 0.0),
-      var(--bg-panel-color) 66%) 0 100%,
-    /* drop-shadow */
-    radial-gradient(farthest-side at 50% 0,
-      rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.0)),
-    radial-gradient(farthest-side at 50% 100%,
-      rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.0)) 0 100%;
-  background-color: rgba(var(--bg-panel-color), --bg-panel-opacity);
-  background-repeat: no-repeat;
-  background-attachment: local, local, scroll, scroll;
-  background-size: 100% 36px, 100% 36px, 100% 5px, 100% 5px;
 }
 
 /* MARK: ASIDE

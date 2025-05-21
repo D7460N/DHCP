@@ -33,7 +33,6 @@ aside form {
 /* MARK: LABELS */
 aside form label {
   display: grid;
-  font-weight: bold;
   gap: 0.5rem;
 }
 
@@ -43,7 +42,6 @@ aside form select {
   padding: 0.5rem;
   border-radius: var(--border-radius);
   width: 100%;
-  box-sizing: border-box;
   border: 0.0625rem solid rgba(var(--input-border-color), 0.1);
   background-color: rgba(var(--input-bg-color), 0.1);
   font-size: 1rem;
@@ -79,17 +77,14 @@ aside form:has([data-dirty="true"]):has(:valid):not(:has(:invalid))::after {
 
 aside form input:valid,
 aside form select:valid {
-  border-color: limegreen;
-}
-
-aside form input:valid,
-aside form select:valid {
-  border-color: limegreen;
+  border: solid 0.25rem transparent;
+  border-inline-start-color: limegreen;
 }
 
 aside form input:invalid,
 aside form select:invalid {
-  border-color: red;
+  border: solid 0.25rem transparent;
+  border-inline-start-color: red;
 }
 
 aside form input:invalid:not(:placeholder-shown)::placeholder {
