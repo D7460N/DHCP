@@ -24,7 +24,9 @@ button {
   color: inherit;
   text-align: center;
   border-radius: var(--border-radius);
-    margin-block-end: 1rem;
+  margin-block-end: 1rem;
+  font-family: inherit;
+  font-size: 100%;
 }
 
 aside form button:first-of-type {
