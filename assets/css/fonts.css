@@ -1,0 +1,71 @@
+/* MARK: FONTS
+*/
+@font-face {
+  font-family: 'Oxanium-extra-light'; /* You can choose any name for your font */
+  src: url('/assets/fonts/oxanium/static/Oxanium-extra-light.woff2') format('woff2'), /* Path to the font file */
+       url('/assets/fonts/oxanium/static/Oxanium-extra-light.woff') format('woff'),
+       url('/assets/fonts/oxanium/static/Oxanium-extra-light.ttf') format('truetype'); /* Fallback font formats */
+  /* Optional: specify font-weight and font-style */
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Oxanium-light'; /* You can choose any name for your font */
+  src: url('/assets/fonts/oxanium/static/Oxanium-Light.woff2') format('woff2'), /* Path to the font file */
+       url('/assets/fonts/oxanium/static/Oxanium-Light.woff') format('woff'),
+       url('/assets/fonts/oxanium/static/Oxanium-Light.ttf') format('truetype'); /* Fallback font formats */
+  /* Optional: specify font-weight and font-style */
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Oxanium-regular'; /* You can choose any name for your font */
+  src: url('/assets/fonts/oxanium/static/Oxanium-regular.woff2') format('woff2'), /* Path to the font file */
+       url('/assets/fonts/oxanium/static/Oxanium-regular.woff') format('woff'),
+       url('/assets/fonts/oxanium/static/Oxanium-regular.ttf') format('truetype'); /* Fallback font formats */
+  /* Optional: specify font-weight and font-style */
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Oxanium-medium'; /* You can choose any name for your font */
+  src: url('/assets/fonts/oxanium/static/Oxanium-medium.woff2') format('woff2'), /* Path to the font file */
+       url('/assets/fonts/oxanium/static/Oxanium-medium.woff') format('woff'),
+       url('/assets/fonts/oxanium/static/Oxanium-medium.ttf') format('truetype'); /* Fallback font formats */
+  /* Optional: specify font-weight and font-style */
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Oxanium-semi-bold'; /* You can choose any name for your font */
+  src: url('/assets/fonts/oxanium/static/Oxanium-semi-bold.woff2') format('woff2'), /* Path to the font file */
+       url('/assets/fonts/oxanium/static/Oxanium-semi-bold.woff') format('woff'),
+       url('/assets/fonts/oxanium/static/Oxanium-semi-bold.ttf') format('truetype'); /* Fallback font formats */
+  /* Optional: specify font-weight and font-style */
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Oxanium-bold'; /* You can choose any name for your font */
+  src: url('/assets/fonts/oxanium/static/Oxanium-bold.woff2') format('woff2'), /* Path to the font file */
+       url('/assets/fonts/oxanium/static/Oxanium-bold.woff') format('woff'),
+       url('/assets/fonts/oxanium/static/Oxanium-bold.ttf') format('truetype'); /* Fallback font formats */
+  /* Optional: specify font-weight and font-style */
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Oxanium-extra-bold'; /* You can choose any name for your font */
+  src: url('/assets/fonts/oxanium/static/Oxanium-extra-bold.woff2') format('woff2'), /* Path to the font file */
+       url('/assets/fonts/oxanium/static/Oxanium-extra-bold.woff') format('woff'),
+       url('/assets/fonts/oxanium/static/Oxanium-extra-bold.ttf') format('truetype'); /* Fallback font formats */
+  /* Optional: specify font-weight and font-style */
+  font-weight: 800;
+  font-style: normal;
+}

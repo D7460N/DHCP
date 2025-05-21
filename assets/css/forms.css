@@ -51,13 +51,7 @@ aside form select {
 
 /* MARK: BUTTON */
 aside form button {
-  padding: 0.75rem;
-  border: none;
   background-color: rgba(var(--button-bg-color), 0.25);
-  cursor: pointer;
-  border-radius: var(--border-radius);
-  font-family: inherit;
-  font-size: 100%;
 }
 
 aside form button:hover,

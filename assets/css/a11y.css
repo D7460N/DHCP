@@ -3,7 +3,7 @@
   --outline-style: dotted;
   --outline-width: 0.0625em;
   --outline-offset: -0.0625em;
-  --outline-color: var(--accent);
+  --outline-color: rgba(var(--accent));
   --outline-border-radius: var(--border-radius);
 }
 
@@ -38,7 +38,7 @@ a:focus-visible {
 https://web.dev/articles/accent-color
 */
 :root {
-  --brand: #66ccff;
+  --brand: rgb(102, 204, 255);
   scrollbar-color: var(--brand) Canvas;
 }
 

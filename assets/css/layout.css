@@ -131,6 +131,7 @@ header {
   margin-inline: 1rem;
   align-items: center;
   overflow: hidden;
+  align-items: center;
 }
 
 header label {
