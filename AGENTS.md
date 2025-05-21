@@ -74,6 +74,7 @@ This file contains explicit instructions, architecture guidelines, coding standa
 * Reference explicitly documented standards in this repo only
 * Always consider the user's top priorities: GOD, Family, Country, Web
 * User experience (UX) and usability must always be prioritized in guidance
+* ⚠️ **Avoid unnecessary setup steps**: Do **not** scaffold or build boilerplate unless explicitly instructed. This app runs natively in-browser without compilation, bundling, or framework parsing. Assume a live-ready browser-native environment. Save compute cycles and avoid wasted output.
 
 ## 🚫 Explicitly Avoid
 
