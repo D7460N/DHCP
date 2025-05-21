@@ -130,6 +130,7 @@ header {
   border-radius: var(--border-radius);
   margin-inline: 1rem;
   overflow: hidden;
+  align-items: center;
 }
 
 header label {

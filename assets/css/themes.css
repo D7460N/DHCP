@@ -29,6 +29,7 @@
   --txt-shadow-color: 0, 0, 0;
   --txt-shadow-opacity: 1.0;
   --accent: #005A9C;
+  --accent2: 48, 190, 255;
 }
 
 
@@ -59,7 +60,8 @@
         var(--txt-shadow-opacity));
     --txt-shadow-color: 255, 255, 255;
     --txt-shadow-opacity: 0.3;
-    --accent: #66CCFF;
+    --accent: rgb(102, 204, 255);
+    --accent2: 48, 190, 255;
   }
 }
 
@@ -89,7 +91,7 @@ body:before {
   height: 100dvh;
   background-attachment: initial;
   background-color: transparent;
-  background-image: url('https://d7460n-app-with-resizer.pages.dev/assets/images/pattern.png');
+  background-image: url('/assets/images/app/pattern.png');
   background-size: 4.6875rem;
   background-repeat: repeat;
   z-index: -5;
