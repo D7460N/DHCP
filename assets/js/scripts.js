@@ -5,12 +5,32 @@
 const BASE_URL = "https://67d944ca00348dd3e2aa65f4.mockapi.io/" // Base API URL
 
 // === DOM Element References ===
-const ul = document.querySelector("main article ul:last-of-type")
-const form = document.querySelector("aside form")
-const fieldset = form.querySelector("fieldset")
-const newButton = document.querySelector("button")
-const resetButton = form.querySelector("[data-reset]")
-const submitButton = form.querySelector("[data-submit]")
+const ul = document.querySelector('main article ul:last-of-type')
+const form = document.querySelector('aside form')
+const fieldset = form.querySelector('fieldset')
+const newButton = document.querySelector('button')
+const resetButton = form.querySelector('[data-reset]')
+const submitButton = form.querySelector('[data-submit]')
+const navInputs = document.querySelectorAll('nav input[name="nav"]')
+
+const ENDPOINTS = [
+  'manage',
+  'api-registration',
+  'audit',
+  'credentials',
+  'faqs',
+  'option-set',
+  'option-types',
+  'scope-type',
+  'server-types',
+  'servers',
+  'variables',
+  'settings'
+]
+
+function isValidEndpoint(name) {
+  return ENDPOINTS.includes(name)
+}
 
 form.oninput = () => {
   toggleResetButton()
@@ -29,8 +49,7 @@ function mirrorToSelectedRow(event) {
   const input = event.target
   const key = input.name
   const selectedLi = document
-    .querySelector('ul li input[type="radio"]:checked')
-    ?.closest("li")
+    .querySelector('ul li input[type="radio"]:checked')?.closest("li")
   if (!selectedLi) return
 
   const mirror = selectedLi.querySelector(`span[data-key="${key}"]`)
@@ -328,16 +347,16 @@ form.onsubmit = (e) => {
   e.preventDefault()
   const selected = document.querySelector('ul li input[type="radio"]:checked');
   const id = selected?.closest("li")?.querySelector('span[data-key="id"]')?.textContent?.trim();
-  const tab = documentquerySelector('nav input[name="nav"]:checked')?.closest("label")?.textContent.trim().toLowerCase().replace(/\s+/g, "-");
-  if (!tab) return
+  const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value
+  if (!endpoint) return
 
   const data = {}
   fieldset.querySelectorAll("input[name], select[name]").forEach((el) => {
     if (!el.readOnly) data[el.name] = el.value.trim()
   })
 
-  const method = id ? "PUT" : "POST"
-  const url = id ? `${BASE_URL}${tab}/${id}` : `${BASE_URL}${tab}`
+  const method = id ? 'PUT' : 'POST'
+  const url = id ? `${BASE_URL}${endpoint}/${id}` : `${BASE_URL}${endpoint}`
 
   console.log("[FORM SUBMIT]", { method, url, data })
 
@@ -347,7 +366,7 @@ form.onsubmit = (e) => {
     body: JSON.stringify(data)
   })
   .then(() => confirmAction('Record saved.', '', { type: 'alert' }))
-  .then(() => load(`${BASE_URL}${tab}`))
+  .then(() => load(`${BASE_URL}${endpoint}`))
   .catch(err => {
     console.error('Failed to save record:', err)
     confirmAction('Error saving record.', '', { type: 'alert' })
@@ -366,17 +385,17 @@ form.onreset = (e) => {
 document.querySelector('[data-delete]').onclick = () => {
   const selected = document.querySelector('ul li input[type="radio"]:checked');
   const id = selected?.closest('li')?.querySelector('span[data-key="id"]')?.textContent?.trim();
-  const tab = document.querySelector('nav input[name="nav"]:checked')?.closest('label')?.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+  const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value
 
-  if (!selected || !id || !tab) {
+  if (!selected || !id || !endpoint) {
     alert('Select a valid record to delete.');
     return;
   }
 
   confirmAction('Delete this record?', '', { type: 'confirm' }).then(ok => {
     if (!ok) return;
-    fetch(`${BASE_URL}${tab}/${id}`, { method: 'DELETE' })
-      .then(() => load(`${BASE_URL}${tab}`));
+    fetch(`${BASE_URL}${endpoint}/${id}`, { method: 'DELETE' })
+      .then(() => load(`${BASE_URL}${endpoint}`));
   });
 };
 
