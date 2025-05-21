@@ -78,7 +78,10 @@ This file contains explicit instructions, architecture guidelines, coding standa
   variables
   settings
   ```
-* Endpoint determination must not rely on text labels. Use static `value` attributes assigned in markup for stability.## 📜 Markdown Documentation
+* Endpoint determination must not rely on text labels. Use static `value` attributes assigned in markup for stability.
+
+## 📜 Markdown Documentation
+
 * Always structured and concise (`.md` format)
 * Markdown documentation placed under `docs/`
 * `_README.md` in `css/`, `js/`, `images/`
