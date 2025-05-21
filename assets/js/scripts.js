@@ -91,6 +91,26 @@ function createInputFromKey(key, value) {
   return element;
 }
 
+// === Header Columns Generator ===
+function updateHeaderRow(sourceRow) {
+  const headerLi = document.querySelector('main article > ul li')
+  if (!headerLi || !sourceRow) return
+
+  // Reuse list cleanup pattern from load()
+  headerLi.innerHTML = ''
+
+  // Adapt span[data-key] query from updateFormFromSelectedRow()
+  sourceRow.querySelectorAll('span[data-key]').forEach(spanSource => {
+    const key = spanSource.getAttribute('data-key')
+    const clone = spanSource.cloneNode(false)
+    clone.textContent = key
+      .replace(/^item-/, '')
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase())
+    headerLi.appendChild(clone)
+  })
+}
+
 // === Load Data from API and Render into UI ===
 function load(endpoint) {
   console.log('[LOAD]', endpoint);
@@ -142,6 +162,9 @@ function load(endpoint) {
         li.appendChild(label);
         ul.appendChild(li);
       });
+
+      const firstRow = ul.querySelector('li')
+      if (firstRow) updateHeaderRow(firstRow)
 
       snapshotForm();
       toggleResetButton();
@@ -264,6 +287,8 @@ newButton.onclick = () => {
 
   li.appendChild(label);
   ul.appendChild(li);
+  // Apply header update using same span[data-key] loop logic
+  updateHeaderRow(li)
   radio.checked = true;
 
   snapshotForm();
