@@ -327,50 +327,43 @@ document.querySelector('[data-delete]').onclick = () => {
   });
 };
 
-
 // === Modal Confirmation ===
-function confirmAction(message, { type = 'confirm' } = {}) {
+function confirmAction(title, message, { type = 'confirm' } = {}) {
   return new Promise(resolve => {
-    let modal = document.getElementById('modal-confirm');
-    const container = document.querySelector('app-container');
-    if (!modal) {
-      modal = document.createElement('div');
-      modal.id = 'modal-confirm';
-      modal.innerHTML = `
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
-          <p></p>
-          <div class="modal-buttons"></div>
-        </div>`;
-      container.appendChild(modal);
-    } else if (!container.contains(modal)) {
-      container.appendChild(modal);
-    }
-
+    const modal = document.querySelector('modal-confirm');
+    modal.querySelector('h4').textContent = title;
     modal.querySelector('p').textContent = message;
-    const buttons = modal.querySelector('.modal-buttons');
-    buttons.innerHTML = '';
+
+    const [btnPrimary, btnSecondary] = modal.querySelectorAll('button');
 
     if (type === 'confirm') {
-      ['Yes', 'No'].forEach(label => {
-        const btn = document.createElement('button');
-        btn.textContent = label;
-        btn.onclick = () => {
-          modal.classList.remove('show');
-          resolve(label === 'Yes');
-        };
-        buttons.appendChild(btn);
-      });
-    } else {
-      const btn = document.createElement('button');
-      btn.textContent = 'Dismiss';
-      btn.onclick = () => {
-        modal.classList.remove('show');
+      btnPrimary.textContent = 'Yes';
+      btnSecondary.textContent = 'No';
+
+      btnPrimary.onclick = () => {
+        clearModal();
+        resolve(true);
+      };
+
+      btnSecondary.onclick = () => {
+        clearModal();
         resolve(false);
       };
-      buttons.appendChild(btn);
+    } else {
+      btnPrimary.textContent = 'Dismiss';
+      btnPrimary.onclick = () => {
+        clearModal();
+        resolve();
+      };
+      btnSecondary.textContent = ''; // hide secondary button
+      btnSecondary.onclick = null;
     }
 
-    modal.classList.add('show');
+    function clearModal() {
+      modal.querySelector('h4').textContent = '';
+      modal.querySelector('p').textContent = '';
+      btnPrimary.textContent = '';
+      btnSecondary.textContent = '';
+    }
   });
 }

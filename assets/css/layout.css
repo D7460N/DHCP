@@ -271,6 +271,7 @@ main article > ul:has(+ section) {
   letter-spacing: 0.0625rem;
 }
 
+/* Style UL LI table header <ul> INSIDE <section> */
 main article section ul {
   display: none;
   list-style-type: none;
@@ -383,7 +384,7 @@ aside {
 
 aside:has(form fieldset:not(:empty)) {
   display: grid;
-      grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr;
 }
 
 aside form {
@@ -397,9 +398,17 @@ aside form fieldset {
 
 
 /* Place buttons horizontally */
-aside form button[data-delete] { grid-column: 1; }
-aside form button[data-reset]  { grid-column: 2; }
-aside form button[data-submit] { grid-column: 3; }
+aside form button[data-delete] {
+  grid-column: 1;
+}
+
+aside form button[data-reset] {
+  grid-column: 2;
+}
+
+aside form button[data-submit] {
+  grid-column: 3;
+}
 
 /* Optional: Align buttons left */
 aside form {
@@ -430,52 +439,66 @@ br {
 }
 
 
-.modal-confirm {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  z-index: 1000;
-  visibility: hidden;
-  opacity: 0;
+/* MARK: MODAL
+*/
+
+modal-confirm {
+  display: none;
 }
 
-.modal-confirm.show {
-  visibility: visible;
+modal-confirm:has(h4:not(:empty), p:not(:empty)) {
+  display: block;
+}
+
+modal-confirm button:empty {
+  display: none;
+}
+
+
+modal-confirm {
+  position: fixed;
+  display: none;
+  opacity: 0;
+  max-width: 20rem;
+  place-self: center;
+  z-index: 1000;
+  background: rgba(var(--bg-panel-color), 0.5);
+  border-radius: var(--border-radius);
+}
+
+modal-confirm p,
+modal-confirm h4 {
+  padding: 0.5rem 1rem;
+}
+
+modal-confirm:has(h4:not(:empty), p:not(:empty)) {
+  display: grid;
   opacity: 1;
 }
 
-.modal-confirm .modal-backdrop {
-  position: absolute;
+modal-confirm modal-backdrop {
+  position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
+  background-color: rgba(var(--input-bg-color), 0.7);
+  z-index: -1;
 }
 
-.modal-confirm .modal-content {
-  position: relative;
-  background: rgba(var(--bg-panel-color), 0.9);
-  padding: 1rem;
-  border-radius: var(--border-radius);
-  display: grid;
-  gap: 1rem;
-  max-width: 20rem;
-}
-
-.modal-confirm .modal-buttons {
+modal-confirm button {
   display: flex;
   gap: 0.5rem;
   justify-content: flex-end;
-}
-
-.modal-confirm button {
   cursor: pointer;
   padding: 0.5rem 1rem;
   border-radius: var(--border-radius);
   border: none;
   background-color: rgba(var(--button-bg-color), 0.1);
-  color: white;
+  color: currentColor;
 }
 
-.modal-confirm button:hover {
+modal-confirm button:empty {
+  display: none;
+}
+
+modal-confirm button:hover {
   background-color: rgba(var(--button-bg-color), 0.5);
 }
