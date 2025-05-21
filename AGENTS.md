@@ -53,9 +53,32 @@ This file contains explicit instructions, architecture guidelines, coding standa
 * Pure native DOM APIs only
 * JSON data fetched from local `data/` directory
 * CRUD operations implemented minimally and natively
+* ❗ Never use `addEventListener` or implicit event wiring.
+* All interactivity must be explicitly bound to user-initiated `oninput`, `onsubmit`, or `onclick` handlers declared inline on the element.
+* Navigation and data loading logic must derive from declarative HTML state. Do not rely on label text or DOM content for dynamic endpoint resolution.
+* Use stable `value` attributes or structural index selectors (`nth-of-type`) for any state-driven logic.
+* Base URL is fixed:
 
-## 📜 Markdown Documentation
+  ```txt
+  https://67d944ca00348dd3e2aa65f4.mockapi.io/
+  ```
+* Valid endpoints:
 
+  ```txt
+  manage
+  api-registration
+  audit
+  credentials
+  faqs
+  option-set
+  option-types
+  scope-type
+  server-types
+  servers
+  variables
+  settings
+  ```
+* Endpoint determination must not rely on text labels. Use static `value` attributes assigned in markup for stability.## 📜 Markdown Documentation
 * Always structured and concise (`.md` format)
 * Markdown documentation placed under `docs/`
 * `_README.md` in `css/`, `js/`, `images/`
@@ -81,6 +104,7 @@ This file contains explicit instructions, architecture guidelines, coding standa
 * Frameworks or JS-based state management
 * Speculative answers or solutions
 * Moral lectures or unsolicited opinions
+* Use of `addEventListener` or external event delegation
 
 ## Environment Variables
 
@@ -91,7 +115,7 @@ PREFERS_ACCURACY=true
 PREFERS_SEPARATION_OF_CONCERNS=true
 HTML_POLICY=no-divs,no-classes,no-ids,no-data-attrs
 CSS_POLICY=layered,heuristics-only,accessibility-first
-JS_POLICY=data-only,no-ui-logic
+JS_POLICY=data-only,no-ui-logic,no-eventlisteners,no-addEventListener
 FRAMEWORKS=none
 DEPENDENCIES=none
 OUTPUT_FORMAT=minimal,semantic,accessible
@@ -100,13 +124,23 @@ SCROLL_CONTAINER=section-only
 STRICT_MODE=true
 DX_MODE=enabled
 PREFERS_NATIVE=true
+LLM_RUNTIME_TARGET=static-browser
+UI_ARCHITECTURE=d7460n
+HTML_MODE=semantic
+CSS_MODE=heuristic
+JS_MODE=data-only
+NO_BOOTSTRAP=true
+NO_CLASSNAME=true
+NO_FRAMEWORK=true
+NO_EVENTLISTENER=true
+D7460N_MODE=true
 ```
 
 ## Core Rules
 
 * **HTML**: Semantic only. No IDs, classes, `div`s, or `data-*`. Use native/custom elements only.
 * **CSS**: All UI logic via `:has()`, `:empty`, `@layer`, container/style queries. No JS-controlled styles.
-* **JavaScript**: Data fetch, hydrate, store only. No DOM manipulation or UI logic.
+* **JavaScript**: Data fetch, hydrate, store only. No DOM manipulation or UI logic. No `addEventListener`.
 * **Accessibility**: Always WCAG/508 compliant. No visual-only cues. Focus-visible required.
 * **Layout**: Holy Grail. `<section>` scrolls. All ancestors `overflow: hidden`.
 
