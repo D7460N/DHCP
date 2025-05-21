@@ -26,9 +26,9 @@ aside form {
   position: relative;
 }
 
-aside form:has(input:not(:placeholder-shown)) {
+/* aside form:has(input:not(:placeholder-shown)) {
   display: grid;
-}
+} */
 
 /* MARK: LABELS */
 aside form label {
@@ -47,6 +47,8 @@ aside form select {
   border: 0.0625rem solid rgba(var(--input-border-color), 0.1);
   background-color: rgba(var(--input-bg-color), 0.1);
   font-size: 1rem;
+  font-family: inherit;
+  font-size: 100%;
 }
 
 /* MARK: BUTTON */
@@ -54,9 +56,10 @@ aside form button {
   padding: 0.75rem;
   border: none;
   background-color: rgba(var(--button-bg-color), 0.25);
-  font-weight: bold;
   cursor: pointer;
   border-radius: var(--border-radius);
+  font-family: inherit;
+  font-size: 100%;
 }
 
 aside form button:hover,
@@ -154,6 +157,13 @@ aside form select {
   border: solid 0.0625rem rgba(var(--input-border-color), 0.1);
   border-radius: var(--border-radius);
   display: grid;
+  font-family: inherit;
+  font-size: 100%;
+}
+
+aside form select option {
+  font-family: inherit;
+  font-size: 100%;
 }
 
 aside form select option::checkmark,

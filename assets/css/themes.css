@@ -89,10 +89,6 @@ iframe {
 */
 body {
   background-color: rgba(var(--bg-color), var(--bg-opacity));
-  color: rgba(var(--txt-color), var(--txt-opacity));
-  font-family: 'Oxanium', 'Electrolize', sans-serif;
-  font-size: 1rem;
-  text-shadow: var(--txt-shadow);
 }
 
 html:before {
