@@ -1,30 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-us">
-
   <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="D7460N">
-    <meta name="description" content="DHCP Portal">
-    <meta name="robots" content="index, archive">
-    <meta name="color-scheme" content="dark light">
-    <link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials">
-    <link rel="canonical" href="https://d7460n.dev/">
-    <base href="/">
-    <link rel="icon" type="image/svg+xml" href="assets/images/brand/logo.svg">
-    <link rel="stylesheet" type="text/css" href="assets/css/themes.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/layout.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/loading.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/scrollbars.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/transitions.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/typography.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/a11y.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/forms.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/fonts.css">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="D7460N" />
+    <meta name="description" content="DHCP Portal" />
+    <meta name="robots" content="index, archive" />
+    <meta name="color-scheme" content="dark light" />
+    <link
+      rel="manifest"
+      href="manifest.webmanifest"
+      crossorigin="use-credentials"
+    />
+    <link rel="canonical" href="https://d7460n.dev/" />
+    <base href="/" />
+    <link rel="icon" type="image/svg+xml" href="assets/images/brand/logo.svg" />
+    <link rel="stylesheet" type="text/css" href="assets/css/themes.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/layout.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/loading.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/scrollbars.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/transitions.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/typography.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/a11y.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/forms.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/fonts.css" />
     <title>DHCP Portal</title>
   </head>
 
@@ -34,13 +37,16 @@
         <p>banner</p>
       </app-banner>
       <header>
-        <app-logo><a href="/" aria-label="Go to DHCP Portal Home">LOGO</a>DHCP Portal</app-logo>
+        <app-logo
+          ><a href="/" aria-label="Go to DHCP Portal Home">LOGO</a>DHCP
+          Portal</app-logo
+        >
         <label>
-          <input type="checkbox" checked>
+          <input type="checkbox" checked />
           <demo-buttons>Layouts</demo-buttons>
         </label>
         <label>
-          <input type="checkbox">
+          <input type="checkbox" />
           <demo-buttons>&#9788;</demo-buttons>
         </label>
       </header>
@@ -53,11 +59,11 @@
           <summary>SCOPE</summary>
           <label>
             Manage
-            <input type="radio" name="nav">
+            <input type="radio" name="nav" value="manage" />
           </label>
           <label>
             FAQs
-            <input type="radio" name="nav">
+            <input type="radio" name="nav" value="faqs" />
           </label>
         </details>
         <details open>
@@ -65,43 +71,43 @@
           <section>
             <label>
               API Registration
-              <input type="radio" name="nav">
+              <input type="radio" name="nav" value="api-registration" />
             </label>
             <label>
               Audit
-              <input type="radio" name="nav">
+              <input type="radio" name="nav" value="audit" />
             </label>
             <label>
               Option Set
-              <input type="radio" name="nav">
+              <input type="radio" name="nav" value="option-set" />
             </label>
             <label>
               Option Types
-              <input type="radio" name="nav" checked>
+              <input type="radio" name="nav" value="option-types" checked />
             </label>
             <label>
               Scope Type
-              <input type="radio" name="nav">
+              <input type="radio" name="nav" value="scope-type" />
             </label>
             <label>
               Server Types
-              <input type="radio" name="nav">
+              <input type="radio" name="nav" value="server-types" />
             </label>
             <label>
               Servers
-              <input type="radio" name="nav">
+              <input type="radio" name="nav" value="servers" />
             </label>
             <label>
               Credentials & Background Jobs
-              <input type="radio" name="nav">
+              <input type="radio" name="nav" value="credentials" />
             </label>
             <label>
               Variables
-              <input type="radio" name="nav">
+              <input type="radio" name="nav" value="variables" />
             </label>
             <label>
               Settings
-              <input type="radio" name="nav">
+              <input type="radio" name="nav" value="settings" />
             </label>
           </section>
         </details>
@@ -110,9 +116,12 @@
         <article>
           <h1></h1>
           <p></p>
-          <hr>
-          <p>Create a new Option Type : : <button type="button">New Option Type</button></p>
-          <input type="search" placeholder="Filter by name..." data-filter>
+          <hr />
+          <p>
+            Create a new Option Type : :
+            <button type="button">New Option Type</button>
+          </p>
+          <input type="search" placeholder="Filter by name..." name="filter" />
           <!-- <select data-sort>
             <option value="itemName-asc">Name ↑</option>
             <option value="itemName-desc">Name ↓</option>
@@ -132,8 +141,7 @@
           </select> -->
 
           <ul aria-hidden="true">
-            <li>
-            </li>
+            <li></li>
           </ul>
           <ul></ul>
         </article>
@@ -142,11 +150,14 @@
         <h2 aria-live="polite">DETAILS</h2>
         <form>
           <fieldset></fieldset>
-          <small>Note: Ensure all fields are filled correctly before submitting.</small>
+          <small
+            >Note: Ensure all fields are filled correctly before
+            submitting.</small
+          >
           <small>Note: All fields marked with * are required.</small>
-          <button data-delete type="button">Delete</button>
-          <button data-reset type="reset" disabled>Reset</button>
-          <button data-submit type="submit" disabled>Save</button>
+          <button name="delete" type="button">Delete</button>
+          <button name="reset" type="reset" disabled>Reset</button>
+          <button name="submit" type="submit" disabled>Save</button>
         </form>
       </aside>
       <footer>
@@ -167,8 +178,16 @@
 
     <!-- Contains constants used by every other module. -->
     <script type="module" src="assets/js/scripts.js"></script>
-    <load-data role="status" aria-live="polite" aria-busy="true" hidden></load-data>
-    <load-delay role="status" aria-live="polite" aria-atomic="true"></load-delay>
+    <load-data
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      hidden
+    ></load-data>
+    <load-delay
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    ></load-delay>
   </body>
-
 </html>
