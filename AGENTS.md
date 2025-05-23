@@ -22,14 +22,25 @@ This file contains explicit instructions, architecture guidelines, coding standa
 
 * Follow user's Prettier config strictly:
 
-```json
-{"semi":false,"singleQuote":true,"tabWidth":2,"trailingComma":"none","printWidth":80,"arrowParens":"avoid","bracketSpacing":true,"jsxBracketSameLine":false,"useTabs":false,"htmlWhitespaceSensitivity":"css","endOfLine":"lf"}
-```
-
-* Prefer ternary operator: `thing ? 'value' : null`
-* Array definitions always use bracket syntax: `[value]`
 * Prioritize CSS-native solutions (container queries, `:has()`, intrinsic sizing/layout)
-* Avoid JavaScript unless explicitly instructed; favor native HTML/CSS
+* AVOID JavaScript unless explicitly instructed; favor native HTML/CSS
+* USE use `oninput` events instead of `addEventListener` or `eventlisteners`
+* NEVER use JavaScript `addEventListener`
+* NEVER use JavaScript `eventlisteners`
+* FOLLOW established in-file coding patterns, paradigms, and conventions
+* SCAN and or audit for already existing utilities, functions and features that can be reused for what you are tasked to do BEFORE creating a new one
+* USE meaningful semantic HTML markup over generic meaningless `<div>` and or `<span>` elements
+
+## `data-hooks`
+
+> _"Where the rubber meets the road."_
+
+* `data-hooks` is a line. The actual devide. The point at which "Separation of Concerns" actually happens. It is where scripting, JavaScript, and the data-side itself ends and the design, heuritics engineering, CSS rules logic, and UI side begins. It's the hand-off. Where the batton is passed. Where the rubber meets the road.
+* JavaScript fetches the API endpoint JSON keys and creates and array.
+* From there it creates standard non-shadow-DOM custom HTML elements or "UI endpoints" or hooks for the data to be populated or `data-hooks`.
+* It does this by creating `data-hooks`
+* They are non web-component, non-shadow-DOM, custom HTML elements created by fetching API endpoint JSON keys and adding the required dash. W3C specification do not specify where the dash should go. Only that it should include at least one dash. For JSON keys that are two or more words joined, example "dataitem", the dash is inserted between the two natural words. When there is a single word, example "item", the dash is appended to the end of the word.
+* Use the custom
 
 ## 🌐 HTML Standards
 
