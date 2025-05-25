@@ -322,22 +322,24 @@ main article select:has(option:not(:empty)) {
 main article ul {
   display: none;
   list-style-type: none;
+  grid-auto-flow: row;
   margin-block-start: 1rem;
   letter-spacing: 0.0625rem;
 }
 
 /* ul:first-of-type = table header */
 main article ul:first-of-type {
-  font-family: Oxanium-medium;
+  align-content: start;
+  font-family: Oxanium-medium, sans-serif;
 
   li span {
-    color: rgba(var(--txt-color), 1.0);
+    color: rgba(var(--txt-active), 1.0);
   }
 }
 
 
 /* Show header row when list populated */
-main article ul:has(span:not(:empty)) {
+main article ul:has(li:not(:empty)) {
   display: grid;
 }
 
@@ -347,24 +349,23 @@ main article ul li {
   gap: 1rem;
 }
 
-main article > ul li span {
+main article > ul li label {
   padding: 0.5rem;
   word-break: break-all;
   text-wrap: pretty;
 }
 
 
-main article ul li span:first-of-type {
+main article ul label:first-child {
   padding-inline-start: 1rem;
+}
+
+main article ul li label:last-child {
+  padding-inline-end: 1rem;
 }
 
 /* ul:last-of-type = table */
 main article ul:last-of-type {
-  display: none;
-  overflow: overlay;
-  list-style-type: none;
-  grid-auto-flow: row;
-
   overflow: overlay;
   position: relative;
   align-content: start;
@@ -403,25 +404,22 @@ main article ul:last-of-type li label {
   cursor: pointer;
   word-break: break-word;
   text-wrap: pretty;
+  align-items: center;
   /* white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; */
 }
 
-main article ul:last-of-type li label span {
-  padding: 0.5rem;
-}
-
-main article ul:last-of-type li label span:first-of-type {
+main article ul:last-of-type li label:first-child {
   padding-inline-start: 1rem;
 }
 
-main article ul:last-of-type li label span:last-of-type {
+main article ul:last-of-type li label:last-child {
   padding-inline-end: 1rem;
 }
 
 main article ul:last-of-type li label:not(:empty) {
-  display: inline-grid;
+  display: grid;
 }
 
 main article input[type="search"] {

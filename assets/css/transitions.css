@@ -10,6 +10,7 @@
   --transition-duration: 250ms;
   --transition-property: visibility, opacity, display, transform, background-color, border-color, color;
   --transition-timing-function: ease-in-out;
+  scroll-behavior: smooth;
 }
 
 /* Accessibility feature */
@@ -80,3 +81,13 @@ a {
 }
 
 off-line p {transition: all var(--transition-duration);}
+
+main article ul:last-of-type {
+  overflow-x: auto;
+  scroll-snap-type: y mandatory;
+}
+
+main article ul:last-of-type > * {
+  grid-template-columns: auto;
+  scroll-snap-align: start;
+}

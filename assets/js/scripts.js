@@ -44,13 +44,19 @@ function toKebab(str) {
     .toLowerCase();
 
   if (!dashed.includes("-")) {
-    dashed = dashed.replace(
-      /(name|type|id|date|time|url|ip|count|size|set|list|item)$/,
-      "-$1",
-    );
+    if (/^(name|type|id|date|time|url|ip|count|size|set|list|item)$/.test(dashed)) {
+      dashed = `${dashed}-`;
+    } else {
+      dashed = dashed.replace(
+        /(name|type|id|date|time|url|ip|count|size|set|list|item)$/,
+        "-$1",
+      );
+    }
   }
 
   if (!dashed.includes("-")) dashed = `${dashed}-`;
+
+  if (dashed.startsWith("-")) dashed = `${dashed.slice(1)}-`;
 
   return dashed;
 }
