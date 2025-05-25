@@ -17,7 +17,7 @@
       rgba(50, 70, 80, 0.9) 0,
       #0d101b 100%);
   --txt-color: 255, 255, 255;
-  --txt-opacity: 0.7;
+  --txt-opacity: 0.6;
   --txt-active: 255, 255, 255;
   --txt-active-opacity: 1.0;
   --txt-link: 102, 204, 255;
@@ -126,19 +126,6 @@ button {
 
 iframe {
   background-color: var(--bg-color);
-}
-
-/* MARK: NAV
-*/
-nav {
-  --bg-panel-opacity: 0;
-}
-
-nav details label:hover,
-nav details label:has(> input:checked) {
-  background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
-  color: rgba(var(--txt-active), var(--txt-active-opacity));
-  cursor: pointer;
 }
 
 /* MARK: FORMS

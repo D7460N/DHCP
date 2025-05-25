@@ -6,25 +6,6 @@
   border-radius: var(--border-radius);
 } */
 
-/* MARK: BUTTONS
-*/
-button {
-  display: inline;
-  padding-inline: 1rem;
-  padding-block: .5rem;
-  width: fit-content;
-  user-select: none;
-  cursor: pointer;
-  border: none;
-  background-color: rgba(var(--bg-active-color), 0.05);
-  color: inherit;
-  text-align: center;
-  border-radius: var(--border-radius);
-  margin-block-end: 1rem;
-  font-family: inherit;
-  font-size: 100%;
-}
-
 aside form button:first-of-type {
   margin-inline-start: 1rem;
 }
