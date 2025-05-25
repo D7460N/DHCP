@@ -16,9 +16,14 @@ const ASSETS = [
 self.addEventListener('install', evt => {
   evt.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(ASSETS))
+      .then(cache =>
+        cache.addAll(ASSETS).catch(err => {
+          console.error('Asset caching failed:', err)
+        })
+      )
   )
 })
+
 
 // Activate Event: Runs once SW is activated and controls the pages
 // Purpose: Remove outdated caches to prevent resource/version conflicts
