@@ -91,7 +91,7 @@ body:before {
   height: 100dvh;
   background-attachment: initial;
   background-color: transparent;
-  background-image: url('/assets/images/app/pattern.png');
+  background-image: url('../images/app/pattern.png');
   background-size: 4.6875rem;
   background-repeat: repeat;
   z-index: -5;
@@ -106,7 +106,7 @@ body:before {
   z-index: -10;
   height: 100dvh;
   background-color: rgba(var(--bg-02-color), var(--bg-02-opacity));
-  background-image: url('/assets/images/brand/logo.svg');
+  background-image: url('../images/brand/logo.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: inherit; */

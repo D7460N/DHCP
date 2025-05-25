@@ -247,11 +247,11 @@ app-logo::before {
   width: 6em;
   height: 6em;
   background-color: currentColor;
-  mask-image: url(/assets/images/brand/logo.svg);
+  mask-image: url(../images/brand/logo.svg);
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: contain;
-  -webkit-mask-image: url(/assets/images/brand/logo.svg);
+  -webkit-mask-image: url(../images/brand/logo.svg);
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
   -webkit-mask-size: contain;
