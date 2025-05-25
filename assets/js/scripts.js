@@ -1,10 +1,11 @@
-// === scripts.js ===
+// MARK: SCRIPTS.JS
+
 // Purpose: Fetch JSON and inject values using custom elements generated from API keys
 
-// === Constants ===
+// MARK: CONSTANTS
 const BASE_URL = "https://67d944ca00348dd3e2aa65f4.mockapi.io/"; // Base API URL
 
-// === DOM Element References ===
+// MARK: DOM ELEMENT REFERENCES
 const headerUl = document.querySelector("main article ul:first-of-type");
 const ul = document.querySelector("main article ul:last-of-type");
 const form = document.querySelector("aside form");
@@ -70,14 +71,14 @@ form.oninput = () => {
   toggleSubmitButton();
 };
 
-// === Utility: Format ISO Date to input[type="datetime-local"] value ===
+// MARK: UTILITY: FORMAT ISO DATE TO INPUT[TYPE="DATETIME-LOCAL"] VALUE
 function formatDateForInput(str) {
   const d = new Date(str);
   if (isNaN(d)) return "";
   return d.toISOString().slice(0, 16); // Trims to format: YYYY-MM-DDTHH:MM
 }
 
-// === Live Mirror Handler: Inline oninput for native form inputs ===
+// MARK: LIVE MIRROR HANDLER: INLINE ONINPUT FOR NATIVE FORM INPUTS
 function mirrorToSelectedRow(event) {
   const input = event.target;
   const key = input.name;
@@ -92,7 +93,7 @@ function mirrorToSelectedRow(event) {
   }
 }
 
-// === Utility: Build appropriate input/select based on key-value ===
+// MARK: UTILITY: BUILD APPROPRIATE INPUT/SELECT BASED ON KEY-VALUE
 function createInputFromKey(key, value) {
   const inputName = key;
   const val = value?.trim?.() ?? "";
@@ -148,7 +149,7 @@ function createInputFromKey(key, value) {
   return element;
 }
 
-// === Header Columns Generator ===
+// MARK: HEADER COLUMNS GENERATOR
 function updateHeaderRow(sourceRow) {
   const headerLi = headerUl?.querySelector("li");
   if (!headerLi || !sourceRow) return;
@@ -167,7 +168,7 @@ function updateHeaderRow(sourceRow) {
   });
 }
 
-// === List Item Factory ===
+// MARK: LIST ITEM FACTORY
 function createListItem(item = {}) {
   const li = document.createElement("li");
   li.tabIndex = 0;
@@ -190,7 +191,7 @@ function createListItem(item = {}) {
   return li;
 }
 
-// === Load Data from API and Render into UI ===
+// MARK: LOAD DATA FROM API AND RENDER INTO UI
 function load(endpoint) {
   console.log("[LOAD]", endpoint);
   fetchJSON(endpoint)
@@ -234,7 +235,7 @@ function load(endpoint) {
     .catch((err) => console.error("Failed to load data:", err));
 }
 
-// === Reflect LI Data Into Form ===
+// MARK: REFLECT LI DATA INTO FORM
 function updateFormFromSelectedRow() {
   fieldset.innerHTML = "";
   const selectedRow = document
@@ -262,7 +263,7 @@ function updateFormFromSelectedRow() {
   toggleResetButton();
 }
 
-// === Track Form Original State ===
+// MARK: TRACK FROM ORIGINAL STATE
 let originalData = {};
 let snapshotLi = null;
 function snapshotForm() {
@@ -314,14 +315,14 @@ function restoreForm() {
   }
 }
 
-// === Initial Tab Fetch ===
+// MARK: INITIAL TAB FETCH
 loadEndpoints().then(() => {
   const selected = document.querySelector('nav input[name="nav"]:checked');
   const firstEndpoint = selected?.value;
   if (isValidEndpoint(firstEndpoint)) load(`${BASE_URL}${firstEndpoint}`);
 });
 
-// === Tab Switch Logic ===
+// MARK: TAB SWITCH LOGIC
 document.querySelectorAll('nav input[name="nav"]').forEach((input) => {
   input.onchange = () => {
     if (!input.checked) return;
@@ -335,7 +336,7 @@ document.querySelectorAll('nav input[name="nav"]').forEach((input) => {
   };
 });
 
-// === New Row Creation ===
+// MARK: NEW ROW CREATION
 newButton.onclick = () => {
   if (
     hasUnsavedChanges() &&
@@ -375,7 +376,7 @@ newButton.onclick = () => {
   snapshotForm();
 };
 
-// === Form Submit ===
+// MARK: FORM SUBMIT
 form.onsubmit = (e) => {
   e.preventDefault();
   const selected = document.querySelector(
@@ -413,7 +414,7 @@ form.onsubmit = (e) => {
     });
 };
 
-// === Form Reset ===
+// MARK: FORM RESET
 form.onreset = (e) => {
   e.preventDefault();
   if (!confirm("Reset all changes?")) return;
@@ -421,7 +422,7 @@ form.onreset = (e) => {
   snapshotForm();
 };
 
-// === Delete Handler ===
+// MARK: DELETE HANDLER
 deleteButton.onclick = () => {
   const selected = document.querySelector(
     'ul li input[name="list-item"]:checked',
@@ -447,7 +448,7 @@ deleteButton.onclick = () => {
   });
 };
 
-// === Modal Confirmation ===
+// MARK: MODAL CONFIRMATION
 function confirmAction(title, message = "", { type = "confirm" } = {}) {
   return new Promise((resolve) => {
     const modal = document.querySelector("modal-confirm");
@@ -488,15 +489,27 @@ function confirmAction(title, message = "", { type = "confirm" } = {}) {
   });
 }
 
+// MARK: OFF-LINE
+let offlineInterval
+let offlineStartTime
 
 function updateOnlineStatus() {
   const offlineMsg = document.querySelector('off-line p')
-  offlineMsg.textContent = navigator.onLine ? '' : 'Currently offline . . .'
+
+  if (navigator.onLine) {
+    clearInterval(offlineInterval)
+    offlineMsg.textContent = ''
+  } else {
+    offlineStartTime = Date.now()
+
+    offlineInterval = setInterval(() => {
+      const elapsedSec = Math.floor((Date.now() - offlineStartTime) / 1000)
+      offlineMsg.textContent = `You’re offline (${elapsedSec}s elapsed)`
+    }, 1000)
+  }
 }
 
-// Listen explicitly for online/offline events
 window.addEventListener('online', updateOnlineStatus)
 window.addEventListener('offline', updateOnlineStatus)
 
-// Initialize immediately on page load
 updateOnlineStatus()
