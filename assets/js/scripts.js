@@ -44,7 +44,9 @@ function toKebab(str) {
     .toLowerCase();
 
   if (!dashed.includes("-")) {
-    if (/^(name|type|id|date|time|url|ip|count|size|set|list|item)$/.test(dashed)) {
+    if (
+      /^(name|type|id|date|time|url|ip|count|size|set|list|item)$/.test(dashed)
+    ) {
       dashed = `${dashed}-`;
     } else {
       dashed = dashed.replace(
@@ -200,7 +202,7 @@ function createListItem(item = {}) {
     if (input.checked) {
       e.preventDefault();
       input.checked = false;
-      clearFieldset();
+      input.oninput();
       snapshotForm();
     }
   };
@@ -514,26 +516,26 @@ function confirmAction(title, message = "", { type = "confirm" } = {}) {
 }
 
 // MARK: OFF-LINE
-let offlineInterval
-let offlineStartTime
+let offlineInterval;
+let offlineStartTime;
 
 function updateOnlineStatus() {
-  const offlineMsg = document.querySelector('off-line p')
+  const offlineMsg = document.querySelector("off-line p");
 
   if (navigator.onLine) {
-    clearInterval(offlineInterval)
-    offlineMsg.textContent = ''
+    clearInterval(offlineInterval);
+    offlineMsg.textContent = "";
   } else {
-    offlineStartTime = Date.now()
+    offlineStartTime = Date.now();
 
     offlineInterval = setInterval(() => {
-      const elapsedSec = Math.floor((Date.now() - offlineStartTime) / 1000)
-      offlineMsg.textContent = `You’re offline (${elapsedSec}s elapsed)`
-    }, 1000)
+      const elapsedSec = Math.floor((Date.now() - offlineStartTime) / 1000);
+      offlineMsg.textContent = `You’re offline (${elapsedSec}s elapsed)`;
+    }, 1000);
   }
 }
 
-window.ononline = updateOnlineStatus
-window.onoffline = updateOnlineStatus
+window.ononline = updateOnlineStatus;
+window.onoffline = updateOnlineStatus;
 
-updateOnlineStatus()
+updateOnlineStatus();
