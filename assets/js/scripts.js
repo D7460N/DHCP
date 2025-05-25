@@ -5,6 +5,7 @@
 const BASE_URL = "https://67d944ca00348dd3e2aa65f4.mockapi.io/"; // Base API URL
 
 // === DOM Element References ===
+const headerUl = document.querySelector("main article ul:first-of-type");
 const ul = document.querySelector("main article ul:last-of-type");
 const form = document.querySelector("aside form");
 const fieldset = form.querySelector("fieldset");
@@ -22,13 +23,13 @@ function fetchJSON(url) {
 
 function loadEndpoints() {
   return fetchJSON(`${BASE_URL}nav-content`).then(([data]) => {
-      const keys = Object.keys(data || {});
-      ENDPOINTS.splice(0, ENDPOINTS.length, ...keys);
-      navInputs.forEach((input, i) => {
-        const ep = keys[i];
-        if (ep) input.value = ep;
-      });
+    const keys = Object.keys(data || {});
+    ENDPOINTS.splice(0, ENDPOINTS.length, ...keys);
+    navInputs.forEach((input, i) => {
+      const ep = keys[i];
+      if (ep) input.value = ep;
     });
+  });
 }
 
 function isValidEndpoint(name) {
@@ -149,7 +150,7 @@ function createInputFromKey(key, value) {
 
 // === Header Columns Generator ===
 function updateHeaderRow(sourceRow) {
-  const headerLi = document.querySelector("main article > ul li");
+  const headerLi = headerUl?.querySelector("li");
   if (!headerLi || !sourceRow) return;
 
   // Reuse list cleanup pattern from load()
@@ -192,7 +193,8 @@ function createListItem(item = {}) {
 // === Load Data from API and Render into UI ===
 function load(endpoint) {
   console.log("[LOAD]", endpoint);
-  fetchJSON(endpoint).then(([data]) => {
+  fetchJSON(endpoint)
+    .then(([data]) => {
       console.log("[LOADED]", data);
 
       registerCustomElements(Object.keys(data.items[0] || {}));
