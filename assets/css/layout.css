@@ -1,15 +1,14 @@
 /* MARK: LAYOUT | Vertical
 */
 :root {
-  --app-container-grid-template-rows:
-    auto auto auto 1fr auto auto;
+  --app-container-grid-template-rows: auto auto auto 1fr auto auto;
   /* auto auto 1fr minmax(1rem, 7rem) minmax(1rem, 7rem); */
   --border-radius: 0.3em;
   --nav-justify-content: start;
   --nav-border-radius: var(--border-radius) var(--border-radius) 0 0;
   --main-margin-block: -1rem 0;
   --main-margin-inline: 1rem;
-  --main-border-radius: 0 .3rem .3rem .3rem;
+  --main-border-radius: 0 0.3rem 0.3rem 0.3rem;
   --tab-grid-auto-flow: column;
   --sub-header-display: none;
   --grid-gap: 1rem;
@@ -115,7 +114,7 @@ app-banner {
 }
 
 app-banner p {
-  padding: .2rem;
+  padding: 0.2rem;
   font-size: 75%;
 }
 
@@ -146,6 +145,7 @@ header label input {
 */
 nav {
   display: grid;
+  gap: 1rem;
   grid-auto-flow: var(--tab-grid-auto-flow);
   grid-row: var(--grid-row-span);
   user-select: none;
@@ -153,6 +153,7 @@ nav {
   margin-inline-start: 1rem;
   overflow: hidden;
   align-content: start;
+  background-color: rgba(var(--bg-panel-color), 0.0);
 }
 
 nav details {
@@ -160,21 +161,34 @@ nav details {
   overflow: hidden;
 }
 
+nav details:first-of-type {
+  margin-block-start: 1rem;
+}
+
 nav details summary {
+  font-family: Oxanium-SemiBold;
   letter-spacing: 0.0625rem;
+  color: rgba(var(--txt-active) ,var(--txt-active-opacity));
   text-wrap: pretty;
-  font-weight: 900;
   padding-inline: 1rem;
-  padding-block: .5rem;
+  padding-block: 0.5rem;
   padding-inline-start: 0;
   overflow: hidden;
 }
 
 nav details label {
+  display: block;
   padding-inline: 1rem;
-  padding-block: .5rem;
+  padding-block: 0.5rem;
   cursor: pointer;
   user-select: none;
+}
+
+nav details label:hover,
+nav details label:has(> input:checked) {
+  background-color: rgba(var(--bg-panel-color), var(--bg-active-opacity));
+  color: rgba(var(--txt-active), var(--txt-active-opacity));
+  cursor: pointer;
 }
 
 nav details {
@@ -198,11 +212,55 @@ nav label input {
   display: none;
 }
 
-header app-logo,
-header app-user,
-footer powered-by,
-footer app-version,
+/* MARK: BUTTONS
+*/
+button {
+  display: inline;
+  padding-inline: 1rem;
+  padding-block: .5rem;
+  width: fit-content;
+  user-select: none;
+  cursor: pointer;
+  border: none;
+  background-color: rgba(var(--bg-active-color), 0.05);
+  color: inherit;
+  text-align: center;
+  border-radius: var(--border-radius);
+  margin-block-end: 1rem;
+  font-family: inherit;
+  font-size: 100%;
+}
+
 demo-buttons {
+  padding: 1rem;
+}
+
+app-logo {
+  padding: 1rem;
+  margin-inline-start: 5rem;
+  color: rgba(var(--txt-active),var(--txt-active-opacity));
+}
+
+app-logo::before {
+  content: '';
+  display: block;
+  width: 6em;
+  height: 6em;
+  background-color: currentColor;
+  mask-image: url(../images/brand/logo.svg);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url(../images/brand/logo.svg);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  position: absolute;
+  inset-block-start: 1em;
+  inset-inline-start: 1em;
+}
+
+app-user {
   padding: 1rem;
 }
 
@@ -239,12 +297,12 @@ main article:has(h1:not(:empty)) {
 } */
 
 /* Hide <p> by default */
-main article > p {
+main article>p {
   display: none;
 }
 
 /* Show <p> when <p> has content */
-main article > p:not(:empty) {
+main article>p:not(:empty) {
   display: grid;
 }
 
@@ -261,39 +319,46 @@ main article select:has(option:not(:empty)) {
 
 /* MARK: UL LI TABLES
 */
-main article > ul {
+main article ul {
   display: none;
   list-style-type: none;
   margin-block-start: 1rem;
   letter-spacing: 0.0625rem;
 }
 
+/* ul:first-of-type = table header */
 main article ul:first-of-type {
-  font-weight: 600;
+  font-family: Oxanium-medium;
+
+  li span {
+    color: rgba(var(--txt-color), 1.0);
+  }
 }
 
+
 /* Show header row when list populated */
-main article > ul:has(span:not(:empty)) {
+main article ul:has(span:not(:empty)) {
   display: grid;
 }
 
-main article > ul li {
+main article ul li {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
   gap: 1rem;
 }
 
 main article > ul li span {
-  padding: .5rem;
+  padding: 0.5rem;
   word-break: break-all;
   text-wrap: pretty;
 }
 
-main article > ul li span:first-of-type {
+
+main article ul li span:first-of-type {
   padding-inline-start: 1rem;
 }
 
-/* Style UL LI table header <ul> INSIDE <section> */
+/* ul:last-of-type = table */
 main article ul:last-of-type {
   display: none;
   overflow: overlay;
@@ -319,12 +384,13 @@ main article ul:last-of-type li label {
 
 main article ul:last-of-type li:hover {
   background-color: rgba(var(--bg-active-color), 0.05);
+  color: rgba(var(--txt-active), 1.0);
 }
 
 /* LI active state */
 main article ul:last-of-type li:has(input:checked) {
   background-color: rgba(var(--bg-active-color), 0.05);
-  color: rgba(var(--txt-active), 1.0);
+  color: rgba(var(--txt-active), 1);
 }
 
 /* Spinner visible when selected */
@@ -343,7 +409,7 @@ main article ul:last-of-type li label {
 }
 
 main article ul:last-of-type li label span {
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 main article ul:last-of-type li label span:first-of-type {
@@ -390,17 +456,16 @@ aside form fieldset {
   grid-column: 1 / -1;
 }
 
-
 /* Place buttons horizontally */
-aside form button[data-delete] {
+aside form button[name="delete"] {
   grid-column: 1;
 }
 
-aside form button[data-reset] {
+aside form button[name="reset"] {
   grid-column: 2;
 }
 
-aside form button[data-submit] {
+aside form button[name="submit"] {
   grid-column: 3;
 }
 
@@ -412,7 +477,6 @@ aside form {
   justify-content: start;
   align-items: center;
 }
-
 
 /* MARK: FOOTER
 */
@@ -427,11 +491,14 @@ footer {
   overflow: hidden;
 }
 
-br {
-  display: block;
-  margin: .5rem;
+powered-by {
+  padding: 1rem;
 }
 
+br {
+  display: block;
+  margin: 0.5rem;
+}
 
 /* MARK: MODAL
 */

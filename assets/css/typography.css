@@ -2,16 +2,15 @@
 */
 :root {
   --font-family: 'Oxanium-light', sans-serif;
-  --font-size: 1rem;
+  --font-size: clamp(1rem, 1.3cqi, 1.3rem);
   --line-height: 1.5;
   --letter-spacing: 0.05rem;
   --txt-shadow-color: 0, 0, 0;
   --txt-shadow-opacity: 0.3;
 
   color: rgba(var(--txt-color), var(--txt-opacity));
-  font-family: 'Oxanium-light', sans-serif;
-  font-weight: 300;
-  font-size: 1rem;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
   text-shadow: var(--txt-shadow);
 }
 
@@ -25,20 +24,22 @@ a:not([class]) {
 
 /* https://moderncss.dev/modern-css-for-dynamic-component-based-architecture/#container-query-fluid-type */
 :is(h1, h2, h3, h4) {
-  font-weight: 600;
+  font-family: Oxanium-SemiBold;
+  color: rgba(var(--txt-color), 1.0);
   padding: 1rem;
   letter-spacing: 0.125rem;
   text-transform: uppercase;
   text-wrap: balance;
+  font-weight: normal;
 }
 
 h1 {
   font-size: 2rem;
 }
 
-:is(h2, h3) {
+/* :is(h2, h3) {
   font-size: clamp(1.25rem, 5cqi, 1.5rem);
-}
+} */
 
 h4 {
   display: var(--sub-header-display);
