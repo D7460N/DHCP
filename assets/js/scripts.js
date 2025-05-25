@@ -14,38 +14,50 @@ const resetButton = form.querySelector('button[name="reset"]');
 const submitButton = form.querySelector('button[name="submit"]');
 const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
-const ENDPOINTS = [
-  "manage",
-  "api-registration",
-  "audit",
-  "credentials",
-  "faqs",
-  "option-set",
-  "option-types",
-  "scope-type",
-  "server-types",
-  "servers",
-  "variables",
-  "settings",
-];
+const ENDPOINTS = [];
+
+function loadEndpoints() {
+  return fetch("data/nav-content.json")
+    .then((res) => res.json())
+    .then(([data]) => {
+      const keys = Object.keys(data || {});
+      ENDPOINTS.splice(0, ENDPOINTS.length, ...keys);
+      navInputs.forEach((input, i) => {
+        const ep = keys[i];
+        if (ep) input.value = ep;
+      });
+    });
+}
 
 function isValidEndpoint(name) {
   return ENDPOINTS.includes(name);
 }
 
 function toKebab(str) {
-  return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+  let dashed = str
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .replace(/_/g, "-")
+    .toLowerCase();
+  if (!dashed.includes("-")) {
+    dashed = dashed.replace(
+      /(name|type|id|date|time|url|ip|count|size|set|list)$/,
+      "-$1",
+    );
+  }
+  return dashed.includes("-") ? dashed : `${dashed}-`;
 }
 
 function toCamel(str) {
-  return str.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+  let result = str.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+  if (result.endsWith("-")) result = result.slice(0, -1);
+  return result;
 }
 
 function registerCustomElements(keys) {
   keys.forEach((key) => {
     const tag = toKebab(key);
-    if (!customElements.get(tag) && tag.includes("-")) {
-      customElements.define(tag, class extends HTMLElement {});
+    if (tag.includes("-")) {
+      document.createElement(tag);
     }
   });
 }
@@ -301,9 +313,11 @@ function restoreForm() {
 }
 
 // === Initial Tab Fetch ===
-const selected = document.querySelector('nav input[name="nav"]:checked');
-const firstEndpoint = selected?.value;
-if (isValidEndpoint(firstEndpoint)) load(`${BASE_URL}${firstEndpoint}`);
+loadEndpoints().then(() => {
+  const selected = document.querySelector('nav input[name="nav"]:checked');
+  const firstEndpoint = selected?.value;
+  if (isValidEndpoint(firstEndpoint)) load(`${BASE_URL}${firstEndpoint}`);
+});
 
 // === Tab Switch Logic ===
 document.querySelectorAll('nav input[name="nav"]').forEach((input) => {
