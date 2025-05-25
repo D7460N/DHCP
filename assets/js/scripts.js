@@ -16,10 +16,12 @@ const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
 const ENDPOINTS = [];
 
+function fetchJSON(url) {
+  return fetch(url).then((r) => r.json());
+}
+
 function loadEndpoints() {
-  return fetch("data/nav-content.json")
-    .then((res) => res.json())
-    .then(([data]) => {
+  return fetchJSON(`${BASE_URL}nav-content`).then(([data]) => {
       const keys = Object.keys(data || {});
       ENDPOINTS.splice(0, ENDPOINTS.length, ...keys);
       navInputs.forEach((input, i) => {
@@ -190,9 +192,7 @@ function createListItem(item = {}) {
 // === Load Data from API and Render into UI ===
 function load(endpoint) {
   console.log("[LOAD]", endpoint);
-  fetch(endpoint)
-    .then((res) => res.json())
-    .then(([data]) => {
+  fetchJSON(endpoint).then(([data]) => {
       console.log("[LOADED]", data);
 
       registerCustomElements(Object.keys(data.items[0] || {}));
