@@ -1,5 +1,6 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-us">
+
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -141,10 +142,8 @@
         <h2 aria-live="polite">DETAILS</h2>
         <form>
           <fieldset></fieldset>
-          <small
-            >Note: Ensure all fields are filled correctly before
-            submitting.</small
-          >
+          <small>Note: Ensure all fields are filled correctly before
+            submitting.</small>
           <small>Note: All fields marked with * are required.</small>
           <button name="delete" type="button">Delete</button>
           <button name="reset" type="reset" disabled>Reset</button>
@@ -169,16 +168,19 @@
 
     <!-- Contains constants used by every other module. -->
     <script type="module" src="./assets/js/scripts.js"></script>
-    <load-data
-      role="status"
-      aria-live="polite"
-      aria-busy="true"
-      hidden
-    ></load-data>
-    <load-delay
-      role="status"
-      aria-live="polite"
-      aria-atomic="true"
-    ></load-delay>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => navigator.serviceWorker.ready)
+          .then(reg => console.log('Service Worker registered:', reg))
+          .catch(err => console.error('SW registration failed:', err))
+      }
+    </script>
+    <off-line>
+      <p>Currently offline . . .</p>
+    </off-line>
+    <load-data role="status" aria-live="polite" aria-busy="true" hidden></load-data>
+    <load-delay role="status" aria-live="polite" aria-atomic="true"></load-delay>
   </body>
+
 </html>
