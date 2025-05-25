@@ -487,3 +487,16 @@ function confirmAction(title, message = "", { type = "confirm" } = {}) {
     }
   });
 }
+
+
+function updateOnlineStatus() {
+  const offlineMsg = document.querySelector('off-line p')
+  offlineMsg.textContent = navigator.onLine ? '' : 'Currently offline . . .'
+}
+
+// Listen explicitly for online/offline events
+window.addEventListener('online', updateOnlineStatus)
+window.addEventListener('offline', updateOnlineStatus)
+
+// Initialize immediately on page load
+updateOnlineStatus()

@@ -168,7 +168,7 @@ nav details:first-of-type {
 nav details summary {
   font-family: Oxanium-SemiBold, sans-serif;
   letter-spacing: 0.0625rem;
-  color: rgba(var(--txt-active) ,var(--txt-active-opacity));
+  color: rgba(var(--txt-active), var(--txt-active-opacity));
   text-wrap: pretty;
   padding-inline: 1rem;
   padding-block: 0.5rem;
@@ -238,7 +238,7 @@ demo-buttons {
 app-logo {
   padding: 1rem;
   margin-inline-start: 5rem;
-  color: rgba(var(--txt-active),var(--txt-active-opacity));
+  color: rgba(var(--txt-active), var(--txt-active-opacity));
 }
 
 app-logo::before {
@@ -297,12 +297,12 @@ main article:has(h1:not(:empty)) {
 } */
 
 /* Hide <p> by default */
-main article>p {
+main article > p {
   display: none;
 }
 
 /* Show <p> when <p> has content */
-main article>p:not(:empty) {
+main article > p:not(:empty) {
   display: grid;
 }
 
@@ -558,4 +558,35 @@ modal-confirm button:empty {
 
 modal-confirm button:hover {
   background-color: rgba(var(--button-bg-color), 0.5);
+}
+
+off-line {
+  display: none;
+  position: fixed;
+  padding: 1rem;
+  text-align: center;
+  color: red;
+  font-size: 2rem;
+  background-color: rgba(var(--input-bg-color), 0.3);
+  border: solid 0.0652rem red;
+  border-radius: 0.3rem;
+  width: 50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+off-line:has(p:not(:empty)) {
+  display: grid;
+}
+
+off-line p {
+  animation: fadeInOut 1s ease-in-out infinite alternate;
+}
+
+@keyframes fadeInOut {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
 }

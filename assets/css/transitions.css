@@ -78,3 +78,5 @@ button {
 a {
   transition: all var(--transition-duration);
 }
+
+off-line p {transition: all var(--transition-duration);}
