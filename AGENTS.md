@@ -14,8 +14,8 @@ This file contains explicit instructions, architecture guidelines, coding standa
 ## 🏗️ Project Structure
 
 * HTML markup minimal and semantic.
-* CSS stored in `assets/css/`.
-* JavaScript, if explicitly required, placed under `assets/js/`.
+* CSS stored in `/assets/css/`.
+* JavaScript, if explicitly required, placed under `/assets/js/`.
 * Data files stored under `data/` as JSON.
 
 ## 💻 Coding Conventions
@@ -35,7 +35,7 @@ This file contains explicit instructions, architecture guidelines, coding standa
 
 > _"Where the rubber meets the road."_
 
-* `data-hooks` is a line. The actual devide. The point at which "Separation of Concerns" actually happens. It is where scripting, JavaScript, and the data-side itself ends and the design, heuritics engineering, CSS rules logic, and UI side begins. It's the hand-off. Where the batton is passed. Where the rubber meets the road.
+* `data-hooks` is a line. The actual divide. The point at which "Separation of Concerns" actually happens. It is where scripting, JavaScript, and the data-side itself ends and the design, heuristics engineering, CSS rules logic, and UI side begins. It's the hand-off. Where the baton is passed. Where the rubber meets the road.
 * JavaScript fetches the API endpoint JSON keys and creates and array.
 * From there it creates standard non-shadow-DOM custom HTML elements or "UI endpoints" or hooks for the data to be populated or `data-hooks`.
 * It does this by creating `data-hooks`

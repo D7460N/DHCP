@@ -166,7 +166,7 @@ nav details:first-of-type {
 }
 
 nav details summary {
-  font-family: Oxanium-SemiBold;
+  font-family: Oxanium-SemiBold, sans-serif;
   letter-spacing: 0.0625rem;
   color: rgba(var(--txt-active) ,var(--txt-active-opacity));
   text-wrap: pretty;
@@ -247,11 +247,11 @@ app-logo::before {
   width: 6em;
   height: 6em;
   background-color: currentColor;
-  mask-image: url(../images/brand/logo.svg);
+  mask-image: url(/assets/images/brand/logo.svg);
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: contain;
-  -webkit-mask-image: url(../images/brand/logo.svg);
+  -webkit-mask-image: url(/assets/images/brand/logo.svg);
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
   -webkit-mask-size: contain;
@@ -487,11 +487,13 @@ footer {
   grid-column: 1 / -1;
   user-select: none;
   border-radius: var(--border-radius);
+  align-items: center;
   margin-inline: 1rem;
   overflow: hidden;
 }
 
-powered-by {
+powered-by,
+app-version {
   padding: 1rem;
 }
 
