@@ -2,7 +2,7 @@
 
 ## Data Model
 
-All data is sourced from static or dynamic JSON files. JavaScript is only used to `fetch()` the data and inject it into semantic HTML custom elements.
+All data is sourced from static or dynamic JSON files. JavaScript is only used to `fetch()` the data and inject it into semantic HTML custom elements. A small helper `fetchJSON(url)` centralizes the fetch-and-parse logic.
 
 ## JSON Format
 
