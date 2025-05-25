@@ -194,11 +194,11 @@ stars-1::after {
   display: block;
   content: " ";
   position: absolute;
-  top: 2000px;
+  top: 125rem;
   width: 0.0625rem;
   height: 0.0625rem;
   background: transparent;
-  box-shadow: 738px 1628px #fff, 496px 1086px #fff, 638px 709px #fff,
+  box-shadow: 45.125rem 101.75rem #fff, 31rem 67.875rem #fff, 39.875rem 44.3125rem #fff,
     1424px 1853px #fff, 1261px 1485px #fff, 1902px 179px #fff,
     1518px 1443px #fff, 294px 740px #fff, 579px 1173px #fff, 1230px 784px #fff,
     1853px 850px #fff, 1379px 619px #fff, 1229px 1129px #fff, 122px 153px #fff,
@@ -579,14 +579,14 @@ stars-title {
   text-align: center;
   font-family: "lato", sans-serif;
   font-weight: 300;
-  font-size: 50px;
+  font-size: 3.125rem;
   letter-spacing: 0.625rem;
   margin-top: -3.75rem;
   padding-left: 0.625rem;
 }
 
 stars-title span {
-  background: -webkit-linear-gradient(white, #38495a);
+  background: -webkit-linear-gradient(#FFF, #38495A);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
