@@ -42,13 +42,17 @@ function toKebab(str) {
     .replace(/([a-z])([A-Z])/g, "$1-$2")
     .replace(/_/g, "-")
     .toLowerCase();
+
   if (!dashed.includes("-")) {
     dashed = dashed.replace(
-      /(name|type|id|date|time|url|ip|count|size|set|list)$/,
+      /(name|type|id|date|time|url|ip|count|size|set|list|item)$/,
       "-$1",
     );
   }
-  return dashed.includes("-") ? dashed : `${dashed}-`;
+
+  if (!dashed.includes("-")) dashed = `${dashed}-`;
+
+  return dashed;
 }
 
 function toCamel(str) {
@@ -509,7 +513,7 @@ function updateOnlineStatus() {
   }
 }
 
-window.addEventListener('online', updateOnlineStatus)
-window.addEventListener('offline', updateOnlineStatus)
+window.ononline = updateOnlineStatus
+window.onoffline = updateOnlineStatus
 
 updateOnlineStatus()
