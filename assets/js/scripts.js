@@ -76,6 +76,11 @@ function registerCustomElements(keys) {
   });
 }
 
+// MARK: UTILITY: CLEAR ASIDE DETAILS
+function clearFieldset() {
+  fieldset.innerHTML = "";
+}
+
 form.oninput = () => {
   toggleResetButton();
   toggleSubmitButton();
@@ -191,6 +196,15 @@ function createListItem(item = {}) {
   input.oninput = () => updateFormFromSelectedRow();
   label.appendChild(input);
 
+  li.onclick = (e) => {
+    if (input.checked) {
+      e.preventDefault();
+      input.checked = false;
+      clearFieldset();
+      snapshotForm();
+    }
+  };
+
   for (const [key, value] of Object.entries(item)) {
     const el = document.createElement(toKebab(key));
     el.textContent = value ?? "";
@@ -223,7 +237,7 @@ function load(endpoint) {
       }
 
       ul.innerHTML = "";
-      fieldset.innerHTML = "";
+      clearFieldset();
 
       const article = document.querySelector("main article:has(h1)");
       const h1 = article?.querySelector("h1");
@@ -247,7 +261,7 @@ function load(endpoint) {
 
 // MARK: REFLECT LI DATA INTO FORM
 function updateFormFromSelectedRow() {
-  fieldset.innerHTML = "";
+  clearFieldset();
   const selectedRow = document
     .querySelector('ul li input[name="list-item"]:checked')
     ?.closest("li");
@@ -354,7 +368,7 @@ newButton.onclick = () => {
   )
     return;
 
-  fieldset.innerHTML = "";
+  clearFieldset();
 
   const templateRow = ul.querySelector("li");
   if (!templateRow) return;
