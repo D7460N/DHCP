@@ -11,6 +11,8 @@ const tableUl = document.querySelector('main article ul[aria-hidden="true"] + ul
 const form = document.querySelector("aside form");
 const fieldset = form.querySelector("fieldset");
 const newButton = document.querySelector("main article button");
+const closeButton = form.querySelector('button[aria-label="Close"]');
+const main = document.querySelector("main");
 const deleteButton = form.querySelector('button[aria-label="Delete"]');
 const resetButton = form.querySelector('button[aria-label="Reset"]');
 const submitButton = form.querySelector('button[aria-label="Submit"]');
@@ -476,9 +478,21 @@ deleteButton.oninput = () => {
   confirmAction("Delete this record?", "", { type: "confirm" }).then((ok) => {
     if (!ok) return;
     fetch(`${BASE_URL}${endpoint}/${id}`, { method: "DELETE" }).then(() =>
-      load(`${BASE_URL}${endpoint}`),
+      load(`${BASE_URL}${endpoint}`)
     );
   });
+};
+
+// MARK: CLOSE ASIDE
+closeButton.oninput = () => {
+  const selected = tableUl.querySelector('input[name="list-item"]:checked');
+  if (selected) {
+    selected.checked = false;
+    selected.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+  fieldset.innerHTML = "";
+  if (main) main.style.removeProperty('width');
+  snapshotForm();
 };
 
 // MARK: MODAL CONFIRMATION
