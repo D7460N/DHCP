@@ -6,14 +6,14 @@
 const BASE_URL = "https://67d944ca00348dd3e2aa65f4.mockapi.io/"; // Base API URL
 
 // MARK: DOM ELEMENT REFERENCES
-const headerUl = document.querySelector("main article ul[aria-hidden='true']");
-const ul = document.querySelector("main article ul[aria-hidden='true'] + ul");
+const headerUl = document.querySelector('main article ul[aria-hidden="true"]');
+const tableUl = document.querySelector('main article ul[aria-hidden="true"] + ul');
 const form = document.querySelector("aside form");
 const fieldset = form.querySelector("fieldset");
 const newButton = document.querySelector("main article button");
-const deleteButton = form.querySelector('button[name="delete"]');
-const resetButton = form.querySelector('button[name="reset"]');
-const submitButton = form.querySelector('button[name="submit"]');
+const deleteButton = form.querySelector('button[aria-label="Delete"]');
+const resetButton = form.querySelector('button[aria-label="Reset"]');
+const submitButton = form.querySelector('button[aria-label="Submit"]');
 const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
 const ENDPOINTS = [];
@@ -185,7 +185,7 @@ function handleRowToggle(event) {
   const radio = li.querySelector('input[type="radio"][name="list-item"]');
 
   if (checkbox.checked) {
-    ul.querySelectorAll('input[name="row-toggle"]').forEach((cb) => {
+    tableUl.querySelectorAll('input[name="row-toggle"]').forEach((cb) => {
       if (cb !== checkbox) cb.checked = false;
     });
   }
@@ -245,7 +245,7 @@ function load(endpoint) {
         return;
       }
 
-      ul.innerHTML = "";
+      tableUl.innerHTML = "";
       fieldset.innerHTML = "";
 
       const article = document.querySelector("main article:has(h1)");
@@ -256,10 +256,10 @@ function load(endpoint) {
 
       data.items.forEach((item) => {
         const li = createListItem(item);
-        ul.appendChild(li);
+        tableUl.appendChild(li);
       });
 
-      const firstRow = ul.querySelector("li");
+      const firstRow = tableUl.querySelector("li");
       if (firstRow) updateHeaderRow(firstRow);
 
       snapshotForm();
@@ -379,7 +379,7 @@ newButton.oninput = () => {
 
   fieldset.innerHTML = "";
 
-  const templateRow = ul.querySelector("li");
+  const templateRow = tableUl.querySelector("li");
   if (!templateRow) return;
 
   const item = {};
@@ -401,7 +401,7 @@ newButton.oninput = () => {
   });
 
   const li = createListItem(item);
-  ul.prepend(li);
+  tableUl.prepend(li);
 
   updateHeaderRow(li);
   li.querySelector('input[name="list-item"]').checked = true;
