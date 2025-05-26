@@ -195,6 +195,7 @@ function createListItem(item = {}) {
   input.type = "radio";
   input.name = "list-item";
   input.hidden = true;
+  // Radio state is sufficient for selection
   input.oninput = () => updateFormFromSelectedRow();
   label.appendChild(input);
 
