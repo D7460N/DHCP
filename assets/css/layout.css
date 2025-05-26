@@ -327,20 +327,15 @@ main article ul {
   display: none;
   list-style-type: none;
   grid-auto-flow: row;
-  margin-block-start: 1rem;
   letter-spacing: 0.0625rem;
 }
 
 /* MARK: UL HEADER
 */
-/* ul:first-of-type = table header */
 main article ul[aria-hidden="true"] {
   align-content: start;
   font-family: Oxanium-medium, sans-serif;
-
-  li span {
-    color: rgba(var(--txt-active), 1.0);
-  }
+  color: rgba(var(--txt-color), 1.0);
 }
 
 
@@ -375,41 +370,41 @@ main article ul li label:last-child {
 
 /* MARK: UL TABLE
 */
-main article ul:last-of-type {
+main article ul[aria-hidden='true'] + ul {
   overflow: overlay;
   position: relative;
   align-content: start;
 }
 
-main article ul:last-of-type li {
+main article ul[aria-hidden='true'] + ul li {
   display: grid;
   grid-template-columns: 1fr;
   cursor: pointer;
 }
 
-main article ul:last-of-type li label {
+main article ul[aria-hidden='true'] + ul li label {
   /* https://www.youtube.com/watch?v=EeM5wnhO9iI */
   grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
   gap: 1rem;
 }
 
-main article ul:last-of-type li:hover {
+main article ul[aria-hidden='true'] + ul li:hover {
   background-color: rgba(var(--bg-active-color), 0.05);
   color: rgba(var(--txt-active), 1.0);
 }
 
 /* LI active state */
-main article ul:last-of-type li:has(input:checked) {
+main article ul[aria-hidden='true'] + ul li:has(input:checked) {
   background-color: rgba(var(--bg-active-color), 0.05);
   color: rgba(var(--txt-active), 1);
 }
 
 /* Spinner visible when selected */
-main article ul:last-of-type li:has(input:checked) load-data {
+main article ul[aria-hidden='true'] + ul li:has(input:checked) load-data {
   display: grid;
 }
 
-main article ul:last-of-type li label {
+main article ul[aria-hidden='true'] + ul li label {
   display: none;
   cursor: pointer;
   word-break: break-word;
@@ -420,15 +415,15 @@ main article ul:last-of-type li label {
   text-overflow: ellipsis; */
 }
 
-main article ul:last-of-type li label:first-child {
+main article ul[aria-hidden='true'] + ul li label:first-child {
   padding-inline-start: 1rem;
 }
 
-main article ul:last-of-type li label:last-child {
+main article ul[aria-hidden='true'] + ul li label:last-child {
   padding-inline-end: 1rem;
 }
 
-main article ul:last-of-type li label:not(:empty) {
+main article ul[aria-hidden='true'] + ul li label:not(:empty) {
   display: grid;
 }
 
