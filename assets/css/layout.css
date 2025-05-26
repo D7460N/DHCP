@@ -72,7 +72,7 @@ app-container {
 
 /* When <aside> has an fieldset that is not empty, which also gives <aside> display: grid;, add a grid column to <app-container> */
 app-container:has(aside form fieldset:not(:empty)) {
-  --app-container-grid-template-columns: 12rem 1fr 20rem;
+  --app-container-grid-template-columns: 12rem auto 1fr;
   grid-template-columns: var(--app-container-grid-template-columns);
 }
 
@@ -231,6 +231,10 @@ button {
   font-size: 100%;
 }
 
+button:hover {
+  background-color: rgba(var(--bg-active-color), 0.15);
+}
+
 demo-buttons {
   padding: 1rem;
 }
@@ -275,7 +279,8 @@ main {
   margin-inline-end: 1rem;
   overflow: hidden;
   align-content: start;
-  /* resize: var(--main-resize-h); */
+  resize: var(--main-resize-h);
+  min-width: 20rem;
 }
 
 /* MARK:ARTICLE
@@ -439,8 +444,38 @@ main article input[type="search"]:not(:placeholder-shown) {
 aside {
   display: none;
   overflow: hidden;
+  position: relative;
   align-content: start;
   border-radius: var(--border-radius);
+  margin-inline-end: 1rem;
+  min-width: 12rem;
+}
+
+aside button[aria-label="Close"] {
+  position: absolute;
+  align-self: start;
+  justify-self: end;
+  margin-block-start: 1rem;
+  margin-inline-end: 1rem;
+}
+
+aside button[aria-label="Delete"] {
+  position: absolute;
+  align-self: end;
+  justify-self: start;
+  margin-inline-start: 1rem;
+}
+
+aside button[aria-label="Reset"] {
+  position: absolute;
+  align-self: end;
+  justify-self: center;
+}
+
+aside button[aria-label="Save"] {
+  position: absolute;
+  justify-self: end;
+  align-self: end;
   margin-inline-end: 1rem;
 }
 
@@ -451,11 +486,12 @@ aside:has(form fieldset:not(:empty)) {
 
 aside form small,
 aside form fieldset {
-  grid-column: 1 / -1;
+  /* grid-column: 1 / -1; */
+  align-self: end;
 }
 
 /* Place buttons horizontally */
-aside form button[name="delete"] {
+/* aside form button[name="delete"] {
   grid-column: 1;
 }
 
@@ -465,15 +501,15 @@ aside form button[name="reset"] {
 
 aside form button[name="submit"] {
   grid-column: 3;
-}
+} */
 
 /* Optional: Align buttons left */
 aside form {
-  grid-template-columns: 1fr auto auto;
   grid-template-rows: auto 1fr auto auto;
   gap: 1rem;
+  position: relative;
   justify-content: start;
-  align-items: center;
+  /* align-items: center; */
 }
 
 /* MARK: FOOTER

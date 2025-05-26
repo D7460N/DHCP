@@ -6,21 +6,7 @@
   border-radius: var(--border-radius);
 } */
 
-aside form button:first-of-type {
-  margin-inline-start: 1rem;
-}
 
-aside form button:last-of-type {
-  margin-inline-end: 1rem;
-}
-
-button:hover {
-  background-color: rgba(var(--bg-active-color), 0.15);
-}
-
-demo-buttons {
-  cursor: pointer;
-}
 
 hr {
   margin: 1rem 0;

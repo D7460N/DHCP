@@ -21,7 +21,7 @@ article select {
 /* MARK: FORMS */
 aside form {
   display: grid;
-  max-width: 45rem;
+  /* max-width: 45rem; */
   overflow: hidden;
   position: relative;
 }
@@ -49,7 +49,17 @@ aside form select {
   font-size: 100%;
 }
 
-/* MARK: BUTTON */
+demo-buttons {
+  cursor: pointer;
+}
+
+/* MARK: DISABLED BUTTONS */
+aside form button:disabled {
+  background-color: rgba(var(--button-bg-color), 0.1);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 aside form button {
   background-color: rgba(var(--button-bg-color), 0.25);
 }
@@ -220,11 +230,4 @@ aside form fieldset label {
 aside form input[type="checkbox"] {
   margin-right: 0.5rem;
   vertical-align: middle;
-}
-
-/* MARK: DISABLED BUTTONS */
-aside form button:disabled {
-  background-color: rgba(var(--button-bg-color), 0.1);
-  opacity: 0.5;
-  cursor: not-allowed;
 }
