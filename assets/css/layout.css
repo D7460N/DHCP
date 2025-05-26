@@ -13,7 +13,6 @@
   --sub-header-display: none;
   --grid-gap: 1rem;
   --aside-display: none;
-  /* container: inline-size; */
 }
 
 /* MARK: LAYOUT | Vertical SMALL SCREENS
@@ -55,6 +54,7 @@
 /* MARK: WRAPPER
 */
 app-container {
+  container-type: inline-size;
   display: grid;
   grid-template-rows: var(--app-container-grid-template-rows);
   grid-template-columns: var(--app-container-grid-template-columns);
@@ -279,7 +279,6 @@ main {
   margin-inline-end: 1rem;
   overflow: hidden;
   align-content: start;
-  resize: var(--main-resize-h);
   min-width: 20rem;
 }
 
@@ -332,8 +331,10 @@ main article ul {
   letter-spacing: 0.0625rem;
 }
 
+/* MARK: UL HEADER
+*/
 /* ul:first-of-type = table header */
-main article ul:first-of-type {
+main article ul[aria-hidden="true"] {
   align-content: start;
   font-family: Oxanium-medium, sans-serif;
 
@@ -348,28 +349,32 @@ main article ul:has(li:not(:empty)) {
   display: grid;
 }
 
+/* Styles for both ULs */
 main article ul li {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
   gap: 1rem;
 }
 
-main article > ul li label {
+/* Styles for both ULs */
+main article > ul > li label {
   padding: 0.5rem;
   word-break: break-all;
   text-wrap: pretty;
 }
 
-
+/* Styles for both ULs */
 main article ul label:first-child {
   padding-inline-start: 1rem;
 }
 
+/* Styles for both ULs */
 main article ul li label:last-child {
   padding-inline-end: 1rem;
 }
 
-/* ul:last-of-type = table */
+/* MARK: UL TABLE
+*/
 main article ul:last-of-type {
   overflow: overlay;
   position: relative;
@@ -483,6 +488,12 @@ aside:has(form fieldset:not(:empty)) {
   display: grid;
   grid-template-rows: auto 1fr;
 }
+
+main:has(~ aside fieldset:not(:empty)) {
+  /* Apply styles to target */
+  resize: horizontal;
+}
+
 
 aside form small,
 aside form fieldset {
