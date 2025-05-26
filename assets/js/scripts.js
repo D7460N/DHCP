@@ -10,7 +10,9 @@ const headerUl = document.querySelector('main article ul[aria-hidden="true"]');
 const tableUl = document.querySelector('main article ul[aria-hidden="true"] + ul');
 const form = document.querySelector("aside form");
 const fieldset = form.querySelector("fieldset");
+const main = document.querySelector("main");
 const newButton = document.querySelector("main article button");
+const closeButton = form.querySelector('button[aria-label="Close"]');
 const deleteButton = form.querySelector('button[aria-label="Delete"]');
 const resetButton = form.querySelector('button[aria-label="Reset"]');
 const submitButton = form.querySelector('button[aria-label="Submit"]');
@@ -264,6 +266,7 @@ function load(endpoint) {
 
       snapshotForm();
       toggleResetButton();
+      if (!fieldset.childElementCount) main.style.removeProperty("width");
     })
     .catch((err) => console.error("Failed to load data:", err));
 }
@@ -479,6 +482,22 @@ deleteButton.oninput = () => {
       load(`${BASE_URL}${endpoint}`),
     );
   });
+};
+
+// MARK: CLOSE ASIDE
+closeButton.oninput = () => {
+  const selected = document.querySelector('ul li input[name="list-item"]:checked');
+  if (selected) {
+    selected.checked = false;
+    selected
+      .closest("li")
+      ?.querySelector('input[name="row-toggle"]')
+      ?.checked = false;
+  }
+
+  fieldset.innerHTML = "";
+  main.style.removeProperty("width");
+  snapshotForm();
 };
 
 // MARK: MODAL CONFIRMATION
