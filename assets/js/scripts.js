@@ -179,11 +179,34 @@ function updateHeaderRow(sourceRow) {
 }
 
 // MARK: LIST ITEM FACTORY
+function handleRowToggle(event) {
+  const checkbox = event.target;
+  const li = checkbox.closest("li");
+  const radio = li.querySelector('input[type="radio"][name="list-item"]');
+
+  if (checkbox.checked) {
+    ul.querySelectorAll('input[name="row-toggle"]').forEach((cb) => {
+      if (cb !== checkbox) cb.checked = false;
+    });
+  }
+
+  radio.checked = checkbox.checked;
+  radio.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
 function createListItem(item = {}) {
   const li = document.createElement("li");
   li.tabIndex = 0;
 
   const label = document.createElement("label");
+
+  const toggle = document.createElement("input");
+  toggle.type = "checkbox";
+  toggle.name = "row-toggle";
+  toggle.hidden = true;
+  toggle.oninput = handleRowToggle;
+  label.appendChild(toggle);
+
   const input = document.createElement("input");
   input.type = "radio";
   input.name = "list-item";
@@ -334,7 +357,7 @@ loadEndpoints().then(() => {
 
 // MARK: TAB SWITCH LOGIC
 document.querySelectorAll('nav input[name="nav"]').forEach((input) => {
-  input.onchange = () => {
+  input.oninput = () => {
     if (!input.checked) return;
     if (
       hasUnsavedChanges() &&
@@ -347,7 +370,7 @@ document.querySelectorAll('nav input[name="nav"]').forEach((input) => {
 });
 
 // MARK: NEW ROW CREATION
-newButton.onclick = () => {
+newButton.oninput = () => {
   if (
     hasUnsavedChanges() &&
     !confirm("You have unsaved changes. Discard them?")
@@ -433,7 +456,7 @@ form.onreset = (e) => {
 };
 
 // MARK: DELETE HANDLER
-deleteButton.onclick = () => {
+deleteButton.oninput = () => {
   const selected = document.querySelector(
     'ul li input[name="list-item"]:checked',
   );
@@ -471,23 +494,23 @@ function confirmAction(title, message = "", { type = "confirm" } = {}) {
       btnPrimary.textContent = "Yes";
       btnSecondary.textContent = "No";
 
-      btnPrimary.onclick = () => {
+      btnPrimary.oninput = () => {
         clearModal();
         resolve(true);
       };
 
-      btnSecondary.onclick = () => {
+      btnSecondary.oninput = () => {
         clearModal();
         resolve(false);
       };
     } else {
       btnPrimary.textContent = "Dismiss";
-      btnPrimary.onclick = () => {
+      btnPrimary.oninput = () => {
         clearModal();
         resolve();
       };
       btnSecondary.textContent = ""; // hide secondary button
-      btnSecondary.onclick = null;
+      btnSecondary.oninput = null;
     }
 
     function clearModal() {
