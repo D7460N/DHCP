@@ -44,9 +44,7 @@ function toKebab(str) {
     .toLowerCase();
 
   if (!dashed.includes("-")) {
-    if (
-      /^(name|type|id|date|time|url|ip|count|size|set|list|item)$/.test(dashed)
-    ) {
+    if (/^(name|type|id|date|time|url|ip|count|size|set|list|item)$/.test(dashed)) {
       dashed = `${dashed}-`;
     } else {
       dashed = dashed.replace(
@@ -76,11 +74,6 @@ function registerCustomElements(keys) {
       document.createElement(tag);
     }
   });
-}
-
-// MARK: UTILITY: CLEAR ASIDE DETAILS
-function clearFieldset() {
-  fieldset.innerHTML = "";
 }
 
 form.oninput = () => {
@@ -198,15 +191,6 @@ function createListItem(item = {}) {
   input.oninput = () => updateFormFromSelectedRow();
   label.appendChild(input);
 
-  li.onclick = (e) => {
-    if (input.checked) {
-      e.preventDefault();
-      input.checked = false;
-      input.oninput();
-      snapshotForm();
-    }
-  };
-
   for (const [key, value] of Object.entries(item)) {
     const el = document.createElement(toKebab(key));
     el.textContent = value ?? "";
@@ -239,7 +223,7 @@ function load(endpoint) {
       }
 
       ul.innerHTML = "";
-      clearFieldset();
+      fieldset.innerHTML = "";
 
       const article = document.querySelector("main article:has(h1)");
       const h1 = article?.querySelector("h1");
@@ -263,7 +247,7 @@ function load(endpoint) {
 
 // MARK: REFLECT LI DATA INTO FORM
 function updateFormFromSelectedRow() {
-  clearFieldset();
+  fieldset.innerHTML = "";
   const selectedRow = document
     .querySelector('ul li input[name="list-item"]:checked')
     ?.closest("li");
@@ -370,7 +354,7 @@ newButton.onclick = () => {
   )
     return;
 
-  clearFieldset();
+  fieldset.innerHTML = "";
 
   const templateRow = ul.querySelector("li");
   if (!templateRow) return;
@@ -516,26 +500,26 @@ function confirmAction(title, message = "", { type = "confirm" } = {}) {
 }
 
 // MARK: OFF-LINE
-let offlineInterval;
-let offlineStartTime;
+let offlineInterval
+let offlineStartTime
 
 function updateOnlineStatus() {
-  const offlineMsg = document.querySelector("off-line p");
+  const offlineMsg = document.querySelector('off-line p')
 
   if (navigator.onLine) {
-    clearInterval(offlineInterval);
-    offlineMsg.textContent = "";
+    clearInterval(offlineInterval)
+    offlineMsg.textContent = ''
   } else {
-    offlineStartTime = Date.now();
+    offlineStartTime = Date.now()
 
     offlineInterval = setInterval(() => {
-      const elapsedSec = Math.floor((Date.now() - offlineStartTime) / 1000);
-      offlineMsg.textContent = `You’re offline (${elapsedSec}s elapsed)`;
-    }, 1000);
+      const elapsedSec = Math.floor((Date.now() - offlineStartTime) / 1000)
+      offlineMsg.textContent = `Offline [ (${elapsedSec}s elapsed) ]`
+    }, 1000)
   }
 }
 
-window.ononline = updateOnlineStatus;
-window.onoffline = updateOnlineStatus;
+window.ononline = updateOnlineStatus
+window.onoffline = updateOnlineStatus
 
-updateOnlineStatus();
+updateOnlineStatus()
