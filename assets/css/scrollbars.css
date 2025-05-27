@@ -1,5 +1,7 @@
 /* MARK: SCROLLBARS
 */
+/*
+
 *::-webkit-scrollbar {
   display: block;
   width: 1rem;
@@ -40,18 +42,52 @@
   box-shadow: none;
 }
 
+
+  */
+
 /* MARK: FIREFOX
 */
 /* Target elements, not :root{} */
 /* https://codeconvey.com/custom-scrollbar-css-for-all-browsers/ */
-fieldset,
+/* fieldset,
 section {
-  scrollbar-color: rgba(var(--accent2), 0.0) rgba(var(--accent2), 0.0);
+  scrollbar-color: rgba(var(--accent2), 0.0) rgba(var(--accent2), 0.0); */
   /* Thumb and track color */
-  scrollbar-width: thin;
+  /* scrollbar-width: thin; */
   /* Track width */
-}
+/* }
 fieldset:hover,
 section:hover {
   scrollbar-color: rgba(var(--accent2), 0.3) rgba(var(--accent2), 0.0);
+} */
+
+
+
+
+/* ::-webkit-scrollbar {
+  height: 6px;
+  background-color: none;
+}
+:hover::-webkit-scrollbar {
+  background-color: rgba(var(--accent2), 1.0);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius:5px;
+}
+:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--accent2), 1.0);
+  border-radius:5px;
+} */
+
+main article ul[aria-hidden="true"] + ul {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--accent2)) #0000;
+
+  transition: scrollbar-color .5s ease;
+
+  &:not(:hover) {
+    scrollbar-color: transparent #0000;
+  }
 }

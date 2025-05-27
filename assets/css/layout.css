@@ -330,6 +330,13 @@ main article ul {
   letter-spacing: 0.0625rem;
 }
 
+/* Styles for both ULs */
+main article ul li {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
+  gap: 1rem;
+}
+
 /* MARK: UL HEADER
 */
 main article ul[aria-hidden="true"] {
@@ -338,17 +345,18 @@ main article ul[aria-hidden="true"] {
   color: rgba(var(--txt-color), 1.0);
 }
 
+main article ul[aria-hidden="true"] li:first-child {
+  padding-inline-start: 1rem;
+}
+
+main article ul[aria-hidden="true"] li:last-child {
+  padding-inline-end: 1rem;
+}
+
 
 /* Show header row when list populated */
 main article ul:has(li:not(:empty)) {
   display: grid;
-}
-
-/* Styles for both ULs */
-main article ul li {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
-  gap: 1rem;
 }
 
 /* Styles for both ULs */
@@ -457,6 +465,7 @@ aside button[aria-label="Close"] {
   justify-self: end;
   margin-block-start: 1rem;
   margin-inline-end: 1rem;
+  padding: 0.5rem;
 }
 
 aside button[aria-label="Delete"] {
