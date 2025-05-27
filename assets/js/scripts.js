@@ -372,7 +372,7 @@ document.querySelectorAll('nav input[name="nav"]').forEach((input) => {
 });
 
 // MARK: NEW ROW CREATION
-newButton.oninput = () => {
+newButton.onclick = () => {
   if (
     hasUnsavedChanges() &&
     !confirm("You have unsaved changes. Discard them?")
@@ -458,7 +458,7 @@ form.onreset = (e) => {
 };
 
 // MARK: DELETE HANDLER
-deleteButton.oninput = () => {
+deleteButton.onclick = () => {
   const selected = document.querySelector(
     'ul li input[name="list-item"]:checked',
   );
@@ -513,23 +513,23 @@ function confirmAction(title, message = "", { type = "confirm" } = {}) {
       btnPrimary.textContent = "Yes";
       btnSecondary.textContent = "No";
 
-      btnPrimary.oninput = () => {
+      btnPrimary.onclick = () => {
         clearModal();
         resolve(true);
       };
 
-      btnSecondary.oninput = () => {
+      btnSecondary.onclick = () => {
         clearModal();
         resolve(false);
       };
     } else {
       btnPrimary.textContent = "Dismiss";
-      btnPrimary.oninput = () => {
+      btnPrimary.onclick = () => {
         clearModal();
         resolve();
       };
       btnSecondary.textContent = ""; // hide secondary button
-      btnSecondary.oninput = null;
+      btnSecondary.onclick = null;
     }
 
     function clearModal() {
