@@ -11,6 +11,8 @@ const tableUl = document.querySelector('main article ul[aria-hidden="true"] + ul
 const form = document.querySelector("aside form");
 const fieldset = form.querySelector("fieldset");
 const newButton = document.querySelector("main article button");
+const main = document.querySelector("main");
+const closeButton = form.querySelector('button[aria-label="Close"]');
 const deleteButton = form.querySelector('button[aria-label="Delete"]');
 const resetButton = form.querySelector('button[aria-label="Reset"]');
 const submitButton = form.querySelector('button[aria-label="Submit"]');
@@ -479,6 +481,20 @@ deleteButton.oninput = () => {
       load(`${BASE_URL}${endpoint}`),
     );
   });
+};
+
+// MARK: CLOSE ASIDE
+closeButton.oninput = () => {
+  const selectedRadio = document.querySelector(
+    'ul li input[name="list-item"]:checked',
+  );
+  const selectedLi = selectedRadio?.closest('li');
+  selectedLi?.querySelector('input[name="row-toggle"]').checked = false;
+  if (selectedRadio) selectedRadio.checked = false;
+
+  fieldset.innerHTML = "";
+  main.removeAttribute("style");
+  snapshotForm();
 };
 
 // MARK: MODAL CONFIRMATION
