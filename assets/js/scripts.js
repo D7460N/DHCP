@@ -3,237 +3,82 @@
 // Purpose: Fetch JSON and inject values using custom elements generated from API keys
 
 // MARK: CONSTANTS
-const BASE_URL = "https://67d944ca00348dd3e2aa65f4.mockapi.io/"; // Base API URL
+const BASE_URL = "https://67d944ca00348dd3e2aa65f4.mockapi.io/" // Base API URL
 
 // MARK: DOM ELEMENT REFERENCES
-const headerUl = document.querySelector('main article ul[aria-hidden="true"]');
-const tableUl = document.querySelector('main article ul[aria-hidden="true"] + ul');
-const form = document.querySelector("aside form");
-const fieldset = form.querySelector("fieldset");
-const main = document.querySelector("main");
-const newButton = document.querySelector("main article button");
-const closeButton = document.querySelector('aside button[aria-label="Close"]');
-const deleteButton = form.querySelector('button[aria-label="Delete"]');
-const resetButton = form.querySelector('button[aria-label="Reset"]');
-const submitButton = form.querySelector('button[aria-label="Submit"]');
-const navInputs = document.querySelectorAll('nav input[name="nav"]');
+const headerUl = document.querySelector('main article ul[aria-hidden="true"]')
+const tableUl = document.querySelector('main article ul[aria-hidden="true"] + ul')
+const form = document.querySelector("aside form")
+const fieldset = form.querySelector("fieldset")
+const mainEl = document.querySelector("main")
+const newButton = document.querySelector("main article button")
+const closeButton = document.querySelector('aside button[aria-label="Close"]')
+const deleteButton = form.querySelector('button[aria-label="Delete"]')
+const resetButton = form.querySelector('button[aria-label="Reset"]')
+const submitButton = form.querySelector('button[aria-label="Save"]')
+const navInputs = document.querySelectorAll('nav input[name="nav"]')
 
-const ENDPOINTS = [];
+const ENDPOINTS = []
 
-function fetchJSON(url) {
-  return fetch(url).then((r) => r.json());
-}
+// MARK: UTILITY FUNCTIONS
 
+// Fetch & Data Handling
+function fetchJSON(url) {return fetch(url).then((r) => r.json())}
 function loadEndpoints() {
   return fetchJSON(`${BASE_URL}nav-content`).then(([data]) => {
-    const keys = Object.keys(data || {});
-    ENDPOINTS.splice(0, ENDPOINTS.length, ...keys);
+    const keys = Object.keys(data || {})
+    ENDPOINTS.splice(0, ENDPOINTS.length, ...keys)
     navInputs.forEach((input, i) => {
-      const ep = keys[i];
-      if (ep) input.value = ep;
-    });
-  });
+      const ep = keys[i]
+      if (ep) input.value = ep
+    })
+  })
 }
-
 function isValidEndpoint(name) {
-  return ENDPOINTS.includes(name);
+  return ENDPOINTS.includes(name)
 }
-
+// String & Format Utilities
 function toKebab(str) {
   let dashed = str
     .replace(/([a-z])([A-Z])/g, "$1-$2")
     .replace(/_/g, "-")
-    .toLowerCase();
+    .toLowerCase()
 
   if (!dashed.includes("-")) {
-    if (/^(name|type|id|date|time|url|ip|count|size|set|list|item)$/.test(dashed)) {
-      dashed = `${dashed}-`;
+    if (
+      /^(name|type|id|date|time|url|ip|count|size|set|list|item)$/.test(dashed)
+    ) {
+      dashed = `${dashed}-`
     } else {
       dashed = dashed.replace(
         /(name|type|id|date|time|url|ip|count|size|set|list|item)$/,
-        "-$1",
-      );
+        "-$1"
+      )
     }
   }
-
-  if (!dashed.includes("-")) dashed = `${dashed}-`;
-
-  if (dashed.startsWith("-")) dashed = `${dashed.slice(1)}-`;
-
-  return dashed;
+  if (!dashed.includes("-")) dashed = `${dashed}-`
+  if (dashed.startsWith("-")) dashed = `${dashed.slice(1)}-`
+  return dashed
 }
-
 function toCamel(str) {
-  let result = str.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
-  if (result.endsWith("-")) result = result.slice(0, -1);
-  return result;
+  let result = str.replace(/-([a-z])/g, (_, c) => c.toUpperCase())
+  if (result.endsWith("-")) result = result.slice(0, -1)
+  return result
 }
-
-function registerCustomElements(keys) {
-  keys.forEach((key) => {
-    const tag = toKebab(key);
-    if (tag.includes("-")) {
-      document.createElement(tag);
-    }
-  });
-}
-
-form.oninput = () => {
-  toggleResetButton();
-  toggleSubmitButton();
-};
-
-// MARK: UTILITY: FORMAT ISO DATE TO INPUT[TYPE="DATETIME-LOCAL"] VALUE
 function formatDateForInput(str) {
-  const d = new Date(str);
-  if (isNaN(d)) return "";
-  return d.toISOString().slice(0, 16); // Trims to format: YYYY-MM-DDTHH:MM
+  const d = new Date(str)
+  if (isNaN(d)) return ""
+  return d.toISOString().slice(0, 16) // Trims to format: YYYY-MM-DDTHH:MM
 }
 
-// MARK: LIVE MIRROR HANDLER: INLINE ONINPUT FOR NATIVE FORM INPUTS
-function mirrorToSelectedRow(event) {
-  const input = event.target;
-  const key = input.name;
-  const selectedLi = document
-    .querySelector('ul li input[name="list-item"]:checked')
-    ?.closest("li");
-  if (!selectedLi) return;
-
-  const mirror = selectedLi.querySelector(`label > ${toKebab(key)}`);
-  if (mirror && !input.readOnly) {
-    mirror.textContent = input.value;
-  }
-}
-
-// MARK: UTILITY: BUILD APPROPRIATE INPUT/SELECT BASED ON KEY-VALUE
-function createInputFromKey(key, value) {
-  const inputName = key;
-  const val = value?.trim?.() ?? "";
-  let element;
-
-  const lowercaseVal = val.toLowerCase();
-  const dhcpTypes = ["host", "ip", "url", "file", "service"];
-
-  if (dhcpTypes.includes(lowercaseVal)) {
-    element = document.createElement("select");
-    element.name = inputName;
-    element.required = true;
-
-    const emptyOpt = document.createElement("option");
-    emptyOpt.value = "";
-    emptyOpt.textContent = "Select Type";
-    element.appendChild(emptyOpt);
-
-    dhcpTypes.forEach((opt) => {
-      const o = document.createElement("option");
-      o.value = o.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
-      if (opt === lowercaseVal) o.selected = true;
-      element.appendChild(o);
-    });
-  } else {
-    element = document.createElement("input");
-    element.name = inputName;
-    element.value = val;
-
-    if (key === "id" || /^[a-f0-9\-]{36}$/.test(val)) {
-      element.type = "hidden";
-      element.oninput = mirrorToSelectedRow;
-      return element;
-    }
-
-    if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/.test(val)) {
-      element.type = "datetime-local";
-      element.readOnly = true;
-      element.tabIndex = -1;
-      element.value = formatDateForInput(val);
-    } else if (/author|modified|created|updated/.test(key)) {
-      element.type = "text";
-      element.readOnly = true;
-      element.tabIndex = -1;
-    } else {
-      element.type = "text";
-      element.required = val !== "";
-      element.pattern = ".+";
-    }
-  }
-
-  element.oninput = mirrorToSelectedRow; // Enable live mirroring
-  return element;
-}
-
-// MARK: HEADER COLUMNS GENERATOR
-function updateHeaderRow(sourceRow) {
-  const headerLi = headerUl?.querySelector("li");
-  if (!headerLi || !sourceRow) return;
-
-  // Reuse list cleanup pattern from load()
-  headerLi.innerHTML = "";
-
-  sourceRow.querySelectorAll("label > *:not(input)").forEach((el) => {
-    const key = toCamel(el.tagName.toLowerCase());
-    const clone = el.cloneNode(false);
-    clone.textContent = toKebab(key)
-      .replace(/^item-/, "")
-      .replace(/-/g, " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase());
-    headerLi.appendChild(clone);
-  });
-}
-
-// MARK: LIST ITEM FACTORY
-function handleRowToggle(event) {
-  const checkbox = event.target;
-  const li = checkbox.closest("li");
-  const radio = li.querySelector('input[type="radio"][name="list-item"]');
-
-  if (checkbox.checked) {
-    tableUl.querySelectorAll('input[name="row-toggle"]').forEach((cb) => {
-      if (cb !== checkbox) cb.checked = false;
-    });
-  }
-
-  radio.checked = checkbox.checked;
-  radio.dispatchEvent(new Event("input", { bubbles: true }));
-}
-
-function createListItem(item = {}) {
-  const li = document.createElement("li");
-  li.tabIndex = 0;
-
-  const label = document.createElement("label");
-
-  const toggle = document.createElement("input");
-  toggle.type = "checkbox";
-  toggle.name = "row-toggle";
-  toggle.hidden = true;
-  toggle.oninput = handleRowToggle;
-  label.appendChild(toggle);
-
-  const input = document.createElement("input");
-  input.type = "radio";
-  input.name = "list-item";
-  input.hidden = true;
-  input.oninput = () => updateFormFromSelectedRow();
-  label.appendChild(input);
-
-  for (const [key, value] of Object.entries(item)) {
-    const el = document.createElement(toKebab(key));
-    el.textContent = value ?? "";
-    label.appendChild(el);
-  }
-
-  li.appendChild(label);
-  return li;
-}
-
-// MARK: LOAD DATA FROM API AND RENDER INTO UI
-function load(endpoint) {
+// MARK: Custom Element Utilities
+function loadEndpoint(endpoint) {
   console.log("[LOAD]", endpoint);
   fetchJSON(endpoint)
     .then(([data]) => {
       console.log("[LOADED]", data);
 
-      registerCustomElements(Object.keys(data.items[0] || {}));
+      initCustomEls(Object.keys(data.items[0] || {}));
 
       const seen = new Set();
       const duplicates = [];
@@ -243,7 +88,7 @@ function load(endpoint) {
       }
       if (duplicates.length) {
         console.error("[DUPLICATE ID DETECTED]", duplicates);
-        alert(`Duplicate IDs found: ${duplicates.join(", ")}`);
+        confirmAction(`Duplicate IDs found: ${duplicates.join(", ")}`, { type: "alert" });
         return;
       }
 
@@ -267,163 +112,380 @@ function load(endpoint) {
       snapshotForm();
       toggleResetButton();
     })
-    .catch((err) => console.error("Failed to load data:", err));
+    .catch((err) => {
+      console.error("Failed to load data:", err);
+      confirmAction("Failed to load data.", { type: "alert" });
+    });
 }
 
-// MARK: REFLECT LI DATA INTO FORM
+// DOM Manipulation Utilities
+function removeInlineStyles(element) {
+  if (element && element instanceof HTMLElement) {
+    element.removeAttribute("style")
+  }
+}
+function clearFieldset(fieldsetElement) {
+  if (fieldsetElement && fieldsetElement instanceof HTMLElement) {
+    fieldsetElement.innerHTML = ""
+  }
+}
+
+// Validation Utilities
+function isValid() {
+  return form.checkValidity();
+}
+function hasUnsavedChanges() {
+  return Array.from(
+    fieldset.querySelectorAll("input[name], select[name]")
+  ).some((el) => el.value !== originalData[el.name])
+}
+window.onbeforeunload = () => (hasUnsavedChanges() ? true : undefined)
+
+// Modal & UI Utilities
+function showModal({ title = "", message = "", buttons = [] }) {
+  return new Promise((resolve) => {
+    const modal = document.querySelector("modal-")
+    if (!modal) return resolve(null)
+
+    modal.querySelector("h4").textContent = title
+    modal.querySelector("p").textContent = message
+
+    const modalButtons = modal.querySelectorAll("button")
+    modalButtons.forEach((btn, index) => {
+      const buttonData = buttons[index]
+      btn.textContent = buttonData ? buttonData.label : ""
+      btn.onclick = buttonData
+        ? () => {
+          clearModal()
+          resolve(buttonData.value)
+        }
+        : null
+    })
+
+    function clearModal() {
+      modal.querySelector("h4").textContent = ""
+      modal.querySelector("p").textContent = ""
+      modalButtons.forEach((btn) => {
+        btn.textContent = ""
+        btn.onclick = null
+      })
+    }
+  })
+}
+
+// Form State Utilities
+// MARK: TRACK FROM ORIGINAL STATE
+let originalData = {}
+let snapshotLi = null
+function snapshotForm() {
+  originalData = {}
+  fieldset.querySelectorAll("input[name], select[name]").forEach((el) => {
+    originalData[el.name] = el.value
+  })
+  snapshotLi = document
+    .querySelector('ul li input[name="list-item"]:checked')
+    ?.closest("li")
+  toggleResetButton()
+  toggleSubmitButton()
+}
+function restoreForm() {
+  fieldset.querySelectorAll("input[name], select[name]").forEach((el) => {
+    if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
+      el.value = originalData[el.name]
+    }
+  })
+
+  if (snapshotLi) {
+    snapshotLi.querySelectorAll("label > *:not(input)").forEach((el) => {
+      const key = toCamel(el.tagName.toLowerCase())
+      if (Object.prototype.hasOwnProperty.call(originalData, key)) {
+        el.textContent = originalData[key]
+      }
+    })
+  }
+}
+function toggleResetButton() {
+  if (!resetButton) return
+  const dirty = hasUnsavedChanges()
+  resetButton.disabled = !dirty
+  form.dataset.dirty = dirty ? "true" : "false"
+}
+function toggleSubmitButton() {
+  if (!submitButton) return
+  const dirty = hasUnsavedChanges()
+  const valid = form.checkValidity()
+  submitButton.disabled = !(dirty && valid)
+}
+function initCustomEls(keys) {
+  keys.forEach((key) => {
+    const tag = toKebab(key);
+    if (tag.includes("-")) {
+      document.createElement(tag);
+    }
+  });
+}
 function updateFormFromSelectedRow() {
-  fieldset.innerHTML = "";
+  fieldset.innerHTML = ""
   const selectedRow = document
     .querySelector('ul li input[name="list-item"]:checked')
-    ?.closest("li");
-  if (!selectedRow) return;
+    ?.closest("li")
+  if (!selectedRow) {
+    removeInlineStyles(mainEl) // <- Clear main inline styles
+    snapshotForm()
+    form.oninput()
+    return
+  }
 
   selectedRow.querySelectorAll("label > *:not(input)").forEach((source) => {
-    const key = toCamel(source.tagName.toLowerCase());
-    const value = source.textContent;
+    const key = toCamel(source.tagName.toLowerCase())
+    const value = source.textContent
 
-    const label = document.createElement("label");
+    const label = document.createElement("label")
     label.textContent =
       toKebab(key)
         .replace(/^item-/, "")
         .replace(/-/g, " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase()) + ": ";
+        .replace(/\b\w/g, (c) => c.toUpperCase()) + ": "
 
-    const input = createInputFromKey(key, value);
-    label.appendChild(input);
-    fieldset.appendChild(label);
-  });
+    const input = createInputFromKey(key, value)
+    label.appendChild(input)
+    fieldset.appendChild(label)
+  })
 
-  snapshotForm();
-  toggleResetButton();
+  snapshotForm()
+  toggleResetButton()
 }
 
-// MARK: TRACK FROM ORIGINAL STATE
-let originalData = {};
-let snapshotLi = null;
-function snapshotForm() {
-  originalData = {};
-  fieldset.querySelectorAll("input[name], select[name]").forEach((el) => {
-    originalData[el.name] = el.value;
-  });
-  snapshotLi = document
-    .querySelector('ul li input[name="list-item"]:checked')
-    ?.closest("li");
-  toggleResetButton();
-  toggleSubmitButton();
-}
-function hasUnsavedChanges() {
-  return Array.from(
-    fieldset.querySelectorAll("input[name], select[name]"),
-  ).some((el) => el.value !== originalData[el.name]);
-}
-window.onbeforeunload = () => (hasUnsavedChanges() ? true : undefined);
+// MARK: List & Row Utilities
+function handleRowToggle(event) {
+  const checkbox = event.target
+  const li = checkbox.closest("li")
+  const radio = li.querySelector('input[type="radio"][name="list-item"]')
 
-function toggleResetButton() {
-  if (!resetButton) return;
-  const dirty = hasUnsavedChanges();
-  resetButton.disabled = !dirty;
-  form.dataset.dirty = dirty ? "true" : "false";
+  if (checkbox.checked) {
+    tableUl.querySelectorAll('input[name="row-toggle"]').forEach((cb) => {
+      if (cb !== checkbox) cb.checked = false
+    })
+  }
+
+  radio.checked = checkbox.checked
+  radio.dispatchEvent(new Event("input", { bubbles: true }))
 }
+function createListItem(item = {}) {
+  const li = document.createElement("li")
+  li.tabIndex = 0
 
-function toggleSubmitButton() {
-  if (!submitButton) return;
-  const dirty = hasUnsavedChanges();
-  const valid = form.checkValidity();
-  submitButton.disabled = !(dirty && valid);
+  const label = document.createElement("label")
+
+  const toggle = document.createElement("input")
+  toggle.type = "checkbox"
+  toggle.name = "row-toggle"
+  toggle.hidden = true
+  toggle.oninput = handleRowToggle
+  label.appendChild(toggle)
+
+  const input = document.createElement("input")
+  input.type = "radio"
+  input.name = "list-item"
+  input.hidden = true
+  input.oninput = () => updateFormFromSelectedRow()
+  label.appendChild(input)
+
+  for (const [key, value] of Object.entries(item)) {
+    const el = document.createElement(toKebab(key))
+    el.textContent = value ?? ""
+    label.appendChild(el)
+  }
+
+  li.appendChild(label)
+  return li
 }
+function updateHeaderRow(sourceRow) {
+  const headerLi = headerUl?.querySelector("li")
+  if (!headerLi || !sourceRow) return
 
-function restoreForm() {
-  fieldset.querySelectorAll("input[name], select[name]").forEach((el) => {
-    if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
-      el.value = originalData[el.name];
-    }
-  });
+  // Reuse list cleanup pattern from load()
+  headerLi.innerHTML = ""
 
-  if (snapshotLi) {
-    snapshotLi.querySelectorAll("label > *:not(input)").forEach((el) => {
-      const key = toCamel(el.tagName.toLowerCase());
-      if (Object.prototype.hasOwnProperty.call(originalData, key)) {
-        el.textContent = originalData[key];
-      }
-    });
+  sourceRow.querySelectorAll("label > *:not(input)").forEach((el) => {
+    const key = toCamel(el.tagName.toLowerCase())
+    const clone = el.cloneNode(false)
+    clone.textContent = toKebab(key)
+      .replace(/^item-/, "")
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase())
+    headerLi.appendChild(clone)
+  })
+}
+// MARK: OFF-LINE
+let offlineInterval
+let offlineStartTime
+window.ononline = updateOnlineStatus
+window.onoffline = updateOnlineStatus
+updateOnlineStatus()
+function updateOnlineStatus() {
+  const offlineMsg = document.querySelector("off-line p")
+
+  if (navigator.onLine) {
+    clearInterval(offlineInterval)
+    offlineMsg.textContent = ""
+  } else {
+    offlineStartTime = Date.now()
+
+    offlineInterval = setInterval(() => {
+      const elapsedSec = Math.floor((Date.now() - offlineStartTime) / 1000)
+      offlineMsg.textContent = `Offline [ (${elapsedSec}s elapsed) ]`
+    }, 1000)
   }
 }
+function mirrorToSelectedRow(event) {
+  const input = event.target
+  const key = input.name
+  const selectedLi = document
+    .querySelector('ul li input[name="list-item"]:checked')
+    ?.closest("li")
+  if (!selectedLi) return
+
+  const mirror = selectedLi.querySelector(`label > ${toKebab(key)}`)
+  if (mirror && !input.readOnly) {
+    mirror.textContent = input.value
+  }
+}
+function createInputFromKey(key, value) {
+  const inputName = key
+  const val = value?.trim?.() ?? ""
+  let element
+
+  const lowercaseVal = val.toLowerCase()
+  const dhcpTypes = ["host", "ip", "url", "file", "service"]
+
+  if (dhcpTypes.includes(lowercaseVal)) {
+    element = document.createElement("select")
+    element.name = inputName
+    element.required = true
+
+    const emptyOpt = document.createElement("option")
+    emptyOpt.value = ""
+    emptyOpt.textContent = "Select Type"
+    element.appendChild(emptyOpt)
+
+    dhcpTypes.forEach((opt) => {
+      const o = document.createElement("option")
+      o.value = o.textContent = opt.charAt(0).toUpperCase() + opt.slice(1)
+      if (opt === lowercaseVal) o.selected = true
+      element.appendChild(o)
+    })
+  } else {
+    element = document.createElement("input")
+    element.name = inputName
+    element.value = val
+
+    if (key === "id" || /^[a-f0-9\-]{36}$/.test(val)) {
+      element.type = "hidden"
+      element.oninput = mirrorToSelectedRow
+      return element
+    }
+
+    if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/.test(val)) {
+      element.type = "datetime-local"
+      element.readOnly = true
+      element.tabIndex = -1
+      element.value = formatDateForInput(val)
+    } else if (/author|modified|created|updated/.test(key)) {
+      element.type = "text"
+      element.readOnly = true
+      element.tabIndex = -1
+    } else {
+      element.type = "text"
+      element.required = val !== ""
+      element.pattern = ".+"
+    }
+  }
+
+  element.oninput = mirrorToSelectedRow // Enable live mirroring
+  return element
+}
+form.oninput = () => {
+  toggleResetButton()
+  toggleSubmitButton()
+}
+
+
+// MARK: MAIN APPLICATION LOGIC
 
 // MARK: INITIAL TAB FETCH
 loadEndpoints().then(() => {
   const selected = document.querySelector('nav input[name="nav"]:checked');
   const firstEndpoint = selected?.value;
-  if (isValidEndpoint(firstEndpoint)) load(`${BASE_URL}${firstEndpoint}`);
+  if (isValidEndpoint(firstEndpoint)) loadEndpoint(`${BASE_URL}${firstEndpoint}`);
 });
-
 // MARK: TAB SWITCH LOGIC
 document.querySelectorAll('nav input[name="nav"]').forEach((input) => {
-  input.oninput = () => {
-    if (!input.checked) return;
-    if (
-      hasUnsavedChanges() &&
-      !confirm("You have unsaved changes. Discard them?")
-    )
-      return;
-    const endpoint = input.value;
-    if (isValidEndpoint(endpoint)) load(`${BASE_URL}${endpoint}`);
-  };
-});
+  input.onchange = () => {
+    if (!input.checked) return
 
+    const proceed = () => {
+      const label = input.closest("label")
+      const tab = label?.textContent.trim().toLowerCase().replace(/\s+/g, "-")
+      if (tab) load(`${BASE_URL}${tab}`)
+    }
+
+    if (hasUnsavedChanges()) {
+      confirmAction("You have unsaved changes. Discard them?", {
+        type: "confirm",
+      }).then((ok) => {
+        if (ok) proceed()
+      })
+    } else {
+      proceed()
+    }
+  }
+})
 // MARK: NEW ROW CREATION
-newButton.oninput = () => {
+newButton.onclick = () => {
   if (
     hasUnsavedChanges() &&
     !confirm("You have unsaved changes. Discard them?")
   )
-    return;
+    return
 
-  fieldset.innerHTML = "";
+  fieldset.innerHTML = ""
 
-  const templateRow = tableUl.querySelector("li");
-  if (!templateRow) return;
+  const templateRow = tableUl.querySelector("li")
+  if (!templateRow) return
 
-  const item = {};
+  const item = {}
 
   templateRow.querySelectorAll("label > *:not(input)").forEach((spanT) => {
-    const key = toCamel(spanT.tagName.toLowerCase());
+    const key = toCamel(spanT.tagName.toLowerCase())
 
-    item[key] = "";
+    item[key] = ""
 
-    const formLabel = document.createElement("label");
+    const formLabel = document.createElement("label")
     formLabel.textContent =
       toKebab(key)
         .replace(/^item-/, "")
         .replace(/-/g, " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase()) + ": ";
-    const input = createInputFromKey(key, "");
-    formLabel.appendChild(input);
-    fieldset.appendChild(formLabel);
-  });
+        .replace(/\b\w/g, (c) => c.toUpperCase()) + ": "
+    const input = createInputFromKey(key, "")
+    formLabel.appendChild(input)
+    fieldset.appendChild(formLabel)
+  })
 
-  const li = createListItem(item);
-  tableUl.prepend(li);
+  const li = createListItem(item)
+  tableUl.prepend(li)
 
-  updateHeaderRow(li);
-  li.querySelector('input[name="list-item"]').checked = true;
+  updateHeaderRow(li)
+  li.querySelector('input[name="list-item"]').checked = true
 
-  snapshotForm();
-};
-
+  snapshotForm()
+}
 // MARK: FORM SUBMIT
 form.onsubmit = (e) => {
-  e.preventDefault();
-  const selected = document.querySelector(
-    'ul li input[name="list-item"]:checked',
-  );
-  const id = selected
-    ?.closest("li")
-    ?.querySelector("label > id")
-    ?.textContent?.trim();
-  const endpoint = document.querySelector(
-    'nav input[name="nav"]:checked',
-  )?.value;
+  e.preventDefault()
+  const selected = document.querySelector('ul li input[name="list-item"]:checked');
+  const id = selected?.closest("li")?.querySelector("label > id")?.textContent?.trim();
+  const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
   if (!endpoint) return;
 
   const data = {};
@@ -436,132 +498,189 @@ form.onsubmit = (e) => {
 
   console.log("[FORM SUBMIT]", { method, url, data });
 
-  fetch(url, {
-    method,
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+  showModal({
+    title: "Please Confirm",
+    message: "Save changes?",
+    buttons: [{ label: "Yes", value: true }, { label: "No", value: false }],
   })
-    .then(() => confirmAction("Record saved.", "", { type: "alert" }))
-    .then(() => load(`${BASE_URL}${endpoint}`))
+
+    .then((confirmed) => {
+      if (!confirmed) return; // Explicitly stop if user clicks "No"
+
+      return fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+    })
+
+    .then((res) => {
+      if (res && res.ok !== false) {
+        showModal({
+          title: "Success",
+          message: "Changes saved successfully.",
+          buttons: [{ label: "OK", value: true }],
+        });
+        load(`${BASE_URL}${endpoint}`);
+      } else if (res && res.ok === false) {
+        throw new Error("Network response was not ok.");
+      }
+    })
+
     .catch((err) => {
       console.error("Failed to save record:", err);
-      confirmAction("Error saving record.", "", { type: "alert" });
+      showModal({
+        title: "Error",
+        message: "Error saving record.",
+        buttons: [{ label: "OK", value: true }],
+      });
     });
 };
-
 // MARK: FORM RESET
 form.onreset = (e) => {
-  e.preventDefault();
-  if (!confirm("Reset all changes?")) return;
-  restoreForm();
-  snapshotForm();
-};
+  e.preventDefault()
+  confirmAction("Reset all changes?", { type: "confirm" }).then((ok) => {
+    if (!ok) return
+    restoreForm() // explicitly restore original state instead of clearing
+    snapshotForm()
+  })
+}
+
+// form.onreset = (e) => {
+//   e.preventDefault();
+//   if (!confirm("Reset all changes?")) return;
+//   restoreForm();
+//   snapshotForm();
+// };
+
+// form.onreset = (e) => {
+//   e.preventDefault(); // explicitly prevent default reset
+//   confirmAction('Reset all changes?', { type: 'confirm' }).then(ok => {
+//     if (!ok) return;
+//     updateFormFromSelectedRow();
+//   });
+//   restoreForm();
+//   snapshotForm();
+// };
 
 // MARK: DELETE HANDLER
 deleteButton.oninput = () => {
-  const selected = document.querySelector(
-    'ul li input[name="list-item"]:checked',
-  );
-  const id = selected
-    ?.closest("li")
-    ?.querySelector("label > id")
-    ?.textContent?.trim();
-  const endpoint = document.querySelector(
-    'nav input[name="nav"]:checked',
-  )?.value;
+  const selected = document.querySelector('ul li input[name="list-item"]:checked')
+  const id = selected?.closest("li")?.querySelector("label > id")?.textContent?.trim()
+  const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value
 
   if (!selected || !id || !endpoint) {
-    alert("Select a valid record to delete.");
-    return;
+    alert("Select a valid record to delete.")
+    return
   }
 
-  confirmAction("Delete this record?", "", { type: "confirm" }).then((ok) => {
-    if (!ok) return;
-    fetch(`${BASE_URL}${endpoint}/${id}`, { method: "DELETE" }).then(() =>
-      load(`${BASE_URL}${endpoint}`),
-    );
-  });
-};
-
+  confirmAction("Delete this record?", { type: "confirm" }).then((ok) => {
+    if (!selected || !id || !tab || !ok) return
+    fetch(`${BASE_URL}${tab}/${id}`, { method: "DELETE" }).then(() =>
+      load(`${BASE_URL}${tab}`)
+    )
+  })
+}
 // MARK: CLOSE ASIDE
-closeButton.oninput = () => {
-  const selected = document.querySelector(
-    'ul li input[name="list-item"]:checked',
-  )?.closest("li");
-  if (selected) {
-    const radio = selected.querySelector('input[name="list-item"]');
-    const toggle = selected.querySelector('input[name="row-toggle"]');
-    if (radio) radio.checked = false;
-    if (toggle) toggle.checked = false;
-  }
+closeButton.onclick = () => {
+  const closeAside = () => {
+    const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest("li")
 
-  fieldset.innerHTML = "";
-  if (main) main.style.width = "";
-  snapshotForm();
-};
+    if (selected) {
+      const radio = selected.querySelector('input[name="list-item"]')
+      const toggle = selected.querySelector('input[name="row-toggle"]')
+      if (radio) radio.checked = false
+      if (toggle) toggle.checked = false
+    }
+
+    clearFieldset(fieldset) // <-- Call your new utility clearly
+    form.oninput()
+
+    const mainEl = document.querySelector("main")
+    if (mainEl) removeInlineStyles(mainEl)
+
+    snapshotForm()
+  }
+  if (hasUnsavedChanges()) {
+    confirmAction("You have unsaved changes. Discard them?", {
+      type: "confirm",
+    }).then((ok) => {
+      if (ok) closeAside()
+    })
+  } else {
+    closeAside()
+  }
+}
 
 // MARK: MODAL CONFIRMATION
-function confirmAction(title, message = "", { type = "confirm" } = {}) {
-  return new Promise((resolve) => {
-    const modal = document.querySelector("modal-confirm");
-    modal.querySelector("h4").textContent = title;
-    modal.querySelector("p").textContent = message;
+// function confirmAction(title, message = "", { type = "confirm" } = {}) {
+//   return new Promise((resolve) => {
+//     const modal = document.querySelector("modal-");
+//     modal.querySelector("h4").textContent = title;
+//     modal.querySelector("p").textContent = message;
 
-    const [btnPrimary, btnSecondary] = modal.querySelectorAll("button");
+//     const [btnPrimary, btnSecondary] = modal.querySelectorAll("button");
 
-    if (type === "confirm") {
-      btnPrimary.textContent = "Yes";
-      btnSecondary.textContent = "No";
+//     if (type === "confirm") {
+//       btnPrimary.textContent = "Yes";
+//       btnSecondary.textContent = "No";
 
-      btnPrimary.oninput = () => {
-        clearModal();
-        resolve(true);
-      };
+//       btnPrimary.onclick = () => {
+//         clearModal();
+//         resolve(true);
+//       };
 
-      btnSecondary.oninput = () => {
-        clearModal();
-        resolve(false);
-      };
-    } else {
-      btnPrimary.textContent = "Dismiss";
-      btnPrimary.oninput = () => {
-        clearModal();
-        resolve();
-      };
-      btnSecondary.textContent = ""; // hide secondary button
-      btnSecondary.oninput = null;
-    }
+//       btnSecondary.onclick = () => {
+//         clearModal();
+//         resolve(false);
+//       };
+//     } else {
+//       btnPrimary.textContent = "Dismiss";
+//       btnPrimary.onclick = () => {
+//         clearModal();
+//         resolve();
+//       };
+//       btnSecondary.textContent = ""; // hide secondary button
+//       btnSecondary.onclick = null;
+//     }
 
-    function clearModal() {
-      modal.querySelector("h4").textContent = "";
-      modal.querySelector("p").textContent = "";
-      btnPrimary.textContent = "";
-      btnSecondary.textContent = "";
-    }
-  });
-}
+//     function clearModal() {
+//       modal.querySelector("h4").textContent = "";
+//       modal.querySelector("p").textContent = "";
+//       btnPrimary.textContent = "";
+//       btnSecondary.textContent = "";
+//     }
+//   });
+// }
 
-// MARK: OFF-LINE
-let offlineInterval
-let offlineStartTime
+// === Unified Modal Utility ===
+// === Unified Modal Utility ===
 
-function updateOnlineStatus() {
-  const offlineMsg = document.querySelector('off-line p')
-
-  if (navigator.onLine) {
-    clearInterval(offlineInterval)
-    offlineMsg.textContent = ''
-  } else {
-    offlineStartTime = Date.now()
-
-    offlineInterval = setInterval(() => {
-      const elapsedSec = Math.floor((Date.now() - offlineStartTime) / 1000)
-      offlineMsg.textContent = `Offline [ (${elapsedSec}s elapsed) ]`
-    }, 1000)
+// === confirmAction using Unified Modal ===
+function confirmAction(message, { type = "confirm" } = {}) {
+  const config = {
+    title: type === "confirm" ? "Please Confirm" : "Notice",
+    message,
+    buttons:
+      type === "confirm"
+        ? [
+          { label: "Yes", value: true },
+          { label: "No", value: false },
+        ]
+        : [{ label: "OK", value: true }],
   }
+
+  return showModal(config)
 }
 
-window.ononline = updateOnlineStatus
-window.onoffline = updateOnlineStatus
-
-updateOnlineStatus()
+// MARK: APPLICATION-LEVEL EVENT HANDLERS (Before Unload Warning)
+window.onbeforeunload = (e) => {
+  if (!hasUnsavedChanges()) return;
+  e.preventDefault();
+  confirmAction("You have unsaved changes. Reload and discard them?", {
+    type: "confirm",
+  }).then((ok) => {
+    if (ok) location.reload();
+  });
+  return ""; // Needed for browser compatibility
+};
