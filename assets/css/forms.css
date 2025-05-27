@@ -231,3 +231,8 @@ aside form input[type="checkbox"] {
   margin-right: 0.5rem;
   vertical-align: middle;
 }
+
+/* https://x.com/argyleink/status/1927220175385866387 */
+textarea {
+  scrollbar-width: thin;
+}

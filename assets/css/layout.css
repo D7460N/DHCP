@@ -146,8 +146,7 @@ header label input {
 nav {
   display: grid;
   gap: 1rem;
-  grid-auto-flow: var(--tab-grid-auto-flow);
-  grid-row: var(--grid-row-span);
+  grid-template-rows: auto 1fr;
   user-select: none;
   justify-content: var(--nav-justify-content);
   margin-inline-start: 1rem;
@@ -173,7 +172,7 @@ nav details summary {
   padding-inline: 1rem;
   padding-block: 0.5rem;
   padding-inline-start: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 nav details label {
@@ -192,12 +191,12 @@ nav details label:has(> input:checked) {
 }
 
 nav details {
-  grid-auto-flow: var(--tab-grid-auto-flow);
+  grid-template-rows: auto 1fr;
 }
 
 nav details section {
   display: grid;
-  grid-auto-flow: var(--tab-grid-auto-flow);
+  grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
   overflow: overlay;
   position: relative;
   align-content: start;
@@ -553,9 +552,9 @@ br {
 
 /* MARK: MODAL
 */
-modal-confirm {
-  position: fixed;
+modal- {
   display: none;
+  position: fixed;
   opacity: 0;
   max-width: 20rem;
   place-self: center;
@@ -564,32 +563,28 @@ modal-confirm {
   border-radius: var(--border-radius);
 }
 
-modal-confirm:has(h4:not(:empty), p:not(:empty)) {
-  display: grid;
-}
-
-modal-confirm button:empty {
-  display: none;
-}
-
-modal-confirm p,
-modal-confirm h4 {
-  padding: 1rem;
-}
-
-modal-confirm:has(h4:not(:empty), p:not(:empty)) {
+modal-:has(h4:not(:empty), p:not(:empty)) {
   display: grid;
   opacity: 1;
 }
 
-modal-confirm modal-backdrop {
+modal- button:empty {
+  display: none;
+}
+
+modal- p,
+modal- h4 {
+  padding: 1rem;
+}
+
+modal- modal-backdrop {
   position: fixed;
   inset: 0;
   background-color: rgba(var(--input-bg-color), 0.7);
   z-index: -1;
 }
 
-modal-confirm button {
+modal- button {
   display: flex;
   gap: 0.5rem;
   justify-content: flex-end;
@@ -601,14 +596,12 @@ modal-confirm button {
   color: currentColor;
 }
 
-modal-confirm button:empty {
-  display: none;
+modal- button:hover {
+  background-color: rgba(var(--button-bg-color), 0.7);
 }
 
-modal-confirm button:hover {
-  background-color: rgba(var(--button-bg-color), 0.5);
-}
-
+/* MARK: OFFLINE
+*/
 off-line {
   display: none;
   position: fixed;
@@ -625,6 +618,7 @@ off-line {
   left: 50%;
   transform: translate(-50%, -50%);
   overflow: hidden;
+  transition-delay: 1s;
 }
 
 off-line:has(p:not(:empty)) {
