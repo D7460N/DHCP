@@ -8,9 +8,11 @@ const BASE_URL = "https://67d944ca00348dd3e2aa65f4.mockapi.io/"; // Base API URL
 // MARK: DOM ELEMENT REFERENCES
 const headerUl = document.querySelector('main article ul[aria-hidden="true"]');
 const tableUl = document.querySelector('main article ul[aria-hidden="true"] + ul');
+const main = document.querySelector("main");
 const form = document.querySelector("aside form");
 const fieldset = form.querySelector("fieldset");
 const newButton = document.querySelector("main article button");
+const closeButton = document.querySelector('aside button[aria-label="Close"]');
 const deleteButton = form.querySelector('button[aria-label="Delete"]');
 const resetButton = form.querySelector('button[aria-label="Reset"]');
 const submitButton = form.querySelector('button[aria-label="Submit"]');
@@ -479,6 +481,23 @@ deleteButton.oninput = () => {
       load(`${BASE_URL}${endpoint}`),
     );
   });
+};
+
+// MARK: CLOSE ASIDE
+closeButton.oninput = () => {
+  const selectedLi = document
+    .querySelector('ul li input[name="list-item"]:checked')
+    ?.closest("li");
+  if (selectedLi) {
+    selectedLi.querySelector('input[name="list-item"]').checked = false;
+    selectedLi.querySelector('input[name="row-toggle"]').checked = false;
+  }
+
+  fieldset.innerHTML = "";
+
+  if (main) main.style.width = "";
+
+  snapshotForm();
 };
 
 // MARK: MODAL CONFIRMATION
