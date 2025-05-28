@@ -2,6 +2,9 @@
 
 // Purpose: Fetch JSON and inject values using custom elements generated from API keys
 
+let NAV_DATA = {} // holds nav-content JSON
+
+
 // MARK: CONSTANTS
 const BASE_URL = "https://67d944ca00348dd3e2aa65f4.mockapi.io/" // Base API URL
 
@@ -23,17 +26,39 @@ const ENDPOINTS = []
 // MARK: UTILITY FUNCTIONS
 
 // Fetch & Data Handling
-function fetchJSON(url) {return fetch(url).then((r) => r.json())}
+function fetchJSON(url) { return fetch(url).then((r) => r.json()) }
 function loadEndpoints() {
   return fetchJSON(`${BASE_URL}nav-content`).then(([data]) => {
-    const keys = Object.keys(data || {})
-    ENDPOINTS.splice(0, ENDPOINTS.length, ...keys)
-    navInputs.forEach((input, i) => {
-      const ep = keys[i]
-      if (ep) input.value = ep
-    })
-  })
+    NAV_DATA = data; // store full nav content
+
+    const keys = Object.keys(data || {});
+    ENDPOINTS.splice(0, ENDPOINTS.length, ...keys);
+
+    const navSection = document.querySelector('nav details > section');
+    if (!navSection) return;
+
+    navSection.innerHTML = '';
+
+    keys.forEach((key, i) => {
+      const { title } = data[key] || {};
+
+      const label = document.createElement('label');
+      label.textContent = title;
+
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = 'nav';
+      input.value = key; // key = endpoint
+      input.hidden = true;
+      if (i === 0) input.checked = true;
+
+      label.appendChild(input);
+      navSection.appendChild(label);
+    });
+  });
 }
+
+
 function isValidEndpoint(name) {
   return ENDPOINTS.includes(name)
 }
@@ -95,7 +120,7 @@ function loadEndpoint(endpoint) {
       tableUl.innerHTML = "";
       fieldset.innerHTML = "";
 
-      const article = document.querySelector("main article:has(h1)");
+      const article = document.querySelector("main article");
       const h1 = article?.querySelector("h1");
       const intro = article?.querySelector("p");
       if (h1) h1.textContent = data.title ?? "";
@@ -415,32 +440,31 @@ form.oninput = () => {
 
 // MARK: INITIAL TAB FETCH
 loadEndpoints().then(() => {
+  document.querySelectorAll('nav input[name="nav"]').forEach((input) => {
+    input.onchange = () => {
+      if (!input.checked) return
+
+      const proceed = () => {
+        const label = input.closest("label")
+        const endpoint = input.value
+        if (endpoint) loadEndpoint(`${BASE_URL}${endpoint}`)
+      }
+
+      if (hasUnsavedChanges()) {
+        confirmAction("You have unsaved changes. Discard them?", {
+          type: "confirm",
+        }).then((ok) => {
+          if (ok) proceed()
+        })
+      } else {
+        proceed()
+      }
+    }
+  })
+
   const selected = document.querySelector('nav input[name="nav"]:checked');
-  const firstEndpoint = selected?.value;
-  if (isValidEndpoint(firstEndpoint)) loadEndpoint(`${BASE_URL}${firstEndpoint}`);
+  if (selected?.onchange) selected.onchange()
 });
-// MARK: TAB SWITCH LOGIC
-document.querySelectorAll('nav input[name="nav"]').forEach((input) => {
-  input.onchange = () => {
-    if (!input.checked) return
-
-    const proceed = () => {
-      const label = input.closest("label")
-      const tab = label?.textContent.trim().toLowerCase().replace(/\s+/g, "-")
-      if (tab) load(`${BASE_URL}${tab}`)
-    }
-
-    if (hasUnsavedChanges()) {
-      confirmAction("You have unsaved changes. Discard them?", {
-        type: "confirm",
-      }).then((ok) => {
-        if (ok) proceed()
-      })
-    } else {
-      proceed()
-    }
-  }
-})
 // MARK: NEW ROW CREATION
 newButton.onclick = () => {
   if (
@@ -521,7 +545,7 @@ form.onsubmit = (e) => {
           message: "Changes saved successfully.",
           buttons: [{ label: "OK", value: true }],
         });
-        load(`${BASE_URL}${endpoint}`);
+        loadEndpoint(`${BASE_URL}${endpoint}`);
       } else if (res && res.ok === false) {
         throw new Error("Network response was not ok.");
       }
@@ -536,6 +560,7 @@ form.onsubmit = (e) => {
       });
     });
 };
+
 // MARK: FORM RESET
 form.onreset = (e) => {
   e.preventDefault()
@@ -546,38 +571,16 @@ form.onreset = (e) => {
   })
 }
 
-// form.onreset = (e) => {
-//   e.preventDefault();
-//   if (!confirm("Reset all changes?")) return;
-//   restoreForm();
-//   snapshotForm();
-// };
-
-// form.onreset = (e) => {
-//   e.preventDefault(); // explicitly prevent default reset
-//   confirmAction('Reset all changes?', { type: 'confirm' }).then(ok => {
-//     if (!ok) return;
-//     updateFormFromSelectedRow();
-//   });
-//   restoreForm();
-//   snapshotForm();
-// };
-
 // MARK: DELETE HANDLER
 deleteButton.onclick = () => {
   const selected = document.querySelector('ul li input[name="list-item"]:checked')
   const id = selected?.closest("li")?.querySelector("label > id")?.textContent?.trim()
   const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value
 
-  if (!selected || !id || !endpoint) {
-    alert("Select a valid record to delete.")
-    return
-  }
-
   confirmAction("Delete this record?", { type: "confirm" }).then((ok) => {
-    if (!selected || !id || !tab || !ok) return
-    fetch(`${BASE_URL}${tab}/${id}`, { method: "DELETE" }).then(() =>
-      load(`${BASE_URL}${tab}`)
+    if (!selected || !id || !ok) return
+    fetch(`${BASE_URL}${endpoint}/${id}`, { method: "DELETE" }).then(() =>
+      loadEndpoint(`${BASE_URL}${endpoint}`)
     )
   })
 }
@@ -611,50 +614,6 @@ closeButton.onclick = () => {
     closeAside()
   }
 }
-
-// MARK: MODAL CONFIRMATION
-// function confirmAction(title, message = "", { type = "confirm" } = {}) {
-//   return new Promise((resolve) => {
-//     const modal = document.querySelector("modal-");
-//     modal.querySelector("h4").textContent = title;
-//     modal.querySelector("p").textContent = message;
-
-//     const [btnPrimary, btnSecondary] = modal.querySelectorAll("button");
-
-//     if (type === "confirm") {
-//       btnPrimary.textContent = "Yes";
-//       btnSecondary.textContent = "No";
-
-//       btnPrimary.onclick = () => {
-//         clearModal();
-//         resolve(true);
-//       };
-
-//       btnSecondary.onclick = () => {
-//         clearModal();
-//         resolve(false);
-//       };
-//     } else {
-//       btnPrimary.textContent = "Dismiss";
-//       btnPrimary.onclick = () => {
-//         clearModal();
-//         resolve();
-//       };
-//       btnSecondary.textContent = ""; // hide secondary button
-//       btnSecondary.onclick = null;
-//     }
-
-//     function clearModal() {
-//       modal.querySelector("h4").textContent = "";
-//       modal.querySelector("p").textContent = "";
-//       btnPrimary.textContent = "";
-//       btnSecondary.textContent = "";
-//     }
-//   });
-// }
-
-// === Unified Modal Utility ===
-// === Unified Modal Utility ===
 
 // === confirmAction using Unified Modal ===
 function confirmAction(message, { type = "confirm" } = {}) {
