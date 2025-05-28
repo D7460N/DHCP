@@ -68,39 +68,22 @@ app-container {
 		 https://stackblitz.com/edit/dvh?file=style.css
 	*/
   overflow: hidden;
-}
 
-/* When <aside> has an fieldset that is not empty, which also gives <aside> display: grid;, add a grid column to <app-container> */
-app-container:has(aside form fieldset:not(:empty)) {
-  --app-container-grid-template-columns: 12rem auto 1fr;
-  grid-template-columns: var(--app-container-grid-template-columns);
-}
+  /* 3 columns when <aside><fieldset> is not empty */
+  &:has(aside form fieldset:not(:empty)) {
+    --app-container-grid-template-columns: 12rem 1fr minmax(min-content, 1fr);
+    grid-template-columns: var(--app-container-grid-template-columns);
 
-app-container:has(aside form fieldset:not(:empty)) main {
-  margin-inline-end: 0;
-}
+    /* --min: 30ch;
 
-/* app-container:has(aside h4:not(:empty)) {
-  --app-container-grid-template-columns: 12rem 1fr 15rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
+  } */
 
-  main {margin-inline-end: 0;}
-} */
-
-/* @media (max-width: 800px) {
-  app-container {
-    grid-template-rows: auto auto 1fr minmax(1rem, 7rem) minmax(1rem, 7rem);
-    grid-template-columns: unset;
+  &:has(aside form fieldset:not(:empty)) main {
+    margin-inline-end: 0;
   }
-  nav > section {
-        grid-auto-flow: column !important;
-  }
-  main {
-    margin: -1rem 0 0 0 !important;
-  }
-  nav header, aside header, header {
-    display: none !important;
- }
-} */
+}
 
 /* MARK: APP-BANNER
 */
@@ -111,11 +94,12 @@ app-banner {
   user-select: none;
   text-align: center;
   overflow: hidden;
-}
 
-app-banner p {
-  padding: 0.2rem;
-  font-size: 75%;
+  p {
+    margin: 0;
+    padding: 0.2rem;
+    font-size: 75%;
+  }
 }
 
 /* MARK: HEADER
@@ -131,14 +115,14 @@ header {
   align-items: center;
   overflow: hidden;
   align-items: center;
-}
 
-header label {
-  grid-template-columns: auto 1fr;
-}
+  label {
+    grid-template-columns: auto 1fr;
+  }
 
-header label input {
-  display: none;
+  label input {
+    display: none;
+  }
 }
 
 /* MARK: NAV
@@ -150,65 +134,58 @@ nav {
   user-select: none;
   justify-content: var(--nav-justify-content);
   margin-inline-start: 1rem;
-  overflow: hidden;
   align-content: start;
   background-color: rgba(var(--bg-panel-color), 0.0);
-}
-
-nav details {
-  display: grid;
   overflow: hidden;
-}
 
-nav details:first-of-type {
-  margin-block-start: 1rem;
-}
+  details {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
 
-nav details summary {
-  font-family: Oxanium-SemiBold, sans-serif;
-  letter-spacing: 0.0625rem;
-  color: rgba(var(--txt-active), var(--txt-active-opacity));
-  text-wrap: pretty;
-  padding-inline: 1rem;
-  padding-block: 0.5rem;
-  padding-inline-start: 0;
-  /* overflow: hidden; */
-}
+    &:first-of-type {
+      margin-block-start: 1rem;
+    }
 
-nav details label {
-  display: block;
-  padding-inline: 1rem;
-  padding-block: 0.5rem;
-  cursor: pointer;
-  user-select: none;
-}
+    summary {
+      font-family: Oxanium-SemiBold, sans-serif;
+      letter-spacing: 0.0625rem;
+      color: rgba(var(--txt-active), var(--txt-active-opacity));
+      text-wrap: pretty;
+      padding-inline: 1rem;
+      padding-block: 0.5rem;
+      padding-inline-start: 0;
+    }
 
-nav details label:hover,
-nav details label:has(> input:checked) {
-  background-color: rgba(var(--bg-panel-color), var(--bg-active-opacity));
-  color: rgba(var(--txt-active), var(--txt-active-opacity));
-  cursor: pointer;
-}
+    section {
+      display: grid;
+      grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
+      overflow: overlay;
+      position: relative;
+      align-content: start;
+      overflow: hidden;
 
-nav details {
-  grid-template-rows: auto 1fr;
-}
+      label {
+        grid-template-columns: auto 1fr;
+        border-radius: var(--nav-border-radius);
+        padding-inline: 1rem;
+        padding-block: 0.5rem;
+        cursor: pointer;
+        user-select: none;
 
-nav details section {
-  display: grid;
-  grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
-  overflow: overlay;
-  position: relative;
-  align-content: start;
-}
+        &:hover,
+        &:has(> input:checked) {
+          background-color: rgba(var(--bg-panel-color), var(--bg-active-opacity));
+          color: rgba(var(--txt-active), var(--txt-active-opacity));
+          cursor: pointer;
+        }
 
-nav label {
-  grid-template-columns: auto 1fr;
-  border-radius: var(--nav-border-radius);
-}
-
-nav label input {
-  display: none;
+        input {
+          display: none;
+        }
+      }
+    }
+  }
 }
 
 /* MARK: BUTTONS
@@ -228,10 +205,10 @@ button {
   margin-block-end: 1rem;
   font-family: inherit;
   font-size: 100%;
-}
 
-button:hover {
-  background-color: rgba(var(--bg-active-color), 0.15);
+  &:hover {
+    background-color: rgba(var(--bg-active-color), 0.15);
+  }
 }
 
 demo-buttons {
@@ -242,25 +219,25 @@ app-logo {
   padding: 1rem;
   margin-inline-start: 5rem;
   color: rgba(var(--txt-active), var(--txt-active-opacity));
-}
 
-app-logo::before {
-  content: '';
-  display: block;
-  width: 6em;
-  height: 6em;
-  background-color: currentColor;
-  mask-image: url(../images/brand/logo.svg);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  -webkit-mask-image: url(../images/brand/logo.svg);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
-  position: absolute;
-  inset-block-start: 1em;
-  inset-inline-start: 1em;
+  &::before {
+    content: '';
+    display: block;
+    width: 6em;
+    height: 6em;
+    background-color: currentColor;
+    mask-image: url(../images/brand/logo.svg);
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-image: url(../images/brand/logo.svg);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+    position: absolute;
+    inset-block-start: 1em;
+    inset-inline-start: 1em;
+  }
 }
 
 app-user {
@@ -279,251 +256,231 @@ main {
   overflow: hidden;
   align-content: start;
   min-width: 20rem;
-}
 
-/* MARK:ARTICLE
-*/
-/* Hide <article> by default */
-main article {
-  display: none;
-  align-content: start;
-  overflow: hidden;
-}
+  &:has(~ aside fieldset:not(:empty)) {
+    resize: horizontal;
+    /* Show when <aside><fieldset> is not empty */
+  }
 
-/* Show <article> when <article><h1> has content */
-main article:has(h1:not(:empty)) {
-  display: grid;
-}
+  /* MARK:ARTICLE
+  */
+  article {
+    display: none;
+    /* Hide by default */
+    align-content: start;
+    overflow: hidden;
 
-/* main article > ul:has(h1:not(:empty)) {
-  display: grid;
-} */
+    &:has(h1:not(:empty)) {
+      display: grid;
+      /* Show when not empty */
+    }
 
-/* Hide <p> by default */
-main article > p {
-  display: none;
-}
+    input[type="search"] {
+      display: none;
+      /* Hide by default */
 
-/* Show <p> when <p> has content */
-main article > p:not(:empty) {
-  display: grid;
-}
+      &:not(:empty) {
+        display: grid;
+        /* Show when not empty */
+      }
 
-/* Hide <select> by default */
-main article select {
-  display: none;
-  margin-inline: 1rem;
-}
+      &:not(:placeholder-shown) {
+        display: grid;
+        /* Show when not empty */
+      }
+    }
 
-/* Show <select> when <select> has content */
-main article select:has(option:not(:empty)) {
-  display: grid;
-}
+    p {
+      display: none;
+      /* Hide by default */
 
-/* MARK: UL LI TABLES
-*/
-main article ul {
-  display: none;
-  list-style-type: none;
-  grid-auto-flow: row;
-  letter-spacing: 0.0625rem;
-}
+      &:not(:empty) {
+        display: grid;
+        /* Show when not empty */
+      }
+    }
 
-/* Styles for both ULs */
-main article ul li {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
-  gap: 1rem;
-}
+    select {
+      display: none;
+      /* Hide by default */
+      margin-inline: 1rem;
 
-/* MARK: UL HEADER
-*/
-main article ul[aria-hidden="true"] {
-  align-content: start;
-  font-family: Oxanium-medium, sans-serif;
-  color: rgba(var(--txt-color), 1.0);
-}
+      &:has(option:not(:empty)) {
+        display: grid;
+        /* Show when not empty */
+      }
+    }
 
-main article ul[aria-hidden="true"] li:first-child {
-  padding-inline-start: 1rem;
-}
+    ul {
+      display: none;
+      /* Hide by default */
+      list-style-type: none;
+      grid-auto-flow: row;
+      letter-spacing: 0.0625rem;
 
-main article ul[aria-hidden="true"] li:last-child {
-  padding-inline-end: 1rem;
-}
+      &:has(li:not(:empty)) {
+        display: grid;
+        /* Show when not empty */
+      }
 
+      li {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
+        gap: 1rem;
 
-/* Show header row when list populated */
-main article ul:has(li:not(:empty)) {
-  display: grid;
-}
+        label {
+          padding: 0.5rem;
+          word-break: break-all;
+          text-wrap: pretty;
 
-/* Styles for both ULs */
-main article > ul > li label {
-  padding: 0.5rem;
-  word-break: break-all;
-  text-wrap: pretty;
-}
+          &:first-child {
+            padding-inline-start: 1rem;
+          }
 
-/* Styles for both ULs */
-main article ul label:first-child {
-  padding-inline-start: 1rem;
-}
+          &:last-child {
+            padding-inline-end: 1rem;
+          }
+        }
+      }
+    }
 
-/* Styles for both ULs */
-main article ul li label:last-child {
-  padding-inline-end: 1rem;
-}
+    /* UL TABLE HEADER */
+    ul[aria-hidden="true"] {
+      align-content: start;
+      font-family: Oxanium-medium, sans-serif;
+      color: rgba(var(--txt-color), 1.0);
 
-/* MARK: UL TABLE
-*/
-main article ul[aria-hidden='true'] + ul {
-  overflow: overlay;
-  position: relative;
-  align-content: start;
-}
+      li {
+        &:first-child {
+          padding-inline-start: 1rem;
+        }
 
-main article ul[aria-hidden='true'] + ul li {
-  display: grid;
-  grid-template-columns: 1fr;
-  cursor: pointer;
-}
+        &:last-child {
+          padding-inline-end: 1rem;
+        }
+      }
 
-main article ul[aria-hidden='true'] + ul li label {
-  /* https://www.youtube.com/watch?v=EeM5wnhO9iI */
-  grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
-  gap: 1rem;
-}
+      /* MARK: UL TABLE BODY
+    */
+      &+ul {
+        overflow: overlay;
+        position: relative;
+        align-content: start;
 
-main article ul[aria-hidden='true'] + ul li:hover {
-  background-color: rgba(var(--bg-active-color), 0.05);
-  color: rgba(var(--txt-active), 1.0);
-}
+        li {
+          display: grid;
+          grid-template-columns: 1fr;
+          cursor: pointer;
 
-/* LI active state */
-main article ul[aria-hidden='true'] + ul li:has(input:checked) {
-  background-color: rgba(var(--bg-active-color), 0.05);
-  color: rgba(var(--txt-active), 1);
-}
+          &:hover {
+            background-color: rgba(var(--bg-active-color), 0.05);
+            color: rgba(var(--txt-active), 1.0);
+          }
 
-/* Spinner visible when selected */
-main article ul[aria-hidden='true'] + ul li:has(input:checked) load-data {
-  display: grid;
-}
+          /* Active/checked state */
+          &:has(input:checked) {
+            background-color: rgba(var(--bg-active-color), 0.05);
+            color: rgba(var(--txt-active), 1);
+          }
 
-main article ul[aria-hidden='true'] + ul li label {
-  display: none;
-  cursor: pointer;
-  word-break: break-word;
-  text-wrap: pretty;
-  align-items: center;
-  /* white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; */
-}
+          /* Spinner visible when selected */
+          &:has(input:checked) load-data {
+            display: grid;
+          }
 
-main article ul[aria-hidden='true'] + ul li label:first-child {
-  padding-inline-start: 1rem;
-}
+          label {
+            display: none;
+            /* Hide by default */
+            /* https://www.youtube.com/watch?v=EeM5wnhO9iI */
+            grid-template-columns: repeat(auto-fit, minmax(min(1rem), 1fr));
+            gap: 1rem;
+            cursor: pointer;
+            word-break: break-word;
+            text-wrap: pretty;
+            align-items: center;
 
-main article ul[aria-hidden='true'] + ul li label:last-child {
-  padding-inline-end: 1rem;
-}
+            &:not(:empty) {
+              display: grid;
+              /* Show when not empty */
+            }
 
-main article ul[aria-hidden='true'] + ul li label:not(:empty) {
-  display: grid;
-}
+            &:first-child {
+              padding-inline-start: 1rem;
+            }
 
-main article input[type="search"] {
-  display: none;
-}
-
-main article input[type="search"]:not(:empty) {
-  display: grid;
-}
-
-main article input[type="search"]:not(:placeholder-shown) {
-  display: grid;
+            &:last-child {
+              padding-inline-end: 1rem;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 /* MARK: ASIDE
 */
 aside {
   display: none;
+  /* Hide by default */
   overflow: hidden;
   position: relative;
   align-content: start;
   border-radius: var(--border-radius);
   margin-inline-end: 1rem;
   min-width: 12rem;
+
+  &:has(form fieldset:not(:empty)) {
+    display: grid;
+    /* Show when not empty */
+    grid-template-rows: auto 1fr;
+  }
+
+  button[aria-label="Close"] {
+    position: absolute;
+    align-self: start;
+    justify-self: end;
+    margin-block-start: 1rem;
+    margin-inline-end: 1rem;
+    padding: 0.5rem;
+  }
+
+  button[aria-label="Delete"] {
+    position: absolute;
+    align-self: end;
+    justify-self: start;
+    margin-inline-start: 1rem;
+  }
+
+  button[aria-label="Reset"] {
+    position: absolute;
+    align-self: end;
+    justify-self: center;
+  }
+
+  button[aria-label="Save"] {
+    position: absolute;
+    justify-self: end;
+    align-self: end;
+    margin-inline-end: 1rem;
+  }
+
+  form {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto auto;
+    gap: 1rem;
+    position: relative;
+    justify-content: start;
+
+    small {
+      align-self: end;
+    }
+  }
 }
 
-aside button[aria-label="Close"] {
-  position: absolute;
-  align-self: start;
-  justify-self: end;
-  margin-block-start: 1rem;
-  margin-inline-end: 1rem;
-  padding: 0.5rem;
-}
-
-aside button[aria-label="Delete"] {
-  position: absolute;
-  align-self: end;
-  justify-self: start;
-  margin-inline-start: 1rem;
-}
-
-aside button[aria-label="Reset"] {
-  position: absolute;
-  align-self: end;
-  justify-self: center;
-}
-
-aside button[aria-label="Save"] {
-  position: absolute;
-  justify-self: end;
-  align-self: end;
-  margin-inline-end: 1rem;
-}
-
-aside:has(form fieldset:not(:empty)) {
-  display: grid;
-  grid-template-rows: auto 1fr;
-}
-
-main:has(~ aside fieldset:not(:empty)) {
-  /* Apply styles to target */
-  resize: horizontal;
-}
-
-
-aside form small,
-aside form fieldset {
-  /* grid-column: 1 / -1; */
-  align-self: end;
-}
-
-/* Place buttons horizontally */
-/* aside form button[name="delete"] {
-  grid-column: 1;
-}
-
-aside form button[name="reset"] {
-  grid-column: 2;
-}
-
-aside form button[name="submit"] {
-  grid-column: 3;
-} */
-
-/* Optional: Align buttons left */
-aside form {
-  grid-template-rows: auto 1fr auto auto;
-  gap: 1rem;
-  position: relative;
-  justify-content: start;
-  /* align-items: center; */
+br {
+  display: block;
+  margin: 0.5rem;
 }
 
 /* MARK: FOOTER
@@ -538,22 +495,18 @@ footer {
   align-items: center;
   margin-inline: 1rem;
   overflow: hidden;
-}
 
-powered-by,
-app-version {
-  padding: 1rem;
-}
-
-br {
-  display: block;
-  margin: 0.5rem;
+  powered-by,
+  app-version {
+    padding: 1rem;
+  }
 }
 
 /* MARK: MODAL
 */
 modal- {
   display: none;
+  /* Hide by default */
   position: fixed;
   opacity: 0;
   max-width: 20rem;
@@ -561,49 +514,54 @@ modal- {
   z-index: 1000;
   background: rgba(var(--bg-panel-color), 0.5);
   border-radius: var(--border-radius);
+
+  &:has(h4:not(:empty), p:not(:empty)) {
+    display: grid;
+    /* Show when not empty */
+    opacity: 1;
+  }
+
+  button {
+    display: none;
+    /* Hide by default */
+
+    &:not(:empty) {
+      display: flex;
+      /* Show when not empty */
+      gap: 0.5rem;
+      justify-content: flex-end;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      border: none;
+      background-color: rgba(var(--button-bg-color), 0.1);
+      color: currentColor;
+    }
+
+    &:hover {
+      background-color: rgba(var(--button-bg-color), 0.7);
+    }
+  }
+
+  p,
+  h4 {
+    padding: 1rem;
+  }
+
+  back-drop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(var(--input-bg-color), 0.7);
+    z-index: -1;
+  }
 }
 
-modal-:has(h4:not(:empty), p:not(:empty)) {
-  display: grid;
-  opacity: 1;
-}
 
-modal- button:empty {
-  display: none;
-}
 
-modal- p,
-modal- h4 {
-  padding: 1rem;
-}
-
-modal- modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(var(--input-bg-color), 0.7);
-  z-index: -1;
-}
-
-modal- button {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  border-radius: var(--border-radius);
-  border: none;
-  background-color: rgba(var(--button-bg-color), 0.1);
-  color: currentColor;
-}
-
-modal- button:hover {
-  background-color: rgba(var(--button-bg-color), 0.7);
-}
-
-/* MARK: OFFLINE
+/* MARK: OFF-LINE
 */
-off-line {
-  display: none;
+/* off-line {
+  display: none; Hide by default
   position: fixed;
   padding: 1rem;
   text-align: center;
@@ -619,17 +577,22 @@ off-line {
   transform: translate(-50%, -50%);
   overflow: hidden;
   transition-delay: 1s;
-}
 
-off-line:has(p:not(:empty)) {
-  display: grid;
-}
+  &:has(p:not(:empty)) {
+    display: grid; Show when not empty */
 
-off-line p {
-  animation: fadeInOut 1s ease-in-out infinite alternate;
-}
+    /* p {
+      animation: fadeInOut 1s ease-in-out infinite alternate;
+    }
+  }
+} */
 
 @keyframes fadeInOut {
-  from { opacity: 0.4; }
-  to { opacity: 1; }
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
