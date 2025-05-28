@@ -564,7 +564,7 @@ form.onreset = (e) => {
 // };
 
 // MARK: DELETE HANDLER
-deleteButton.oninput = () => {
+deleteButton.onclick = () => {
   const selected = document.querySelector('ul li input[name="list-item"]:checked')
   const id = selected?.closest("li")?.querySelector("label > id")?.textContent?.trim()
   const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value
