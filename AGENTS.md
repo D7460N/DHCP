@@ -6,6 +6,7 @@ This file contains explicit instructions, architecture guidelines, coding standa
 
 ## 🚨 Critical Instructions
 
+* Think all the way through the consequences. Solve the root. Avoid downstream waste.
 * Prioritize accuracy, brevity, clarity, efficiency, and relevance above all.
 * Never speculate or hallucinate. Confirm file and context existence explicitly.
 * Strictly adhere to modern web standards (HTML5, CSS3).
