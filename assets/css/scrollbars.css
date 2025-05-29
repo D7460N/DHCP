@@ -81,7 +81,9 @@ section:hover {
   border-radius:5px;
 } */
 
-main article ul[aria-hidden="true"] + ul {
+nav details section,
+main article ul[aria-hidden="true"] + ul,
+aside form fieldset {
   scrollbar-width: thin;
   scrollbar-color: rgb(var(--accent2)) #0000;
 
