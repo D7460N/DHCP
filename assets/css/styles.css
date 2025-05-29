@@ -24,11 +24,10 @@ aside p {
 a {
   color: rgba(var(--txt-link), 0.7);
   text-decoration: none;
-
   box-shadow: 0 1px 0 rgba(0, 255, 255, 0.0);
-}
 
-a:hover {
-  color: rgba(var(--txt-link), 1.0);
-  box-shadow: 0 1px 0 rgba(var(--txt-link), 1.0);
+  &:hover {
+    color: rgba(var(--txt-link), 1.0);
+    box-shadow: 0 1px 0 rgba(var(--txt-link), 1.0);
+  }
 }
