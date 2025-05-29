@@ -97,51 +97,74 @@ function formatDateForInput(str) {
 }
 
 // MARK: Custom Element Utilities
-function loadEndpoint(endpoint) {
+async function loadEndpoint(endpoint) {
   console.log("[LOAD]", endpoint);
-  fetchJSON(endpoint)
-    .then(([data]) => {
-      console.log("[LOADED]", data);
 
-      initCustomEls(Object.keys(data.items[0] || {}));
+  // Clear existing content first
+  headerUl.querySelectorAll("li").forEach(li => li.innerHTML = "");
+  tableUl.innerHTML = "";
 
-      const seen = new Set();
-      const duplicates = [];
-      for (const item of data.items) {
-        if (seen.has(item.id)) duplicates.push(item.id);
-        seen.add(item.id);
-      }
-      if (duplicates.length) {
-        console.error("[DUPLICATE ID DETECTED]", duplicates);
-        confirmAction(`Duplicate IDs found: ${duplicates.join(", ")}`, { type: "alert" });
-        return;
-      }
+  const headerLi = headerUl.querySelector("li");
+  if (headerLi) {
+    headerLi.innerHTML = ""; // clears content of li but preserves the li itself
+  }
 
-      tableUl.innerHTML = "";
-      fieldset.innerHTML = "";
+  try {
+    const [data] = await fetchJSON(endpoint);
+    console.log("[LOADED]", data);
 
-      const article = document.querySelector("main article");
-      const h1 = article?.querySelector("h1");
-      const intro = article?.querySelector("p");
-      if (h1) h1.textContent = data.title ?? "";
-      if (intro) intro.textContent = data.intro ?? "";
+    const keys = Object.keys(data.items[0] || {});
 
-      data.items.forEach((item) => {
-        const li = createListItem(item);
-        tableUl.appendChild(li);
-      });
-
-      const firstRow = tableUl.querySelector("li");
-      if (firstRow) updateHeaderRow(firstRow);
-
-      snapshotForm();
-      toggleResetButton();
-    })
-    .catch((err) => {
-      console.error("Failed to load data:", err);
-      confirmAction("Failed to load data.", { type: "alert" });
+    // Explicitly populate the header independently
+    keys.forEach(key => {
+      const el = document.createElement(toKebab(key));
+      el.textContent = toKebab(key)
+        .replace(/^item-/, "")
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+      headerLi.appendChild(el);
     });
+
+    initCustomEls(keys);
+
+    const seen = new Set();
+    const duplicates = [];
+
+    for (const item of data.items) {
+      if (seen.has(item.id)) duplicates.push(item.id);
+      seen.add(item.id);
+    }
+
+    if (duplicates.length) {
+      console.error("[DUPLICATE ID DETECTED]", duplicates);
+      await confirmAction(`Duplicate IDs found: ${duplicates.join(", ")}`, { type: "alert" });
+      return;
+    }
+
+    fieldset.innerHTML = "";
+
+    const article = document.querySelector("main article");
+    const h1 = article?.querySelector("h1");
+    const intro = article?.querySelector("p");
+    if (h1) h1.textContent = data.title ?? "";
+    if (intro) intro.textContent = data.intro ?? "";
+
+    // Populate table rows separately
+    data.items.forEach((item) => {
+      const li = createListItem(item);
+      tableUl.appendChild(li);
+    });
+
+    snapshotForm();
+    toggleResetButton();
+  } catch (err) {
+    console.error("Failed to load data:", err);
+    await confirmAction("Failed to load data.", { type: "alert" });
+  }
 }
+
+
+
 
 // DOM Manipulation Utilities
 function removeInlineStyles(element) {
