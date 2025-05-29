@@ -488,45 +488,70 @@ loadEndpoints().then(() => {
   const selected = document.querySelector('nav input[name="nav"]:checked');
   if (selected?.onchange) selected.onchange()
 });
+
 // MARK: NEW ROW CREATION
-newButton.onclick = () => {
+newButton.onclick = async () => {
   if (
     hasUnsavedChanges() &&
-    !confirm("You have unsaved changes. Discard them?")
+    !(await confirmAction("You have unsaved changes. Discard them?", { type: "confirm" }))
   )
-    return
+    return;
 
-  fieldset.innerHTML = ""
+  fieldset.innerHTML = "";
 
-  const templateRow = tableUl.querySelector("li")
-  if (!templateRow) return
+  // Attempt to get keys from the first existing table row
+  const existingLi = tableUl.querySelector("li");
 
-  const item = {}
+  let keys;
 
-  templateRow.querySelectorAll("label > *:not(input)").forEach((spanT) => {
-    const key = toCamel(spanT.tagName.toLowerCase())
+  if (existingLi) {
+    // Keys from existing table row
+    keys = Array.from(existingLi.querySelectorAll("label > *:not(input)"))
+      .map(el => toCamel(el.tagName.toLowerCase()));
+  } else {
+    // 🚩 Minimal default fallback schema
+    keys = ["id", "name", "description", "created", "updated"];
+  }
 
-    item[key] = ""
+  const item = {};
 
-    const formLabel = document.createElement("label")
+  keys.forEach((key) => {
+    item[key] = ""; // Initialize empty values
+
+    const formLabel = document.createElement("label");
     formLabel.textContent =
       toKebab(key)
         .replace(/^item-/, "")
         .replace(/-/g, " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase()) + ": "
-    const input = createInputFromKey(key, "")
-    formLabel.appendChild(input)
-    fieldset.appendChild(formLabel)
-  })
+        .replace(/\b\w/g, (c) => c.toUpperCase()) + ": ";
 
-  const li = createListItem(item)
-  tableUl.prepend(li)
+    const input = createInputFromKey(key, "");
+    formLabel.appendChild(input);
+    fieldset.appendChild(formLabel);
+  });
 
-  updateHeaderRow(li)
-  li.querySelector('input[name="list-item"]').checked = true
+  const li = createListItem(item);
+  tableUl.prepend(li);
 
-  snapshotForm()
-}
+  // Handle headers explicitly
+  const headerLi = headerUl.querySelector("li");
+  if (headerLi && headerLi.childElementCount === 0) {
+    keys.forEach(key => {
+      const headerEl = document.createElement(toKebab(key));
+      headerEl.textContent = toKebab(key)
+        .replace(/^item-/, "")
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+      headerLi.appendChild(headerEl);
+    });
+  }
+
+  li.querySelector('input[name="list-item"]').checked = true;
+  snapshotForm();
+  toggleResetButton();
+};
+
+
 // MARK: FORM SUBMIT
 form.onsubmit = (e) => {
   e.preventDefault()
@@ -595,18 +620,50 @@ form.onreset = (e) => {
 }
 
 // MARK: DELETE HANDLER
-deleteButton.onclick = () => {
-  const selected = document.querySelector('ul li input[name="list-item"]:checked')
-  const id = selected?.closest("li")?.querySelector("label > id")?.textContent?.trim()
-  const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value
+deleteButton.onclick = async () => {
+  const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest("li");
 
-  confirmAction("Delete this record?", { type: "confirm" }).then((ok) => {
-    if (!selected || !id || !ok) return
-    fetch(`${BASE_URL}${endpoint}/${id}`, { method: "DELETE" }).then(() =>
-      loadEndpoint(`${BASE_URL}${endpoint}`)
-    )
-  })
-}
+  if (!selected) {
+    await confirmAction("No row selected to delete.", { type: "alert" });
+    return;
+  }
+
+  const idEl = selected.querySelector("label > id");
+  const id = idEl?.textContent?.trim();
+
+  const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
+
+  if (!id) {
+    const confirmClear = await confirmAction("Discard unsaved new record?", { type: "confirm" });
+    if (confirmClear) {
+      selected.remove();                 // Remove the new unsaved row
+      clearFieldset(fieldset);           // Clear the form fields
+
+      // Explicitly clear the header as well
+      const headerLi = headerUl.querySelector("li");
+      if (headerLi) headerLi.innerHTML = "";
+
+      snapshotForm();                    // Reset the snapshot state
+      toggleResetButton();               // Disable/reset buttons
+      toggleSubmitButton();              // Disable submit button
+    }
+    return;
+  }
+
+  const confirmDelete = await confirmAction("Delete this record?", { type: "confirm" });
+  if (!confirmDelete) return;
+
+  try {
+    await fetch(`${BASE_URL}${endpoint}/${id}`, { method: "DELETE" });
+    await loadEndpoint(`${BASE_URL}${endpoint}`); // refresh the table
+  } catch (err) {
+    console.error("Failed to delete:", err);
+    await confirmAction("Failed to delete record.", { type: "alert" });
+  }
+};
+
+
+
 // MARK: CLOSE ASIDE
 closeButton.onclick = () => {
   const closeAside = () => {
