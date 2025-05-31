@@ -1,4 +1,4 @@
-// === scripts.js (REWRITTEN: No Custom Elements, Fully Native Inputs) ===
+// MARK: SCRIPTS.JS
 // Purpose: Fetch JSON, inject content into UL/LI and FORM using native HTML form elements only
 
 // === Constants ===
@@ -19,6 +19,62 @@ const resetButton = form.querySelector('button[aria-label="Reset"]');
 const submitButton = form.querySelector('button[aria-label="Save"]');
 const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
+// === Load Data from API and Render into UI ===
+function load(endpoint) {
+  console.log('[LOAD]', endpoint);
+  fetchJSON(endpoint)
+    .then(res => res.json())
+    .then(([data]) => {
+      console.log('[LOADED]', data);
+
+      const seen = new Set();
+      const duplicates = [];
+      for (const item of data.items) {
+        if (seen.has(item.id)) duplicates.push(item.id);
+        seen.add(item.id);
+      }
+      if (duplicates.length) {
+        console.error('[DUPLICATE ID DETECTED]', duplicates);
+        alert(`Duplicate IDs found: ${duplicates.join(', ')}`);
+        return;
+      }
+
+      tableUl.innerHTML = '';
+      fieldset.innerHTML = '';
+
+      const article = document.querySelector('main article:has(h1)');
+      const h1 = article?.querySelector('h1');
+      const intro = article?.querySelector('p');
+      if (h1) h1.textContent = data.title ?? '';
+      if (intro) intro.textContent = data.intro ?? '';
+
+      data.items.forEach(item => {
+        const li = document.createElement('li');
+        li.tabIndex = 0;
+
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'list-item';
+        input.hidden = true;
+        input.oninput = () => updateFormFromSelectedRow();
+        label.appendChild(input);
+
+        for (const [key, value] of Object.entries(item)) {
+          const span = document.createElement('span');
+          span.setAttribute('data-key', key);
+          span.textContent = value;
+          label.appendChild(span);
+        }
+
+        li.appendChild(label);
+        tableUl.appendChild(li);
+      });
+
+      snapshotForm();
+    })
+    .catch(err => console.error('Failed to load data:', err));
+}
 
 // === Utility: Format ISO Date to datetime-local ===
 function formatDateForInput(str) {
@@ -111,62 +167,7 @@ function createInputFromKey(key, value) {
 }
 
 
-// === Load Data from API and Render into UI ===
-function load(endpoint) {
-  console.log('[LOAD]', endpoint);
-  fetchJSON(endpoint)
-    .then(res => res.json())
-    .then(([data]) => {
-      console.log('[LOADED]', data);
 
-      const seen = new Set();
-      const duplicates = [];
-      for (const item of data.items) {
-        if (seen.has(item.id)) duplicates.push(item.id);
-        seen.add(item.id);
-      }
-      if (duplicates.length) {
-        console.error('[DUPLICATE ID DETECTED]', duplicates);
-        alert(`Duplicate IDs found: ${duplicates.join(', ')}`);
-        return;
-      }
-
-      tableUl.innerHTML = '';
-      fieldset.innerHTML = '';
-
-      const article = document.querySelector('main article:has(h1)');
-      const h1 = article?.querySelector('h1');
-      const intro = article?.querySelector('p');
-      if (h1) h1.textContent = data.title ?? '';
-      if (intro) intro.textContent = data.intro ?? '';
-
-      data.items.forEach(item => {
-        const li = document.createElement('li');
-        li.tabIndex = 0;
-
-        const label = document.createElement('label');
-        const input = document.createElement('input');
-        input.type = 'radio';
-        input.name = 'list-item';
-        input.hidden = true;
-        input.oninput = () => updateFormFromSelectedRow();
-        label.appendChild(input);
-
-        for (const [key, value] of Object.entries(item)) {
-          const span = document.createElement('span');
-          span.setAttribute('data-key', key);
-          span.textContent = value;
-          label.appendChild(span);
-        }
-
-        li.appendChild(label);
-        tableUl.appendChild(li);
-      });
-
-      snapshotForm();
-    })
-    .catch(err => console.error('Failed to load data:', err));
-}
 
 // === Reflect LI Data Into Form (Native Inputs) ===
 function updateFormFromSelectedRow() {
