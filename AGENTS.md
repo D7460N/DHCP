@@ -167,3 +167,99 @@ Codex agents must:
 * Avoid assumptions
 * Validate output against provided HTML structure
 * Output only necessary changes—no boilerplate unless explicitly requested
+
+## AGENT Custom Instructions
+
+> Last updated 2025.05.31
+
+- These instructions override all other sources unless otherwise stated.
+- Think step‑by‑step internally, then reply with the final code only.
+- Read them at least twice before responding to user prompt
+- After generating code, run an internal review: verify syntax, missing functions, and unused variables. Output the corrected version only.
+- If accuracy cannot be 100% established and confirmed, start process over again until accuracy can be 100% confirmed. Accuracy is the utmost priority.
+- Do not take shortcuts. 
+- Do not skip code sections to save time.
+- Do not fall back to general answers.
+- Specificity is a priority.
+- Contextual answers are a priority. 
+- Before generating code or responding, check if context is lost. If context is lost, state that context was lost and then regain context. Never guess.
+- Before responding, verify accuracy and modern best practices, utilizing web access as needed.
+- Comply with these rules in every response, then if compliance is successful, clearly indicate compliance with these rules in every response. If compliance is not successful, indicate that also.
+- When being constrained, admit constraints or limitations (e.g., low bandwidth or CPU usage).
+
+- Verification Routine
+
+- Mandatory Routine: Verify accuracy, completeness, and adherence to the latest best practices before every response.
+- Explicit Indication: Before delivering the response, only after verification has occurred, clearly indicate that verification has occurred .
+
+- Core Architectural Rules (Non-Negotiable)
+
+Separation of Concerns
+
+- HTML: Structure only (semantic elements).
+- CSS: UI behavior, state, visibility, interaction.
+- JS: Data handling only (no UI or styling logic).
+- No Classes, IDs, Inline Styles or Scripts: All structure semantic, styles external.
+- CSS-Driven UI: Use `:has()`, container queries, logical DOM for dynamic interactions. Native transitions only; no JS event listeners.
+
+Scroll Control
+
+- Scrollable Element: Scrolls (`overflow: auto`).
+- Ancestor Control: All ancestor elements set to `overflow: hidden`.
+
+Accessibility
+
+- Full Accessibility: 508/WCAG compliance without relying on JS.
+
+Layout & Structure
+
+- Layout Grid: `<app-container>` with `<nav>`, `<main>`, `<aside>`.
+- Semantic Elements: `<main>` holds one `<article>` at a time; `<aside>` for additional details.
+- Forms: Always semantic (`<fieldset>`, `<legend>`, `<label>`, `<button>`).
+- Validation using only CSS (`:valid`, `:invalid`, `:out-of-range`).
+- Submit buttons disabled until form is valid.
+- Validate new form inputs using only CSS (`:valid`, `:invalid`, `:out-of-range`).
+- Holy Grail Layout: Responsive and full-bleed by default.
+
+UI State Management
+
+- Native Controls: Checkboxes, radios, CSS `:has()` and container style queries manage state.
+- Dynamic UI: Use `:checked`, `:empty`, `:not()` for conditional UI.
+
+Data Layer
+
+- JS Role: Fetches and injects data into pre-existing DOM nodes.
+- API Constraint: REST/JSON only; no frameworks.
+- Supports internal (Swagger) and public editing.
+
+Project Philosophy
+
+- Dependency-Free
+- No external frameworks.
+- Browser-Native First
+- Prioritize and utilize native browser features and progressive enhancement.
+- Immediate Visual Completeness
+- Avoid blank initial loads.
+- Simplicity & Maintainability is a priority
+- Keep everything explainable and maintainable
+
+Organizational Strategy
+
+Traceability: Every rule aligned to:
+
+- UI: Look & behavior.
+- UX: Usability/accessibility.
+- DX: Developer simplicity.
+- CX: Client/stakeholder outcomes.
+
+AI Assistant Behavior
+
+- No Generalization
+- Avoid assumptions
+- Only suggest changes explicitly requested or clearly justified
+- Proactive Communication
+- Alert to conflicts, missing context, or better alternatives
+- Self-Check Protocol
+- If ChatGPT is unsure, directly halt action and alert user
+- Rigorous Change Verification
+- Required: Confirm every change is explicitly justified and maintains original intent
