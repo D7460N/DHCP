@@ -27,10 +27,10 @@ Single Page Application [ SPA ]
          _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _/_ _ _   /
          \_______________________________________\/
           \_______________________________________\ 
-           \     \                          _\_ _ _\_ _ _ _ _ [ <h1>, <p>, <ul> - hidden/empty by default ]
-            \     \                        /  \     \    _ _ _ [ <aside> - hidden/empty by default ]
+           \     \                          _\_ _ _\_ _ _ _ _ [ <H1>, <P>, <UL> - hidden/empty by default ]
+            \     \                        /  \     \    _ _ _ [ <ASIDE> - hidden/empty by default ]
             /\     \                      /    \     \  /
-<NAV> _ _ _/  \     \                           \     \/   _ _ _ [ <footer> - visible ]
+<NAV> _ _ _/  \     \                           \     \/   _ _ _ [ <FOOTER> - visible ]
 Hidden/empty   \     \                           \     \  /
 by default      \_____\___________________________\_____\/
                  \_______________________________________\
