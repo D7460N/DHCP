@@ -111,6 +111,15 @@ async function loadEndpoint(endpoint) {
 
   try {
     const [data] = await fetchJSON(endpoint);
+
+    if (!Array.isArray(data.items)) {
+      try {
+        data.items = await fetchJSON(`${endpoint}-items`);
+      } catch {
+        data.items = [];
+      }
+    }
+
     console.log("[LOADED]", data);
 
     const keys = Object.keys(data.items[0] || {});

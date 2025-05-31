@@ -152,11 +152,12 @@ Example template:
 
   1. Check for unsaved changes (`hasUnsavedChanges()`).
   2. Prompt user if there are unsaved changes.
-  3. Fetch data from the selected endpoint:
+ 3. Fetch data from the selected endpoint:
 
      ```javascript
      loadEndpoint(`${BASE_URL}${endpoint}`);
      ```
+  * `loadEndpoint()` automatically fetches `${endpoint}-items` if `items` are not provided by the first request.
 
   * Example endpoint triggered:
 
