@@ -8,31 +8,52 @@ JavaScript in D7460N handles:
 - Semantic UI state (no direct DOM styling)
 - Event control for forms and navigation
 
-## Philosophy
+## Presentaion Layer
 
 | Layer     | Role                                 |
 |-----------|--------------------------------------|
-| HTML      | Structure and semantics              |
-| CSS       | UI layout and visual state via `:has()` |
-| JS        | Data handling, rendering, and event coordination |
+| HTML      | Structure only - intuitive semantic markup, A11y foundation |
+| CSS       | Heuristics only - themes, conditional visual state via `:has()`, style queries|
+| JS        | Data only - handling and delivery |
 
-## Module Structure
+```
+ARCHITECTURE ::
 
-| File               | Responsibility                     |
-|--------------------|-------------------------------------|
-| `config.js`         | Constants, endpoints, version info  |
-| `utils.js`          | Shared helper functions             |
-| `refs.js`           | DOM references                      |
-| `api.js`            | Data service layer (`fetch`, load)  |
-| `view.js`           | DOM rendering and content binding   |
-| `formController.js` | Handles form submit, update, delete |
-| `app.js`            | Main entry point: wires modules     |
+Single Page Application [ SPA ]
+- HTML = front-loaded, empty, hidden
+- CSS = hides/shows elements based on data
+- JS = delivers/removes data                _ _ _ [ <APP-BANNER> - visible ]
+                                           /        _ _ _ [ <HEADER> - visible ]
+         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _/_ _ _   /
+         \_______________________________________\/
+          \_______________________________________\ 
+           \     \                          _\_ _ _\_ _ _ _ _ [ <H1>, <P>, <UL> - hidden/empty by default ]
+           /\     \                        /  \     \    _ _ _ [ <ASIDE> - hidden/empty by default ]
+<NAV> _ _ /  \     \                      /    \     \  / _ _ _ [ <FOOTER> - visible ]
+Hidden/empty  \     \                           \     \/ /
+by default     \_____\___________________________\_____\/
+                \_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\
+                                             /
+                                            /_ _ _ [ <APP-BANNER> - visible ]
 
-## Principles
 
-- All modules use **ES Modules** (`import/export`)
-- No classes, no global functions, no inline scripts
-- Fully browser-native, framework-free
+[ <nav> -  ]
+
+```
+
+## Markup
+
+**Minimal semantic markup** == clean, perfomant, intuitive, overridable
+
+- Ally foundation
+- Minimal nesting
+- Zero CSS classes, IDs, or `data-*`
+- Zero inline scripts or styles
+- Zerp dependencies
+- Zerp compiling
+- Zero build tools
+- Preserves browser compatibility (future proof)
+- Reduces erros to data/business logic
 
 ## API Handling Strategy
 
@@ -80,3 +101,148 @@ Example template:
 - Triggers a fetch from the correct endpoint
 - Each row is rendered from the template with the same logic
 - Fields with no content remain empty and invisible thanks to CSS
+
+<br>
+
+---
+
+<br>
+
+## ① Initial Load Sequence
+
+**Trigger:**
+
+* The script initially runs on page load.
+
+**Order & Flow:**
+
+1. **`loadEndpoints()`** (initial entry point)
+
+   * Triggered immediately upon page load (`loadEndpoints().then(...)`).
+   * Fetches data from:
+
+     ```javascript
+     fetchJSON(`${BASE_URL}nav-content`)
+     ```
+   * Populates `NAV_DATA` and dynamically creates navigation items (`<nav>` inputs).
+
+2. **Default Tab Load**
+
+   * Automatically triggers the first tab's data fetch after populating the navigation.
+   * Specifically:
+
+     ```javascript
+     const selected = document.querySelector('nav input[name="nav"]:checked');
+     if (selected?.onchange) selected.onchange();
+     ```
+   * Calls `loadEndpoint(endpoint)` for the selected tab.
+
+## ② Navigation (Tab Click) Sequence
+
+**Trigger:**
+
+* User clicks on a radio input in the `<nav>`.
+
+**Order & Flow:**
+
+* Each `<nav>` radio input has an `onchange` event bound at the end of the initial load:
+
+  ```javascript
+  input.onchange = () => { ... }
+  ```
+* When clicked, the flow is:
+
+  1. Check for unsaved changes (`hasUnsavedChanges()`).
+  2. Prompt user if there are unsaved changes.
+ 3. Fetch data from the selected endpoint:
+
+     ```javascript
+     loadEndpoint(`${BASE_URL}${endpoint}`);
+     ```
+  * `loadEndpoint()` automatically fetches `${endpoint}-items` if `items` are not provided by the first request.
+
+  * Example endpoint triggered:
+
+    ```
+    https://67d944ca00348dd3e2aa65f4.mockapi.io/manage
+    ```
+
+## ③ New Row Creation Sequence
+
+**Trigger:**
+
+* User clicks the "new row" button (`newButton.onclick`).
+
+**Order & Flow:**
+
+* Check for unsaved changes.
+* Clears the form and table headers, then initializes a new row based on existing row keys or default keys.
+* Does **not** trigger a new fetch from API—uses existing UI structure to create a new blank entry locally.
+
+## ④ Form Submission Sequence
+
+**Trigger:**
+
+* User clicks "Save" (submit button) (`form.onsubmit`).
+
+**Order & Flow:**
+
+* Shows a confirmation modal to confirm saving changes.
+* Submits either a `POST` (for new entries) or a `PUT` (for existing entries) to:
+
+  ```javascript
+  `${BASE_URL}${endpoint}` // or `${BASE_URL}${endpoint}/${id}`
+  ```
+* After successful save, it automatically calls:
+
+  ```javascript
+  loadEndpoint(`${BASE_URL}${endpoint}`);
+  ```
+
+  * Refreshes the table with updated data from the API.
+
+## ⑤ Row Deletion Sequence
+
+**Trigger:**
+
+* User clicks the delete button (`deleteButton.onclick`).
+
+**Order & Flow:**
+
+* If the row is saved:
+
+  * Confirms deletion, then sends a `DELETE` request to:
+
+    ```javascript
+    `${BASE_URL}${endpoint}/${id}`
+    ```
+  * Refreshes the table afterward by calling:
+
+    ```javascript
+    loadEndpoint(`${BASE_URL}${endpoint}`);
+    ```
+* If the row is unsaved:
+
+  * Confirms discarding changes.
+  * Clears form and removes unsaved row without API interaction.
+
+## ⑥ Form Reset Sequence
+
+**Trigger:**
+
+* User clicks the reset button (`form.onreset`).
+
+**Order & Flow:**
+
+* Shows confirmation modal.
+* Restores the form state from `originalData`.
+* Does **not** involve an API call.
+
+## Summary of API Calls & Their Triggers
+
+| Call                               | Trigger             | API Endpoint                                  |
+| ---------------------------------- | ------------------- | --------------------------------------------- |
+| Initial Navigation (`nav-content`) | Page load           | `/nav-content`                                |
+| Tab content load                   | Nav input click     | `/manage`, `/faqs`, `/api-registration`, etc. |
+| Save Form (`POST` or `PUT`)        | Form submit         | `/endpoint` or `/endpoint/:id`                |
+| Delete Row (`DELETE`)              | Delete button click | `/endpoint/:id`                               |
