@@ -21,21 +21,23 @@ ARCHITECTURE ::
 
 Single Page Application [ SPA ]
 - HTML = front-loaded, empty, hidden
-- CSS = hides elements withput data       [ <banner> - visible ]
-- JS = delivers/removes data             / [ <header> - visible ]
-________________________________________/ /
-\_______________________________________\/
- \_______________________________________\
-  .     ._ _ _ _ _ _ _ _ _ _ _ _ _ _._ _ _._ _ [ <nav> - hidden/empty by default ]
-   .    /.                  _ _ _ _ _._ _ _._ _ [ <h1>, <p>, <ul> - hidden/empty by default ]
-    .  /  .                /          .     ._ _ [ <aside> - hidden/empty by default ]
-     .     .           `_\/_           .    /.
-      .     .           ./\ .           .  /  .
-       .     .                           .     .
-        ________________________________________
-        \_______________________________________\
-         \_______________________________________\
+- CSS = hides/shows elements based on data
+- JS = delivers/removes data                _ _ _ [ <APP-BANNER> - visible ]
+                                           /        _ _ _ [ <HEADER> - visible ]
+         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _/_ _ _   /
+         \_______________________________________\/
+          \_______________________________________\ 
+           \     \                          _\_ _ _\_ _ _ _ _ [ <H1>, <P>, <UL> - hidden/empty by default ]
+           /\     \                        /  \     \    _ _ _ [ <ASIDE> - hidden/empty by default ]
+<NAV> _ _ /  \     \                      /    \     \  / _ _ _ [ <FOOTER> - visible ]
+Hidden/empty  \     \                           \     \/ /
+by default     \_____\___________________________\_____\/
+                \_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\
+                                             /
+                                            /_ _ _ [ <APP-BANNER> - visible ]
 
+
+[ <nav> -  ]
 
 ```
 
@@ -152,11 +154,12 @@ Example template:
 
   1. Check for unsaved changes (`hasUnsavedChanges()`).
   2. Prompt user if there are unsaved changes.
-  3. Fetch data from the selected endpoint:
+ 3. Fetch data from the selected endpoint:
 
      ```javascript
      loadEndpoint(`${BASE_URL}${endpoint}`);
      ```
+  * `loadEndpoint()` automatically fetches `${endpoint}-items` if `items` are not provided by the first request.
 
   * Example endpoint triggered:
 

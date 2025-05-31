@@ -70,19 +70,9 @@ function toKebab(str) {
     .toLowerCase()
 
   if (!dashed.includes("-")) {
-    if (
-      /^(name|type|id|date|time|url|ip|count|size|set|list|item)$/.test(dashed)
-    ) {
-      dashed = `${dashed}-`
-    } else {
-      dashed = dashed.replace(
-        /(name|type|id|date|time|url|ip|count|size|set|list|item)$/,
-        "-$1"
-      )
-    }
+    dashed = `${dashed}-`
   }
-  if (!dashed.includes("-")) dashed = `${dashed}-`
-  if (dashed.startsWith("-")) dashed = `${dashed.slice(1)}-`
+
   return dashed
 }
 function toCamel(str) {
@@ -111,6 +101,15 @@ async function loadEndpoint(endpoint) {
 
   try {
     const [data] = await fetchJSON(endpoint);
+
+    if (!Array.isArray(data.items)) {
+      try {
+        data.items = await fetchJSON(`${endpoint}-items`);
+      } catch {
+        data.items = [];
+      }
+    }
+
     console.log("[LOADED]", data);
 
     const keys = Object.keys(data.items[0] || {});
