@@ -8,31 +8,50 @@ JavaScript in D7460N handles:
 - Semantic UI state (no direct DOM styling)
 - Event control for forms and navigation
 
-## Philosophy
+## Presentaion Layer
 
 | Layer     | Role                                 |
 |-----------|--------------------------------------|
-| HTML      | Structure and semantics              |
-| CSS       | UI layout and visual state via `:has()` |
-| JS        | Data handling, rendering, and event coordination |
+| HTML      | Structure only - intuitive semantic markup, A11y foundation |
+| CSS       | Heuristics only - themes, conditional visual state via `:has()`, style queries|
+| JS        | Data only - handling and delivery |
 
-## Module Structure
+```
+ARCHITECTURE ::
 
-| File               | Responsibility                     |
-|--------------------|-------------------------------------|
-| `config.js`         | Constants, endpoints, version info  |
-| `utils.js`          | Shared helper functions             |
-| `refs.js`           | DOM references                      |
-| `api.js`            | Data service layer (`fetch`, load)  |
-| `view.js`           | DOM rendering and content binding   |
-| `formController.js` | Handles form submit, update, delete |
-| `app.js`            | Main entry point: wires modules     |
+Single Page Application [ SPA ]
+- HTML = front-loaded, empty, hidden
+- CSS = hides elements withput data       [ <banner> - visible ]
+- JS = delivers/removes data             / [ <header> - visible ]
+________________________________________/ /
+\_______________________________________\/
+ \_______________________________________\
+  .     ._ _ _ _ _ _ _ _ _ _ _ _ _ _._ _ _._ _ [ <nav> - hidden/empty by default ]
+   .    /.                  _ _ _ _ _._ _ _._ _ [ <h1>, <p>, <ul> - hidden/empty by default ]
+    .  /  .                /          .     ._ _ [ <aside> - hidden/empty by default ]
+     .     .           `_\/_           .    /.
+      .     .           ./\ .           .  /  .
+       .     .                           .     .
+        ________________________________________
+        \_______________________________________\
+         \_______________________________________\
 
-## Principles
 
-- All modules use **ES Modules** (`import/export`)
-- No classes, no global functions, no inline scripts
-- Fully browser-native, framework-free
+```
+
+## Markup
+
+**Minimal semantic markup** == clean, perfomant, intuitive, overridable
+
+- Ally foundation
+- Minimal nesting
+- Zero CSS classes, IDs, or `data-*`
+- Zero inline scripts or styles
+- Zerp dependencies
+- Zerp compiling
+- Zero build tools
+- Preserves browser compatibility (future proof)
+- Reduces erros to data/business logic
 
 ## API Handling Strategy
 
