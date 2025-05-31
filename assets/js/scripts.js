@@ -187,7 +187,6 @@ function hasUnsavedChanges() {
     fieldset.querySelectorAll("input[name], select[name]")
   ).some((el) => el.value !== originalData[el.name])
 }
-window.onbeforeunload = () => (hasUnsavedChanges() ? true : undefined)
 
 // Modal & UI Utilities
 function showModal({ title = "", message = "", buttons = [] }) {
@@ -679,8 +678,7 @@ closeButton.onclick = () => {
     clearFieldset(fieldset) // <-- Call your new utility clearly
     form.oninput()
 
-    const mainEl = document.querySelector("main")
-    if (mainEl) removeInlineStyles(mainEl)
+    removeInlineStyles(mainEl)
 
     snapshotForm()
   }
