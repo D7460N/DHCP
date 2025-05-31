@@ -21,21 +21,25 @@ ARCHITECTURE ::
 
 Single Page Application [ SPA ]
 - HTML = front-loaded, empty, hidden
-- CSS = hides elements withput data       [ <banner> - visible ]
-- JS = delivers/removes data             / [ <header> - visible ]
-________________________________________/ /
-\_______________________________________\/
- \_______________________________________\
-  .     ._ _ _ _ _ _ _ _ _ _ _ _ _ _._ _ _._ _ [ <nav> - hidden/empty by default ]
-   .    /.                  _ _ _ _ _._ _ _._ _ [ <h1>, <p>, <ul> - hidden/empty by default ]
-    .  /  .                /          .     ._ _ [ <aside> - hidden/empty by default ]
-     .     .           `_\/_           .    /.
-      .     .           ./\ .           .  /  .
-       .     .                           .     .
-        ________________________________________
-        \_______________________________________\
-         \_______________________________________\
+- CSS = hides/shows elements based on data
+- JS = delivers/removes data                _ _ _ [ <APP-BANNER> - visible ]
+                                           /        _ _ _ [ <HEADER> - visible ]
+         _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _/_ _ _   /
+         \_______________________________________\/
+          \_______________________________________\ 
+           \     \                          _\_ _ _\_ _ _ _ _ [ <h1>, <p>, <ul> - hidden/empty by default ]
+            \     \                        /  \     \    _ _ _ [ <aside> - hidden/empty by default ]
+            /\     \                      /    \     \  /
+<NAV> _ _ _/  \     \                           \     \/   _ _ _ [ <footer> - visible ]
+Hidden/empty   \     \                           \     \  /
+by default      \_____\___________________________\_____\/
+                 \_______________________________________\
+                  \_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\
+                                             /
+                                            /_ _ _ [ <banner> - visible ]
 
+
+[ <nav> -  ]
 
 ```
 
