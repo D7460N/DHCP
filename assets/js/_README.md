@@ -28,13 +28,11 @@ Single Page Application [ SPA ]
          \_______________________________________\/
           \_______________________________________\ 
            \     \                          _\_ _ _\_ _ _ _ _ [ <H1>, <P>, <UL> - hidden/empty by default ]
-            \     \                        /  \     \    _ _ _ [ <ASIDE> - hidden/empty by default ]
-            /\     \                      /    \     \  /
-<NAV> _ _ _/  \     \                           \     \/   _ _ _ [ <FOOTER> - visible ]
-Hidden/empty   \     \                           \     \  /
-by default      \_____\___________________________\_____\/
-                 \_______________________________________\
-                  \_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\
+           /\     \                        /  \     \    _ _ _ [ <ASIDE> - hidden/empty by default ]
+<NAV> _ _ /  \     \                      /    \     \  / _ _ _ [ <FOOTER> - visible ]
+Hidden/empty  \     \                           \     \/ /
+by default     \_____\___________________________\_____\/
+                \_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\
                                              /
                                             /_ _ _ [ <APP-BANNER> - visible ]
 
