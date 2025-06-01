@@ -16,7 +16,10 @@ JavaScript in D7460N handles:
 | CSS       | Heuristics only - themes, conditional visual state via `:has()`, style queries|
 | JS        | Data only - handling and delivery |
 
-```latex
+```prolog
+
+tex
+latex
 
 stylus
 yaml
