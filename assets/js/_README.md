@@ -17,19 +17,6 @@ JavaScript in D7460N handles:
 | JS        | Data only - handling and delivery |
 
 ```prolog
-
-tex
-latex
-
-stylus
-yaml
-apache
-smalltalk
-less
-tsx
-jsx
-haskell
-elixir
 ARCHITECTURE ::
 
 Single Page Application [ SPA ]
@@ -49,7 +36,6 @@ Single Page Application [ SPA ]
                       \______\____________________________\_______\/ /
                        \___________________________________________\/
                         \_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\
-
 
 ```
 
