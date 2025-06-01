@@ -16,25 +16,36 @@ JavaScript in D7460N handles:
 | CSS       | Heuristics only - themes, conditional visual state via `:has()`, style queries|
 | JS        | Data only - handling and delivery |
 
-```
+```latex
+
+stylus
+yaml
+apache
+smalltalk
+less
+tsx
+jsx
+haskell
+elixir
 ARCHITECTURE ::
 
 Single Page Application [ SPA ]
 - HTML = front-loaded, empty, hidden
-- CSS = hides elements withput data       [ <banner> - visible ]
-- JS = delivers/removes data             / [ <header> - visible ]
-________________________________________/ /
-\_______________________________________\/
- \_______________________________________\
-  .     ._ _ _ _ _ _ _ _ _ _ _ _ _ _._ _ _._ _ [ <nav> - hidden/empty by default ]
-   .    /.                  _ _ _ _ _._ _ _._ _ [ <h1>, <p>, <ul> - hidden/empty by default ]
-    .  /  .                /          .     ._ _ [ <aside> - hidden/empty by default ]
-     .     .           `_\/_           .    /.
-      .     .           ./\ .           .  /  .
-       .     .                           .     .
-        ________________________________________
-        \_______________________________________\
-         \_______________________________________\
+- CSS = hides elements withput data
+- JS = delivers/removes data                                _ _ _ [ <APP-BANNER> - always visible ]
+                                                           / _ _ _ [ <HEADER> - always visible ]
+              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ / / _ _ _ [ <ASIDE> - hidden/empty by default ]
+              \___________________________________________\/ /
+               \___________________________________________\/
+   [ <NAV> ]   /\      \                            \       \
+   _ _ _ _ _ _/  \      \                     _ _ _ [ Page content - <h1>, <p>, <ul>, etc. - hidden/empty by default ]
+   Hidden/        \      \                   /        \       \
+   empty by        \      \                 /          \       \
+   default          \      \                            \       \    _ _ _ [ <FOOTER> -  always visible ]
+                     \      \                            \       \  / _ _ _ [ <APP-BANNER> - always visible ]
+                      \______\____________________________\_______\/ /
+                       \___________________________________________\/
+                        \_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\
 
 
 ```
