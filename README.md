@@ -29,7 +29,8 @@ Done. No build step. No server. No problem.
 | `/assets/css/` | CSS layers for layout, typography, heuristics |
 | `/data/` | Mock JSON APIs for each tab |
 | `/docs/` | Dev guides, presentation decks, accessibility docs |
-| `/assets/images/` | SVG brand and GUI assets |
+| `/assets/images/brand` | SVG brand and PWA PNG assets |
+| `/assets/images/app` | GUI assets |
 
 ## 🛠️ Developer Tips
 
