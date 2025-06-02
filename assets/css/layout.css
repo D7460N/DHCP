@@ -95,7 +95,7 @@ app-container {
     }
   }
 
-  app-container>* {
+  app-container > * {
     background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
   }
 
@@ -260,6 +260,8 @@ app-container {
   /* MARK: BUTTONS
 */
   button {
+    --bg-panel-opacity: 0.1;
+
     display: inline;
     padding-inline: 1rem;
     padding-block: .5rem;
@@ -267,7 +269,7 @@ app-container {
     user-select: none;
     cursor: pointer;
     border: none;
-    background-color: rgba(var(--bg-active-color), 0.05);
+    background-color: rgba(var(--button-bg-color), 0.1);
     color: inherit;
     text-align: center;
     border-radius: var(--border-radius);
@@ -276,7 +278,8 @@ app-container {
     font-size: 100%;
 
     &:hover {
-      background-color: rgba(var(--bg-active-color), 0.15);
+      background-color: rgba(var(--button-bg-color), 0.25);
+      color: rgba(var(--txt-active), 1.0);
     }
   }
 
