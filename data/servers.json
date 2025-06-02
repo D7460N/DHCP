@@ -1,7 +1,207 @@
 [
   {
-    "id": "b65b7a1c-8d8b-4edb-ad19-e328749aeec3",
+    "id": "880baad4-b7b5-4629-b2c4-9862617ca110",
     "title": "Servers",
-    "intro": "DHCP server inventory and configurations."
+    "intro": "DHCP server inventory and configurations.",
+    "items": [
+      {
+        "itemName": "auth01.ad.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Auth",
+        "itemOS": "Windows Server 2019",
+        "itemStatus": "Active",
+        "id": "c0004953-6ead-4770-996b-50ed58f074e0"
+      },
+      {
+        "itemName": "dns01.dmz.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "DNS",
+        "itemOS": "Ubuntu Server 22.04",
+        "itemStatus": "Active",
+        "id": "7312785b-f563-4fb5-8609-4e7a7bccc645"
+      },
+      {
+        "itemName": "web01.prod.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Web",
+        "itemOS": "Red Hat Enterprise Linux 9",
+        "itemStatus": "Active",
+        "id": "a106ccda-3023-417a-93ae-b1b2d576d19f"
+      },
+      {
+        "itemName": "web02.prod.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Web",
+        "itemOS": "Red Hat Enterprise Linux 9",
+        "itemStatus": "Active",
+        "id": "1453e786-c39f-402e-968a-4a754a9f761b"
+      },
+      {
+        "itemName": "db01.sql.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Database",
+        "itemOS": "Windows Server 2022",
+        "itemStatus": "Active",
+        "id": "b5b8ba83-1937-48bd-8341-f3660f842c9d"
+      },
+      {
+        "itemName": "print01.office.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Print",
+        "itemOS": "Windows Server 2016",
+        "itemStatus": "Active",
+        "id": "24294044-b613-4358-9e62-6367c80ddff5"
+      },
+      {
+        "itemName": "mgmt01.int.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Management",
+        "itemOS": "CentOS 7",
+        "itemStatus": "Active",
+        "id": "c1f9c7a5-c0a5-41b3-80d6-0b14b0b5932d"
+      },
+      {
+        "itemName": "proxy01.dmz.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Proxy",
+        "itemOS": "AlmaLinux 9",
+        "itemStatus": "Active",
+        "id": "87c5ae8e-28d4-4a00-a1c2-5f13e7df43c3"
+      },
+      {
+        "itemName": "api01.dev.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "API",
+        "itemOS": "Debian 12",
+        "itemStatus": "Active",
+        "id": "1ecfb08d-f457-4b95-bd57-3a5e7166972d"
+      },
+      {
+        "itemName": "jump01.ops.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Jumpbox",
+        "itemOS": "Rocky Linux 9",
+        "itemStatus": "Active",
+        "id": "5d0d2c6b-cbfc-408c-b1a5-2ff81cb5dba0"
+      },
+      {
+        "itemName": "scan01.audit.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Scanner",
+        "itemOS": "Kali Linux",
+        "itemStatus": "Active",
+        "id": "4a48e847-d26d-4fd4-9d4c-3255e4e37c0e"
+      },
+      {
+        "itemName": "smtp01.mail.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Mail",
+        "itemOS": "Ubuntu Server 20.04",
+        "itemStatus": "Active",
+        "id": "949c51ed-416a-4129-9b17-8c50b1085087"
+      },
+      {
+        "itemName": "devops01.tools.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "CI/CD",
+        "itemOS": "Amazon Linux 2023",
+        "itemStatus": "Active",
+        "id": "ed218ac3-7487-4781-91f6-16e1a0c586e3"
+      },
+      {
+        "itemName": "repo01.code.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Repository",
+        "itemOS": "Debian 11",
+        "itemStatus": "Active",
+        "id": "52dc2d0f-5691-420c-8db6-6a027d87a3fc"
+      },
+      {
+        "itemName": "ntp01.core.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Time",
+        "itemOS": "OpenBSD",
+        "itemStatus": "Active",
+        "id": "fa587137-12fd-4ba6-bfa3-5e5e7a4be5c5"
+      },
+      {
+        "itemName": "vault01.sec.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Secrets",
+        "itemOS": "Red Hat Enterprise Linux 8",
+        "itemStatus": "Active",
+        "id": "bbdc2736-f209-4b7f-b014-397af9f9dc7b"
+      },
+      {
+        "itemName": "backup01.archive.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Backup",
+        "itemOS": "Windows Server 2012 R2",
+        "itemStatus": "Active",
+        "id": "afc6cc4f-7a3e-4b3e-84d4-5063d29e0e9d"
+      },
+      {
+        "itemName": "bastion01.dmz.corp.net",
+        "itemCreated": "2024-12-01T10:00:00Z",
+        "itemUpdated": "2025-01-06T10:00:00Z",
+        "itemAuthor": "system",
+        "itemModified": "system",
+        "itemType": "Bastion",
+        "itemOS": "Rocky Linux 8",
+        "itemStatus": "Active",
+        "id": "4ee2d79c-939f-40ae-a07a-1d933ae6f318"
+      }
+    ]
   }
 ]
