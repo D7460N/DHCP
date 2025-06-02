@@ -80,7 +80,9 @@ a {
   transition: all var(--transition-duration);
 }
 
-off-line p {transition: all var(--transition-duration);}
+off-line p {
+  transition: all var(--transition-duration);
+}
 
 main article ul:last-of-type {
   overflow-x: auto;
@@ -102,5 +104,15 @@ main article ul:last-of-type > * {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeInOut {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 1;
   }
 }
