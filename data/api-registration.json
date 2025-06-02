@@ -1,174 +1,98 @@
 [
   {
-    "id": "6d69aea7-d23e-4a7d-bc86-a86d1a3990bc",
+    "id": "6d69aea7-d23e-4a7d-bc86-a86d1a399002",
     "title": "API Registration",
     "intro": "Register and manage API integrations.",
     "items": [
       {
-        "id": "17221e18-6683-42a4-b466-2ca90ac21843",
-        "sortOrder": 2,
-        "clientName": "Firewall Sync",
-        "clientId": "firewall-sync",
-        "clientSecret": "••••••••",
-        "scopes": [
-          "read",
-          "write"
-        ],
-        "createdBy": "secadmin",
-        "createdAt": "2025-01-21T00:00:00Z",
-        "lastUsed": "2025-03-05T11:00:00Z",
-        "isActive": true,
-        "uptimeSeconds": 3754800,
-        "uptimeDisplay": "43 days, 11 hours"
+        "id": "d5c3f58c-1559-43d1-ab28-2b5df1322f88",
+        "itemName": "example1.domain.com",
+        "itemCreated": "2024-12-10T10:45:43Z",
+        "itemUpdated": "2024-12-14T10:45:43Z",
+        "itemAuthor": "alpha-02",
+        "itemModifiedBy": "qwerty-01",
+        "itemType": "Service"
       },
       {
-        "id": "59f3f642-e14a-46ee-9545-3cf3da8170bc",
-        "sortOrder": 3,
-        "clientName": "DHCP Logger",
-        "clientId": "dhcp-logger",
-        "clientSecret": "••••••••",
-        "scopes": [
-          "read",
-          "audit"
-        ],
-        "createdBy": "admin",
-        "createdAt": "2024-12-03T00:00:00Z",
-        "lastUsed": "2025-01-27T21:00:00Z",
-        "isActive": true,
-        "uptimeSeconds": 4827600,
-        "uptimeDisplay": "55 days, 21 hours"
+        "id": "d6251578-9f90-4fba-9109-32223a8b332f",
+        "itemName": "example2.domain.com",
+        "itemCreated": "2024-12-11T10:45:43Z",
+        "itemUpdated": "2024-12-16T10:45:43Z",
+        "itemAuthor": "delta-04",
+        "itemModifiedBy": "bravo-03",
+        "itemType": "IP"
       },
       {
-        "id": "1d1a53f7-9178-441a-8b81-e81996e041d5",
-        "sortOrder": 4,
-        "clientName": "IP Reclaimer",
-        "clientId": "ip-reclaimer",
-        "clientSecret": "••••••••",
-        "scopes": [
-          "write"
-        ],
-        "createdBy": "netops",
-        "createdAt": "2024-12-11T00:00:00Z",
-        "lastUsed": "2025-01-20T10:00:00Z",
-        "isActive": true,
-        "uptimeSeconds": 3492000,
-        "uptimeDisplay": "40 days, 10 hours"
+        "id": "d7db4801-03fc-4383-bc8e-787b2e3ed059",
+        "itemName": "example3.domain.com",
+        "itemCreated": "2024-12-12T10:45:43Z",
+        "itemUpdated": "2024-12-17T10:45:43Z",
+        "itemAuthor": "delta-04",
+        "itemModifiedBy": "delta-04",
+        "itemType": "URL"
       },
       {
-        "id": "ae62feff-7e46-4035-ac0e-cb3d10655d52",
-        "sortOrder": 5,
-        "clientName": "Tenant Config Loader",
-        "clientId": "tenant-config-loader",
-        "clientSecret": "••••••••",
-        "scopes": [
-          "read",
-          "write"
-        ],
-        "createdBy": "devops",
-        "createdAt": "2024-12-19T00:00:00Z",
-        "lastUsed": "2025-02-25T13:00:00Z",
-        "isActive": true,
-        "uptimeSeconds": 5922000,
-        "uptimeDisplay": "68 days, 13 hours"
+        "id": "2a2e8a82-0cb3-40b6-a216-150be583695f",
+        "itemName": "example4.domain.com",
+        "itemCreated": "2024-12-13T10:45:43Z",
+        "itemUpdated": "2024-12-15T10:45:43Z",
+        "itemAuthor": "qwerty-01",
+        "itemModifiedBy": "qwerty-01",
+        "itemType": "Host"
       },
       {
-        "id": "c44b6aa5-01a9-4e65-af02-41808d247b1d",
-        "sortOrder": 6,
-        "clientName": "DNS Propagation Tracker",
-        "clientId": "dns-propagation-tracker",
-        "clientSecret": "••••••••",
-        "scopes": [
-          "read"
-        ],
-        "createdBy": "dnsadmin",
-        "createdAt": "2024-12-23T00:00:00Z",
-        "lastUsed": "2025-03-08T03:00:00Z",
-        "isActive": true,
-        "uptimeSeconds": 6490800,
-        "uptimeDisplay": "75 days, 3 hours"
+        "id": "5235a640-4250-482b-8184-e0da17b6cb63",
+        "itemName": "example5.domain.com",
+        "itemCreated": "2024-12-14T10:45:43Z",
+        "itemUpdated": "2024-12-17T10:45:43Z",
+        "itemAuthor": "qwerty-01",
+        "itemModifiedBy": "qwerty-01",
+        "itemType": "File"
       },
       {
-        "id": "bff5cb91-91df-41a7-83ff-d17d8823e2b1",
-        "sortOrder": 7,
-        "clientName": "Credential Rotation Bot",
-        "clientId": "credential-rotation-bot",
-        "clientSecret": "••••••••",
-        "scopes": [
-          "write"
-        ],
-        "createdBy": "secops",
-        "createdAt": "2024-12-12T00:00:00Z",
-        "lastUsed": "2025-01-31T09:00:00Z",
-        "isActive": true,
-        "uptimeSeconds": 4320000,
-        "uptimeDisplay": "50 days, 0 hours"
+        "id": "2f486acc-45f5-4643-be75-643d019fef12",
+        "itemName": "example6.domain.com",
+        "itemCreated": "2024-12-15T10:45:43Z",
+        "itemUpdated": "2024-12-16T10:45:43Z",
+        "itemAuthor": "bravo-03",
+        "itemModifiedBy": "qwerty-01",
+        "itemType": "Host"
       },
       {
-        "id": "fd40e8fc-bfc4-4a44-97c5-d9204e14c7f5",
-        "sortOrder": 8,
-        "clientName": "Audit Trail Exporter",
-        "clientId": "audit-trail-exporter",
-        "clientSecret": "••••••••",
-        "scopes": [
-          "read",
-          "audit"
-        ],
-        "createdBy": "audit",
-        "createdAt": "2025-01-01T00:00:00Z",
-        "lastUsed": "2025-02-10T08:00:00Z",
-        "isActive": true,
-        "uptimeSeconds": 3456000,
-        "uptimeDisplay": "40 days, 0 hours"
+        "id": "20e393cd-0151-4b09-8c9b-1d67bc045aad",
+        "itemName": "example7.domain.com",
+        "itemCreated": "2024-12-16T10:45:43Z",
+        "itemUpdated": "2024-12-21T10:45:43Z",
+        "itemAuthor": "bravo-03",
+        "itemModifiedBy": "delta-04",
+        "itemType": "IP"
       },
       {
-        "id": "373ec134-2909-4352-9261-498aa1e886e1",
-        "sortOrder": 9,
-        "clientName": "CMDB Sync Service",
-        "clientId": "cmdb-sync-service",
-        "clientSecret": "••••••••",
-        "scopes": [
-          "read",
-          "write"
-        ],
-        "createdBy": "cmdbadmin",
-        "createdAt": "2025-01-10T00:00:00Z",
-        "lastUsed": "2025-03-01T16:00:00Z",
-        "isActive": true,
-        "uptimeSeconds": 4320000,
-        "uptimeDisplay": "50 days, 0 hours"
+        "id": "961fe8af-b0cc-4274-98ba-413454a29c6f",
+        "itemName": "example8.domain.com",
+        "itemCreated": "2024-12-17T10:45:43Z",
+        "itemUpdated": "2024-12-22T10:45:43Z",
+        "itemAuthor": "alpha-02",
+        "itemModifiedBy": "qwerty-01",
+        "itemType": "Host"
       },
       {
-        "id": "5dc3f538-f03c-4db1-b0db-1d8f3845105e",
-        "sortOrder": 10,
-        "clientName": "Config Drift Detector",
-        "clientId": "config-drift-detector",
-        "clientSecret": "••••••••",
-        "scopes": [
-          "read",
-          "audit"
-        ],
-        "createdBy": "devsec",
-        "createdAt": "2024-12-28T00:00:00Z",
-        "lastUsed": "2025-03-05T20:00:00Z",
-        "isActive": true,
-        "uptimeSeconds": 5889600,
-        "uptimeDisplay": "68 days, 3 hours"
+        "id": "6c96dadc-8e5f-4d0c-995d-04accb06fdbb",
+        "itemName": "example9.domain.com",
+        "itemCreated": "2024-12-18T10:45:43Z",
+        "itemUpdated": "2024-12-19T10:45:43Z",
+        "itemAuthor": "bravo-03",
+        "itemModifiedBy": "alpha-02",
+        "itemType": "URL"
       },
       {
-        "id": "2cd38341-4c01-49d0-8487-9c94cf935ab8",
-        "sortOrder": 11,
-        "clientName": "Access Policy Updater",
-        "clientId": "access-policy-updater",
-        "clientSecret": "••••••••",
-        "scopes": [
-          "write"
-        ],
-        "createdBy": "idmadmin",
-        "createdAt": "2025-01-08T00:00:00Z",
-        "lastUsed": "2025-02-18T10:00:00Z",
-        "isActive": true,
-        "uptimeSeconds": 3531600,
-        "uptimeDisplay": "40 days, 21 hours"
+        "id": "7eb35306-c534-4e8d-9926-70f64f43ac67",
+        "itemName": "example10.domain.com",
+        "itemCreated": "2024-12-19T10:45:43Z",
+        "itemUpdated": "2024-12-24T10:45:43Z",
+        "itemAuthor": "alpha-02",
+        "itemModifiedBy": "delta-04",
+        "itemType": "IP"
       }
     ]
   }
