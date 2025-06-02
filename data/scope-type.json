@@ -1,7 +1,121 @@
 [
   {
-    "id": "1f64485e-f115-4a28-a3c0-d9863fad3ee8",
+    "id": "1f64485e",
     "title": "Scope Type",
-    "intro": "Define and manage scope types in the DHCP network."
+    "intro": "no data",
+    "items": [
+      {
+        "type": "private",
+        "id": "9fd91e1f",
+        "name": "Private",
+        "description": "Internal/private LAN IP ranges (e.g., 192.168.0.0/16, 10.0.0.0/8).",
+        "enabled": true
+      },
+      {
+        "type": "public",
+        "id": "fbdc25ab-9c0a-4b6d-bf49-4e35b6c80471",
+        "name": "Public",
+        "description": "Routable IPs allocated externally. Often used in ISP or DMZ segments.",
+        "enabled": false
+      },
+      {
+        "type": "multicast",
+        "id": "7aaec1ac-2b28-4955-8fc4-57fce54c84d5",
+        "name": "Multicast",
+        "description": "Supports address distribution for multicast groups (224.0.0.0/4).",
+        "enabled": false
+      },
+      {
+        "type": "superscope",
+        "id": "b5e0a5a0-0e9e-4e64-bf3f-28519a65b05c",
+        "name": "SuperScope",
+        "description": "Groups multiple scopes for logical or overlapping network management.",
+        "enabled": true
+      },
+      {
+        "type": "reserved",
+        "id": "01b34e37-73f1-4a50-8dd9-d76b87a9c2e7",
+        "name": "Reserved",
+        "description": "IP addresses manually mapped to specific MAC addresses.",
+        "enabled": true
+      },
+      {
+        "type": "loopback",
+        "id": "c8f0f810-28df-4c49-9d89-3a7069b76fd0",
+        "name": "Loopback",
+        "description": "127.0.0.1 range. Typically excluded from DHCP but may be reported.",
+        "enabled": false
+      },
+      {
+        "type": "dhcpv6",
+        "id": "ea8595d5-92a3-4e51-a837-fac2e9fd8355",
+        "name": "DHCPv6",
+        "description": "IPv6 stateful scope for client address assignment.",
+        "enabled": false
+      },
+      {
+        "type": "linklocal",
+        "id": "4a23bc26-43f0-4729-bfd4-8b4a6931170a",
+        "name": "Link-Local",
+        "description": "Self-assigned addresses in 169.254.0.0/16. Often excluded from scopes.",
+        "enabled": false
+      },
+      {
+        "type": "failover",
+        "id": "37f199d0-77db-4477-a98d-c37290cb47b2",
+        "name": "Failover Scope",
+        "description": "Used in high-availability DHCP server pair configurations.",
+        "enabled": true
+      },
+      {
+        "type": "excluded",
+        "id": "8f87081b-c1f8-4604-b4ed-53ed6db345c0",
+        "name": "Excluded Ranges",
+        "description": "IPs within a scope that should never be leased.",
+        "enabled": true
+      },
+      {
+        "type": "relay",
+        "id": "d39be6f3-2100-45cf-9312-177b0d7c7ef8",
+        "name": "Relay",
+        "description": "Used when DHCP is relayed across subnets or routers.",
+        "enabled": true
+      },
+      {
+        "type": "guest",
+        "id": "1c108ffe-2d8c-43d9-a8fa-f5f4908c9e20",
+        "name": "Guest",
+        "description": "Temporary or isolated client networks with limited access.",
+        "enabled": true
+      },
+      {
+        "type": "infrastructure",
+        "id": "1d3f1f12-843c-4fd4-b038-e6e9c5ccfa47",
+        "name": "Infrastructure",
+        "description": "Scopes for switches, routers, APs, and other backbone devices.",
+        "enabled": true
+      },
+      {
+        "type": "voip",
+        "id": "fe21c2db-5f0a-45e0-9a68-7d1d83b8f6bc",
+        "name": "VoIP Phones",
+        "description": "Reserved for IP phones with specific QoS/lease requirements.",
+        "enabled": false
+      },
+      {
+        "type": "iot",
+        "id": "ba7a1179-d9b8-48d6-9e2e-e64fc58ff09b",
+        "name": "IoT Devices",
+        "description": "Used for smart devices, typically segregated for security.",
+        "enabled": true
+      },
+      {
+        "type": "lab",
+        "id": "f8f37827-dbb0-4f29-b6f3-bdb4a60bfae9",
+        "name": "Lab/Test",
+        "description": "DHCP scopes for test networks and staging environments.",
+        "enabled": false
+      }
+    ]
   }
 ]
