@@ -116,16 +116,6 @@ html::before {
 /* background-size: 75% 75%;
 } */
 
-/* MARK: ALL PANELS
-*/
-app-container > * {
-  background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
-}
-
-button {
-  --bg-panel-opacity: 0.1;
-}
-
 /* MARK: FORMS
 */
 form fieldset label:focus {
