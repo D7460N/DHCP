@@ -223,6 +223,7 @@ function removeInlineStyles(element) {
 		element.removeAttribute('style');
 	}
 }
+
 // Clears all inner content of the provided fieldset element.
 function clearFieldset(fieldsetElement) {
 	// Checks if provided element is a valid HTML fieldset before clearing.

@@ -290,6 +290,10 @@ app-container {
         }
       }
 
+      button {
+        display: inline-block;
+      }
+
       p {
         display: none;
         /* Hide by default */
