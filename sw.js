@@ -6,9 +6,20 @@ const CACHE_NAME = 'cache-v3'
 const ASSETS = [
   './',
   './index.html',
+  './assets/css/themes.css',
+  './assets/css/layout.css',
+  './assets/css/reset.css',
   './assets/css/styles.css',
+  './assets/css/loading.css',
+  './assets/css/scrollbars.css',
+  './assets/css/transitions.css',
+  './assets/css/typography.css',
+  './assets/css/responsive.css',
+  './assets/css/a11y.css',
+  './assets/css/forms.css',
+  './assets/css/fonts.css',
   './assets/js/scripts.js',
-  './assets/images/logo.svg'
+  './assets/images/brand/logos/logo.svg'
 ]
 
 // Install Event: Runs once when SW is first registered or updated
