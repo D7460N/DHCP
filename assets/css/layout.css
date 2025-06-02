@@ -516,34 +516,47 @@ app-container {
     max-width: 20rem;
     place-self: center;
     z-index: 1000;
-    background: rgba(var(--bg-panel-color), 0.5);
+    background: rgba(var(--bg-panel-color), 0.0);
     border-radius: var(--border-radius);
 
-    &:has(h4:not(:empty), p:not(:empty)) {
+    &:has(h4:not(:empty),
+      p:not(:empty)) {
       display: grid;
       /* Show when not empty */
       opacity: 1;
+      background: rgba(var(--bg-panel-color), 0.5);
     }
 
     button {
       display: none;
       /* Hide by default */
+      gap: 0.5rem;
+      justify-content: flex-end;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      border: none;
+      background-color: rgba(var(--button-bg-color), 0.1);
+      color: currentColor;
 
       &:not(:empty) {
         display: flex;
         /* Show when not empty */
-        gap: 0.5rem;
-        justify-content: flex-end;
-        cursor: pointer;
-        padding: 0.5rem 1rem;
-        border-radius: var(--border-radius);
-        border: none;
-        background-color: rgba(var(--button-bg-color), 0.1);
-        color: currentColor;
       }
 
       &:hover {
         background-color: rgba(var(--button-bg-color), 0.7);
+      }
+
+      &:first-of-type {
+        margin-inline-start: 1rem;
+        place-self: start;
+      }
+
+      &:last-of-type {
+        margin-inline-end: 1rem;
+        place-self: end;
+        position: absolute;
       }
     }
 

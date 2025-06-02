@@ -8,7 +8,7 @@
 :root {
   --transition-behavior: allow-discrete;
   --transition-duration: 250ms;
-  --transition-property: visibility, opacity, display, transform, background-color, border-color, color;
+  --transition-property: visibility, opacity, display, transform, background, background-color, border-color, color;
   --transition-timing-function: ease-in-out;
   scroll-behavior: smooth;
 }
@@ -90,4 +90,17 @@ main article ul:last-of-type {
 main article ul:last-of-type > * {
   grid-template-columns: auto;
   scroll-snap-align: start;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -9,161 +9,148 @@
   --after-color: var(--after-color);
 }
 
-article select {
-  border-color: rgba(var(--input-border-color), 0.1);
-  width: fit-content;
-  padding: .5rem 1rem;
-  border-radius: var(--border-radius);
-  background-color: rgba(var(--input-bg-color), 0.1);
-  justify-self: end;
+article {
+  select {
+    border-color: rgba(var(--input-border-color), 0.1);
+    width: fit-content;
+    padding: .5rem 1rem;
+    border-radius: var(--border-radius);
+    background-color: rgba(var(--input-bg-color), 0.1);
+    justify-self: end;
+  }
 }
 
 /* MARK: FORMS */
-aside form {
-  display: grid;
-  max-width: 45rem;
-  overflow: hidden;
-  position: relative;
+aside {
+  form {
+    display: grid;
+    max-width: 45rem;
+    overflow: hidden;
+    position: relative;
+
+    label {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    input:invalid:not(:placeholder-shown)::placeholder {
+      color: crimson;
+      font-style: italic;
+    }
+
+    input,
+    select {
+      padding: 0.5rem;
+      border-radius: var(--border-radius);
+      width: 100%;
+      border: 0.0625rem solid rgba(var(--input-border-color), 0.1);
+      background-color: rgba(var(--input-bg-color), 0.1);
+      font-size: 1rem;
+      font-family: inherit;
+      font-size: 100%;
+    }
+
+    input:valid,
+    select:valid {
+      border: solid 0.25rem transparent;
+      border-inline-start-color: limegreen;
+    }
+
+    input:invalid,
+    select:invalid {
+      border: solid 0.25rem transparent;
+      border-inline-start-color: red;
+    }
+
+    select {
+      appearance: base-select;
+      font: -webkit-small-control;
+      border: solid 0.0625rem rgba(var(--input-border-color), 0.1);
+      border-radius: var(--border-radius);
+      display: grid;
+      font-family: inherit;
+      font-size: 100%;
+
+      option {
+        font-family: inherit;
+        font-size: 100%;
+
+        &::checkmark {
+          display: none;
+        }
+      }
+
+      &::picker-icon {
+        display: none;
+      }
+    }
+
+    /* https://codepen.io/una/pen/MWMmYxb?editors=1100 */
+    select,
+    &::picker(select) {
+      appearance: base-select;
+      font: -webkit-small-control;
+    }
+
+    input:invalid:not(:placeholder-shown)::placeholder {
+      color: crimson;
+      font-style: italic;
+    }
+
+    button {
+      background-color: rgba(var(--button-bg-color), 0.25);
+    }
+
+    button:disabled {
+      background-color: rgba(var(--button-bg-color), 0.1);
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    button:hover,
+    button:focus-visible {
+      background-color: rgba(var(--button-bg-color), 0.5);
+      color: rgba(var(--txt-active));
+    }
+
+    &:has([data-dirty="true"]):valid::after {
+      content: '✓ Ready to submit';
+      display: block;
+      color: var(--after-color);
+      margin-top: 0.5rem;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    &:has(:invalid) button[type="submit"] {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.85rem;
+      display: none;
+    }
+
+    input:invalid:not(:placeholder-shown) + .error {
+      display: block;
+    }
+  }
 }
 
 /* aside form:has(input:not(:placeholder-shown)) {
   display: grid;
 } */
 
-/* MARK: LABELS */
-aside form label {
-  display: grid;
-  gap: 0.5rem;
-}
-
-/* MARK: INPUTS */
-aside form input,
-aside form select {
-  padding: 0.5rem;
-  border-radius: var(--border-radius);
-  width: 100%;
-  border: 0.0625rem solid rgba(var(--input-border-color), 0.1);
-  background-color: rgba(var(--input-bg-color), 0.1);
-  font-size: 1rem;
-  font-family: inherit;
-  font-size: 100%;
-}
-
 demo-buttons {
   cursor: pointer;
 }
 
-/* MARK: DISABLED BUTTONS */
-aside form button:disabled {
-  background-color: rgba(var(--button-bg-color), 0.1);
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-aside form button {
-  background-color: rgba(var(--button-bg-color), 0.25);
-}
-
-aside form button:hover,
-aside form button:focus-visible {
-  background-color: rgba(var(--button-bg-color), 0.5);
-  color: rgba(var(--txt-active));
-}
-
-/* MARK: VALIDATION */
-aside form:has([data-dirty="true"]):has(:valid):not(:has(:invalid))::after {
-  content: '✓ Ready to submit';
-  display: block;
-  color: var(--after-color);
-  margin-top: 0.5rem;
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-aside form input:valid,
-aside form select:valid {
-  border: solid 0.25rem transparent;
-  border-inline-start-color: limegreen;
-}
-
-aside form input:invalid,
-aside form select:invalid {
-  border: solid 0.25rem transparent;
-  border-inline-start-color: red;
-}
-
-aside form input:invalid:not(:placeholder-shown)::placeholder {
-  color: crimson;
-  font-style: italic;
-}
-
-aside form:has(:invalid) button[type="submit"] {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-
-
-
-
-
-
-aside form input:invalid:not(:placeholder-shown)::placeholder {
-  color: crimson;
-  font-style: italic;
-}
-
-aside form:has(:invalid) button[type="submit"] {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-
-
-
-
-
-
-aside form .error {
-  color: red;
-  font-size: 0.85rem;
-  display: none;
-}
-
-aside form input:invalid:not(:placeholder-shown) + .error {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-0.25rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* MARK: SELECT */
-/* https://codepen.io/una/pen/MWMmYxb?editors=1100 */
-aside form select,
-aside form ::picker(select) {
-  appearance: base-select;
-  font: -webkit-small-control;
-}
 
-aside form select {
-  border: solid 0.0625rem rgba(var(--input-border-color), 0.1);
-  border-radius: var(--border-radius);
-  display: grid;
-  font-family: inherit;
-  font-size: 100%;
-}
 
-aside form select option {
-  font-family: inherit;
-  font-size: 100%;
-}
+
+
 
 aside form select option::checkmark,
 aside form select::picker-icon {
