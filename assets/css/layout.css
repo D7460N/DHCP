@@ -95,6 +95,10 @@ app-container {
     }
   }
 
+  app-container>* {
+    background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
+  }
+
 
 
 
