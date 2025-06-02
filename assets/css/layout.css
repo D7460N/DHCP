@@ -47,14 +47,24 @@
   }
 }
 
+
+
+
+
 [hidden] {
   display: none;
 }
 
-/* MARK: WRAPPER
+
+
+
+
+/* MARK: WRAPPER --------------------------------------------
 */
 app-container {
   container-type: inline-size;
+  container-name: app-container;
+
   display: grid;
   grid-template-rows: var(--app-container-grid-template-rows);
   grid-template-columns: var(--app-container-grid-template-columns);
@@ -85,6 +95,10 @@ app-container {
     }
   }
 
+
+
+
+
   /* MARK: APP-BANNER
 */
   app-banner {
@@ -102,7 +116,11 @@ app-container {
     }
   }
 
-  /* MARK: HEADER
+
+
+
+
+  /* MARK: HEADER --------------------------------------------
 */
   header {
     display: grid;
@@ -116,16 +134,59 @@ app-container {
     overflow: hidden;
     align-items: center;
 
-    label {
-      grid-template-columns: auto 1fr;
+    app-logo {
+      padding: 1rem;
+      margin-inline-start: 5rem;
+      color: rgba(var(--txt-active), var(--txt-active-opacity));
+
+      &::before {
+        content: '';
+        display: block;
+        width: 6em;
+        height: 6em;
+        background-color: currentColor;
+        mask-image: url(../images/brand/logos/logo.svg);
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
+        -webkit-mask-image: url(../images/brand/logos/logo.svg);
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        -webkit-mask-size: contain;
+        position: absolute;
+        inset-block-start: 1em;
+        inset-inline-start: 1em;
+      }
     }
 
-    label input {
-      display: none;
+    label {
+      grid-template-columns: auto 1fr;
+      padding: 1rem;
+      cursor: pointer;
+
+      &:hover {
+        color: rgba(var(--txt-color), 1.0);
+      }
+
+      &:first-of-type {
+        display: none;
+      }
+
+      input {
+        display: none;
+      }
+    }
+
+    app-user {
+      padding: 1rem;
     }
   }
 
-  /* MARK: NAV
+
+
+
+
+  /* MARK: NAV --------------------------------------------
 */
   nav {
     display: grid;
@@ -188,6 +249,10 @@ app-container {
     }
   }
 
+
+
+
+
   /* MARK: BUTTONS
 */
   button {
@@ -211,40 +276,11 @@ app-container {
     }
   }
 
-  demo-buttons {
-    padding: 1rem;
-  }
 
-  app-logo {
-    padding: 1rem;
-    margin-inline-start: 5rem;
-    color: rgba(var(--txt-active), var(--txt-active-opacity));
 
-    &::before {
-      content: '';
-      display: block;
-      width: 6em;
-      height: 6em;
-      background-color: currentColor;
-      mask-image: url(../images/brand/logo.svg);
-      mask-repeat: no-repeat;
-      mask-position: center;
-      mask-size: contain;
-      -webkit-mask-image: url(../images/brand/logo.svg);
-      -webkit-mask-repeat: no-repeat;
-      -webkit-mask-position: center;
-      -webkit-mask-size: contain;
-      position: absolute;
-      inset-block-start: 1em;
-      inset-inline-start: 1em;
-    }
-  }
 
-  app-user {
-    padding: 1rem;
-  }
 
-  /* MARK: MAIN
+  /* MARK: MAIN --------------------------------------------
 */
   main {
     display: grid;
@@ -262,7 +298,11 @@ app-container {
       /* Show when <aside><fieldset> is not empty */
     }
 
-    /* MARK:ARTICLE
+
+
+
+
+    /* MARK:ARTICLE --------------------------------------------
   */
     article {
       display: none;
@@ -291,7 +331,19 @@ app-container {
       }
 
       button {
-        display: inline-block;
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 1rem;
+        align-items: center;
+        justify-items: center;
+        position: absolute;
+        align-self: start;
+        justify-self: end;
+        margin: 1rem;
+
+        &:hover {
+          color: rgba(var(--txt-active), 1);
+        }
       }
 
       p {
@@ -348,6 +400,10 @@ app-container {
         }
       }
 
+
+
+
+
       /* UL TABLE HEADER */
       ul[aria-hidden="true"] {
         align-content: start;
@@ -364,9 +420,9 @@ app-container {
           }
         }
 
-        /* MARK: UL TABLE BODY
-    */
-        & + ul {
+        /* MARK: UL TABLE BODY --------------------------------------------
+      */
+        &+ul {
           overflow: overlay;
           position: relative;
           align-content: start;
@@ -422,7 +478,11 @@ app-container {
     }
   }
 
-  /* MARK: ASIDE
+
+
+
+
+  /* MARK: ASIDE --------------------------------------------
 */
   aside {
     display: none;
@@ -487,7 +547,11 @@ app-container {
     margin: 0.5rem;
   }
 
-  /* MARK: FOOTER
+
+
+
+
+  /* MARK: FOOTER --------------------------------------------
 */
   footer {
     display: grid;
@@ -506,7 +570,11 @@ app-container {
     }
   }
 
-  /* MARK: MODAL
+
+
+
+
+  /* MARK: MODAL --------------------------------------------
 */
   modal- {
     display: none;
@@ -575,6 +643,8 @@ app-container {
 
 
 
+
+
   /* MARK: OFF-LINE
 */
   /* off-line {
@@ -603,4 +673,10 @@ app-container {
     }
   }
 } */
+}
+
+@container app-container (width > 50rem) {
+  :is(h1, h2, h3, h4) {
+    padding: 2rem;
+  }
 }
