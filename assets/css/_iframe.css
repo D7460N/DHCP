@@ -4,6 +4,10 @@ iframe {
   background-color: transparent;
 }
 
+iframe {
+  background-color: var(--bg-color);
+}
+
 iframe section article img {
   mix-blend-mode: multiply;
   opacity: 50%;
