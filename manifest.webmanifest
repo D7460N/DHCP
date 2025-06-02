@@ -1,12 +1,12 @@
 {
-  "name": "D7460N Template",
+  "name": "D7460N Architecture",
   "short_name": "D7460N",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#0d101b",
   "theme_color": "rgb(19,20,23)",
   "orientation": "portrait-primary",
-  "description": "Modern HTML5/CSS3 front-end template",
+  "description": "Modern HTML5/CSS3 front-end architecture",
   "icons": [
     {
       "src": "assets/images/brand/pwa/72x72_light.png",
