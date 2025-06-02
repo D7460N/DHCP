@@ -86,8 +86,11 @@ aside {
     }
 
     /* https://codepen.io/una/pen/MWMmYxb?editors=1100 */
-    select,
-    &::picker(select) {
+    select {
+      appearance: base-select;
+      font: -webkit-small-control;
+    }
+    select::picker(select) {
       appearance: base-select;
       font: -webkit-small-control;
     }
@@ -141,13 +144,6 @@ aside {
 /* aside form:has(input:not(:placeholder-shown)) {
   display: grid;
 } */
-
-demo-buttons {
-  cursor: pointer;
-}
-
-/* MARK: SELECT */
-
 
 
 
