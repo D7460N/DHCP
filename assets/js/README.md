@@ -3,6 +3,7 @@
 ## Purpose
 
 JavaScript in D7460N handles:
+
 - Data fetching (via `fetch()`)
 - API interaction (CRUD)
 - Semantic UI state (no direct DOM styling)
@@ -10,11 +11,11 @@ JavaScript in D7460N handles:
 
 ## Presentaion Layer
 
-| Layer     | Role                                 |
-|-----------|--------------------------------------|
-| HTML      | Structure only - intuitive semantic markup, A11y foundation |
-| CSS       | Heuristics only - themes, conditional visual state via `:has()`, style queries|
-| JS        | Data only - handling and delivery |
+| Layer | Role                                                                           |
+| ----- | ------------------------------------------------------------------------------ |
+| HTML  | Structure only - intuitive semantic markup, A11y foundation                    |
+| CSS   | Heuristics only - themes, conditional visual state via `:has()`, style queries |
+| JS    | Data only - handling and delivery                                              |
 
 ```prolog
 ARCHITECTURE ::
@@ -74,18 +75,18 @@ Example template:
 
 ```html
 <template>
-  <li tabindex="0">
-    <input type="radio" name="list-item" hidden>
-    <item-name></item-name>
-    <item-hostname></item-hostname>
-    <item-ip></item-ip>
-    <item-os></item-os>
-    <item-type></item-type>
-    <item-created></item-created>
-    <item-updated></item-updated>
-    <item-author></item-author>
-    <item-modified></item-modified>
-  </li>
+	<li tabindex="0">
+		<input type="radio" name="list-item" hidden />
+		<item-name></item-name>
+		<item-hostname></item-hostname>
+		<item-ip></item-ip>
+		<item-os></item-os>
+		<item-type></item-type>
+		<item-created></item-created>
+		<item-updated></item-updated>
+		<item-author></item-author>
+		<item-modified></item-modified>
+	</li>
 </template>
 ```
 
@@ -110,45 +111,48 @@ Example template:
 
 **Trigger:**
 
-* The script initially runs on page load.
+- The script initially runs on page load.
 
 **Order & Flow:**
 
 1. **`loadEndpoints()`** (initial entry point)
 
-   * Triggered immediately upon page load (`loadEndpoints().then(...)`).
-   * Fetches data from:
+   - Triggered immediately upon page load (`loadEndpoints().then(...)`).
+   - Fetches data from:
 
      ```javascript
-     fetchJSON(`${BASE_URL}nav-content`)
+     fetchJSON(`${BASE_URL}nav-content`);
      ```
-   * Populates `NAV_DATA` and dynamically creates navigation items (`<nav>` inputs).
+
+   - Populates `NAV_DATA` and dynamically creates navigation items (`<nav>` inputs).
 
 2. **Default Tab Load**
 
-   * Automatically triggers the first tab's data fetch after populating the navigation.
-   * Specifically:
+   - Automatically triggers the first tab's data fetch after populating the navigation.
+   - Specifically:
 
      ```javascript
      const selected = document.querySelector('nav input[name="nav"]:checked');
      if (selected?.onchange) selected.onchange();
      ```
-   * Calls `loadEndpoint(endpoint)` for the selected tab.
+
+   - Calls `loadEndpoint(endpoint)` for the selected tab.
 
 ## ② Navigation (Tab Click) Sequence
 
 **Trigger:**
 
-* User clicks on a radio input in the `<nav>`.
+- User clicks on a radio input in the `<nav>`.
 
 **Order & Flow:**
 
-* Each `<nav>` radio input has an `onchange` event bound at the end of the initial load:
+- Each `<nav>` radio input has an `onchange` event bound at the end of the initial load:
 
   ```javascript
   input.onchange = () => { ... }
   ```
-* When clicked, the flow is:
+
+- When clicked, the flow is:
 
   1. Check for unsaved changes (`hasUnsavedChanges()`).
   2. Prompt user if there are unsaved changes.
@@ -158,7 +162,7 @@ Example template:
      loadEndpoint(`${BASE_URL}${endpoint}`);
      ```
 
-  * Example endpoint triggered:
+  - Example endpoint triggered:
 
     ```
     https://67d944ca00348dd3e2aa65f4.mockapi.io/manage
@@ -168,72 +172,75 @@ Example template:
 
 **Trigger:**
 
-* User clicks the "new row" button (`newButton.onclick`).
+- User clicks the "new row" button (`newButton.onclick`).
 
 **Order & Flow:**
 
-* Check for unsaved changes.
-* Clears the form and table headers, then initializes a new row based on existing row keys or default keys.
-* Does **not** trigger a new fetch from API—uses existing UI structure to create a new blank entry locally.
+- Check for unsaved changes.
+- Clears the form and table headers, then initializes a new row based on existing row keys or default keys.
+- Does **not** trigger a new fetch from API—uses existing UI structure to create a new blank entry locally.
 
 ## ④ Form Submission Sequence
 
 **Trigger:**
 
-* User clicks "Save" (submit button) (`form.onsubmit`).
+- User clicks "Save" (submit button) (`form.onsubmit`).
 
 **Order & Flow:**
 
-* Shows a confirmation modal to confirm saving changes.
-* Submits either a `POST` (for new entries) or a `PUT` (for existing entries) to:
+- Shows a confirmation modal to confirm saving changes.
+- Submits either a `POST` (for new entries) or a `PUT` (for existing entries) to:
 
   ```javascript
-  `${BASE_URL}${endpoint}` // or `${BASE_URL}${endpoint}/${id}`
+  `${BASE_URL}${endpoint}`; // or `${BASE_URL}${endpoint}/${id}`
   ```
-* After successful save, it automatically calls:
+
+- After successful save, it automatically calls:
 
   ```javascript
   loadEndpoint(`${BASE_URL}${endpoint}`);
   ```
 
-  * Refreshes the table with updated data from the API.
+  - Refreshes the table with updated data from the API.
 
 ## ⑤ Row Deletion Sequence
 
 **Trigger:**
 
-* User clicks the delete button (`deleteButton.onclick`).
+- User clicks the delete button (`deleteButton.onclick`).
 
 **Order & Flow:**
 
-* If the row is saved:
+- If the row is saved:
 
-  * Confirms deletion, then sends a `DELETE` request to:
+  - Confirms deletion, then sends a `DELETE` request to:
 
     ```javascript
-    `${BASE_URL}${endpoint}/${id}`
+    `${BASE_URL}${endpoint}/${id}`;
     ```
-  * Refreshes the table afterward by calling:
+
+  - Refreshes the table afterward by calling:
 
     ```javascript
     loadEndpoint(`${BASE_URL}${endpoint}`);
     ```
-* If the row is unsaved:
 
-  * Confirms discarding changes.
-  * Clears form and removes unsaved row without API interaction.
+- If the row is unsaved:
+
+  - Confirms discarding changes.
+  - Clears form and removes unsaved row without API interaction.
 
 ## ⑥ Form Reset Sequence
 
 **Trigger:**
 
-* User clicks the reset button (`form.onreset`).
+- User clicks the reset button (`form.onreset`).
 
 **Order & Flow:**
 
-* Shows confirmation modal.
-* Restores the form state from `originalData`.
-* Does **not** involve an API call.
+- Shows confirmation modal.
+- Restores the form state from `originalData`.
+- Does **not** involve an API call.
 
 ## Summary of API Calls & Their Triggers
 
