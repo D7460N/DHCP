@@ -1,98 +1,120 @@
 [
   {
-    "id": "fa6a6516-7f1b-4658-bcdd-6e07eb16b205",
+    "id": "fa6a6516-7f1b-4658-bcdd-6e07eb16b207",
     "title": "Option Types",
     "intro": "This tab manages different types of DHCP options like IPs, URLs, and custom hosts.",
     "items": [
       {
-        "itemName": "example1.domain.com",
-        "itemCreated": "2024-12-10T10:45:43Z",
-        "itemUpdated": "2024-12-14T10:45:43Z",
-        "itemAuthor": "alpha-02",
-        "itemModified": "qwerty-01",
-        "itemType": "Service",
-        "id": "d5c3f58c-1559-43d1-ab28-2b5df1322f88"
+        "type": "private",
+        "id": "9fd91e1f-846d-44f5-8c9a-fb290a6be28c",
+        "name": "Private",
+        "description": "Internal/private LAN IP ranges (e.g., 192.168.0.0/16, 10.0.0.0/8).",
+        "enabled": true
       },
       {
-        "itemName": "example2.domain.com",
-        "itemCreated": "2024-12-11T10:45:43Z",
-        "itemUpdated": "2024-12-16T10:45:43Z",
-        "itemAuthor": "delta-04",
-        "itemModified": "bravo-03",
-        "itemType": "IP",
-        "id": "d6251578-9f90-4fba-9109-32223a8b332f"
+        "type": "public",
+        "id": "fbdc25ab-9c0a-4b6d-bf49-4e35b6c80471",
+        "name": "Public",
+        "description": "Routable IPs allocated externally. Often used in ISP or DMZ segments.",
+        "enabled": false
       },
       {
-        "itemName": "example3.domain.com",
-        "itemCreated": "2024-12-12T10:45:43Z",
-        "itemUpdated": "2024-12-17T10:45:43Z",
-        "itemAuthor": "delta-04",
-        "itemModified": "delta-04",
-        "itemType": "URL",
-        "id": "d7db4801-03fc-4383-bc8e-787b2e3ed059"
+        "type": "multicast",
+        "id": "7aaec1ac-2b28-4955-8fc4-57fce54c84d5",
+        "name": "Multicast",
+        "description": "Supports address distribution for multicast groups (224.0.0.0/4).",
+        "enabled": false
       },
       {
-        "itemName": "example4.domain.com",
-        "itemCreated": "2024-12-13T10:45:43Z",
-        "itemUpdated": "2024-12-15T10:45:43Z",
-        "itemAuthor": "qwerty-01",
-        "itemModified": "qwerty-01",
-        "itemType": "Host",
-        "id": "2a2e8a82-0cb3-40b6-a216-150be583695f"
+        "type": "superscope",
+        "id": "b5e0a5a0-0e9e-4e64-bf3f-28519a65b05c",
+        "name": "SuperScope",
+        "description": "Groups multiple scopes for logical or overlapping network management.",
+        "enabled": true
       },
       {
-        "itemName": "example5.domain.com",
-        "itemCreated": "2024-12-14T10:45:43Z",
-        "itemUpdated": "2024-12-17T10:45:43Z",
-        "itemAuthor": "qwerty-01",
-        "itemModified": "qwerty-01",
-        "itemType": "File",
-        "id": "5235a640-4250-482b-8184-e0da17b6cb63"
+        "type": "reserved",
+        "id": "01b34e37-73f1-4a50-8dd9-d76b87a9c2e7",
+        "name": "Reserved",
+        "description": "IP addresses manually mapped to specific MAC addresses.",
+        "enabled": true
       },
       {
-        "itemName": "example6.domain.com",
-        "itemCreated": "2024-12-15T10:45:43Z",
-        "itemUpdated": "2024-12-16T10:45:43Z",
-        "itemAuthor": "bravo-03",
-        "itemModified": "qwerty-01",
-        "itemType": "Host",
-        "id": "2f486acc-45f5-4643-be75-643d019fef12"
+        "type": "loopback",
+        "id": "c8f0f810-28df-4c49-9d89-3a7069b76fd0",
+        "name": "Loopback",
+        "description": "127.0.0.1 range. Typically excluded from DHCP but may be reported.",
+        "enabled": false
       },
       {
-        "itemName": "example7.domain.com",
-        "itemCreated": "2024-12-16T10:45:43Z",
-        "itemUpdated": "2024-12-21T10:45:43Z",
-        "itemAuthor": "bravo-03",
-        "itemModified": "delta-04",
-        "itemType": "IP",
-        "id": "20e393cd-0151-4b09-8c9b-1d67bc045aad"
+        "type": "dhcpv6",
+        "id": "ea8595d5-92a3-4e51-a837-fac2e9fd8355",
+        "name": "DHCPv6",
+        "description": "IPv6 stateful scope for client address assignment.",
+        "enabled": false
       },
       {
-        "itemName": "example8.domain.com",
-        "itemCreated": "2024-12-17T10:45:43Z",
-        "itemUpdated": "2024-12-22T10:45:43Z",
-        "itemAuthor": "alpha-02",
-        "itemModified": "qwerty-01",
-        "itemType": "Host",
-        "id": "961fe8af-b0cc-4274-98ba-413454a29c6f"
+        "type": "linklocal",
+        "id": "4a23bc26-43f0-4729-bfd4-8b4a6931170a",
+        "name": "Link-Local",
+        "description": "Self-assigned addresses in 169.254.0.0/16. Often excluded from scopes.",
+        "enabled": false
       },
       {
-        "itemName": "example9.domain.com",
-        "itemCreated": "2024-12-18T10:45:43Z",
-        "itemUpdated": "2024-12-19T10:45:43Z",
-        "itemAuthor": "bravo-03",
-        "itemModified": "alpha-02",
-        "itemType": "URL",
-        "id": "6c96dadc-8e5f-4d0c-995d-04accb06fdbb"
+        "type": "failover",
+        "id": "37f199d0-77db-4477-a98d-c37290cb47b2",
+        "name": "Failover Scope",
+        "description": "Used in high-availability DHCP server pair configurations.",
+        "enabled": true
       },
       {
-        "itemName": "example10.domain.com",
-        "itemCreated": "2024-12-19T10:45:43Z",
-        "itemUpdated": "2024-12-24T10:45:43Z",
-        "itemAuthor": "alpha-02",
-        "itemModified": "delta-04",
-        "itemType": "IP",
-        "id": "7eb35306-c534-4e8d-9926-70f64f43ac67"
+        "type": "excluded",
+        "id": "8f87081b-c1f8-4604-b4ed-53ed6db345c0",
+        "name": "Excluded Ranges",
+        "description": "IPs within a scope that should never be leased.",
+        "enabled": true
+      },
+      {
+        "type": "relay",
+        "id": "d39be6f3-2100-45cf-9312-177b0d7c7ef8",
+        "name": "Relay",
+        "description": "Used when DHCP is relayed across subnets or routers.",
+        "enabled": true
+      },
+      {
+        "type": "guest",
+        "id": "1c108ffe-2d8c-43d9-a8fa-f5f4908c9e20",
+        "name": "Guest",
+        "description": "Temporary or isolated client networks with limited access.",
+        "enabled": true
+      },
+      {
+        "type": "infrastructure",
+        "id": "1d3f1f12-843c-4fd4-b038-e6e9c5ccfa47",
+        "name": "Infrastructure",
+        "description": "Scopes for switches, routers, APs, and other backbone devices.",
+        "enabled": true
+      },
+      {
+        "type": "voip",
+        "id": "fe21c2db-5f0a-45e0-9a68-7d1d83b8f6bc",
+        "name": "VoIP Phones",
+        "description": "Reserved for IP phones with specific QoS/lease requirements.",
+        "enabled": false
+      },
+      {
+        "type": "iot",
+        "id": "ba7a1179-d9b8-48d6-9e2e-e64fc58ff09b",
+        "name": "IoT Devices",
+        "description": "Used for smart devices, typically segregated for security.",
+        "enabled": true
+      },
+      {
+        "type": "lab",
+        "id": "f8f37827-dbb0-4f29-b6f3-bdb4a60bfae9",
+        "name": "Lab/Test",
+        "description": "DHCP scopes for test networks and staging environments.",
+        "enabled": false
       }
     ]
   }
