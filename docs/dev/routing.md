@@ -1,39 +1,61 @@
-# D7460N Developer Guide: Routing
+# Developer Guide: Routing
 
 ## Goal
 
-Navigation in D7460N is handled using native HTML inputs (`<input type="radio">`) and CSS `:has()` logic. This enables view switching in a Single Page App without JavaScript or hash/URL routing.
+Navigation is handled using native HTML inputs (`<input type="radio">`) and CSS `:has()` logic. This enables view switching in a Single Page App without JavaScript or hash/URL routing.
+
+`#`hash rounting is a native browser feature for "deep linking" or "within document linking".<br>
+[HTML Deep Linking: A Comprehensive Guide](https://www.byteplus.com/en/topic/496693?title=html-deep-link-a-comprehensive-guide)
 
 ---
 
-## Pattern
+## Navigation Pattern
 
 ```html
 <nav>
   <details open>
-    <summary>Tabs</summary>
+    <summary>Scope</summary>
     <label><input type="radio" name="nav" checked>Manage</label>
     <label><input type="radio" name="nav">FAQs</label>
+  </details>
+  <details open>
+    <summary>Admin</summary>
+    <label><input type="radio" name="nav" checked>API Registration</label>
+    <label><input type="radio" name="nav">Audit</label>
   </details>
 </nav>
 
 <main>
   <article>...</article>
-  <article hidden>...</article>
+  <aside hidden>...</aside>
 </main>
 ```
 
+## Data Logic (JS Only)
+
+Page init `oninput` fetches and dynamically generates `<label>`s for each key and injects them with radio `<input>`s and the `value` for each `<label>`.
+
+Example:
+```html
+<label>   <-- JSON key
+  Manage  <-- JSON value
+  <input type="radio" name="nav" checked>
+</label>
+```
+
+
 ## Visibility Logic (CSS Only)
 
+- CSS is presetup to watch for this HTML pattern and use the `<label>` `oninput` event to fectch page content.
+- When certain elements are populated with content, their parent wrapper element is rendered.
+
 ```css
-main article {
-  display: none;
-}
-nav:has(input:nth-of-type(1):checked) ~ main article:nth-of-type(1) {
-  display: block;
-}
-nav:has(input:nth-of-type(2):checked) ~ main article:nth-of-type(2) {
-  display: block;
+article {
+  display: none;      <-- Hidden by default
+
+  &:has(h1:not(:empty)) {
+    display: grid;    <-- Show when not empty
+  }
 }
 ```
 
@@ -41,11 +63,38 @@ nav:has(input:nth-of-type(2):checked) ~ main article:nth-of-type(2) {
 - It then reveals the corresponding article in `<main>`
 - No JavaScript is used to toggle views
 
-## Notes
+## Loading State
 
-- Articles must match the order of radio inputs
-- This model supports true SPA tab behavior
-- Works with screen readers (no JS required)
+- Allows for a natural `loading data` state between when the data is fetched (user initiated `oninput` event), and when the data arives in the targeted DOM element.
+- CSS shows a loading indicator between two booleans states.
+
+```css
+       ___Loading element
+      |
+      v
+loading-data {
+  display: none;
+}           ^
+            |
+            Hidden by default
+
+
+ [ Boolean state 1 ]                  [ Boolean state 2 ]
+
+ If this is true      AND...          this is true...
+      |                |                |
+      v                v                v
+nav:has(input:checked) ~ loading-data:has(+ main article h1:empty) {
+  display: block;               ^
+}            ^                  |
+             |                  |
+      Then show...         ...this.
+```
+
+- This same hide/show pattern is used repeatedly for almost everything
+- This model adhears to Single Page Application (SPA) tab behavior
+- Works with screen readers
+- No JS required
 
 ## Related
 - `layout.md` - layout regions and structure
