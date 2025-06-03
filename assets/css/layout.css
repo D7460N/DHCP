@@ -440,13 +440,13 @@ app-container {
             cursor: pointer;
 
             &:hover {
-              background-color: rgba(var(--bg-active-color), 0.05);
+              background-color: rgba(from currentcolor r g b / 0.05);
               color: rgba(var(--txt-active), 1.0);
             }
 
             /* Active/checked state */
             &:has(input:checked) {
-              background-color: rgba(var(--bg-active-color), 0.05);
+              background-color: rgba(from currentcolor r g b / 0.05);
               color: rgba(var(--txt-active), 1);
             }
 
