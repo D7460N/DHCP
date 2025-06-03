@@ -108,7 +108,7 @@ html::before {
   z-index: -10;
   height: 100dvh;
   background-color: rgba(var(--bg-02-color), var(--bg-02-opacity));
-  background-image: url('../images/brand/logo.svg');
+  background-image: url('../images/brand/logos/logo.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: inherit; */
