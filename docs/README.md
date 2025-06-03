@@ -25,7 +25,7 @@ This scaffold outlines a modular presentation deck suitable for clients, custome
 
 | Value Area      | Outcome                             |
 |-----------------|--------------------------------------|
-| Speed           | <.14s paint, no hydration delays     |
+| Speed           | < `.12s` paint, no hydration delays     |
 | Security        | Minimal JS, low surface              |
 | Accessibility   | No dependencies, screen-reader ready |
 | Flexibility      | Works with any backend/API           |
