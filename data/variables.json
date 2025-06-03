@@ -1,7 +1,86 @@
 [
   {
-    "id": "880baad4-b7b5-4629-b2c4-9862617ca1b7",
+    "id": "880baad4-b7b5-4629-b2c4-9862617ca111",
     "title": "Variables",
-    "intro": "Custom variables available to DHCP scripts and automation."
+    "intro": "Custom variables available to DHCP scripts and automation.",
+    "items": [
+      {
+        "id": "01",
+        "name": "lease_time",
+        "value": "86400",
+        "description": "Default DHCP lease time (seconds)",
+        "type": "integer"
+      },
+      {
+        "id": "02",
+        "name": "max_lease_time",
+        "value": "172800",
+        "description": "Maximum allowed DHCP lease time (seconds)",
+        "type": "integer"
+      },
+      {
+        "id": "03",
+        "name": "default_gateway",
+        "value": "192.168.1.1",
+        "description": "Default gateway for DHCP clients",
+        "type": "ipv4"
+      },
+      {
+        "id": "04",
+        "name": "dns_primary",
+        "value": "8.8.8.8",
+        "description": "Primary DNS server address",
+        "type": "ipv4"
+      },
+      {
+        "id": "05",
+        "name": "dns_secondary",
+        "value": "8.8.4.4",
+        "description": "Secondary DNS server address",
+        "type": "ipv4"
+      },
+      {
+        "id": "06",
+        "name": "domain_name",
+        "value": "example.com",
+        "description": "Domain name assigned to DHCP clients",
+        "type": "string"
+      },
+      {
+        "id": "07",
+        "name": "ntp_server",
+        "value": "time.example.com",
+        "description": "NTP server for client time synchronization",
+        "type": "string"
+      },
+      {
+        "id": "08",
+        "name": "subnet_mask",
+        "value": "255.255.255.0",
+        "description": "Subnet mask for DHCP clients",
+        "type": "ipv4"
+      },
+      {
+        "id": "09",
+        "name": "wins_server",
+        "value": "192.168.1.10",
+        "description": "WINS server address",
+        "type": "ipv4"
+      },
+      {
+        "id": "10",
+        "name": "dhcp_range_start",
+        "value": "192.168.1.100",
+        "description": "Start of the DHCP address pool",
+        "type": "ipv4"
+      },
+      {
+        "id": "11",
+        "name": "dhcp_range_end",
+        "value": "192.168.1.200",
+        "description": "End of the DHCP address pool",
+        "type": "ipv4"
+      }
+    ]
   }
 ]

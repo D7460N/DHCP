@@ -37,12 +37,12 @@
           <a href="/" aria-label="Go to D7460N Architecture Home">D7460N Architecture</a>
         </app-logo>
         <label>
+          Layouts
           <input type="checkbox" checked />
-          <demo-buttons>Layouts</demo-buttons>
         </label>
         <label>
+          &#9788;
           <input type="checkbox" />
-          <demo-buttons>&#9788;</demo-buttons>
         </label>
       </header>
       <nav>
@@ -60,10 +60,14 @@
         <article>
           <h1></h1>
           <p></p>
+          <button type="button" aria-label="Add new item">
+            New Item
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+              <path d="M12 8v8m-4-4h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </button>
           <hr />
-          <p>
-            <button type="button">New Item</button>
-          </p>
           <input type="search" placeholder="Filter by name..." name="filter" />
           <ul aria-hidden="true">
             <li></li>
