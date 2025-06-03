@@ -59,6 +59,6 @@ Yes. It is modular, declarative, and built for growth — without increasing com
 
 ## Need More?
 
-See the [Developer Guide](../docs/dev/index.md) or request a demo with working examples.
+See the [Developer Guide](../dev/index.md) or request a demo with working examples.
 
 > This architecture helps teams ship faster, stay compliant, and reduce long-term risk — using only the capabilities already built into every modern browser.
