@@ -2,7 +2,7 @@
 
 ## Holy Grail Grid (Full-Bleed - Edge to Edge)
 
-All D7460N apps begin with a single root wrapper:
+Starts with a single root wrapper:
 
 ```html
 <app-container>
