@@ -12,7 +12,6 @@ Central location for internal resources, architecture notes, and developer onboa
 | `accessibility.md` | WCAG compliance notes and test scripts      |
 | `/docs/customer`   | Customer presentation decks (PPT, PDF, etc.)|
 | `/docs/client`     | Client presentation decks (PPT, PDF, etc.)  |
-| `/architecture/`   | Visual diagrams and flowcharts              |
 
 ## Style Guide
 
