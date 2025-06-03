@@ -14,8 +14,8 @@ This architecture emphasizes native browser capabilities to reduce load time, me
 
 ### Benchmarked Wins
 
-- **First Meaningful Paint**: < 0.12s on cold mobile
-- **Total Transfer Size**: < 100KB with full styles + content
+- **First Meaningful Paint**: < `0.12s` on cold mobile
+- **Total Transfer Size**: < `100KB` with full styles + content
 - **Time to Interactive**: immediate, even with data injection
 
 ---
