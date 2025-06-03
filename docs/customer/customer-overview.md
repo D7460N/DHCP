@@ -1,15 +1,15 @@
-# D7460N Customer Overview: Architecture at a Glance
+# Customer Overview: Architecture at a Glance
 
-This document is for non-technical decision-makers, product owners, and business stakeholders who need to understand what the D7460N architecture offers in terms of value, cost control, and future readiness.
+This document is for decision-makers, product owners, and business stakeholders who are interested in what the architecture offers in terms of value, cost control, and future readiness.
 
 ---
 
 ## What It Is
 
-D7460N is a front-end web architecture designed to reduce project complexity, cost, and delivery time — while improving accessibility, security, and performance.
+This is a front-end web architecture designed to reduce project complexity, cost, and delivery time — while improving accessibility, security, and performance.
 
-- It uses only native browser features — no frameworks, no runtime dependencies
-- Built with HTML, CSS, and JavaScript (data-only, no scripting for UI)
+- It uses only native browser features — no frameworks necessary, no runtime dependencies needed
+- Built with HTML (structure), CSS (heuristics), and JavaScript (data)
 - Designed for government, accessibility, and security requirements from the ground up
 
 ---
@@ -29,7 +29,7 @@ D7460N is a front-end web architecture designed to reduce project complexity, co
 
 ## Key Metrics (Typical Deployment)
 
-- ✅ **First Paint**: under 1.5s (mobile 3G tested)
+- ✅ **Largest Contentful Paint (LCP)**: under 0.12s (typical network conditions)
 - ✅ **Total Payload**: < 100 KB
 - ✅ **Time to Interactive**: immediate on load
 - ✅ **Accessibility**: 100% Lighthouse a11y compliance, no JS required
@@ -59,6 +59,6 @@ Yes. It is modular, declarative, and built for growth — without increasing com
 
 ## Need More?
 
-See the [D7460N Developer Guide](../d7460n-dev-guide/index.md) or request a demo with working examples.
+See the [Developer Guide](../docs/dev/index.md) or request a demo with working examples.
 
 > This architecture helps teams ship faster, stay compliant, and reduce long-term risk — using only the capabilities already built into every modern browser.
