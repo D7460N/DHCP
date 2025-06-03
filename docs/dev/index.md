@@ -22,7 +22,6 @@ Welcome to the developer implementation guide for the architecture. This guide i
 - [`data.md`](data.md) - JSON structure and fetch logic
 - [`performance.md`](performance.md) - Why this approach loads faster
 - [`accessibility.md`](accessibility.md) - How it passes WCAG/508 without JS
-- [`comparison.md`](comparison.md) - How it maps to tasks in React/Vue (no opinions, just parity)
 
 ---
 
