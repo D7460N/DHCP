@@ -79,7 +79,7 @@ loading-data {
             Hidden by default
 
 
- 
+
  If this is true      AND...          this is true...
       |                |                |
       v                v                v

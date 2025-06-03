@@ -1,6 +1,6 @@
-# D7460N Developer Guide: Index
+# Developer Guide: Index
 
-Welcome to the developer implementation guide for the D7460N architecture. This guide is designed for fast, practical onboarding. It assumes no build tools, no frameworks, and no prior exposure to the architecture.
+Welcome to the developer implementation guide for the architecture. This guide is designed for fast, practical onboarding. It assumes no build tools, no frameworks, and no prior exposure to the architecture.
 
 ---
 

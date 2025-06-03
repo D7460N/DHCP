@@ -1,8 +1,8 @@
-# D7460N Developer Guide: Performance
+# Developer Guide: Performance
 
 ## Architectural Performance Goals
 
-D7460N emphasizes native browser capabilities to reduce load time, memory usage, and runtime dependencies. The architecture avoids JS frameworks, build steps, and virtual DOM overhead.
+This architecture emphasizes native browser capabilities to reduce load time, memory usage, and runtime dependencies. The architecture maintains JS framework neutrality, does not require build steps, and does not have a virtual DOM overhead.
 
 ---
 

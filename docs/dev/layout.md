@@ -1,6 +1,6 @@
-# D7460N Developer Guide: Layout
+# Developer Guide: Layout
 
-## Holy Grail Grid (Full-Bleed)
+## Holy Grail Grid (Full-Bleed - Edge to Edge)
 
 All D7460N apps begin with a single root wrapper:
 

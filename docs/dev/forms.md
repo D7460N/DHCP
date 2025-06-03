@@ -1,4 +1,4 @@
-# D7460N Developer Guide: Forms
+# Developer Guide: Forms
 
 ## Form Structure
 

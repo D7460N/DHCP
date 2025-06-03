@@ -1,4 +1,4 @@
-# D7460N Developer Guide: Accessibility
+# Developer Guide: Accessibility (A11y)
 
 ## Design Assumptions
 

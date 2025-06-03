@@ -1,4 +1,4 @@
-# D7460N Developer Guide: Data
+# Developer Guide: Data
 
 ## Data Model
 
