@@ -79,8 +79,7 @@ loading-data {
             Hidden by default
 
 
- [ Boolean state 1 ]                  [ Boolean state 2 ]
-
+ 
  If this is true      AND...          this is true...
       |                |                |
       v                v                v
