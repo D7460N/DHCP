@@ -1,11 +1,11 @@
 [
   {
-    "id": "fe5d3721-3005-4e95-8410-551dfd60b606",
+    "id": "8410-551dfd60b606",
     "title": "Option Set",
     "intro": "A set of DHCP options grouped for common configurations.",
     "items": [
       {
-        "id": "d9a84ec6-7d1f-4fcb-b3a5-0f896ec6c412",
+        "id": "b3a5-0f896ec6c412",
         "type": "default-router",
         "name": "Default Router",
         "description": "Specifies the default gateway for clients.",
@@ -14,7 +14,7 @@
         ]
       },
       {
-        "id": "ac5db3e2-1e7d-4e55-88a1-c6dbe927abc5",
+        "id": "88a1-c6dbe927abc5",
         "type": "dns-basic",
         "name": "DNS Basic",
         "description": "Assigns DNS server and domain search suffix.",
@@ -24,7 +24,7 @@
         ]
       },
       {
-        "id": "f55b1e19-2a3d-4e1a-9d59-f8896be13c39",
+        "id": "9d59-f8896be13c39",
         "type": "ntp-servers",
         "name": "NTP Servers",
         "description": "Provides Network Time Protocol server addresses.",
@@ -33,7 +33,7 @@
         ]
       },
       {
-        "id": "ea75b82a-62f6-4ad4-a3d2-63cfed99a6ae",
+        "id": "a3d2-63cfed99a6ae",
         "type": "voip-config",
         "name": "VoIP Phone Config",
         "description": "Options typically used for VoIP phone provisioning.",
@@ -44,7 +44,7 @@
         ]
       },
       {
-        "id": "5fe7a7a5-bef0-4b47-8c1b-c77db4b99f88",
+        "id": "8c1b-c77db4b99f88",
         "type": "pxe-boot",
         "name": "PXE Boot",
         "description": "Options used for network boot (PXE).",
@@ -54,7 +54,7 @@
         ]
       },
       {
-        "id": "70e0b5a9-67be-44aa-8044-f508cbf45d0b",
+        "id": "8044-f508cbf45d0b",
         "type": "wpad-config",
         "name": "WPAD Auto Proxy",
         "description": "Specifies URL for Web Proxy Auto Discovery.",
@@ -63,7 +63,7 @@
         ]
       },
       {
-        "id": "cd1cc4a5-0e1c-4b14-97b9-0e0117fd3c10",
+        "id": "97b9-0e0117fd3c10",
         "type": "vpn-profile",
         "name": "VPN Profile",
         "description": "Provides custom options used by VPN clients (e.g., DNS split, routing hints).",
@@ -73,7 +73,7 @@
         ]
       },
       {
-        "id": "e91d3f4f-83a1-4179-a42b-1ebc9fc20ad1",
+        "id": "a42b-1ebc9fc20ad1",
         "type": "guest-isolation",
         "name": "Guest Isolation",
         "description": "Restricts DHCP lease to non-routable guests (e.g., DNS only).",
@@ -82,7 +82,7 @@
         ]
       },
       {
-        "id": "9f275d88-7ab2-43a6-93d1-56f69ab381f9",
+        "id": "93d1-56f69ab381f9",
         "type": "empty-set",
         "name": "Blank Template",
         "description": "No options defined. Start from scratch.",

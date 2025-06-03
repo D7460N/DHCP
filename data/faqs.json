@@ -1,61 +1,61 @@
 [
   {
-    "id": "98ac2178-01ce-471d-9bz57-d7c2e4b9d0505050505",
+    "id": "001",
     "title": "Frequently Asked Questions",
     "intro": "Common questions and answers about the DHCP system.",
     "items": [
       {
-        "id": "98ac2178-01ce-471d-9bz57-d7c2e4b9d050505050501",
+        "id": "002",
         "question": "What is DHCP?",
         "answer": "DHCP (Dynamic Host Configuration Protocol) is a network service that automatically assigns IP addresses and related configuration to devices on a network."
       },
       {
-        "id": "98ac2178-01ce-471d-9bz57-d7c2e4b9d050505050502",
+        "id": "003",
         "question": "What is a DHCP scope?",
         "answer": "A DHCP scope defines a pool of IP addresses that the server can lease to clients on a subnet."
       },
       {
-        "id": "98ac2178-01ce-471d-9bz57-d7c2e4b9d050505050503",
+        "id": "004",
         "question": "Can multiple DHCP servers exist on the same subnet?",
         "answer": "Yes, but they must be configured to avoid IP range overlaps to prevent conflicts."
       },
       {
-        "id": "98ac2178-01ce-471d-9bz57-d7c2e4b9d050505050504",
+        "id": "005",
         "question": "How can I reserve an IP address for a device?",
         "answer": "Create a reservation by binding the device's MAC address to a specific IP in the DHCP configuration."
       },
       {
-        "id": "98ac2178-01ce-471d-9bz57-d7c2e4b9d050505050505",
+        "id": "006",
         "question": "What happens if a DHCP server goes offline?",
         "answer": "Clients retain their lease until expiration. Backup or failover servers should take over if configured."
       },
       {
-        "id": "98ac2178-01ce-471d-9bz57-d7c2e4b9d050505050506",
+        "id": "007",
         "question": "Can I assign static IPs with DHCP?",
         "answer": "Yes, use DHCP reservations to assign static IPs while still using DHCP for management."
       },
       {
-        "id": "98ac2178-01ce-471d-9bz57-d7c2e4b9d050505050507",
+        "id": "008",
         "question": "What is DHCP lease time?",
         "answer": "Lease time is how long a client can use an assigned IP before it must renew or release it."
       },
       {
-        "id": "98ac2178-01ce-471d-9bz57-d7c2e4b9d050505050508",
+        "id": "009",
         "question": "How do I see currently leased IPs?",
         "answer": "Use the admin interface or query the DHCP lease database or logs, depending on your server OS."
       },
       {
-        "id": "98ac2178-01ce-471d-9bz57-d7c2e4b9d050505050509",
+        "id": "0010",
         "question": "Can I exclude specific IPs from a DHCP range?",
         "answer": "Yes, most DHCP servers allow IP exclusions to prevent leasing of certain addresses."
       },
       {
-        "id": "98ac2178-01ce-471d-9bz57-d7c2e4b9d050505050510",
+        "id": "011",
         "question": "How do I audit DHCP activity?",
         "answer": "Enable logging on the server and regularly review lease logs, reservations, and event logs."
       },
       {
-        "id": "98ac2178-01ce-471d-9bz57-d7c2e4b9d050505050511",
+        "id": "012",
         "question": "Is it safe to run DHCP over VPN or WAN links?",
         "answer": "Use DHCP relay or IP helpers to manage scope routing securely across subnets."
       }

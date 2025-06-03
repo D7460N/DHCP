@@ -1,12 +1,12 @@
 [
   {
-    "id": "6d69aea7-d23e-4a7d-bc86-a86d1a399002",
+    "id": "a86d1a399002",
     "title": "API Registration",
     "intro": "Register and manage API integrations.",
     "items": [
       {
-        "id": "d5c3f58c-1559-43d1-ab28-2b5df1322f88",
-        "itemName": "example1.domain.com",
+        "id": "2b5df1322f88",
+        "itemName": "example1.com",
         "itemCreated": "2024-12-10T10:45:43Z",
         "itemUpdated": "2024-12-14T10:45:43Z",
         "itemAuthor": "alpha-02",
@@ -14,8 +14,8 @@
         "itemType": "Service"
       },
       {
-        "id": "d6251578-9f90-4fba-9109-32223a8b332f",
-        "itemName": "example2.domain.com",
+        "id": "32223a8b332f",
+        "itemName": "example2.com",
         "itemCreated": "2024-12-11T10:45:43Z",
         "itemUpdated": "2024-12-16T10:45:43Z",
         "itemAuthor": "delta-04",
@@ -23,8 +23,8 @@
         "itemType": "IP"
       },
       {
-        "id": "d7db4801-03fc-4383-bc8e-787b2e3ed059",
-        "itemName": "example3.domain.com",
+        "id": "787b2e3ed059",
+        "itemName": "example3.com",
         "itemCreated": "2024-12-12T10:45:43Z",
         "itemUpdated": "2024-12-17T10:45:43Z",
         "itemAuthor": "delta-04",
@@ -32,8 +32,8 @@
         "itemType": "URL"
       },
       {
-        "id": "2a2e8a82-0cb3-40b6-a216-150be583695f",
-        "itemName": "example4.domain.com",
+        "id": "150be583695f",
+        "itemName": "example4.com",
         "itemCreated": "2024-12-13T10:45:43Z",
         "itemUpdated": "2024-12-15T10:45:43Z",
         "itemAuthor": "qwerty-01",
@@ -41,8 +41,8 @@
         "itemType": "Host"
       },
       {
-        "id": "5235a640-4250-482b-8184-e0da17b6cb63",
-        "itemName": "example5.domain.com",
+        "id": "e0da17b6cb63",
+        "itemName": "example5.com",
         "itemCreated": "2024-12-14T10:45:43Z",
         "itemUpdated": "2024-12-17T10:45:43Z",
         "itemAuthor": "qwerty-01",
@@ -50,8 +50,8 @@
         "itemType": "File"
       },
       {
-        "id": "2f486acc-45f5-4643-be75-643d019fef12",
-        "itemName": "example6.domain.com",
+        "id": "643d019fef12",
+        "itemName": "example6.com",
         "itemCreated": "2024-12-15T10:45:43Z",
         "itemUpdated": "2024-12-16T10:45:43Z",
         "itemAuthor": "bravo-03",
@@ -59,8 +59,8 @@
         "itemType": "Host"
       },
       {
-        "id": "20e393cd-0151-4b09-8c9b-1d67bc045aad",
-        "itemName": "example7.domain.com",
+        "id": "1d67bc045aad",
+        "itemName": "example7.com",
         "itemCreated": "2024-12-16T10:45:43Z",
         "itemUpdated": "2024-12-21T10:45:43Z",
         "itemAuthor": "bravo-03",
@@ -68,8 +68,8 @@
         "itemType": "IP"
       },
       {
-        "id": "961fe8af-b0cc-4274-98ba-413454a29c6f",
-        "itemName": "example8.domain.com",
+        "id": "413454a29c6f",
+        "itemName": "example8.com",
         "itemCreated": "2024-12-17T10:45:43Z",
         "itemUpdated": "2024-12-22T10:45:43Z",
         "itemAuthor": "alpha-02",
@@ -77,8 +77,8 @@
         "itemType": "Host"
       },
       {
-        "id": "6c96dadc-8e5f-4d0c-995d-04accb06fdbb",
-        "itemName": "example9.domain.com",
+        "id": "04accb06fdbb",
+        "itemName": "example9.com",
         "itemCreated": "2024-12-18T10:45:43Z",
         "itemUpdated": "2024-12-19T10:45:43Z",
         "itemAuthor": "bravo-03",
@@ -86,8 +86,8 @@
         "itemType": "URL"
       },
       {
-        "id": "7eb35306-c534-4e8d-9926-70f64f43ac67",
-        "itemName": "example10.domain.com",
+        "id": "70f64f43ac67",
+        "itemName": "example10.com",
         "itemCreated": "2024-12-19T10:45:43Z",
         "itemUpdated": "2024-12-24T10:45:43Z",
         "itemAuthor": "alpha-02",
