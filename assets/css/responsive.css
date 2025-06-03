@@ -1,11 +1,7 @@
 /* MARK: RESPONSIVE
 */
 /* @media (width <=600px) {
-  header label:first-of-type demo-buttons {
+  header label:first-of-type button {
     display: none;
   }
 } */
-
-header label:first-of-type {
-    display: none;
-  }
