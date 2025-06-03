@@ -4,14 +4,15 @@
 
 Central location for internal resources, architecture notes, and developer onboarding.
 
-## Subfolders (expected)
+## Files (expected)
 
-| Folder             | Content                                     |
+| Files              | Content                                     |
 |--------------------|---------------------------------------------|
-| `/dev/`             | Developer onboarding, coding standards       |
-| `/accessibility/`   | WCAG compliance notes and test scripts       |
-| `/slides/`          | Presentation decks (PPT, PDF, etc.)          |
-| `/architecture/`    | Visual diagrams and flowcharts              |
+| `index.md`         | Developer onboarding, coding standards      |
+| `accessibility.md` | WCAG compliance notes and test scripts      |
+| `/docs/customer`   | Customer presentation decks (PPT, PDF, etc.)|
+| `/docs/client`     | Client presentation decks (PPT, PDF, etc.)  |
+| `/architecture/`   | Visual diagrams and flowcharts              |
 
 ## Style Guide
 
