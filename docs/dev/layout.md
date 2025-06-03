@@ -26,38 +26,32 @@ overflow: hidden;
   <nav>
   <main>
     <article>
-      <section>
-    </article>
   <aside>
   <footer>
 ```
 
-- **Header**: branding, account switcher
-- **Nav**: radio-based navigation tabs
-- **Main**: the central scrollable content
+- **Header**: banner, branding, UI controls, account name
+- **Nav**: radio-input-based navigation tabs
+- **Main**: central scrollable content
 - **Aside**: CSS-toggled detail panel
-- **Footer**: version, copyright
+- **Footer**: version, copyright, social
 
-## Scroll Containment Rules
+## Scroll Containment
 
-- Only one element scrolls: `<section>` inside `<article>`
-- All parent containers must use `overflow: hidden`
-- Scrollbar styling is optional but scoped
+- Only the parent of the list scrolls: `<ul>` inside `<fieldset>`
+- All ancestor containers must use `overflow: hidden`
+- Scrollbar styling is scoped
 
-## Flat DOM Required
+## Minimally Nested DOM
 
-- Avoid wrapper `<div>`s
+- Performent
+- Avoid semantically meaningless wrappers such as `<div>`s or `<spans>`
 - Use semantic tags only
-- Minimize depth to ensure clean selector logic (e.g. for `:has()`)
+- Minimize conditionals with long paths to avoid brittleness. (e.g. for `:has()`)
 
-## Intrinsic Layout Enforcement
+## Intrinsic Layout
 
-- Padding and margin go on the data element (e.g. `<p>`, `<h2>`) not on containers
-- Layout resizes based on content; no fixed heights (except `app-container`)
+- Padding and margin are on data elements (e.g. `<label>`, `<p>`, `<h2>`) not on containers
+- Layout resizes based on content; no fixed heights or widths (except `app-container`)
+- Allow the browser to do all the work
 - Scroll logic is never scripted
-
-## Related
-
-- `/layout/README.md`
-- `styles/readme.md`
-- `forms.md` - how forms fit into layout
