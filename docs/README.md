@@ -1,4 +1,4 @@
-# D7460N Slide Deck Outline
+# Slide Deck Outline
 
 (For Presentation Export)
 
@@ -8,7 +8,7 @@ This scaffold outlines a modular presentation deck suitable for clients, custome
 
 ## Slide 1: Title & Context
 
-- **Title**: D7460N: Native Architecture for Web Interfaces
+- **Title**: Native Architecture for Web Interfaces
 - **Subtitle**: Accessibility-first, framework-free, high performance
 - **Presented by**: [Your Name / Team / Role]
 
@@ -25,7 +25,7 @@ This scaffold outlines a modular presentation deck suitable for clients, custome
 
 | Value Area      | Outcome                             |
 |-----------------|--------------------------------------|
-| Speed           | <1.5s paint, no hydration delays     |
+| Speed           | <.14s paint, no hydration delays     |
 | Security        | Minimal JS, low surface              |
 | Accessibility   | No dependencies, screen-reader ready |
 | Flexibility      | Works with any backend/API           |
