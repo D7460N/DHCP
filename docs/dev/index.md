@@ -17,7 +17,6 @@ Welcome to the developer implementation guide for the architecture. This guide i
 ## Sections
 
 - [`layout.md`](layout.md) - How layout is scaffolded using Holy Grail pattern and scroll containment
-- [`components.md`](components.md) - Custom elements and how they're used for UI data binding
 - [`forms.md`](forms.md) - CSS-only validation and accessible forms
 - [`routing.md`](routing.md) - Navigation using radio buttons and `:has()`
 - [`data.md`](data.md) - JSON structure and fetch logic
