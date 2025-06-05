@@ -246,6 +246,19 @@ function hasUnsavedChanges() {
 	);
 }
 
+// === Load App Banner Text ===
+fetch(`${BASE_URL}app-banner`)
+  .then(res => res.json())
+  .then(([first]) => {
+    if (!first?.banner) return;
+    document.querySelectorAll('app-banner > p').forEach(p => {
+      p.textContent = first.banner;
+    });
+  })
+  .catch(err => console.error('Failed to load banner:', err));
+
+
+
 // Modal & UI Utilities
 function showModal({ title = '', message = '', buttons = [] }) {
 	// Displays a modal with a dynamic title, message, and configurable buttons.
@@ -536,46 +549,6 @@ function updateHeaderRow(sourceRow) {
 		// Append the formatted clone as a header column to the header list item
 		headerLi.appendChild(clone);
 	});
-}
-
-// MARK: OFF-LINE
-
-// Variables used to manage the offline status timer and its interval
-let offlineInterval; // Interval ID for offline status updates
-let offlineStartTime; // Timestamp when the offline state began
-
-// Set event handlers for detecting online/offline browser events
-window.ononline = updateOnlineStatus;
-window.onoffline = updateOnlineStatus;
-
-// Immediately invoke to set initial state upon page load
-updateOnlineStatus();
-
-// Function to handle updating UI based on current browser connectivity status
-function updateOnlineStatus() {
-	// Select the DOM element used to display offline status messages
-	const offlineMsg = document.querySelector('off-line p');
-
-	// Check the browser's online status
-	if (navigator.onLine) {
-		// Clear the interval timer if back online to stop updates
-		clearInterval(offlineInterval);
-
-		// Clear the offline message as connectivity is restored
-		offlineMsg.textContent = '';
-	} else {
-		// Record the exact time when the offline state began
-		offlineStartTime = Date.now();
-
-		// Start an interval timer to continuously update the offline duration message every second
-		offlineInterval = setInterval(() => {
-			// Calculate elapsed offline duration in seconds
-			const elapsedSec = Math.floor((Date.now() - offlineStartTime) / 1000);
-
-			// Update the offline message to reflect current offline duration
-			offlineMsg.textContent = `Offline [ (${elapsedSec}s elapsed) ]`;
-		}, 1000);
-	}
 }
 
 // Function to update ("mirror") input changes directly to the selected row's visual representation
