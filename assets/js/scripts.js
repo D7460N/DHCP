@@ -246,17 +246,31 @@ function hasUnsavedChanges() {
 	);
 }
 
-// === Load App Banner Text ===
-fetch(`${BASE_URL}app-banner`)
-  .then(res => res.json())
-  .then(([first]) => {
-    if (!first?.banner) return;
-    document.querySelectorAll('app-banner > p').forEach(p => {
-      p.textContent = first.banner;
-    });
-  })
-  .catch(err => console.error('Failed to load banner:', err));
+// MARK: BANNER
+async function loadBanner() {
+  try {
+    const res = await fetch(`${BASE_URL}app-banner`);
+    if (!res.ok) throw new Error(`STATUS ${res.status}`);
 
+    const [first] = await res.json();
+    const message = first?.banner?.trim();
+    const fallback = message || 'ℹ️ No banner message configured.';
+
+    document.querySelectorAll('app-banner > p').forEach(p => {
+      p.textContent = fallback;
+    });
+  } catch (err) {
+    const msg = err.message.startsWith('STATUS')
+      ? `⚠️ Server responded with code ${err.message.slice(7)}`
+      : `⚠️ Network error: Could not load banner`;
+
+    document.querySelectorAll('app-banner > p').forEach(p => {
+      p.textContent = msg;
+    });
+  }
+}
+
+loadBanner();
 
 
 // Modal & UI Utilities
@@ -278,9 +292,9 @@ function showModal({ title = '', message = '', buttons = [] }) {
 			btn.textContent = buttonData ? buttonData.label : '';
 			btn.onclick = buttonData
 				? () => {
-						clearModal();
-						resolve(buttonData.value);
-				  }
+					clearModal();
+					resolve(buttonData.value);
+				}
 				: null;
 		});
 
@@ -1046,9 +1060,9 @@ function confirmAction(message, { type = 'confirm' } = {}) {
 		buttons:
 			type === 'confirm'
 				? [
-						{ label: 'Yes', value: true }, // User confirms action
-						{ label: 'No', value: false }, // User declines action
-				  ]
+					{ label: 'Yes', value: true }, // User confirms action
+					{ label: 'No', value: false }, // User declines action
+				]
 				: [{ label: 'OK', value: true }], // Simple acknowledgment
 	};
 
