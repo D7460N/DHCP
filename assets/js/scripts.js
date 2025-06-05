@@ -247,30 +247,47 @@ function hasUnsavedChanges() {
 }
 
 // MARK: BANNER
-async function loadBanner() {
+async function loadAppBanner() {
   try {
+    // Send HTTP GET request to app-banner endpoint using BASE_URL prefix
     const res = await fetch(`${BASE_URL}app-banner`);
+
+    // If the response returns a non-successful HTTP status (e.g., 500), throw a structured error
     if (!res.ok) throw new Error(`STATUS ${res.status}`);
 
+    // Parse the JSON response and destructure to get the first array item (should contain .banner text)
     const [first] = await res.json();
+
+    // Trim the banner string (if it exists), or prepare a fallback if empty
     const message = first?.banner?.trim();
     const fallback = message || 'ℹ️ No banner message configured.';
 
+    // Locate all <p> elements that are direct children of <app-banner>
+    // Replace their textContent with the banner message or fallback
     document.querySelectorAll('app-banner > p').forEach(p => {
       p.textContent = fallback;
-    });
-  } catch (err) {
-    const msg = err.message.startsWith('STATUS')
-      ? `⚠️ Server responded with code ${err.message.slice(7)}`
-      : `⚠️ Network error: Could not load banner`;
 
+      // No need for data-error or classes; visual feedback is handled via structural CSS (e.g., :empty, :has())
+    });
+
+  } catch (err) {
+    // Determine error message based on the type of failure
+    const msg = err.message.startsWith('STATUS')
+      ? `⚠️ Server responded with code ${err.message.slice(7)}` // Slice removes 'STATUS ' prefix
+      : `⚠️ Network error: Could not load banner`; // Generic fallback if fetch or JSON parsing failed
+
+    // For each <app-banner><p>, display the error message inline
+    // Again: no class, no attributes, only structural content
     document.querySelectorAll('app-banner > p').forEach(p => {
       p.textContent = msg;
     });
   }
 }
 
-loadBanner();
+// === Always call explicitly ===
+// This ensures that the function is only executed when intended
+// No automatic invocation, no side effects — critical for D7460N plug-and-play architecture
+loadAppBanner();
 
 
 // Modal & UI Utilities
