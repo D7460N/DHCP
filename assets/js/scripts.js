@@ -284,9 +284,6 @@ async function loadAppBanner() {
   }
 }
 
-// === Always call explicitly ===
-// This ensures that the function is only executed when intended
-// No automatic invocation, no side effects — critical for D7460N plug-and-play architecture
 loadAppBanner();
 
 
