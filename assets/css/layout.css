@@ -95,11 +95,16 @@ app-container {
     }
   }
 
-  app-container > * {
-    background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
+  a {
+    color: rgba(var(--txt-link), 0.7);
+    text-decoration: none;
+    box-shadow: 0 1px 0 rgba(0, 255, 255, 0.0);
+
+    &:hover {
+      color: rgba(var(--txt-link), 1.0);
+      box-shadow: 0 1px 0 rgba(var(--txt-link), 1.0);
+    }
   }
-
-
 
 
 
@@ -305,6 +310,10 @@ app-container {
       /* Show when <aside><fieldset> is not empty */
     }
 
+    p {
+      /* margin-block-end: 1lh; */
+      padding: 0 1rem 1rem;
+    }
 
 
 
@@ -337,6 +346,11 @@ app-container {
         }
       }
 
+      hr {
+        margin: 1rem 0;
+        border: solid 0.0625rem rgba(0, 0, 0, 0.1);
+      }
+
       button {
         display: grid;
         grid-template-columns: auto auto;
@@ -356,6 +370,7 @@ app-container {
       p {
         display: none;
         /* Hide by default */
+        padding: 0 1rem 1rem;
 
         &:not(:empty) {
           display: grid;
@@ -429,7 +444,7 @@ app-container {
 
         /* MARK: UL TABLE BODY --------------------------------------------
       */
-        &+ul {
+        & + ul {
           overflow: overlay;
           position: relative;
           align-content: start;
@@ -647,39 +662,6 @@ app-container {
       z-index: -1;
     }
   }
-
-
-
-
-
-  /* MARK: OFF-LINE
-*/
-  /* off-line {
-  display: none; Hide by default
-  position: fixed;
-  padding: 1rem;
-  text-align: center;
-  color: red;
-  font-size: 2rem;
-  background-color: rgba(var(--input-bg-color), 0.3);
-  border: solid 0.0652rem red;
-  border-radius: 0.3rem;
-  width: 50%;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  overflow: hidden;
-  transition-delay: 1s;
-
-  &:has(p:not(:empty)) {
-    display: grid; Show when not empty */
-
-  /* p {
-      animation: fadeInOut 1s ease-in-out infinite alternate;
-    }
-  }
-} */
 }
 
 @container app-container (width > 50rem) {

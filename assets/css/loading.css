@@ -22,24 +22,26 @@ load-delay {
 /* Spinner: default hidden until triggered by li:checked */
 load-data {
   display: none;
+
+  /* Delay message (shown via ::after, not visible by default) */
+  &::after {
+    content: 'This is taking longer than expected…';
+    display: none;
+    /* suppressed until animation kicks in */
+    animation: delay-show 0s linear forwards;
+    animation-delay: 1.5s;
+    /* wait time before showing fallback */
+    font-size: 1rem;
+    color: rgba(var(--txt-color), 0.8);
+    text-align: center;
+    padding: 0.75rem 1.5rem;
+    background-color: rgba(var(--bg-panel-color), 0.9);
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
+  }
 }
 
-/* Delay message (shown via ::after, not visible by default) */
-load-delay::after {
-  content: 'This is taking longer than expected…';
-  display: none;
-  /* suppressed until animation kicks in */
-  animation: delay-show 0s linear forwards;
-  animation-delay: 1.5s;
-  /* wait time before showing fallback */
-  font-size: 1rem;
-  color: rgba(var(--txt-color), 0.8);
-  text-align: center;
-  padding: 0.75rem 1.5rem;
-  background-color: rgba(var(--bg-panel-color), 0.9);
-  border-radius: 0.5rem;
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
-}
+
 
 /* Keyframe to fade in fallback message */
 @keyframes delay-show {

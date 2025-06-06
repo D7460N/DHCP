@@ -1,86 +1,8 @@
 /* MARK: SCROLLBARS
 */
-/*
 
-*::-webkit-scrollbar {
-  display: block;
-  width: 1rem;
-}
-
-*::-webkit-scrollbar-button {
-  display: none;
-}
-
-*::-webkit-scrollbar-track {
-  background-color: rgba(var(--accent2), 1.0);
-}
-
-*::-webkit-scrollbar-track-piece {
-  background-color: rgba(var(--accent2), 0.0);
-}
-
-* {
-  --scrollbar-color: rgba(var(--accent2), 0.0);
-}
-
-*:hover,
-*:focus,
-*:focus-within {
-  --scrollbar-color: rgba(var(--bg-accent-color), var(--bg-accent-opacity)) !important;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: rgba(var(--accent2), 0.0);
-  border: 5px solid transparent;
-  border-radius: 1.5rem;
-  box-shadow: 0.25rem 0 0 0.25rem var(--scrollbar-color) inset;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scrollbar-color);
-  border: 0 solid transparent;
-  box-shadow: none;
-}
-
-
-  */
-
-/* MARK: FIREFOX
-*/
 /* Target elements, not :root{} */
 /* https://codeconvey.com/custom-scrollbar-css-for-all-browsers/ */
-/* fieldset,
-section {
-  scrollbar-color: rgba(var(--accent2), 0.0) rgba(var(--accent2), 0.0); */
-  /* Thumb and track color */
-  /* scrollbar-width: thin; */
-  /* Track width */
-/* }
-fieldset:hover,
-section:hover {
-  scrollbar-color: rgba(var(--accent2), 0.3) rgba(var(--accent2), 0.0);
-} */
-
-
-
-
-/* ::-webkit-scrollbar {
-  height: 6px;
-  background-color: none;
-}
-:hover::-webkit-scrollbar {
-  background-color: rgba(var(--accent2), 1.0);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: transparent;
-  border-radius:5px;
-}
-:hover::-webkit-scrollbar-thumb {
-  background-color: rgba(var(--accent2), 1.0);
-  border-radius:5px;
-} */
-
 nav details section,
 main article ul[aria-hidden="true"] + ul,
 aside form fieldset {
