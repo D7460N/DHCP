@@ -9,38 +9,14 @@
   --after-color: var(--after-color);
 }
 
-app-container {
-
-  /* https://codepen.io/una/pen/MWMmYxb?editors=1100 */
+article {
   select {
-    appearance: base-select;
-    display: grid;
-    font-family: inherit;
-    font-size: 100%;
-    border: 0.0625rem solid rgba(var(--input-border-color), 0.1);
+    border-color: rgba(var(--input-border-color), 0.1);
     width: fit-content;
     padding: .5rem 1rem;
     border-radius: var(--border-radius);
     background-color: rgba(var(--input-bg-color), 0.1);
     justify-self: end;
-
-    &::picker(select) {
-      appearance: base-select;
-    }
-
-
-    option {
-      font-family: inherit;
-      font-size: 100%;
-
-      &::checkmark {
-        display: none;
-      }
-    }
-
-    &::picker-icon {
-      display: none;
-    }
   }
 }
 
@@ -65,7 +41,13 @@ aside {
     input,
     select {
       padding: 0.5rem;
+      border-radius: var(--border-radius);
       width: 100%;
+      border: 0.0625rem solid rgba(var(--input-border-color), 0.1);
+      background-color: rgba(var(--input-bg-color), 0.1);
+      font-size: 1rem;
+      font-family: inherit;
+      font-size: 100%;
     }
 
     input:valid,
@@ -78,6 +60,33 @@ aside {
     select:invalid {
       border: solid 0.25rem transparent;
       border-inline-start-color: red;
+    }
+
+    /* https://codepen.io/una/pen/MWMmYxb?editors=1100 */
+    select {
+      appearance: base-select;
+      border: solid 0.0625rem rgba(var(--input-border-color), 0.1);
+      border-radius: var(--border-radius);
+      display: grid;
+      font-family: inherit;
+      font-size: 100%;
+
+      option {
+        font-family: inherit;
+        font-size: 100%;
+
+        &::checkmark {
+          display: none;
+        }
+      }
+
+      &::picker-icon {
+        display: none;
+      }
+    }
+
+    ::picker(select) {
+      appearance: base-select;
     }
 
     input:invalid:not(:placeholder-shown)::placeholder {
