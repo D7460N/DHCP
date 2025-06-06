@@ -95,16 +95,11 @@ app-container {
     }
   }
 
-  a {
-    color: rgba(var(--txt-link), 0.7);
-    text-decoration: none;
-    box-shadow: 0 1px 0 rgba(0, 255, 255, 0.0);
-
-    &:hover {
-      color: rgba(var(--txt-link), 1.0);
-      box-shadow: 0 1px 0 rgba(var(--txt-link), 1.0);
-    }
+  app-container > * {
+    background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
   }
+
+
 
 
 
@@ -119,9 +114,14 @@ app-container {
     overflow: hidden;
 
     p {
+      display: none;
       margin: 0;
-      padding: 0.2rem;
+      padding: 0.3rem;
       font-size: 75%;
+    }
+
+    p:not(:empty) {
+      display: block;
     }
   }
 
@@ -310,10 +310,6 @@ app-container {
       /* Show when <aside><fieldset> is not empty */
     }
 
-    p {
-      /* margin-block-end: 1lh; */
-      padding: 0 1rem 1rem;
-    }
 
 
 
@@ -346,11 +342,6 @@ app-container {
         }
       }
 
-      hr {
-        margin: 1rem 0;
-        border: solid 0.0625rem rgba(0, 0, 0, 0.1);
-      }
-
       button {
         display: grid;
         grid-template-columns: auto auto;
@@ -370,7 +361,6 @@ app-container {
       p {
         display: none;
         /* Hide by default */
-        padding: 0 1rem 1rem;
 
         &:not(:empty) {
           display: grid;
@@ -444,7 +434,7 @@ app-container {
 
         /* MARK: UL TABLE BODY --------------------------------------------
       */
-        & + ul {
+        &+ul {
           overflow: overlay;
           position: relative;
           align-content: start;
