@@ -95,7 +95,7 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 `<nav>` = page navigation<br>
 `<article>` = main content area<br>
 `<app-logo>` = logo<br>
-`<user-name>` = user name<br>
+`<app-user>` = user name<br>
 `<app-version>` = app version<br>
 `<powered-by>` = powered by D7460N<br>
 `<app-container>` = root wrapper for the app<br>
@@ -115,6 +115,63 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 `<section>` = scrollable<br>
 `<footer>` = sticks to the bottom of the viewport
 
+---
+
+### HTML TEMPLATE
+
+```html
+
+<html>
+  <head></head>
+  <body>
+    <app-container>
+      <app-banner></app-banner>
+      <header>
+        <app-logo></app-logo>
+        <app-user></app-user>
+      </header>
+      <nav>
+        <details>
+          <summary></summary>
+          <section></section>
+        </details>
+        <details>
+          <summary></summary>
+          <section></section>
+        </details>
+      </nav>
+      <main>
+        <article>
+          <h1></h1>
+          <p></p>
+          <button>New</button>
+          <hr>
+          <search>
+          <ul></ul>
+        </article>
+      </main>
+      <aside>
+        <h2>DETAILS</h2>
+        <button>✖</button>
+        <form>
+          <fieldset></fieldset>
+          <button></button>
+          <button></button>
+        </form>
+      </aside>
+      <footer>
+        <powered-by></powered-by>
+        <app-version></app-version>
+      </footer>
+      <app-banner></app-banner>
+    </app-container>
+  </body>
+</html>
+
+```
+
+---
+
 ### HOLY GRAIL LAYOUT
 
 ```txt
@@ -125,32 +182,32 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
                                                            /                                                         /
  _________________________________________________________/________________________________________________________ /
 |                                                                                                                  |      : <aside>
-| <app-logo>                                        <header>                                           <user-name> |   ___: - - - -
+| <app-logo>                                        <header>                                      [ / ] <app-user> |   ___: - - - -
 |__________________________________________________________________________________________________________________|  /   : Content
-|           <nav>           |                        <main>                        |            <aside>            | /    : aware.
-|  <h2></h2>                | ____________________________________________________ | <h2></h2>                     |/     : - - - -
-|  <label><input></label>   ||                      <article>                     ||                               |      : Opens when
-|  <label><input></label>   ||  <h1></h1>                                         || <form>                        |      : data is
-|                           || __________________________________________________ || _____________________________ |      : present.
-|  <h2></h2>                |||                     <section>                    ||||          <section>          ||
-| _________________________ ||| <h2></h2>                                        ||||                             ||
-||        <section>        ||||                                                  ||||  <fieldset>                 ||      : <section>
-||                         |||| <p></p>                                          ||||    <label><input></label>   ||   ___: - - - -
-|| <label><input></label>  ||||                                                  ||||  </fieldset>                ||  /   : Scrollable
-|| <label><input></label>  ||||                                                  ||||                             || /
-|| <label><input></label>  ||||                                                  ||||  <fieldset>                 ||/
-|| <label><input></label>  ||||                                                  ||||    <label><input></label>   ||
-|| <label><input></label>  ||||                                                  ||||                             ||
-|| <label><input></label>  ||||                                                  ||||  <fieldset>                 ||
-|| <label><input></label>  ||||                                                  ||||    <label><input></label>   ||
-||                         ||||                                                  ||||  </fieldset>                ||
-||                         ||||                                                  ||||                             ||
-||                         ||||                Horizontal resize <aside> :____   ||||  <fieldset>                 ||
-||                         ||||                                               \  ||||    <label><input></label>   ||
-||                         ||||                                                \ ||||  </fieldset>                ||
-||                         ||||_________________________________________________\||||_____________________________||
-||_________________________|||____________________________________________________|| </form>                       |
-|__ ________________________|______________________________________________________|_______________________________|
+|           <nav>           |                        <main>                        |            <aside>      [ X ] | /    : aware.
+| _________________________ | ____________________________________________________ | <h2></h2>                     |/     : - - - -
+||        <details>        |||                      <article>                     || _____________________________ |      : Opens when
+||                         |||  <h1></h1>                                <search> |||           <form>            ||      : data is
+|| <summary></summary>  V  |||                               <button>new</button> ||| ___________________________ ||      : present.
+||                         |||  <h2></h2>                                         ||||        <fieldset>         |||
+|| <label><input></label>  |||                                                    ||||                           |||
+|| <label><input></label>  |||  <p></p>                                           |||| <h2></h2>                 |||      : <fieldset>
+||_________________________|||                                                    ||||                           |||   ___: - - - -
+| _________________________ || __________________________________________________ |||| <label><input></label>    |||  /   : Scrollable
+||        <details>        |||| <ul>                                             ||||| <label><input></label>    ||| /
+||                         ||||   <li></li>                                      ||||| <label><input></label>    |||/
+|| <summary></summary>  V  ||||   <li></li>                                      ||||| <label><input></label>    |||
+|| _______________________ ||||   <li></li>                                      ||||| <label><input></label>    |||
+|||       <section>       |||||   <li></li>                                      ||||| <label><input></label>    |||
+|||                       |||||   <li></li>               Scrollable <ul> :____  ||||| <label><input></label>    |||
+|||<label><input></label> ||||| <ul>                                           \ ||||| <label><input></label>    |||
+|||<label><input></label> |||||_________________________________________________\||||| <label><input></label>    |||
+|||<label><input></label> ||||                                                    ||||                           |||
+|||<label><input></label> ||||                   Resize horizontal <aside> :____  |||| <button></button>         |||
+|||<label><input></label> ||||                                                  \ |||| <button></button>         |||
+|||_______________________||||___________________________________________________\||||___________________________|||
+||_________________________|||____________________________________________________|||_____________________________||
+|___________________________|______________________________________________________|_______________________________|
 |                                                                                                                  |
 | <powered-by>                                      <footer>                                         <app-version> |
 |__________________________________________________________________________________________________________________|
@@ -160,4 +217,46 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
                                                                : Sticks to bottom of view port
 
 
+```
+
+---
+
+### SMALL SCREEN LAYOUT
+
+```txt
+
+ __________________________________________________
+|                   <app-banner>                   |
+|__________________________________________________|      : <nav>
+|                                                  |   ___: - - - -
+| <app-logo>                            <app-user> |  /   : Toggleable menu
+|__________________________________________________| /
+|                      <nav>                       |/
+|__________________________________________________|
+|                      <main>                      |      : <fieldset>
+|                                                  |   ___: - - - -
+|                                                  |  /   : Scrollable
+|                                                  | /
+|                                                  |/
+|                                                  |
+|                                                  |
+|                                                  |
+|                                                  |
+|                                                  |
+|                                                  |
+|                                                  |
+|                                                  |
+|                                                  |
+|                                                  |
+|                                                  |
+|                                                  |
+|                                                  |
+|                                                  |
+|                                                  |
+|__________________________________________________|
+|                    <footer>                      |
+| <powered-by>                      <app-version>  |
+|__________________________________________________|
+|                   <app-banner>                   |
+|__________________________________________________|
 ```
