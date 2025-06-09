@@ -316,27 +316,7 @@ function updateHeaderRow(sourceRow) {
     headerLi.appendChild(clone)
   })
 }
-// MARK: OFF-LINE
-let offlineInterval
-let offlineStartTime
-window.ononline = updateOnlineStatus
-window.onoffline = updateOnlineStatus
-updateOnlineStatus()
-function updateOnlineStatus() {
-  const offlineMsg = document.querySelector("off-line p")
 
-  if (navigator.onLine) {
-    clearInterval(offlineInterval)
-    offlineMsg.textContent = ""
-  } else {
-    offlineStartTime = Date.now()
-
-    offlineInterval = setInterval(() => {
-      const elapsedSec = Math.floor((Date.now() - offlineStartTime) / 1000)
-      offlineMsg.textContent = `Offline [ (${elapsedSec}s elapsed) ]`
-    }, 1000)
-  }
-}
 function mirrorToSelectedRow(event) {
   const input = event.target
   const key = input.name
@@ -350,6 +330,7 @@ function mirrorToSelectedRow(event) {
     mirror.textContent = input.value
   }
 }
+
 function createInputFromKey(key, value) {
   const inputName = key
   const val = value?.trim?.() ?? ""
