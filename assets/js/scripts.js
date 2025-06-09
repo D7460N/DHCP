@@ -27,7 +27,7 @@ const ENDPOINTS = []
 
 // Fetch & Data Handling
 function fetchJSON(url) { return fetch(url).then((r) => r.json()) }
-function loadEndpoints() {
+function loadPageContent() {
   return fetchJSON(`${BASE_URL}nav-content`).then(([data]) => {
     NAV_DATA = data; // store full nav content
 
@@ -393,8 +393,8 @@ form.oninput = () => {
 
 // MARK: MAIN APPLICATION LOGIC
 
-// MARK: INITIAL TAB FETCH
-loadEndpoints().then(() => {
+// MARK: INITIAL PAGE CONTENT FETCH
+loadPageContent().then(() => {
   const selected = document.querySelector('nav input[name="nav"]:checked');
   if (selected?.oninput) selected.oninput();
 });
