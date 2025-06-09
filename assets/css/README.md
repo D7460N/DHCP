@@ -121,49 +121,76 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 
 ```html
 
-<html>
-  <head></head>
+<html lang="en-us">
+  <head>
+    <title>D7460N UI</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
   <body>
     <app-container>
-      <app-banner></app-banner>
+      <app-banner aria-live="polite" role="status">
+        <p></p>
+      </app-banner>
+
       <header>
-        <app-logo></app-logo>
-        <app-user></app-user>
+        <app-logo title="Application logo"></app-logo>
+        <app-user title="User menu"></app-user>
       </header>
-      <nav>
+
+      <nav aria-label="Main navigation">
         <details>
-          <summary></summary>
-          <section></section>
+          <summary>
+            <h2>Navigation Menu 1</h2>
+          </summary>
+          <section>
+            <label>
+              text of first navigation label
+              <input type="checkbox" checked />
+            </label>
+          </section>
         </details>
         <details>
-          <summary></summary>
+          <summary>
+            <h2>Navigation Menu 2</h2>
+          </summary>
           <section></section>
         </details>
       </nav>
+
       <main>
-        <article>
-          <h1></h1>
+        <article aria-labelledby="page-title">
+          <h1 id="page-title"></h1>
           <p></p>
-          <button>New</button>
-          <hr>
+          <button type="button">New</button>
+          <hr />
           <search>
-          <ul></ul>
+            <input type="search" placeholder="Search..." />
+          </search>
+          <ul role="list" aria-label="Data table"></ul>
         </article>
       </main>
-      <aside>
-        <h2>DETAILS</h2>
-        <button>✖</button>
+
+      <aside aria-labelledby="details-title">
+        <h2 id="details-title">Details</h2>
+        <button type="button" title="Close details panel">✖</button>
         <form>
-          <fieldset></fieldset>
-          <button></button>
-          <button></button>
+          <fieldset>
+            <legend>Editable Fields</legend>
+          </fieldset>
+          <button type="reset">Reset</button>
+          <button type="submit">Save</button>
         </form>
       </aside>
+
       <footer>
-        <powered-by></powered-by>
-        <app-version></app-version>
+        <powered-by title="Powered by information"></powered-by>
+        <app-version title="Application version"></app-version>
       </footer>
-      <app-banner></app-banner>
+
+      <app-banner aria-live="polite" role="status">
+        <p></p>
+      </app-banner>
     </app-container>
   </body>
 </html>
