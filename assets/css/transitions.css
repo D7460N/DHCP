@@ -78,10 +78,6 @@ a {
   transition: all var(--transition-duration);
 }
 
-off-line p {
-  transition: all var(--transition-duration);
-}
-
 main article ul:last-of-type {
   overflow-x: auto;
   scroll-snap-type: y mandatory;
