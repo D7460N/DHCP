@@ -89,31 +89,61 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 - delete item JS/data logic
 - edit item JS/data logic
 
-## Single Page Application (SPA)
+## Static Layout Elements
 
-`<header>` = sticks to the top of the viewport<br>
-`<nav>` = page navigation<br>
-`<article>` = main content area<br>
-`<app-logo>` = logo<br>
-`<app-user>` = user name<br>
-`<app-version>` = app version<br>
-`<powered-by>` = powered by D7460N<br>
-`<app-container>` = root wrapper for the app<br>
-`<app-item>` = custom element for item data binding<br>
-`<item-name>` = custom element for item name binding<br>
-`<form>` = form element for data entry<br>
-`<fieldset>` = fieldset for grouping form elements<br>
-`<label>` = label for form elements<br>
-`<input>` = input element for data entry<br>
-`<details>` = details element for expandable content<br>
-`<summary>` = summary element for details<br>
-`<h1>`-`<h6>` = headings for semantic structure<br>
-`<p>` = paragraph for text content<br>
-`<nav>` = navigation element for links<br>
-`<main>` = Main relevant focussable content<br>
-`<aside>` = details of whatever content is in `<main>`<br>
-`<section>` = scrollable<br>
+> In order of appearance
+
+| HTMLElement      | Description                                                                       |
+|------------------|-----------------------------------------------------------------------------------|
+| `<app-container>`| Single root application wrapper pushes application to top and bottom of viewport  |
+| `<header>`       | Stays at the top of the viewport                                                  |
+| `<app-logo>`     | Application logo                                                                  |
+| `<app-user>`     | User menu                                                                         |
+| `<nav>`          | Page navigation                                                                   |
+| `<article>`      | main content area                                                                 |
+
+
+
+| `<app-container>`| Root application wrapper                                                          |
+| `<app-container>`| Root application wrapper                                                          |
+
+
+
+`<app-item>` = custom element for item data binding
+
+`<item-name>` = custom element for item name binding
+
+`<form>` = form element for data entry
+
+`<fieldset>` = fieldset for grouping form elements
+
+`<label>` = label for form elements
+
+`<input>` = input element for data entry
+
+`<details>` = details element for expandable content
+
+`<summary>` = summary element for details
+
+`<h1>`-`<h6>` = headings for semantic structure
+
+`<p>` = paragraph for text content
+
+`<nav>` = navigation element for links
+
+`<main>` = Main relevant focussable content
+
+`<aside>` = details of whatever content is in `<main>`
+
+`<section>` = scrollable
+
 `<footer>` = sticks to the bottom of the viewport
+
+`<app-version>` = app version
+
+`<powered-by>` = powered by D7460N
+
+<br>
 
 ---
 
@@ -197,58 +227,77 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 
 ```
 
+<br>
+
 ---
 
-### HOLY GRAIL LAYOUT
+<br>
+
+## HOLY GRAIL LAYOUT
+
+- Minimally nested layout
+
 
 ```txt
 
-                                                                : <header>                                                : <viewport>
-                                                             ___: - - - - -                                            ___: - - - - -
-                                                            /   : Sticks to top of viewport                           /   : No scrollbar
-                                                           /                                                         /
- _________________________________________________________/________________________________________________________ /
-|                                                                                                                  |      : <aside>
-| <app-logo>                                        <header>                                      [ / ] <app-user> |   ___: - - - -
-|__________________________________________________________________________________________________________________|  /   : Content
-|           <nav>           |                        <main>                        |            <aside>      [ X ] | /    : aware.
-| _________________________ | ____________________________________________________ | <h2></h2>                     |/     : - - - -
-||        <details>        |||                      <article>                     || _____________________________ |      : Opens when
-||                         |||  <h1></h1>                                <search> |||           <form>            ||      : data is
-|| <summary></summary>  V  |||                               <button>new</button> ||| ___________________________ ||      : present.
-||                         |||  <h2></h2>                                         ||||        <fieldset>         |||
-|| <label><input></label>  |||                                                    ||||                           |||
-|| <label><input></label>  |||  <p></p>                                           |||| <h2></h2>                 |||      : <fieldset>
-||_________________________|||                                                    ||||                           |||   ___: - - - -
-| _________________________ || __________________________________________________ |||| <label><input></label>    |||  /   : Scrollable
-||        <details>        |||| <ul>                                             ||||| <label><input></label>    ||| /
-||                         ||||   <li></li>                                      ||||| <label><input></label>    |||/
-|| <summary></summary>  V  ||||   <li></li>                                      ||||| <label><input></label>    |||
-|| _______________________ ||||   <li></li>                                      ||||| <label><input></label>    |||
-|||       <section>       |||||   <li></li>                                      ||||| <label><input></label>    |||
-|||                       |||||   <li></li>               Scrollable <ul> :____  ||||| <label><input></label>    |||
-|||<label><input></label> ||||| <ul>                                           \ ||||| <label><input></label>    |||
-|||<label><input></label> |||||_________________________________________________\||||| <label><input></label>    |||
-|||<label><input></label> ||||                                                    ||||                           |||
-|||<label><input></label> ||||                   Resize horizontal <aside> :____  |||| <button></button>         |||
-|||<label><input></label> ||||                                                  \ |||| <button></button>         |||
-|||_______________________||||___________________________________________________\||||___________________________|||
-||_________________________|||____________________________________________________|||_____________________________||
-|___________________________|______________________________________________________|_______________________________|
-|                                                                                                                  |
-| <powered-by>                                      <footer>                                         <app-version> |
-|__________________________________________________________________________________________________________________|
-                                                         \
-                                                          \    : <footer>
-                                                           \___: - - - -
-                                                               : Sticks to bottom of view port
+                                                                    : <app-container>                                           : <viewport>
+                                                                 ___: - - - - -                                              ___: - - - - -
+                                                                /   : Pushes header and footer                              /   : Overflow hidden
+                                                               /      to top and bottom of viewport                        /
+ _____________________________________________________________/__________________________________________________________ /
+|                                                    <app-containter>                                                    |
+| ______________________________________________________________________________________________________________________ |
+||                                                     <app-banner>                                                     ||
+||______________________________________________________________________________________________________________________||
+||                                                                                                                      ||      : <aside>
+|| <app-logo>                                            <header>                                      [ / ] <app-user> ||   ___: - - - -
+||______________________________________________________________________________________________________________________||  /   : Content
+||             <nav>             |                        <main>                        |            <aside>      [ X ] || /    : aware.
+|| _____________________________ | ____________________________________________________ | <h2></h2>                     ||/     : - - - -
+|||          <details>          |||                      <article>                     || _____________________________ ||      : Opens when
+|||                             |||  <h1></h1>                                <search> |||           <form>            |||      : data is
+||| <summary></summary>      V  |||                               <button>new</button> ||| ___________________________ |||      : present.
+|||                             |||  <h2></h2>                                         ||||        <fieldset>         ||||
+||| <label><input></label>      |||                                                    ||||                           ||||
+||| <label><input></label>      |||  <p></p>                                           |||| <h2></h2>                 ||||      : <fieldset>
+|||_____________________________|||                                                    ||||                           ||||   ___: - - - -
+|| _____________________________ || __________________________________________________ |||| <label><input></label>    ||||  /   : Scrollable
+|||          <details>          |||| <ul>                                             ||||| <label><input></label>    |||| /
+|||                             ||||   <li></li>                                      ||||| <label><input></label>    ||||/
+||| <summary></summary>      V  ||||   <li></li>                                      ||||| <label><input></label>    ||||
+||| ___________________________ ||||   <li></li>                                      ||||| <label><input></label>    ||||
+||||         <section>         |||||   <li></li>                                      ||||| <label><input></label>    ||||
+||||                           |||||   <li></li>               Scrollable <ul> :____  ||||| <label><input></label>    ||||
+||||<label><input></label>     ||||| <ul>                                           \ ||||| <label><input></label>    ||||
+||||<label><input></label>     |||||_________________________________________________\||||| <label><input></label>    ||||
+||||<label><input></label>     ||||                                                    ||||                           ||||
+||||<label><input></label>     ||||                   Resize horizontal <aside> :____  |||| <button></button>         ||||
+||||<label><input></label>     ||||                                                  \ |||| <button></button>         ||||
+||||___________________________||||___________________________________________________\||||___________________________||||
+|||_____________________________|||____________________________________________________|||_____________________________|||
+||_______________________________|______________________________________________________|_______________________________||
+||                                                                                                                      ||
+|| <powered-by>                                          <footer>                                         <app-version> ||
+||______________________________________________________________________________________________________________________||
+||                                                     <app-banner>                                                     ||
+||______________________________________________________________________________________________________________________||
+|                                                     <app-container>                                                    |
+|________________________________________________________________________________________________________________________|
+                                                             \
+                                                              \    : <footer>
+                                                               \___: - - - -
+                                                                   : Sticks to bottom of view port
 
 
 ```
 
+<br>
+
 ---
 
-### SMALL SCREEN LAYOUT
+<br>
+
+## SMALL SCREEN LAYOUT
 
 ```txt
 
