@@ -75,14 +75,6 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 - `/components/readme.md`: tag semantics
 - `d7460n-dev-guide/forms.md`: validation logic
 
-## Tofix
-
-- map data to correct form in JS
-- `<aside>` and vertical layout
-- light theme
-
-// TODO
-
 ## Todo
 
 - add item JS/data logic
@@ -91,7 +83,7 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 
 ## Static Layout Elements
 
-> In order of appearance
+> Order of appearance
 
 | HTMLElement           | Description                                                                       |
 |-----------------------|-----------------------------------------------------------------------------------|
