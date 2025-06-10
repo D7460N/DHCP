@@ -93,55 +93,30 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 
 > In order of appearance
 
-| HTMLElement      | Description                                                                       |
-|------------------|-----------------------------------------------------------------------------------|
-| `<app-container>`| Single root application wrapper pushes application to top and bottom of viewport  |
-| `<header>`       | Stays at the top of the viewport                                                  |
-| `<app-logo>`     | Application logo                                                                  |
-| `<app-user>`     | User menu                                                                         |
-| `<nav>`          | Page navigation                                                                   |
-| `<article>`      | main content area                                                                 |
+| HTMLElement           | Description                                                                       |
+|-----------------------|-----------------------------------------------------------------------------------|
+| `<app-container>`     | Single root application wrapper pushes application to top and bottom of viewport  |
+| `<app-banner>`        | Multi-purpose                                                                     |
+| `<header>`            | Stays at the top of the viewport                                                  |
+| `<app-logo>`          | Application logo                                                                  |
+| `<app-user>`          | User menu                                                                         |
+| `<nav>`               | Page navigation                                                                   |
+| `<main>`              | Main relevant focussable content                                                  |
+| `<article>`           | main content area  hidden by default until the `<h1>` has content in it           |
+| `<h1>`-`<h6>`         | Headings for semantic structure                                                   |
+| `<p>`                 | Paragraphs for text content hidden by default until content appear in it          |
+| `<ul>`                | Table header and table body                                                       |
+| `<li>`                | Table header and body columns                                                     |
+| `<custom-elements>`   | Dynamically generated from each API endpoint key and value                        |
+| `<aside>`             | Details of whatever content is in `<main>`                                        |
+| `<form>`              | Wrapper for form button and input controls                                        |
+| `<fieldset>`          | Wrapper for input controls that is scrollable                                     |
+| `<custom-form-inputs>`| Dynamically generated from each API endpoint key and value                        |
+| `<footer>`            | Stays at the bottom of the viewport                                               |
+| `<powered-by>`        | Powered by Author                                                                 |
+| `<app-version>`       | Umm... errr... the app version                                                    |
+| `<app-banner>`        | Multi-purpose                                                                     |
 
-
-
-| `<app-container>`| Root application wrapper                                                          |
-| `<app-container>`| Root application wrapper                                                          |
-
-
-
-`<app-item>` = custom element for item data binding
-
-`<item-name>` = custom element for item name binding
-
-`<form>` = form element for data entry
-
-`<fieldset>` = fieldset for grouping form elements
-
-`<label>` = label for form elements
-
-`<input>` = input element for data entry
-
-`<details>` = details element for expandable content
-
-`<summary>` = summary element for details
-
-`<h1>`-`<h6>` = headings for semantic structure
-
-`<p>` = paragraph for text content
-
-`<nav>` = navigation element for links
-
-`<main>` = Main relevant focussable content
-
-`<aside>` = details of whatever content is in `<main>`
-
-`<section>` = scrollable
-
-`<footer>` = sticks to the bottom of the viewport
-
-`<app-version>` = app version
-
-`<powered-by>` = powered by D7460N
 
 <br>
 
