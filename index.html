@@ -9,7 +9,7 @@
     <meta name="description" content="DHCP Portal">
     <meta name="robots" content="index, archive">
     <meta name="color-scheme" content="dark light">
-    <link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials">
+    <!-- <link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials"> -->
     <link rel="canonical" href="https://d7460n.dev/">
     <link rel="icon" type="image/svg+xml" href="./assets/images/brand/logos/logo.svg">
     <link rel="stylesheet" type="text/css" href="./assets/css/themes.css">
@@ -94,25 +94,18 @@
       <app-banner>
         <p>banner</p>
       </app-banner>
-      <modal->
-        <back-drop></back-drop>
-        <h4></h4>
-        <p></p>
-        <button></button>
-        <button></button>
-      </modal->
     </app-container>
 
     <!-- Contains constants used by every other module. -->
     <script type="module" src="./assets/js/scripts.js"></script>
-    <script>
+    <!-- <script>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js')
           .then(() => navigator.serviceWorker.ready)
           .then(reg => console.log('Service Worker registered:', reg))
           .catch(err => console.error('SW registration failed:', err))
       }
-    </script>
+    </script> -->
   </body>
 
 </html>
