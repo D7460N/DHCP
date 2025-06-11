@@ -342,6 +342,15 @@ app-container {
         }
       }
 
+      hr {
+        margin-block: 1rem;
+        background-color: transparent;
+        height: 0;
+        border-block-start: solid .125rem rgba(0,0,0,0.3);
+        border-block-end-color: rgba(255,255,255,0.2);
+        border-inline: none;
+      }
+
       button {
         display: grid;
         grid-template-columns: auto auto;
@@ -359,12 +368,11 @@ app-container {
       }
 
       p {
-        display: none;
-        /* Hide by default */
+        display: none; /* Hide by default */
+        margin-inline: 1rem;
 
         &:not(:empty) {
-          display: grid;
-          /* Show when not empty */
+          display: grid; /* Show when not empty */
         }
       }
 

@@ -43,7 +43,7 @@ aside {
       padding: 0.5rem;
       border-radius: var(--border-radius);
       width: 100%;
-      border: 0.0625rem solid rgba(var(--input-border-color), 0.1);
+      border: 0.125rem solid rgba(var(--input-border-color), 0.1);
       background-color: rgba(var(--input-bg-color), 0.1);
       font-size: 1rem;
       font-family: inherit;
@@ -52,7 +52,7 @@ aside {
 
     input:valid,
     select:valid {
-      border: solid 0.25rem transparent;
+      border: solid 0.125rem transparent;
       border-inline-start-color: limegreen;
     }
 
@@ -208,6 +208,37 @@ aside form input[type="checkbox"] {
   margin-right: 0.5rem;
   vertical-align: middle;
 }
+
+aside form:has(button[value="confirm-save"]) button[aria-label="Save"]::before {
+  content: "Click again to confirm saving.";
+  display: block;
+  font-weight: bold;
+  margin-block-end: 0.5rem;
+}
+
+aside form:has(button[value="confirm-delete"]) button[aria-label="Delete"]::before {
+  content: "Click again to confirm deletion.";
+  display: block;
+  font-weight: bold;
+  margin-block-end: 0.5rem;
+}
+
+aside form:has(button[value="confirm-reset"]) button[aria-label="Reset"]::before {
+  content: "Click again to confirm reset.";
+  display: block;
+  font-weight: bold;
+  margin-block-end: 0.5rem;
+}
+
+aside form:has(button[value="confirm-close"]) button[aria-label="Close"]::before {
+  content: "Click again to confirm closing the form.";
+  display: block;
+  font-weight: bold;
+  margin-block-end: 0.5rem;
+}
+
+
+
 
 /* https://x.com/argyleink/status/1927220175385866387 */
 textarea {
