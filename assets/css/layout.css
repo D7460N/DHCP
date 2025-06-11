@@ -30,7 +30,7 @@
 */
 @media (width >=600px) {
   :root:has(header label:nth-of-type(1) input:checked) {
-    --app-container-grid-template-columns: 12rem 1fr;
+    --app-container-grid-template-columns: 12rem 1fr 0;
     /* --app-container-grid-template-columns: 12rem 1fr 15rem; */
     --app-container-grid-template-rows: auto auto 1fr auto auto;
     --nav-border-radius: var(--border-radius) 0 0 var(--border-radius);
@@ -300,7 +300,6 @@ app-container {
     margin-block: var(--main-margin-block);
     margin-inline: var(--main-margin-inline);
     border-radius: var(--main-border-radius);
-    margin-inline-end: 1rem;
     overflow: hidden;
     align-content: start;
     min-width: 20rem;
@@ -505,8 +504,7 @@ app-container {
   /* MARK: ASIDE --------------------------------------------
 */
   aside {
-    display: none;
-    /* Hide by default */
+    /* Hidden by default using width also, app-container: grid-template-columns: auto 1fr 0;*/
     overflow: hidden;
     position: relative;
     align-content: start;
@@ -587,77 +585,6 @@ app-container {
     powered-by,
     app-version {
       padding: 1rem;
-    }
-  }
-
-
-
-
-
-  /* MARK: MODAL --------------------------------------------
-*/
-  modal- {
-    display: none;
-    /* Hide by default */
-    position: fixed;
-    opacity: 0;
-    max-width: 20rem;
-    place-self: center;
-    z-index: 1000;
-    background: rgba(var(--bg-panel-color), 0.0);
-    border-radius: var(--border-radius);
-
-    &:has(h4:not(:empty),
-      p:not(:empty)) {
-      display: grid;
-      /* Show when not empty */
-      opacity: 1;
-      background: rgba(var(--bg-panel-color), 0.5);
-    }
-
-    button {
-      display: none;
-      /* Hide by default */
-      gap: 0.5rem;
-      justify-content: flex-end;
-      cursor: pointer;
-      padding: 0.5rem 1rem;
-      border-radius: var(--border-radius);
-      border: none;
-      background-color: rgba(var(--button-bg-color), 0.1);
-      color: currentColor;
-
-      &:not(:empty) {
-        display: flex;
-        /* Show when not empty */
-      }
-
-      &:hover {
-        background-color: rgba(var(--button-bg-color), 0.7);
-      }
-
-      &:first-of-type {
-        margin-inline-start: 1rem;
-        place-self: start;
-      }
-
-      &:last-of-type {
-        margin-inline-end: 1rem;
-        place-self: end;
-        position: absolute;
-      }
-    }
-
-    p,
-    h4 {
-      padding: 1rem;
-    }
-
-    back-drop {
-      position: fixed;
-      inset: 0;
-      background-color: rgba(var(--input-bg-color), 0.7);
-      z-index: -1;
     }
   }
 }
