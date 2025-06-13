@@ -3,7 +3,7 @@
 // Purpose: Fetch JSON and inject values using custom elements generated from API keys
 
 // Global storage object for navigation data fetched from the API
-let NAV_DATA = {}; // holds nav-content JSON
+let NAV_DATA = {}; // holds navItems JSON
 
 // MARK: Base URL for all API interactions
 const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/'; // Base API URL
@@ -36,7 +36,7 @@ function fetchJSON(url) {
 // Load navigation endpoints from API and dynamically populate navigation controls
 function loadEndpoints() {
 	// Fetches navigation content from the API and updates navigation inputs
-	return fetchJSON(`${BASE_URL}nav-content`).then(([data]) => {
+	return fetchJSON(`${BASE_URL}navItems`).then(([data]) => {
 		NAV_DATA = data; // store full nav content
 		const keys = Object.keys(data || {});
 		ENDPOINTS.splice(0, ENDPOINTS.length, ...keys);
