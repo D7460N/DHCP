@@ -182,11 +182,11 @@ async function loadEndpoint(endpoint) {
 		}
 
 		// If duplicates exist, log an error, inform the user, and halt further processing
-		if (duplicates.length) {
-			console.error('[DUPLICATE ID DETECTED]', duplicates);
-			await confirmAction(`Duplicate IDs found: ${duplicates.join(', ')}`, { type: 'alert' });
-			return;
-		}
+               if (duplicates.length) {
+                        console.error('[DUPLICATE ID DETECTED]', duplicates);
+                        alert(`Duplicate IDs found: ${duplicates.join(', ')}`);
+                        return;
+                }
 
 		// Clear the fieldset to prepare for new item inputs or edits
 		fieldset.innerHTML = '';
@@ -211,9 +211,9 @@ async function loadEndpoint(endpoint) {
 		toggleResetButton();
 	} catch (err) {
 		// Log the error and inform the user via a modal if data loading fails
-		console.error('Failed to load data:', err);
-		await confirmAction('Failed to load data.', { type: 'alert' });
-	}
+               console.error('Failed to load data:', err);
+               alert('Failed to load data.');
+       }
 }
 
 // DOM Manipulation Utilities
@@ -285,44 +285,6 @@ async function loadAppBanner() {
 }
 
 loadAppBanner();
-
-
-// Modal & UI Utilities
-function showModal({ title = '', message = '', buttons = [] }) {
-	// Displays a modal with a dynamic title, message, and configurable buttons.
-	return new Promise(resolve => {
-		const modal = document.querySelector('modal-');
-		if (!modal) return resolve(null);
-
-		// Sets modal title and message dynamically.
-		modal.querySelector('h4').textContent = title;
-		modal.querySelector('p').textContent = message;
-
-		const modalButtons = modal.querySelectorAll('button');
-
-		// Dynamically configures modal buttons based on provided button data.
-		modalButtons.forEach((btn, index) => {
-			const buttonData = buttons[index];
-			btn.textContent = buttonData ? buttonData.label : '';
-			btn.onclick = buttonData
-				? () => {
-					clearModal();
-					resolve(buttonData.value);
-				}
-				: null;
-		});
-
-		// Clears modal content and button states once interaction is complete.
-		function clearModal() {
-			modal.querySelector('h4').textContent = '';
-			modal.querySelector('p').textContent = '';
-			modalButtons.forEach(btn => {
-				btn.textContent = '';
-				btn.onclick = null;
-			});
-		}
-	});
-}
 
 // Form State Utilities
 // MARK: TRACK FROM ORIGINAL STATE
@@ -726,15 +688,10 @@ loadEndpoints().then(() => {
 
 			// Before proceeding, check if there are unsaved form changes
 			if (hasUnsavedChanges()) {
-				// If unsaved changes exist, prompt the user to confirm if they're willing to discard those changes
-				confirmAction('You have unsaved changes. Discard them?', {
-					type: 'confirm',
-				}).then(ok => {
-					// If user confirms, proceed with loading the new endpoint data
-					if (ok) proceed();
-				});
+				if (window.confirm('You have unsaved changes. Discard them?')) {
+					proceed();
+				}
 			} else {
-				// If no unsaved changes, directly proceed to load the selected endpoint data
 				proceed();
 			}
 		};
@@ -750,11 +707,7 @@ loadEndpoints().then(() => {
 // Event handler triggered when the "New" button is clicked to create a new form entry
 newButton.onclick = async () => {
 	// First, check if there are unsaved form changes
-	if (
-		hasUnsavedChanges() &&
-		// Prompt the user to confirm discarding unsaved changes before proceeding
-		!(await confirmAction('You have unsaved changes. Discard them?', { type: 'confirm' }))
-	)
+	if (hasUnsavedChanges() && !window.confirm('You have unsaved changes. Discard them?'))
 		return; // If user declines, exit without making changes
 
 	// Clear the form's current input fields to prepare for creating a new entry
@@ -980,31 +933,3 @@ closeButton.onclick = () => {
 };
 
 
-// MARK: UNIFIED MODAL
-
-// Display a modal dialog to the user with customizable message and buttons,
-// typically used for confirmations or alerts throughout the app
-function confirmAction(message, { type = 'confirm' } = {}) {
-	// Prepare the modal configuration based on the specified dialog type
-	const config = {
-		// Set the title dynamically: "Please Confirm" for confirmation dialogs, otherwise "Notice"
-		title: type === 'confirm' ? 'Please Confirm' : 'Notice',
-		// Display the provided message as the main content of the modal
-		message,
-
-		// Set modal buttons dynamically based on the dialog type:
-		// - "Yes" and "No" buttons for confirmation dialogs (returns true/false)
-		// - "OK" button for simple alert dialogs (returns true)
-		buttons:
-			type === 'confirm'
-				? [
-					{ label: 'Yes', value: true }, // User confirms action
-					{ label: 'No', value: false }, // User declines action
-				]
-				: [{ label: 'OK', value: true }], // Simple acknowledgment
-	};
-
-	// Invoke and display the modal dialog with the prepared configuration,
-	// returning a Promise that resolves to the user's selected button value
-	return showModal(config);
-}
