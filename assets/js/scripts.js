@@ -2,13 +2,14 @@
 
 // Purpose: Fetch JSON and inject values using custom elements generated from API keys
 
+// MARK: FETCH DATA
+//    Base URL
+//    Data targets (CSS syntax)
 // Global storage object for navigation data fetched from the API
 let NAV_DATA = {}; // holds navItems JSON
 
-// MARK: Base URL for all API interactions
 const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/'; // Base API URL
 
-// Define references to frequently accessed DOM elements for efficient reuse throughout the script
 const headerUl = document.querySelector('main article ul[aria-hidden="true"]');
 const tableUl = document.querySelector('main article ul[aria-hidden="true"] + ul');
 const form = document.querySelector('aside form');
@@ -23,6 +24,10 @@ const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
 // Array containing all valid endpoint identifiers
 const ENDPOINTS = [];
+
+// MARK: PROCESS DATA
+//    Validate
+//    Normalize
 
 // MARK: UTILITY FUNCTIONS
 // General-purpose utility functions used across the script
@@ -182,11 +187,11 @@ async function loadEndpoint(endpoint) {
 		}
 
 		// If duplicates exist, log an error, inform the user, and halt further processing
-               if (duplicates.length) {
-                        console.error('[DUPLICATE ID DETECTED]', duplicates);
-                        alert(`Duplicate IDs found: ${duplicates.join(', ')}`);
-                        return;
-                }
+		if (duplicates.length) {
+			console.error('[DUPLICATE ID DETECTED]', duplicates);
+			alert(`Duplicate IDs found: ${duplicates.join(', ')}`);
+			return;
+		}
 
 		// Clear the fieldset to prepare for new item inputs or edits
 		fieldset.innerHTML = '';
@@ -211,9 +216,9 @@ async function loadEndpoint(endpoint) {
 		toggleResetButton();
 	} catch (err) {
 		// Log the error and inform the user via a modal if data loading fails
-               console.error('Failed to load data:', err);
-               alert('Failed to load data.');
-       }
+		console.error('Failed to load data:', err);
+		alert('Failed to load data.');
+	}
 }
 
 // DOM Manipulation Utilities
@@ -248,40 +253,39 @@ function hasUnsavedChanges() {
 
 // MARK: BANNER
 async function loadAppBanner() {
-  try {
-    // Send HTTP GET request to app-banner endpoint using BASE_URL prefix
-    const res = await fetch(`${BASE_URL}app-banner`);
+	try {
+		// Send HTTP GET request to app-banner endpoint using BASE_URL prefix
+		const res = await fetch(`${BASE_URL}app-banner`);
 
-    // If the response returns a non-successful HTTP status (e.g., 500), throw a structured error
-    if (!res.ok) throw new Error(`STATUS ${res.status}`);
+		// If the response returns a non-successful HTTP status (e.g., 500), throw a structured error
+		if (!res.ok) throw new Error(`STATUS ${res.status}`);
 
-    // Parse the JSON response and destructure to get the first array item (should contain .banner text)
-    const [first] = await res.json();
+		// Parse the JSON response and destructure to get the first array item (should contain .banner text)
+		const [first] = await res.json();
 
-    // Trim the banner string (if it exists), or prepare a fallback if empty
-    const message = first?.banner?.trim();
-    const fallback = message || 'ℹ️ No banner message configured.';
+		// Trim the banner string (if it exists), or prepare a fallback if empty
+		const message = first?.banner?.trim();
+		const fallback = message || 'ℹ️ No banner message configured.';
 
-    // Locate all <p> elements that are direct children of <app-banner>
-    // Replace their textContent with the banner message or fallback
-    document.querySelectorAll('app-banner > p').forEach(p => {
-      p.textContent = fallback;
+		// Locate all <p> elements that are direct children of <app-banner>
+		// Replace their textContent with the banner message or fallback
+		document.querySelectorAll('app-banner > p').forEach(p => {
+			p.textContent = fallback;
 
-      // No need for data-error or classes; visual feedback is handled via structural CSS (e.g., :empty, :has())
-    });
+			// No need for data-error or classes; visual feedback is handled via structural CSS (e.g., :empty, :has())
+		});
+	} catch (err) {
+		// Determine error message based on the type of failure
+		const msg = err.message.startsWith('STATUS')
+			? `⚠️ Server responded with code ${err.message.slice(7)}` // Slice removes 'STATUS ' prefix
+			: `⚠️ Network error: Could not load banner`; // Generic fallback if fetch or JSON parsing failed
 
-  } catch (err) {
-    // Determine error message based on the type of failure
-    const msg = err.message.startsWith('STATUS')
-      ? `⚠️ Server responded with code ${err.message.slice(7)}` // Slice removes 'STATUS ' prefix
-      : `⚠️ Network error: Could not load banner`; // Generic fallback if fetch or JSON parsing failed
-
-    // For each <app-banner><p>, display the error message inline
-    // Again: no class, no attributes, only structural content
-    document.querySelectorAll('app-banner > p').forEach(p => {
-      p.textContent = msg;
-    });
-  }
+		// For each <app-banner><p>, display the error message inline
+		// Again: no class, no attributes, only structural content
+		document.querySelectorAll('app-banner > p').forEach(p => {
+			p.textContent = msg;
+		});
+	}
 }
 
 loadAppBanner();
@@ -368,6 +372,10 @@ function toggleSubmitButton() {
 	// Disable the submit button unless the form both has unsaved changes and passes validation
 	submitButton.disabled = !(dirty && valid);
 }
+
+// MARK: POPULATE DATA
+//    Custom element creation when necessary
+//    Inject data
 
 // Initialize custom HTML elements dynamically based on provided keys
 function initCustomEls(keys) {
@@ -656,10 +664,10 @@ form.oninput = () => {
 	// based on both the presence of unsaved changes and form validity
 	toggleSubmitButton();
 
-  submitButton.value = '';
-  deleteButton.value = '';
-  resetButton.value = '';
-  closeButton.value = '';
+	submitButton.value = '';
+	deleteButton.value = '';
+	resetButton.value = '';
+	closeButton.value = '';
 };
 
 // MARK: MAIN APPLICATION LOGIC
@@ -707,8 +715,7 @@ loadEndpoints().then(() => {
 // Event handler triggered when the "New" button is clicked to create a new form entry
 newButton.onclick = async () => {
 	// First, check if there are unsaved form changes
-	if (hasUnsavedChanges() && !window.confirm('You have unsaved changes. Discard them?'))
-		return; // If user declines, exit without making changes
+	if (hasUnsavedChanges() && !window.confirm('You have unsaved changes. Discard them?')) return; // If user declines, exit without making changes
 
 	// Clear the form's current input fields to prepare for creating a new entry
 	fieldset.innerHTML = '';
@@ -798,138 +805,134 @@ newButton.onclick = async () => {
 // MARK: FORM SUBMIT
 
 // Event handler triggered when the form is submitted (e.g., user clicks "Save" button)
-form.onsubmit = async (e) => {
-  e.preventDefault();
+form.onsubmit = async e => {
+	e.preventDefault();
 
-  if (submitButton.value !== 'confirm-save') {
-    submitButton.value = 'confirm-save';
-    return;
-  }
+	if (submitButton.value !== 'confirm-save') {
+		submitButton.value = 'confirm-save';
+		return;
+	}
 
-  const selected = document.querySelector('ul li input[name="list-item"]:checked');
-  const id = selected?.closest('li')?.querySelector('label > id')?.textContent?.trim();
-  const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
-  if (!endpoint) return;
+	const selected = document.querySelector('ul li input[name="list-item"]:checked');
+	const id = selected?.closest('li')?.querySelector('label > id')?.textContent?.trim();
+	const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
+	if (!endpoint) return;
 
-  const data = {};
-  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
-    if (!el.readOnly) data[el.name] = el.value.trim();
-  });
+	const data = {};
+	fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+		if (!el.readOnly) data[el.name] = el.value.trim();
+	});
 
-  const method = id ? 'PUT' : 'POST';
-  const url = id ? `${BASE_URL}${endpoint}/${id}` : `${BASE_URL}${endpoint}`;
+	const method = id ? 'PUT' : 'POST';
+	const url = id ? `${BASE_URL}${endpoint}/${id}` : `${BASE_URL}${endpoint}`;
 
-  try {
-    const res = await fetch(url, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
+	try {
+		const res = await fetch(url, {
+			method,
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(data),
+		});
 
-    if (!res.ok) throw new Error('Save failed');
+		if (!res.ok) throw new Error('Save failed');
 
-    submitButton.value = ''; // reset
-    await loadEndpoint(`${BASE_URL}${endpoint}`);
-  } catch (err) {
-    console.error('Failed to save:', err);
-    const intro = document.querySelector('main article > p');
-    if (intro) intro.textContent = '⚠️ Error saving record.';
-  }
+		submitButton.value = ''; // reset
+		await loadEndpoint(`${BASE_URL}${endpoint}`);
+	} catch (err) {
+		console.error('Failed to save:', err);
+		const intro = document.querySelector('main article > p');
+		if (intro) intro.textContent = '⚠️ Error saving record.';
+	}
 };
-
 
 // MARK: FORM RESET
 
 // Event handler triggered when the form reset event occurs (e.g., user clicks the "Reset" button)
-form.onreset = (e) => {
-  e.preventDefault();
+form.onreset = e => {
+	e.preventDefault();
 
-  if (resetButton.value !== 'confirm-reset') {
-    resetButton.value = 'confirm-reset';
-    return;
-  }
+	if (resetButton.value !== 'confirm-reset') {
+		resetButton.value = 'confirm-reset';
+		return;
+	}
 
-  restoreForm();
-  snapshotForm();
-  resetButton.value = '';
-  submitButton.value = '';
-  deleteButton.value = '';
-  closeButton.value = '';
+	restoreForm();
+	snapshotForm();
+	resetButton.value = '';
+	submitButton.value = '';
+	deleteButton.value = '';
+	closeButton.value = '';
 };
 
 // MARK: DELETE HANDLER
 
 deleteButton.onclick = async () => {
-  const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
-  if (!selected) return;
+	const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
+	if (!selected) return;
 
-  const id = selected.querySelector('label > id')?.textContent?.trim();
-  const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
+	const id = selected.querySelector('label > id')?.textContent?.trim();
+	const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
 
-  if (!endpoint) return;
+	if (!endpoint) return;
 
-  if (!id) {
-    if (deleteButton.value !== 'confirm-delete') {
-      deleteButton.value = 'confirm-delete';
-      return;
-    }
+	if (!id) {
+		if (deleteButton.value !== 'confirm-delete') {
+			deleteButton.value = 'confirm-delete';
+			return;
+		}
 
-    selected.remove();
-    clearFieldset(fieldset);
-    headerUl.querySelector('li').innerHTML = '';
-    snapshotForm();
-    toggleResetButton();
-    toggleSubmitButton();
-    deleteButton.value = ''; // reset
-    return;
-  }
+		selected.remove();
+		clearFieldset(fieldset);
+		headerUl.querySelector('li').innerHTML = '';
+		snapshotForm();
+		toggleResetButton();
+		toggleSubmitButton();
+		deleteButton.value = ''; // reset
+		return;
+	}
 
-  if (deleteButton.value !== 'confirm-delete') {
-    deleteButton.value = 'confirm-delete';
-    return;
-  }
+	if (deleteButton.value !== 'confirm-delete') {
+		deleteButton.value = 'confirm-delete';
+		return;
+	}
 
-  try {
-    await fetch(`${BASE_URL}${endpoint}/${id}`, { method: 'DELETE' });
-    deleteButton.value = ''; // reset
-    await loadEndpoint(`${BASE_URL}${endpoint}`);
-  } catch (err) {
-    console.error('Failed to delete:', err);
-    const intro = document.querySelector('main article > p');
-    if (intro) intro.textContent = '⚠️ Error deleting record.';
-  }
+	try {
+		await fetch(`${BASE_URL}${endpoint}/${id}`, { method: 'DELETE' });
+		deleteButton.value = ''; // reset
+		await loadEndpoint(`${BASE_URL}${endpoint}`);
+	} catch (err) {
+		console.error('Failed to delete:', err);
+		const intro = document.querySelector('main article > p');
+		if (intro) intro.textContent = '⚠️ Error deleting record.';
+	}
 };
-
 
 // MARK: CLOSE ASIDE
 
 closeButton.onclick = () => {
-  const closeAside = () => {
-    const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
-    if (selected) {
-      const radio = selected.querySelector('input[name="list-item"]');
-      if (radio) radio.checked = false;
-      const toggle = selected.querySelector('input[name="row-toggle"]');
-      if (toggle) toggle.checked = false;
-    }
+	const closeAside = () => {
+		const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
+		if (selected) {
+			const radio = selected.querySelector('input[name="list-item"]');
+			if (radio) radio.checked = false;
+			const toggle = selected.querySelector('input[name="row-toggle"]');
+			if (toggle) toggle.checked = false;
+		}
 
-    clearFieldset(fieldset);
-    form.oninput();
-    removeInlineStyles(mainEl);
-    snapshotForm();
+		clearFieldset(fieldset);
+		form.oninput();
+		removeInlineStyles(mainEl);
+		snapshotForm();
 
-    closeButton.value = '';
-    submitButton.value = '';
-    resetButton.value = '';
-    deleteButton.value = '';
-  };
+		closeButton.value = '';
+		submitButton.value = '';
+		resetButton.value = '';
+		deleteButton.value = '';
+	};
 
-  if (closeButton.value !== 'confirm-close') {
-    closeButton.value = 'confirm-close';
-    return;
-  }
+	if (closeButton.value !== 'confirm-close') {
+		closeButton.value = 'confirm-close';
+		return;
+	}
 
-  closeAside();
+	closeAside();
 };
-
-
