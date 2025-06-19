@@ -5,8 +5,8 @@
 // Global storage object for navigation data fetched from the API
 let NAV_DATA = {}; // holds navItems JSON
 
-// MARK: Base URL for all API interactions
-const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/'; // Base API URL
+// MARK: Base URL and shared fetch utility
+import { BASE_URL, fetchJSON } from './utils/fetchJSON.js';
 
 // Define references to frequently accessed DOM elements for efficient reuse throughout the script
 const headerUl = document.querySelector('main article ul[aria-hidden="true"]');
@@ -21,25 +21,18 @@ const resetButton = form.querySelector('button[aria-label="Reset"]');
 const submitButton = form.querySelector('button[aria-label="Save"]');
 const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
+const originalLabels = {
+	save: submitButton.getAttribute('aria-label'),
+	reset: resetButton.getAttribute('aria-label'),
+	delete: deleteButton.getAttribute('aria-label'),
+	close: closeButton.getAttribute('aria-label'),
+};
+
 // Array containing all valid endpoint identifiers
 const ENDPOINTS = [];
 
 // MARK: UTILITY FUNCTIONS
 // General-purpose utility functions used across the script
-
-// Fetch JSON from an endpoint relative to BASE_URL
-async function fetchJSON(endpoint = '') {
-	try {
-		const url = endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`;
-		const res = await fetch(url);
-		const text = await res.text();
-		const data = JSON.parse(text);
-		return data;
-	} catch (err) {
-		console.error('Invalid JSON:', err);
-		return { error: err.message };
-	}
-}
 
 // Load navigation endpoints from API and dynamically populate navigation controls
 function loadEndpoints() {
@@ -192,7 +185,8 @@ async function loadEndpoint(endpoint) {
 		// If duplicates exist, log an error, inform the user, and halt further processing
 		if (duplicates.length) {
 			console.error('[DUPLICATE ID DETECTED]', duplicates);
-			alert(`Duplicate IDs found: ${duplicates.join(', ')}`);
+			const intro = document.querySelector('main article > p');
+			if (intro) intro.textContent = `⚠️ Duplicate IDs: ${duplicates.join(', ')}`;
 			return;
 		}
 
@@ -218,9 +212,10 @@ async function loadEndpoint(endpoint) {
 		// Update UI buttons based on form state (reset/save button toggling)
 		toggleResetButton();
 	} catch (err) {
-		// Log the error and inform the user via a modal if data loading fails
+		// Log the error and display an inline message if data loading fails
 		console.error('Failed to load data:', err);
-		alert('Failed to load data.');
+		const intro = document.querySelector('main article > p');
+		if (intro) intro.textContent = '⚠️ Error loading data.';
 	}
 }
 
@@ -657,10 +652,10 @@ form.oninput = () => {
 	// based on both the presence of unsaved changes and form validity
 	toggleSubmitButton();
 
-	submitButton.value = '';
-	deleteButton.value = '';
-	resetButton.value = '';
-	closeButton.value = '';
+	submitButton.setAttribute('aria-label', originalLabels.save);
+	deleteButton.setAttribute('aria-label', originalLabels.delete);
+	resetButton.setAttribute('aria-label', originalLabels.reset);
+	closeButton.setAttribute('aria-label', originalLabels.close);
 };
 
 // MARK: MAIN APPLICATION LOGIC
@@ -689,12 +684,11 @@ loadEndpoints().then(() => {
 
 			// Before proceeding, check if there are unsaved form changes
 			if (hasUnsavedChanges()) {
-				if (window.confirm('You have unsaved changes. Discard them?')) {
-					proceed();
-				}
-			} else {
-				proceed();
+				submitButton.setAttribute('aria-label', 'confirm-save');
+				resetButton.setAttribute('aria-label', 'confirm-reset');
+				return;
 			}
+			proceed();
 		};
 	});
 
@@ -708,7 +702,11 @@ loadEndpoints().then(() => {
 // Event handler triggered when the "New" button is clicked to create a new form entry
 newButton.onclick = async () => {
 	// First, check if there are unsaved form changes
-	if (hasUnsavedChanges() && !window.confirm('You have unsaved changes. Discard them?')) return; // If user declines, exit without making changes
+	if (hasUnsavedChanges()) {
+		submitButton.setAttribute('aria-label', 'confirm-save');
+		resetButton.setAttribute('aria-label', 'confirm-reset');
+		return; // user must confirm via buttons
+	}
 
 	// Clear the form's current input fields to prepare for creating a new entry
 	fieldset.innerHTML = '';
@@ -801,8 +799,8 @@ newButton.onclick = async () => {
 form.onsubmit = async e => {
 	e.preventDefault();
 
-	if (submitButton.value !== 'confirm-save') {
-		submitButton.value = 'confirm-save';
+	if (submitButton.getAttribute('aria-label') !== 'confirm-save') {
+		submitButton.setAttribute('aria-label', 'confirm-save');
 		return;
 	}
 
@@ -828,7 +826,7 @@ form.onsubmit = async e => {
 
 		if (!res.ok) throw new Error('Save failed');
 
-		submitButton.value = ''; // reset
+		submitButton.setAttribute('aria-label', originalLabels.save); // reset
 		await loadEndpoint(endpoint);
 	} catch (err) {
 		console.error('Failed to save:', err);
@@ -843,17 +841,17 @@ form.onsubmit = async e => {
 form.onreset = e => {
 	e.preventDefault();
 
-	if (resetButton.value !== 'confirm-reset') {
-		resetButton.value = 'confirm-reset';
+	if (resetButton.getAttribute('aria-label') !== 'confirm-reset') {
+		resetButton.setAttribute('aria-label', 'confirm-reset');
 		return;
 	}
 
 	restoreForm();
 	snapshotForm();
-	resetButton.value = '';
-	submitButton.value = '';
-	deleteButton.value = '';
-	closeButton.value = '';
+	resetButton.setAttribute('aria-label', originalLabels.reset);
+	submitButton.setAttribute('aria-label', originalLabels.save);
+	deleteButton.setAttribute('aria-label', originalLabels.delete);
+	closeButton.setAttribute('aria-label', originalLabels.close);
 };
 
 // MARK: DELETE HANDLER
@@ -868,8 +866,8 @@ deleteButton.onclick = async () => {
 	if (!endpoint) return;
 
 	if (!id) {
-		if (deleteButton.value !== 'confirm-delete') {
-			deleteButton.value = 'confirm-delete';
+		if (deleteButton.getAttribute('aria-label') !== 'confirm-delete') {
+			deleteButton.setAttribute('aria-label', 'confirm-delete');
 			return;
 		}
 
@@ -879,18 +877,18 @@ deleteButton.onclick = async () => {
 		snapshotForm();
 		toggleResetButton();
 		toggleSubmitButton();
-		deleteButton.value = ''; // reset
+		deleteButton.setAttribute('aria-label', originalLabels.delete); // reset
 		return;
 	}
 
-	if (deleteButton.value !== 'confirm-delete') {
-		deleteButton.value = 'confirm-delete';
+	if (deleteButton.getAttribute('aria-label') !== 'confirm-delete') {
+		deleteButton.setAttribute('aria-label', 'confirm-delete');
 		return;
 	}
 
 	try {
 		await fetch(`${BASE_URL}${endpoint}/${id}`, { method: 'DELETE' });
-		deleteButton.value = ''; // reset
+		deleteButton.setAttribute('aria-label', originalLabels.delete); // reset
 		await loadEndpoint(endpoint);
 	} catch (err) {
 		console.error('Failed to delete:', err);
@@ -916,14 +914,14 @@ closeButton.onclick = () => {
 		removeInlineStyles(mainEl);
 		snapshotForm();
 
-		closeButton.value = '';
-		submitButton.value = '';
-		resetButton.value = '';
-		deleteButton.value = '';
+		closeButton.setAttribute('aria-label', originalLabels.close);
+		submitButton.setAttribute('aria-label', originalLabels.save);
+		resetButton.setAttribute('aria-label', originalLabels.reset);
+		deleteButton.setAttribute('aria-label', originalLabels.delete);
 	};
 
-	if (closeButton.value !== 'confirm-close') {
-		closeButton.value = 'confirm-close';
+	if (closeButton.getAttribute('aria-label') !== 'confirm-close') {
+		closeButton.setAttribute('aria-label', 'confirm-close');
 		return;
 	}
 
