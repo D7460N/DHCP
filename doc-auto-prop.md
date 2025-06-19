@@ -13,21 +13,22 @@ Introduce a simple, structured documentation method to streamline developer comm
 
 
 ```
-        _________________________
-       |  We want this, that,    |
-       |  and the other          |
-       |  by tomorrow.           |
-       |                         |
-       |  How long will it take? |
-       |__   ____________________|
-          |/
-Stakeholders      .-------------.
-Management       ( Requirements? O
-End-users         `-------------  o
-                           //////
-                          | _ - |
-Engineers be like...     (| o O |)
-                        _ooO_u_Ooo_
+_________________________
+|  We want this, that,    |
+|  and the other          |
+|  by tomorrow.           |
+|                         |
+|  How long will it take? |
+|__   ____________________|
+   |/
+Stakeholders
+Management       .---------------------.
+End-users       ( errr... requirements? )
+                 `---------------- O --`
+                         //////   O
+                        | _ - | o
+Engineers be like...   (| o O |)
+                      _ooO_u_Ooo_
 ```
 
 * **📚 Manual Documentation Overhead:**
