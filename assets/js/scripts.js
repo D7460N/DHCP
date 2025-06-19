@@ -25,19 +25,19 @@ const tableUl = document.querySelector('main article ul[aria-hidden="true"] + ul
 const form = document.querySelector('aside form');
 const fieldset = form.querySelector('fieldset');
 const mainEl = document.querySelector('main');
-const newButton = document.querySelector('main article button');
-const closeButton = document.querySelector('aside button[aria-label="Close"]');
-const deleteButton = form.querySelector('button[aria-label="Delete"]');
-const resetButton = form.querySelector('button[aria-label="Reset"]');
-const submitButton = form.querySelector('button[aria-label="Save"]');
-const savedMessage = submitButton.nextElementSibling;
+const newItem = document.querySelector('main article [attribute*="new item"]');
+const closeItem = document.querySelector('aside [aria-label="Close"]');
+const deleteItem = form.querySelector('[aria-label="Delete"]');
+const resetItem = form.querySelector('[aria-label="Reset"]');
+const submitItem = form.querySelector('[aria-label="Save"]');
+const savedMessage = submitItem.nextElementSibling;
 const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
 const originalLabels = {
-	save: submitButton.getAttribute('aria-label'),
-	reset: resetButton.getAttribute('aria-label'),
-	delete: deleteButton.getAttribute('aria-label'),
-	close: closeButton.getAttribute('aria-label'),
+	save: submitItem.getAttribute('aria-label'),
+	reset: resetItem.getAttribute('aria-label'),
+	delete: deleteItem.getAttribute('aria-label'),
+	close: closeItem.getAttribute('aria-label'),
 };
 
 // Array containing all valid endpoint identifiers
@@ -231,7 +231,7 @@ async function loadEndpoint(endpoint) {
 		snapshotForm();
 
 		// Update UI buttons based on form state (reset/save button toggling)
-		toggleResetButton();
+		toggleResetItem();
 	} catch (err) {
 		// Log the error and display an inline message if data loading fails
 		console.error('Failed to load data:', err);
@@ -328,8 +328,8 @@ function snapshotForm() {
 	snapshotLi = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
 
 	// After taking snapshot, update state of Reset and Submit buttons
-	toggleResetButton();
-	toggleSubmitButton();
+	toggleResetItem();
+	toggleSubmitItem();
 }
 
 // Restore form fields to previously captured state stored in `originalData`
@@ -358,24 +358,24 @@ function restoreForm() {
 }
 
 // Toggle the disabled state of the Reset button based on form changes
-function toggleResetButton() {
+function toggleResetItem() {
 	// Guard clause: ensure the reset button exists before proceeding
-	if (!resetButton) return;
+	if (!resetItem) return;
 
 	// Determine if the form currently has unsaved changes
 	const dirty = hasUnsavedChanges();
 
 	// Disable the reset button if no changes; enable it otherwise
-	resetButton.disabled = !dirty;
+	resetItem.disabled = !dirty;
 
 	// Update the form element's data attribute to reflect if the form has unsaved changes (useful for CSS state indicators)
 	form.dataset.dirty = dirty ? 'true' : 'false';
 }
 
 // Toggle the disabled state of the Submit button based on form validity and changes
-function toggleSubmitButton() {
+function toggleSubmitItem() {
 	// Guard clause: ensure the submit button exists before proceeding
-	if (!submitButton) return;
+	if (!submitItem) return;
 
 	// Determine if the form has unsaved changes
 	const dirty = hasUnsavedChanges();
@@ -384,7 +384,7 @@ function toggleSubmitButton() {
 	const valid = form.checkValidity();
 
 	// Disable the submit button unless the form both has unsaved changes and passes validation
-	submitButton.disabled = !(dirty && valid);
+	submitItem.disabled = !(dirty && valid);
 }
 
 // Initialize custom HTML elements dynamically based on provided keys
@@ -452,7 +452,7 @@ function updateFormFromSelectedRow() {
 	snapshotForm();
 
 	// Update the reset button's enabled/disabled state based on the form's current state
-	toggleResetButton();
+	toggleResetItem();
 }
 
 // MARK: List & Row Utilities
@@ -668,16 +668,16 @@ function createInputFromKey(key, value) {
 form.oninput = () => {
 	// Immediately update the enabled or disabled state of the reset button,
 	// depending on whether there are unsaved changes in the form
-	toggleResetButton();
+	toggleResetItem();
 
 	// Update the enabled or disabled state of the submit button,
 	// based on both the presence of unsaved changes and form validity
-	toggleSubmitButton();
+	toggleSubmitItem();
 
-	submitButton.setAttribute('aria-label', originalLabels.save);
-	deleteButton.setAttribute('aria-label', originalLabels.delete);
-	resetButton.setAttribute('aria-label', originalLabels.reset);
-	closeButton.setAttribute('aria-label', originalLabels.close);
+	submitItem.setAttribute('aria-label', originalLabels.save);
+	deleteItem.setAttribute('aria-label', originalLabels.delete);
+	resetItem.setAttribute('aria-label', originalLabels.reset);
+	closeItem.setAttribute('aria-label', originalLabels.close);
 };
 
 // MARK: MAIN APPLICATION LOGIC
@@ -706,8 +706,8 @@ loadNavItems().then(() => {
 
 			// Before proceeding, check if there are unsaved form changes
 			if (hasUnsavedChanges()) {
-				submitButton.setAttribute('aria-label', 'confirm-save');
-				deleteButton.setAttribute('aria-label', 'confirm-delete');
+				submitItem.setAttribute('aria-label', 'confirm-save');
+				deleteItem.setAttribute('aria-label', 'confirm-delete');
 				return;
 			}
 			proceed();
@@ -722,11 +722,11 @@ loadNavItems().then(() => {
 
 // MARK: NEW ROW CREATION
 // Event handler triggered when the "New" button is clicked to create a new form entry
-newButton.onclick = async () => {
+newItem.onclick = async () => {
 	// First, check if there are unsaved form changes
 	if (hasUnsavedChanges()) {
-		submitButton.setAttribute('aria-label', 'confirm-save');
-		deleteButton.setAttribute('aria-label', 'confirm-delete');
+		submitItem.setAttribute('aria-label', 'confirm-save');
+		deleteItem.setAttribute('aria-label', 'confirm-delete');
 		return; // user must confirm via buttons
 	}
 
@@ -812,7 +812,7 @@ newButton.onclick = async () => {
 	snapshotForm();
 
 	// Update the reset button state (enabled or disabled) based on current form data state
-	toggleResetButton();
+	toggleResetItem();
 };
 
 // MARK: FORM SUBMIT
@@ -821,8 +821,8 @@ newButton.onclick = async () => {
 form.onsubmit = async e => {
 	e.preventDefault();
 
-	if (submitButton.getAttribute('aria-label') !== 'confirm-save') {
-		submitButton.setAttribute('aria-label', 'confirm-save');
+	if (submitItem.getAttribute('aria-label') !== 'confirm-save') {
+		submitItem.setAttribute('aria-label', 'confirm-save');
 		return;
 	}
 
@@ -848,12 +848,12 @@ form.onsubmit = async e => {
 
 		if (!res.ok) throw new Error('Save failed');
 
-		submitButton.setAttribute('aria-label', 'saved');
+		submitItem.setAttribute('aria-label', 'saved');
 		savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
 		await loadEndpoint(endpoint);
 		setTimeout(() => {
 			savedMessage.textContent = '';
-			submitButton.setAttribute('aria-label', originalLabels.save);
+			submitItem.setAttribute('aria-label', originalLabels.save);
 		}, 2000);
 	} catch (err) {
 		console.error('Failed to save:', err);
@@ -868,22 +868,22 @@ form.onsubmit = async e => {
 form.onreset = e => {
 	e.preventDefault();
 
-	if (resetButton.getAttribute('aria-label') !== 'confirm-reset') {
-		resetButton.setAttribute('aria-label', 'confirm-reset');
+	if (resetItem.getAttribute('aria-label') !== 'confirm-reset') {
+		resetItem.setAttribute('aria-label', 'confirm-reset');
 		return;
 	}
 
 	restoreForm();
 	snapshotForm();
-	resetButton.setAttribute('aria-label', originalLabels.reset);
-	submitButton.setAttribute('aria-label', originalLabels.save);
-	deleteButton.setAttribute('aria-label', originalLabels.delete);
-	closeButton.setAttribute('aria-label', originalLabels.close);
+	resetItem.setAttribute('aria-label', originalLabels.reset);
+	submitItem.setAttribute('aria-label', originalLabels.save);
+	deleteItem.setAttribute('aria-label', originalLabels.delete);
+	closeItem.setAttribute('aria-label', originalLabels.close);
 };
 
 // MARK: DELETE HANDLER
 
-deleteButton.onclick = async () => {
+deleteItem.onclick = async () => {
 	const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
 	if (!selected) return;
 
@@ -893,8 +893,8 @@ deleteButton.onclick = async () => {
 	if (!endpoint) return;
 
 	if (!id) {
-		if (deleteButton.getAttribute('aria-label') !== 'confirm-delete') {
-			deleteButton.setAttribute('aria-label', 'confirm-delete');
+		if (deleteItem.getAttribute('aria-label') !== 'confirm-delete') {
+			deleteItem.setAttribute('aria-label', 'confirm-delete');
 			return;
 		}
 
@@ -902,20 +902,20 @@ deleteButton.onclick = async () => {
 		clearFieldset(fieldset);
 		headerUl.querySelector('li').innerHTML = '';
 		snapshotForm();
-		toggleResetButton();
-		toggleSubmitButton();
-		deleteButton.setAttribute('aria-label', originalLabels.delete); // reset
+		toggleResetItem();
+		toggleSubmitItem();
+		deleteItem.setAttribute('aria-label', originalLabels.delete); // reset
 		return;
 	}
 
-	if (deleteButton.getAttribute('aria-label') !== 'confirm-delete') {
-		deleteButton.setAttribute('aria-label', 'confirm-delete');
+	if (deleteItem.getAttribute('aria-label') !== 'confirm-delete') {
+		deleteItem.setAttribute('aria-label', 'confirm-delete');
 		return;
 	}
 
 	try {
 		await fetch(`${BASE_URL}${endpoint}/${id}`, { method: 'DELETE' });
-		deleteButton.setAttribute('aria-label', originalLabels.delete); // reset
+		deleteItem.setAttribute('aria-label', originalLabels.delete); // reset
 		await loadEndpoint(endpoint);
 	} catch (err) {
 		console.error('Failed to delete:', err);
@@ -925,10 +925,10 @@ deleteButton.onclick = async () => {
 };
 
 // MARK: CLOSE ASIDE
-closeButton.onclick = () => {
+closeItem.onclick = () => {
 	if (hasUnsavedChanges()) {
-		submitButton.setAttribute('aria-label', 'confirm-save');
-		deleteButton.setAttribute('aria-label', 'confirm-delete');
+		submitItem.setAttribute('aria-label', 'confirm-save');
+		deleteItem.setAttribute('aria-label', 'confirm-delete');
 		return;
 	}
 
@@ -946,14 +946,14 @@ closeButton.onclick = () => {
 		removeInlineStyles(mainEl);
 		snapshotForm();
 
-		closeButton.setAttribute('aria-label', originalLabels.close);
-		submitButton.setAttribute('aria-label', originalLabels.save);
-		resetButton.setAttribute('aria-label', originalLabels.reset);
-		deleteButton.setAttribute('aria-label', originalLabels.delete);
+		closeItem.setAttribute('aria-label', originalLabels.close);
+		submitItem.setAttribute('aria-label', originalLabels.save);
+		resetItem.setAttribute('aria-label', originalLabels.reset);
+		deleteItem.setAttribute('aria-label', originalLabels.delete);
 	};
 
-	if (closeButton.getAttribute('aria-label') !== 'confirm-close') {
-		closeButton.setAttribute('aria-label', 'confirm-close');
+	if (closeItem.getAttribute('aria-label') !== 'confirm-close') {
+		closeItem.setAttribute('aria-label', 'confirm-close');
 		return;
 	}
 
@@ -963,7 +963,7 @@ closeButton.onclick = () => {
 // Prompt user to save or delete when page loses focus if there are unsaved changes
 window.onblur = () => {
 	if (hasUnsavedChanges()) {
-		submitButton.setAttribute('aria-label', 'confirm-save');
-		deleteButton.setAttribute('aria-label', 'confirm-delete');
+		submitItem.setAttribute('aria-label', 'confirm-save');
+		deleteItem.setAttribute('aria-label', 'confirm-delete');
 	}
 };
