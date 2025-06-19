@@ -59,13 +59,14 @@
         <article>
           <h1></h1>
           <p></p>
-          <button type="button" aria-label="Add new item">
+          <label role="button" aria-label="Add new item">
+            <input type="checkbox">
             New Item
             <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
               <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
               <path d="M12 8v8m-4-4h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
             </svg>
-          </button>
+          </label>
           <hr />
           <input type="search" placeholder="Filter by name..." name="filter" />
           <ul aria-hidden="true">
@@ -76,7 +77,10 @@
       </main>
       <aside>
         <h2 aria-live="polite">DETAILS</h2>
-        <button aria-label="Close">&#10006;</button>
+        <label role="button" aria-label="Close">
+          <input type="checkbox">
+          &#10006;
+        </label>
         <form>
           <fieldset></fieldset>
           <small>Note: Ensure all fields are filled correctly before
