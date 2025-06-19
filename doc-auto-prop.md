@@ -13,7 +13,7 @@ Introduce a simple, structured documentation method to streamline developer comm
 
 
 ```
-_________________________
+ _________________________
 |  We want this, that,    |
 |  and the other          |
 |  by tomorrow.           |
@@ -21,8 +21,8 @@ _________________________
 |  How long will it take? |
 |__   ____________________|
    |/
-Stakeholders
-Management       .---------------------.
+Stakeholders,
+Management,      .---------------------.
 End-users       ( errr... requirements? )
                  `---------------- O --`
                          //////   O
