@@ -19,6 +19,7 @@ const closeButton = document.querySelector('aside button[aria-label="Close"]');
 const deleteButton = form.querySelector('button[aria-label="Delete"]');
 const resetButton = form.querySelector('button[aria-label="Reset"]');
 const submitButton = form.querySelector('button[aria-label="Save"]');
+const savedMessage = submitButton.nextElementSibling;
 const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
 const originalLabels = {
@@ -37,7 +38,8 @@ const ENDPOINTS = [];
 // Load navigation endpoints from API and dynamically populate navigation controls
 function loadEndpoints() {
 	// Fetches navigation content from the API and updates navigation inputs
-	return fetchJSON('navItems').then(([data]) => {
+	return fetchJSON('navItems').then(text => {
+		const [data] = JSON.parse(text);
 		NAV_DATA = data; // store full nav content
 		const keys = Object.keys(data || {});
 		ENDPOINTS.splice(0, ENDPOINTS.length, ...keys);
@@ -141,12 +143,14 @@ async function loadEndpoint(endpoint) {
 
 	try {
 		// Fetch primary data from the given API endpoint
-		const [data] = await fetchJSON(endpoint);
+		const text = await fetchJSON(endpoint);
+		const [data] = JSON.parse(text);
 
 		// Ensure `data.items` is a valid array; if not, attempt to re-fetch or default to empty
 		if (!Array.isArray(data.items)) {
 			try {
-				data.items = await fetchJSON(endpoint);
+				const retry = await fetchJSON(endpoint);
+				data.items = JSON.parse(retry);
 			} catch {
 				data.items = []; // Set default empty array if fetch fails again
 			}
@@ -253,7 +257,8 @@ function hasUnsavedChanges() {
 async function loadAppBanner() {
 	try {
 		// Retrieve banner data using the shared fetchJSON utility
-		const [first] = await fetchJSON('app-banner');
+		const bannerText = await fetchJSON('app-banner');
+		const [first] = JSON.parse(bannerText);
 
 		// Trim the banner string (if it exists), or prepare a fallback if empty
 		const message = first?.banner?.trim();
@@ -685,7 +690,7 @@ loadEndpoints().then(() => {
 			// Before proceeding, check if there are unsaved form changes
 			if (hasUnsavedChanges()) {
 				submitButton.setAttribute('aria-label', 'confirm-save');
-				resetButton.setAttribute('aria-label', 'confirm-reset');
+				deleteButton.setAttribute('aria-label', 'confirm-delete');
 				return;
 			}
 			proceed();
@@ -704,7 +709,7 @@ newButton.onclick = async () => {
 	// First, check if there are unsaved form changes
 	if (hasUnsavedChanges()) {
 		submitButton.setAttribute('aria-label', 'confirm-save');
-		resetButton.setAttribute('aria-label', 'confirm-reset');
+		deleteButton.setAttribute('aria-label', 'confirm-delete');
 		return; // user must confirm via buttons
 	}
 
@@ -826,8 +831,13 @@ form.onsubmit = async e => {
 
 		if (!res.ok) throw new Error('Save failed');
 
-		submitButton.setAttribute('aria-label', originalLabels.save); // reset
+		submitButton.setAttribute('aria-label', 'saved');
+		savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
 		await loadEndpoint(endpoint);
+		setTimeout(() => {
+			savedMessage.textContent = '';
+			submitButton.setAttribute('aria-label', originalLabels.save);
+		}, 2000);
 	} catch (err) {
 		console.error('Failed to save:', err);
 		const intro = document.querySelector('main article > p');
@@ -900,6 +910,11 @@ deleteButton.onclick = async () => {
 // MARK: CLOSE ASIDE
 
 closeButton.onclick = () => {
+	if (hasUnsavedChanges()) {
+		submitButton.setAttribute('aria-label', 'confirm-save');
+		deleteButton.setAttribute('aria-label', 'confirm-delete');
+		return;
+	}
 	const closeAside = () => {
 		const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
 		if (selected) {
@@ -926,4 +941,12 @@ closeButton.onclick = () => {
 	}
 
 	closeAside();
+};
+
+// Prompt user to save or delete when page loses focus if there are unsaved changes
+window.onblur = () => {
+	if (hasUnsavedChanges()) {
+		submitButton.setAttribute('aria-label', 'confirm-save');
+		deleteButton.setAttribute('aria-label', 'confirm-delete');
+	}
 };
