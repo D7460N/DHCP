@@ -265,7 +265,7 @@ app-container {
 
   /* MARK: BUTTONS
 */
-  button {
+  [role="button"] {
     --bg-panel-opacity: 0.1;
 
     display: inline;
@@ -351,7 +351,7 @@ app-container {
         border-inline: none;
       }
 
-      button {
+      [role="button"] {
         display: grid;
         grid-template-columns: auto auto;
         gap: 1rem;
@@ -519,29 +519,35 @@ app-container {
       grid-template-rows: auto 1fr;
     }
 
-    button[aria-label="Close"] {
+    [role="button"] {
+      cursor: pointer;
+      user-select: none;
       position: absolute;
       align-self: start;
       justify-self: end;
       margin-block-start: 1rem;
       margin-inline-end: 1rem;
       padding: 0.5rem;
+
+      input[type="checkbox"] {
+        display: none;
+      }
     }
 
-    button[aria-label="Delete"] {
+    [aria-label="Delete"] {
       position: absolute;
       align-self: end;
       justify-self: start;
       margin-inline-start: 1rem;
     }
 
-    button[aria-label="Reset"] {
+    [aria-label="Reset"] {
       position: absolute;
       align-self: end;
       justify-self: center;
     }
 
-    button[aria-label="Save"] {
+    [aria-label="Save"] {
       position: absolute;
       justify-self: end;
       align-self: end;
