@@ -1,12 +1,23 @@
 // MARK: SCRIPTS.JS
 
-// Purpose: Fetch JSON and inject values using custom elements generated from API keys
+// Shared fetch utility for all data calls
+const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/';
+
+async function fetchJSON(endpoint = '') {
+	try {
+		const url = endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`;
+		const res = await fetch(url);
+		const text = await res.text();
+		JSON.parse(text); // validate JSON
+		return text;
+	} catch (err) {
+		console.error('Invalid JSON:', err);
+		return `Error: ${err.message}`;
+	}
+}
 
 // Global storage object for navigation data fetched from the API
 let NAV_DATA = {}; // holds navItems JSON
-
-// MARK: Base URL and shared fetch utility
-import { BASE_URL, fetchJSON } from './utils/fetchJSON.js';
 
 // Define references to frequently accessed DOM elements for efficient reuse throughout the script
 const headerUl = document.querySelector('main article ul[aria-hidden="true"]');
@@ -19,6 +30,7 @@ const closeButton = document.querySelector('aside button[aria-label="Close"]');
 const deleteButton = form.querySelector('button[aria-label="Delete"]');
 const resetButton = form.querySelector('button[aria-label="Reset"]');
 const submitButton = form.querySelector('button[aria-label="Save"]');
+const savedMessage = submitButton.nextElementSibling;
 const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
 const originalLabels = {
@@ -31,38 +43,45 @@ const originalLabels = {
 // Array containing all valid endpoint identifiers
 const ENDPOINTS = [];
 
-// MARK: UTILITY FUNCTIONS
-// General-purpose utility functions used across the script
-
 // Load navigation endpoints from API and dynamically populate navigation controls
-function loadEndpoints() {
-	// Fetches navigation content from the API and updates navigation inputs
-	return fetchJSON('navItems').then(([data]) => {
-		NAV_DATA = data; // store full nav content
-		const keys = Object.keys(data || {});
-		ENDPOINTS.splice(0, ENDPOINTS.length, ...keys);
+function loadNavItems() {
+	return fetchJSON('navItems').then(text => {
+		let parsed;
+		try {
+			parsed = JSON.parse(text);
+			if (!Array.isArray(parsed)) throw new Error('Expected navItems array');
+		} catch (err) {
+			console.error('Malformed navItems:', err);
+			return;
+		}
 
-		const navSection = document.querySelector('nav details > section');
-		if (!navSection) return;
+		const [data] = parsed;
+		const detailEls = document.querySelectorAll('nav details');
 
-		// Clear existing navigation items
-		navSection.innerHTML = '';
+		Object.entries(data).forEach(([groupKey, groupValue], index) => {
+			const detail = detailEls[index];
+			if (!detail) return;
 
-		// Dynamically create navigation radio buttons based on the fetched data
-		keys.forEach((key, i) => {
-			const { title } = data[key] || {};
-			const label = document.createElement('label');
-			label.textContent = title;
+			const summary = detail.querySelector('summary');
+			const section = detail.querySelector('section');
 
-			const input = document.createElement('input');
-			input.type = 'radio';
-			input.name = 'nav';
-			input.value = key; // key = endpoint
-			input.hidden = true;
-			if (i === 0) input.checked = true; // Check the first input by default
+			if (summary) summary.textContent = groupKey.charAt(0).toUpperCase() + groupKey.slice(1);
+			if (section) section.innerHTML = '';
 
-			label.appendChild(input);
-			navSection.appendChild(label);
+			Object.entries(groupValue).forEach(([key, { title }], i) => {
+				const label = document.createElement('label');
+				label.textContent = title || key;
+
+				const input = document.createElement('input');
+				input.type = 'radio';
+				input.name = 'nav';
+				input.value = key;
+				input.hidden = true;
+				if (i === 0 && index === 0) input.checked = true;
+
+				label.appendChild(input);
+				section.appendChild(label);
+			});
 		});
 	});
 }
@@ -141,12 +160,14 @@ async function loadEndpoint(endpoint) {
 
 	try {
 		// Fetch primary data from the given API endpoint
-		const [data] = await fetchJSON(endpoint);
+		const text = await fetchJSON(endpoint);
+		const [data] = JSON.parse(text);
 
 		// Ensure `data.items` is a valid array; if not, attempt to re-fetch or default to empty
 		if (!Array.isArray(data.items)) {
 			try {
-				data.items = await fetchJSON(endpoint);
+				const retry = await fetchJSON(endpoint);
+				data.items = JSON.parse(retry);
 			} catch {
 				data.items = []; // Set default empty array if fetch fails again
 			}
@@ -253,7 +274,8 @@ function hasUnsavedChanges() {
 async function loadAppBanner() {
 	try {
 		// Retrieve banner data using the shared fetchJSON utility
-		const [first] = await fetchJSON('app-banner');
+		const bannerText = await fetchJSON('app-banner');
+		const [first] = JSON.parse(bannerText);
 
 		// Trim the banner string (if it exists), or prepare a fallback if empty
 		const message = first?.banner?.trim();
@@ -662,7 +684,7 @@ form.oninput = () => {
 
 // MARK: INITIAL TAB FETCH
 // Fetch initial navigation data, then set up event listeners for navigation inputs
-loadEndpoints().then(() => {
+loadNavItems().then(() => {
 	// Iterate over each navigation radio input element to set its change event listener
 	document.querySelectorAll('nav input[name="nav"]').forEach(input => {
 		// Attach an event listener triggered when the input state changes (radio button selection)
@@ -685,7 +707,7 @@ loadEndpoints().then(() => {
 			// Before proceeding, check if there are unsaved form changes
 			if (hasUnsavedChanges()) {
 				submitButton.setAttribute('aria-label', 'confirm-save');
-				resetButton.setAttribute('aria-label', 'confirm-reset');
+				deleteButton.setAttribute('aria-label', 'confirm-delete');
 				return;
 			}
 			proceed();
@@ -704,7 +726,7 @@ newButton.onclick = async () => {
 	// First, check if there are unsaved form changes
 	if (hasUnsavedChanges()) {
 		submitButton.setAttribute('aria-label', 'confirm-save');
-		resetButton.setAttribute('aria-label', 'confirm-reset');
+		deleteButton.setAttribute('aria-label', 'confirm-delete');
 		return; // user must confirm via buttons
 	}
 
@@ -826,8 +848,13 @@ form.onsubmit = async e => {
 
 		if (!res.ok) throw new Error('Save failed');
 
-		submitButton.setAttribute('aria-label', originalLabels.save); // reset
+		submitButton.setAttribute('aria-label', 'saved');
+		savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
 		await loadEndpoint(endpoint);
+		setTimeout(() => {
+			savedMessage.textContent = '';
+			submitButton.setAttribute('aria-label', originalLabels.save);
+		}, 2000);
 	} catch (err) {
 		console.error('Failed to save:', err);
 		const intro = document.querySelector('main article > p');
@@ -898,8 +925,13 @@ deleteButton.onclick = async () => {
 };
 
 // MARK: CLOSE ASIDE
-
 closeButton.onclick = () => {
+	if (hasUnsavedChanges()) {
+		submitButton.setAttribute('aria-label', 'confirm-save');
+		deleteButton.setAttribute('aria-label', 'confirm-delete');
+		return;
+	}
+
 	const closeAside = () => {
 		const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
 		if (selected) {
@@ -926,4 +958,12 @@ closeButton.onclick = () => {
 	}
 
 	closeAside();
+};
+
+// Prompt user to save or delete when page loses focus if there are unsaved changes
+window.onblur = () => {
+	if (hasUnsavedChanges()) {
+		submitButton.setAttribute('aria-label', 'confirm-save');
+		deleteButton.setAttribute('aria-label', 'confirm-delete');
+	}
 };
