@@ -5,10 +5,10 @@ export async function fetchJSON(endpoint = '') {
 		const url = endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`;
 		const res = await fetch(url);
 		const text = await res.text();
-		const data = JSON.parse(text);
-		return data;
+		JSON.parse(text); // validate JSON
+		return text;
 	} catch (err) {
 		console.error('Invalid JSON:', err);
-		return { error: err.message };
+		return `Error: ${err.message}`;
 	}
 }

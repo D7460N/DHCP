@@ -1,107 +1,114 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-us">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="author" content="D7460N" />
+		<meta name="description" content="DHCP Portal" />
+		<meta name="robots" content="index, archive" />
+		<meta name="color-scheme" content="dark light" />
+		<!-- <link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials"> -->
+		<link rel="canonical" href="https://d7460n.dev/" />
+		<link rel="icon" type="image/svg+xml" href="./assets/images/brand/logos/logo.svg" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/themes.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/loading.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/scrollbars.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/transitions.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/typography.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/responsive.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/a11y.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/forms.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/fonts.css" />
+		<title>DHCP Portal</title>
+	</head>
 
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="D7460N">
-    <meta name="description" content="DHCP Portal">
-    <meta name="robots" content="index, archive">
-    <meta name="color-scheme" content="dark light">
-    <!-- <link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials"> -->
-    <link rel="canonical" href="https://d7460n.dev/">
-    <link rel="icon" type="image/svg+xml" href="./assets/images/brand/logos/logo.svg">
-    <link rel="stylesheet" type="text/css" href="./assets/css/themes.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/layout.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/loading.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/scrollbars.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/transitions.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/typography.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/responsive.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/a11y.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/forms.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/fonts.css">
-    <title>DHCP Portal</title>
-  </head>
+	<body>
+		<app-container>
+			<app-banner>
+				<p>banner</p>
+			</app-banner>
+			<header>
+				<app-logo>
+					<a href="/" aria-label="Go to D7460N Architecture Home">D7460N Architecture</a>
+				</app-logo>
+				<label>
+					Layouts
+					<input type="checkbox" checked />
+				</label>
+				<label>
+					&#9788;
+					<input type="checkbox" />
+				</label>
+			</header>
+			<nav>
+				<!-- <h4>Filters</h4> -->
+				<details open>
+					<summary>SCOPE</summary>
+					<section></section>
+				</details>
+				<details open>
+					<summary>ADMIN</summary>
+					<section></section>
+				</details>
+			</nav>
+			<main>
+				<article>
+					<h1></h1>
+					<p></p>
+					<button type="button" aria-label="Add new item">
+						New Item
+						<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+							<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+							<path
+								d="M12 8v8m-4-4h8"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+							/>
+						</svg>
+					</button>
+					<hr />
+					<input type="search" placeholder="Filter by name..." name="filter" />
+					<ul aria-hidden="true">
+						<li></li>
+					</ul>
+					<ul></ul>
+				</article>
+			</main>
+			<aside>
+				<h2 aria-live="polite">DETAILS</h2>
+				<button aria-label="Close">&#10006;</button>
+				<p>Click again to confirm closing.</p>
+				<form>
+					<fieldset></fieldset>
+					<small>Note: Ensure all fields are filled correctly before submitting.</small>
+					<small>Note: All fields marked with * are required.</small>
+					<p>Click again to confirm deletion.</p>
+					<button name="delete" type="button" aria-label="Delete">Delete</button>
+					<p>Click again to confirm reset.</p>
+					<button name="reset" type="reset" aria-label="Reset" disabled>Reset</button>
+					<p>Click again to confirm saving.</p>
+					<button name="submit" type="submit" aria-label="Save" disabled>Save</button>
+					<p></p>
+				</form>
+			</aside>
+			<footer>
+				<powered-by
+					>Powered by : :
+					<a href="https://github.com/D7460N/" target="_blank" rel="noopener">D7460N</a></powered-by
+				>
+				<app-version>v.0.00001</app-version>
+			</footer>
+			<app-banner>
+				<p>banner</p>
+			</app-banner>
+		</app-container>
 
-  <body>
-    <app-container>
-      <app-banner>
-        <p>banner</p>
-      </app-banner>
-      <header>
-        <app-logo>
-          <a href="/" aria-label="Go to D7460N Architecture Home">D7460N Architecture</a>
-        </app-logo>
-        <label>
-          Layouts
-          <input type="checkbox" checked />
-        </label>
-        <label>
-          &#9788;
-          <input type="checkbox" />
-        </label>
-      </header>
-      <nav>
-        <!-- <h4>Filters</h4> -->
-        <details open>
-          <summary>SCOPE</summary>
-          <section></section>
-        </details>
-        <details open>
-          <summary>ADMIN</summary>
-          <section></section>
-        </details>
-      </nav>
-      <main>
-        <article>
-          <h1></h1>
-          <p></p>
-          <button type="button" aria-label="Add new item">
-            New Item
-            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
-              <path d="M12 8v8m-4-4h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            </svg>
-          </button>
-          <hr />
-          <input type="search" placeholder="Filter by name..." name="filter" />
-          <ul aria-hidden="true">
-            <li></li>
-          </ul>
-          <ul></ul>
-        </article>
-      </main>
-      <aside>
-        <h2 aria-live="polite">DETAILS</h2>
-        <button aria-label="Close">&#10006;</button>
-        <form>
-          <fieldset></fieldset>
-          <small>Note: Ensure all fields are filled correctly before
-            submitting.</small>
-          <small>Note: All fields marked with * are required.</small>
-          <p>Click again to confirm saving.</p>
-          <p>Click again to confirm deletion.</p>
-          <p>Click again to confirm reset.</p>
-          <p>Click again to confirm closing.</p>
-          <button name="delete" type="button" aria-label="Delete">Delete</button>
-          <button name="reset" type="reset" aria-label="Reset" disabled>Reset</button>
-          <button name="submit" type="submit" aria-label="Save" disabled>Save</button>
-        </form>
-      </aside>
-      <footer>
-        <powered-by>Powered by : : <a href="https://github.com/D7460N/" target="_blank" rel="noopener">D7460N</a></powered-by>
-        <app-version>v.0.00001</app-version>
-      </footer>
-      <app-banner>
-        <p>banner</p>
-      </app-banner>
-    </app-container>
-
-    <script type="module" src="./assets/js/scripts.js"></script>
-    <!-- <script>
+		<script type="module" src="./assets/js/scripts.js"></script>
+		<!-- <script>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js')
           .then(() => navigator.serviceWorker.ready)
@@ -109,6 +116,5 @@
           .catch(err => console.error('SW registration failed:', err))
       }
     </script> -->
-  </body>
-
+	</body>
 </html>
