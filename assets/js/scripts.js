@@ -141,7 +141,7 @@ function formatDateForInput(str) {
 }
 
 // Load data from a specific API endpoint and populate the UI elements accordingly
-async function loadEndpoint(endpoint) {
+async function loadPageContent(endpoint) {
 	// Log the endpoint being loaded for debugging purposes
 	console.log('[LOAD]', endpoint);
 
@@ -698,7 +698,7 @@ loadNavItems().then(() => {
 				const endpoint = input.value;
 
 				// Trigger data loading for the chosen endpoint, updating the main content accordingly
-				if (endpoint) loadEndpoint(endpoint);
+				if (endpoint) loadPageContent(endpoint);
 			};
 
 			// Before proceeding, check if there are unsaved form changes
@@ -847,7 +847,7 @@ form.onsubmit = async e => {
 
 		submitItem.setAttribute('aria-label', 'saved');
 		savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
-		await loadEndpoint(endpoint);
+		await loadPageContent(endpoint);
 		setTimeout(() => {
 			savedMessage.textContent = '';
 			submitItem.setAttribute('aria-label', originalLabels.save);
@@ -913,7 +913,7 @@ deleteItem.onclick = async () => {
 	try {
 		await fetch(`${BASE_URL}${endpoint}/${id}`, { method: 'DELETE' });
 		deleteItem.setAttribute('aria-label', originalLabels.delete); // reset
-		await loadEndpoint(endpoint);
+		await loadPageContent(endpoint);
 	} catch (err) {
 		console.error('Failed to delete:', err);
 		const intro = document.querySelector('main article > p');
