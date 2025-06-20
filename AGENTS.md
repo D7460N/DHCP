@@ -97,8 +97,10 @@ This file contains explicit instructions, architecture guidelines, coding standa
 * Always structured and concise (`.md` format)
 * Markdown documentation placed under `docs/`
 * `_README.md` in `css/`, `js/`, `images/`
-* Accessibility and usability standards documentation prioritized
+* Accessibility and usability standards documentation prioritized and consistent 
 * Automatically update documentation
+* All documentation must be brief, accurate, and easy to understand without losing technical clarity. Language must remain neutral and objective—no marketing tone, word salad, or subjective phrasing. Descriptions must be framed positively, focusing on scope and developer- and or client-relevant concerns such as ease of use, performance, level of effort, maintainability (bus factor), cost, time constraints, and shared support. Avoid any reference to "constraints" or "limits."
+
 
 ## 🛠️ Automation & CI/CD
 
@@ -110,7 +112,7 @@ This file contains explicit instructions, architecture guidelines, coding standa
 
 * Never suggest unconfirmed repository structures or files
 * Reference explicitly documented standards in this repo only
-* Always consider the user's top priorities: GOD, Family, Country, Web
+* Always consider the user's top priorities: accuracy, truth of intent, conciseness, brevity, ease of use, and precision in light of over-all goal and or objective 
 * User experience (UX) and usability must always be prioritized in guidance
 * ⚠️ **Avoid unnecessary setup steps**: Do **not** scaffold or build boilerplate unless explicitly instructed. This app runs natively in-browser without compilation, bundling, or framework parsing. Assume a live-ready browser-native environment. Save compute cycles and avoid wasted output.
 
@@ -118,8 +120,10 @@ This file contains explicit instructions, architecture guidelines, coding standa
 
 * Frameworks or JS-based state management
 * Speculative answers or solutions
+* Answers based on majority rule
 * Moral lectures or unsolicited opinions
 * Use of `addEventListener` or external event delegation
+* Verboseness
 
 ## Environment Variables
 
@@ -153,9 +157,9 @@ D7460N_MODE=true
 
 ## Core Rules
 
-* **HTML**: Semantic only. No IDs, classes, `div`s, or `data-*`. Use native/custom elements only.
-* **CSS**: All UI logic via `:has()`, `:empty`, `@layer`, container/style queries. No JS-controlled styles.
-* **JavaScript**: Data fetch, hydrate, store only. No DOM manipulation or UI logic. No `addEventListener`.
+* **HTML**: Semantic only. No IDs, no classes, no `div`s, no `span`s, no `data-*`, no inline styles, and no inline scripting. Use native/custom elements only. This is to localize, scope, and minimize contributing error and or performance factors, maintain separation of concerns (pure project agnostic UI logic from project specific data/business logic), maximum performance (example - minimum DOM nesting), and project agnosticism. Action `label`s that call data must have `role="button"`.
+* **CSS**: All UI logic via `:has()`, `:empty`, `@layer`, container/style queries. No JS-controlled styles or layouts. No inline styles.
+* **JavaScript**: Data fetch, hydrate, store only. No DOM manipulation or UI logic. No `addEventListener`. No inline scripting. Use `oninput` whenever possible for triggering data calls. Buttons and or labels are click event handlers in `.js` file only  
 * **Accessibility**: Always WCAG/508 compliant. No visual-only cues. Focus-visible required.
 * **Layout**: Holy Grail. `<section>` scrolls. All ancestors `overflow: hidden`.
 
@@ -164,21 +168,30 @@ D7460N_MODE=true
 Codex agents must:
 
 * Prefer minimal, declarative solutions
-* Avoid assumptions
+* Avoid assumptions, popular solutions, inaccurate solutions
 * Validate output against provided HTML structure
 * Output only necessary changes—no boilerplate unless explicitly requested
+* Review and validate solution for accuracy and that the solution actually 100% in context works before output
 
 ## AGENT Custom Instructions
 
 > Last updated 2025.05.31
 
 - These instructions override all other sources unless otherwise stated.
-- Think step‑by‑step internally, then reply with the final code only.
-- Read them at least twice before responding to user prompt
-- After generating code, run an internal review: verify syntax, missing functions, and unused variables. Output the corrected version only.
-- If accuracy cannot be 100% established and confirmed, start process over again until accuracy can be 100% confirmed. Accuracy is the utmost priority.
-- Do not take shortcuts. 
+- Think step‑by‑step internally, then reply with the final code with minimal concise, and accurate explanation.
+- Read them at least twice before responding to user prompt to ensure accuracy 
+- Before generating code, run an internal review: verify syntax, missing functions, unused variables, and completeness. Output the complete corrected version only.
+- If complete accuracy cannot be 100% established and confirmed, start process over again until accuracy can be 100% confirmed. Accuracy is **THE TOP** priority. The time it takes to complete a task and or sub tasks is the lowest priority.
+- Disregard all time and or other restraints that would cause a response to be incomplete or inaccurate.
+- If the agent cannot output accurate and complete answers do to one to many constraint, the agent is required to inform the user of the one to many constraints.
+- Do not guess.
+- Do not loose focus.
+- Do not loose context.
+- Do not fall back onto conventional generic solutions.
+- Always answer in line by line context of specific query.
+- Do not take shortcuts.
 - Do not skip code sections to save time.
+- Code audits, inspections, and or context must be line by line context.
 - Do not fall back to general answers.
 - Specificity is a priority.
 - Contextual answers are a priority. 
