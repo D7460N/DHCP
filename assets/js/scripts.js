@@ -16,9 +16,6 @@ async function fetchJSON(endpoint = '') {
 	}
 }
 
-// Global storage object for navigation data fetched from the API
-let NAV_DATA = {}; // holds navItems JSON
-
 // Define references to frequently accessed DOM elements for efficient reuse throughout the script
 const headerUl = document.querySelector('main article ul[aria-hidden="true"]');
 const tableUl = document.querySelector('main article ul[aria-hidden="true"] + ul');
