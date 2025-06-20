@@ -1,16 +1,21 @@
-/* https://adactio.com/journal/21896 */
-@media (prefers-reduced-motion: no-preference) {
-  @view-transition {
-    navigation: auto;
-  }
+/* MARK: DEFINITIONS */
+:root {
+  --transition-duration: 250ms;
+  --transition-property: visibility, opacity, display, transform, background, background-color, border-color, color;
+  --transition-timing-function: ease-in-out;
+
+  scroll-behavior: smooth;
+
+  /* https://html-css-tip-of-the-week.netlify.app/tip/interpolate-size/
+  https://12daysofweb.dev/2024/calc-size-and-interpolate-size/ */
+  interpolate-size: allow-keywords;
 }
 
-:root {
-  --transition-behavior: allow-discrete;
-  --transition-duration: 250ms;
-  --transition-property: visibility, opacity, display, transform, background, background-color, border-color;
-  --transition-timing-function: ease-in-out;
-  scroll-behavior: smooth;
+* {
+  transition-property: var(--transition-property);
+  transition-duration: var(--transition-duration);
+  transition-timing-function: var(--transition-timing-function);
+  transition-behavior: allow-discrete;
 }
 
 /* Accessibility feature */
@@ -20,25 +25,11 @@
   }
 }
 
-@starting-style {
-  * {
-    visibility: hidden;
-    opacity: 0;
+/* https://adactio.com/journal/21896 */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
   }
-}
-
-*,
-* * {
-  transition-property: var(--transition-property);
-  transition-duration: var(--transition-duration);
-  transition-timing-function: var(--transition-timing-function);
-  transition-behavior: var(--transition-behavior);
-}
-
-/* https://html-css-tip-of-the-week.netlify.app/tip/interpolate-size/
-https://12daysofweb.dev/2024/calc-size-and-interpolate-size/ */
-:root {
-  interpolate-size: allow-keywords;
 }
 
 /* https://www.bram.us/2025/01/29/view-transitions-page-interactivity/ */
@@ -56,40 +47,33 @@ https://12daysofweb.dev/2024/calc-size-and-interpolate-size/ */
   }
 }
 
-/* MARK:ARTICLE
-*/
-main article {
-  transition: opacity var(--transition-duration) allow-discrete;
+@starting-style {
+  * {
+    visibility: hidden;
+    opacity: 0;
+  }
 }
 
-/* MARK: ASIDE
-*/
-/* aside {
-  transition: width var(--transition-duration) allow-discrete, opacity var(--transition-duration) allow-discrete;
+
+/* a,
+h1,
+p,
+button,
+[role="button"] {
+  transition: background-color var(--transition-duration), color var(--transition-duration);
 } */
-
-/* MARK: BUTTONS
-*/
-button {
-  transition: background-color var(--transition-duration);
-}
-
-a {
-  transition: all var(--transition-duration);
-}
 
 main article ul:last-of-type {
   overflow-x: auto;
   scroll-snap-type: y mandatory;
+
+  >* {
+    grid-template-columns: auto;
+    scroll-snap-align: start;
+  }
 }
 
-main article ul:last-of-type > * {
-  grid-template-columns: auto;
-  scroll-snap-align: start;
-}
-
-
-@keyframes fadeIn {
+/* @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(-0.25rem);
@@ -109,4 +93,4 @@ main article ul:last-of-type > * {
   to {
     opacity: 1;
   }
-}
+} */
