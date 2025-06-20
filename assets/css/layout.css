@@ -265,6 +265,7 @@ app-container {
 
   /* MARK: BUTTONS
 */
+  button,
   [role="button"] {
     --bg-panel-opacity: 0.1;
 
@@ -351,6 +352,7 @@ app-container {
         border-inline: none;
       }
 
+      button,
       [role="button"] {
         display: grid;
         grid-template-columns: auto auto;
