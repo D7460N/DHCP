@@ -22,7 +22,7 @@ const tableUl = document.querySelector('main article ul[aria-hidden="true"] + ul
 const form = document.querySelector('aside form');
 const fieldset = form.querySelector('fieldset');
 const mainEl = document.querySelector('main');
-const newItem = document.querySelector('main article [attribute*="new item"]');
+const newItem = document.querySelector('main article [aria-label*="new item"]');
 const closeItem = document.querySelector('aside [aria-label="Close"]');
 const deleteItem = form.querySelector('[aria-label="Delete"]');
 const resetItem = form.querySelector('[aria-label="Reset"]');
@@ -30,11 +30,11 @@ const submitItem = form.querySelector('[aria-label="Save"]');
 const savedMessage = submitItem.nextElementSibling;
 const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
-const originalLabels = {
-	save: submitItem.getAttribute('aria-label'),
-	reset: resetItem.getAttribute('aria-label'),
-	delete: deleteItem.getAttribute('aria-label'),
-	close: closeItem.getAttribute('aria-label'),
+const confirmFlags = {
+	save: { value: false },
+	delete: { value: false },
+	reset: { value: false },
+	close: { value: false },
 };
 
 // Array containing all valid endpoint identifiers
@@ -332,27 +332,24 @@ function snapshotForm() {
 // Restore form fields to previously captured state stored in `originalData`
 // This function is typically triggered by a form reset action
 function restoreForm() {
-	// Restore each form input/select element's value from the original snapshot
+	if (!originalData || !Object.keys(originalData).length) return;
+
 	fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
-		// Check explicitly if the property exists in originalData to avoid undefined assignments
 		if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
 			el.value = originalData[el.name];
 		}
 	});
 
-	// Restore corresponding visual representation in the selected list item, if present
 	if (snapshotLi) {
 		snapshotLi.querySelectorAll('label > *:not(input)').forEach(el => {
-			// Convert element tag name back to camelCase to match keys stored in originalData
 			const key = toCamel(el.tagName.toLowerCase());
-
-			// Restore text content of list item's corresponding fields
 			if (Object.prototype.hasOwnProperty.call(originalData, key)) {
 				el.textContent = originalData[key];
 			}
 		});
 	}
 }
+
 
 // Toggle the disabled state of the Reset button based on form changes
 function toggleResetItem() {
@@ -367,6 +364,20 @@ function toggleResetItem() {
 
 	// Update the form element's data attribute to reflect if the form has unsaved changes (useful for CSS state indicators)
 	form.dataset.dirty = dirty ? 'true' : 'false';
+
+	const status = form.querySelector('output');
+	if (!status) return;
+
+	if (!dirty) {
+		status.textContent = 'Nothing to save or reset.';
+		status.hidden = false;
+	} else if (!form.checkValidity()) {
+		status.textContent = 'Please complete required fields.';
+		status.hidden = false;
+	} else {
+		status.hidden = true;
+	}
+
 }
 
 // Toggle the disabled state of the Submit button based on form validity and changes
@@ -382,6 +393,30 @@ function toggleSubmitItem() {
 
 	// Disable the submit button unless the form both has unsaved changes and passes validation
 	submitItem.disabled = !(dirty && valid);
+
+	const status = form.querySelector('output');
+	if (!status) return;
+
+	if (!dirty) {
+		status.textContent = 'ℹ️ Nothing to save or reset.';
+		status.hidden = false;
+	} else if (!form.checkValidity()) {
+		status.textContent = '⚠️ Please complete required fields.';
+		status.hidden = false;
+	} else {
+		status.hidden = true;
+	}
+
+}
+
+// Confirmation logic utility: guards critical actions based on dirty state
+function unsavedCheck(flagRef, condition, proceed) {
+	if (!flagRef.value && condition()) {
+		flagRef.value = true;
+		return;
+	}
+	flagRef.value = false;
+	proceed();
 }
 
 // Initialize custom HTML elements dynamically based on provided keys
@@ -670,11 +705,6 @@ form.oninput = () => {
 	// Update the enabled or disabled state of the submit button,
 	// based on both the presence of unsaved changes and form validity
 	toggleSubmitItem();
-
-	submitItem.setAttribute('aria-label', originalLabels.save);
-	deleteItem.setAttribute('aria-label', originalLabels.delete);
-	resetItem.setAttribute('aria-label', originalLabels.reset);
-	closeItem.setAttribute('aria-label', originalLabels.close);
 };
 
 // MARK: MAIN APPLICATION LOGIC
@@ -702,12 +732,7 @@ loadNavItems().then(() => {
 			};
 
 			// Before proceeding, check if there are unsaved form changes
-			if (hasUnsavedChanges()) {
-				submitItem.setAttribute('aria-label', 'confirm-save');
-				deleteItem.setAttribute('aria-label', 'confirm-delete');
-				return;
-			}
-			proceed();
+			unsavedCheck(confirmFlags.save, hasUnsavedChanges, proceed);
 		};
 	});
 
@@ -721,95 +746,93 @@ loadNavItems().then(() => {
 // Event handler triggered when the "New" button is clicked to create a new form entry
 newItem.onclick = async () => {
 	// First, check if there are unsaved form changes
-	if (hasUnsavedChanges()) {
-		submitItem.setAttribute('aria-label', 'confirm-save');
-		deleteItem.setAttribute('aria-label', 'confirm-delete');
-		return; // user must confirm via buttons
-	}
+	unsavedCheck(confirmFlags.save, hasUnsavedChanges, () => {
 
-	// Clear the form's current input fields to prepare for creating a new entry
-	fieldset.innerHTML = '';
+		// Clear the form's current input fields to prepare for creating a new entry
+		fieldset.innerHTML = '';
 
-	// Attempt to retrieve keys from the first existing table row (to maintain field consistency)
-	const existingLi = tableUl.querySelector('li');
+		// Attempt to retrieve keys from the first existing table row (to maintain field consistency)
+		const existingLi = tableUl.querySelector('li');
 
-	// Declare a variable to store field keys to be used for new entry creation
-	let keys;
+		// Declare a variable to store field keys to be used for new entry creation
+		let keys;
 
-	if (existingLi) {
-		// Extract keys from the existing table row's child elements (excluding input elements)
-		keys = Array.from(existingLi.querySelectorAll('label > *:not(input)')).map(el =>
-			toCamel(el.tagName.toLowerCase()),
-		);
-	} else {
-		// 🚩 Provide a minimal default schema if no existing rows are present
-		keys = ['id', 'name', 'description', 'created', 'updated'];
-	}
+		if (existingLi) {
+			// Extract keys from the existing table row's child elements (excluding input elements)
+			keys = Array.from(existingLi.querySelectorAll('label > *:not(input)')).map(el =>
+				toCamel(el.tagName.toLowerCase()),
+			);
+		} else {
+			// 🚩 Provide a minimal default schema if no existing rows are present
+			keys = ['id', 'name', 'description', 'created', 'updated'];
+		}
 
-	// Initialize an empty item object to represent the new entry
-	const item = {};
+		// Initialize an empty item object to represent the new entry
+		const item = {};
 
-	// Iterate over each key to dynamically create form fields
-	keys.forEach(key => {
-		// Initialize each item's field with an empty string value
-		item[key] = '';
-
-		// Create a label element for the current form field
-		const formLabel = document.createElement('label');
-
-		// Set the label's text content to be human-readable, derived from the field's key
-		formLabel.textContent =
-			toKebab(key)
-				.replace(/^item-/, '') // Remove 'item-' prefix, if present
-				.replace(/-/g, ' ') // Replace hyphens with spaces for readability
-				.replace(/\b\w/g, c => c.toUpperCase()) + ': '; // Capitalize each word
-
-		// Generate an input element appropriate for the current key (with empty initial value)
-		const input = createInputFromKey(key, '');
-
-		// Append the generated input field to its corresponding label
-		formLabel.appendChild(input);
-
-		// Append the complete label-input combination to the form's fieldset
-		fieldset.appendChild(formLabel);
-	});
-
-	// Create a new list item (<li>) element for the new entry using the previously prepared data fields
-	const li = createListItem(item);
-
-	// Insert the newly created list item at the very beginning (top) of the table UI
-	tableUl.prepend(li);
-
-	// Explicitly populate the header row if it is currently empty (ensures table headers always exist)
-	const headerLi = headerUl.querySelector('li');
-
-	// Check if the header row element exists and currently has no child elements (empty header row)
-	if (headerLi && headerLi.childElementCount === 0) {
-		// Iterate over each data field key to generate corresponding header elements
+		// Iterate over each key to dynamically create form fields
 		keys.forEach(key => {
-			// Dynamically create header elements using the kebab-case format of each key
-			const headerEl = document.createElement(toKebab(key));
+			// Initialize each item's field with an empty string value
+			item[key] = '';
 
-			// Generate a user-friendly, readable header text from the key
-			headerEl.textContent = toKebab(key)
-				.replace(/^item-/, '') // Remove the 'item-' prefix, if present
-				.replace(/-/g, ' ') // Replace dashes with spaces for readability
-				.replace(/\b\w/g, c => c.toUpperCase()); // Capitalize each word for improved presentation
+			// Create a label element for the current form field
+			const formLabel = document.createElement('label');
 
-			// Append the newly created header element to the header row (<li>)
-			headerLi.appendChild(headerEl);
+			// Set the label's text content to be human-readable, derived from the field's key
+			formLabel.textContent =
+				toKebab(key)
+					.replace(/^item-/, '') // Remove 'item-' prefix, if present
+					.replace(/-/g, ' ') // Replace hyphens with spaces for readability
+					.replace(/\b\w/g, c => c.toUpperCase()) + ': '; // Capitalize each word
+
+			// Generate an input element appropriate for the current key (with empty initial value)
+			const input = createInputFromKey(key, '');
+
+			// Append the generated input field to its corresponding label
+			formLabel.appendChild(input);
+
+			// Append the complete label-input combination to the form's fieldset
+			fieldset.appendChild(formLabel);
 		});
-	}
 
-	// Programmatically select (check) the newly created list item's radio input
-	// to immediately reflect it as the currently active item in the UI
-	li.querySelector('input[name="list-item"]').checked = true;
+		// Create a new list item (<li>) element for the new entry using the previously prepared data fields
+		const li = createListItem(item);
 
-	// Take a snapshot of the current form state to track changes against this new baseline
-	snapshotForm();
+		// Insert the newly created list item at the very beginning (top) of the table UI
+		tableUl.prepend(li);
 
-	// Update the reset button state (enabled or disabled) based on current form data state
-	toggleResetItem();
+		// Explicitly populate the header row if it is currently empty (ensures table headers always exist)
+		const headerLi = headerUl.querySelector('li');
+
+		// Check if the header row element exists and currently has no child elements (empty header row)
+		if (headerLi && headerLi.childElementCount === 0) {
+			// Iterate over each data field key to generate corresponding header elements
+			keys.forEach(key => {
+				// Dynamically create header elements using the kebab-case format of each key
+				const headerEl = document.createElement(toKebab(key));
+
+				// Generate a user-friendly, readable header text from the key
+				headerEl.textContent = toKebab(key)
+					.replace(/^item-/, '') // Remove the 'item-' prefix, if present
+					.replace(/-/g, ' ') // Replace dashes with spaces for readability
+					.replace(/\b\w/g, c => c.toUpperCase()); // Capitalize each word for improved presentation
+
+				// Append the newly created header element to the header row (<li>)
+				headerLi.appendChild(headerEl);
+			});
+		}
+
+		// Programmatically select (check) the newly created list item's radio input
+		// to immediately reflect it as the currently active item in the UI
+		li.querySelector('input[name="list-item"]').checked = true;
+
+		// Take a snapshot of the current form state to track changes against this new baseline
+		snapshotForm();
+
+		// Update the reset button state (enabled or disabled) based on current form data state
+		toggleResetItem();
+
+	});
 };
 
 // MARK: FORM SUBMIT
@@ -818,46 +841,45 @@ newItem.onclick = async () => {
 form.onsubmit = async e => {
 	e.preventDefault();
 
-	if (submitItem.getAttribute('aria-label') !== 'confirm-save') {
-		submitItem.setAttribute('aria-label', 'confirm-save');
-		return;
-	}
+	unsavedCheck(confirmFlags.save, hasUnsavedChanges, async () => {
 
-	const selected = document.querySelector('ul li input[name="list-item"]:checked');
-	const id = selected?.closest('li')?.querySelector('label > id')?.textContent?.trim();
-	const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
-	if (!endpoint) return;
+		const selected = document.querySelector('ul li input[name="list-item"]:checked');
+		const id = selected?.closest('li')?.querySelector('label > id')?.textContent?.trim();
+		const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
+		if (!endpoint) return;
 
-	const data = {};
-	fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
-		if (!el.readOnly) data[el.name] = el.value.trim();
-	});
-
-	const method = id ? 'PUT' : 'POST';
-	const url = id ? `${BASE_URL}${endpoint}/${id}` : `${BASE_URL}${endpoint}`;
-
-	try {
-		const res = await fetch(url, {
-			method,
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(data),
+		const data = {};
+		fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+			if (!el.readOnly) data[el.name] = el.value.trim();
 		});
 
-		if (!res.ok) throw new Error('Save failed');
+		const method = id ? 'PUT' : 'POST';
+		const url = id ? `${BASE_URL}${endpoint}/${id}` : `${BASE_URL}${endpoint}`;
 
-		submitItem.setAttribute('aria-label', 'saved');
-		savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
-		await loadPageContent(endpoint);
-		setTimeout(() => {
-			savedMessage.textContent = '';
-			submitItem.setAttribute('aria-label', originalLabels.save);
-		}, 2000);
-	} catch (err) {
-		console.error('Failed to save:', err);
-		const intro = document.querySelector('main article > p');
-		if (intro) intro.textContent = '⚠️ Error saving record.';
-	}
+		try {
+			const res = await fetch(url, {
+				method,
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(data),
+			});
+
+			if (!res.ok) throw new Error('Save failed');
+
+			submitItem.setAttribute('aria-label', 'saved');
+			savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
+			await loadPageContent(endpoint);
+			setTimeout(() => {
+				savedMessage.textContent = '';
+			}, 2000);
+		} catch (err) {
+			console.error('Failed to save:', err);
+			const intro = document.querySelector('main article > p');
+			if (intro) intro.textContent = '⚠️ Error saving record.';
+		}
+
+	});
 };
+
 
 // MARK: FORM RESET
 
@@ -865,102 +887,73 @@ form.onsubmit = async e => {
 form.onreset = e => {
 	e.preventDefault();
 
-	if (resetItem.getAttribute('aria-label') !== 'confirm-reset') {
-		resetItem.setAttribute('aria-label', 'confirm-reset');
-		return;
-	}
-
-	restoreForm();
-	snapshotForm();
-	resetItem.setAttribute('aria-label', originalLabels.reset);
-	submitItem.setAttribute('aria-label', originalLabels.save);
-	deleteItem.setAttribute('aria-label', originalLabels.delete);
-	closeItem.setAttribute('aria-label', originalLabels.close);
+	unsavedCheck(confirmFlags.reset, hasUnsavedChanges, () => {
+		restoreForm();
+		snapshotForm();
+	});
 };
+
 
 // MARK: DELETE HANDLER
 
-deleteItem.onclick = async () => {
+deleteItem.onclick = () => {
 	const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
 	if (!selected) return;
 
 	const id = selected.querySelector('label > id')?.textContent?.trim();
 	const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
-
 	if (!endpoint) return;
 
-	if (!id) {
-		if (deleteItem.getAttribute('aria-label') !== 'confirm-delete') {
-			deleteItem.setAttribute('aria-label', 'confirm-delete');
+	unsavedCheck(confirmFlags.delete, hasUnsavedChanges, async () => {
+		if (!id) {
+			// Unsaved item: just remove from UI
+			selected.remove();
+			clearFieldset(fieldset);
+			headerUl.querySelector('li').innerHTML = '';
+			snapshotForm();
+			toggleResetItem();
+			toggleSubmitItem();
 			return;
 		}
 
-		selected.remove();
-		clearFieldset(fieldset);
-		headerUl.querySelector('li').innerHTML = '';
-		snapshotForm();
-		toggleResetItem();
-		toggleSubmitItem();
-		deleteItem.setAttribute('aria-label', originalLabels.delete); // reset
-		return;
-	}
-
-	if (deleteItem.getAttribute('aria-label') !== 'confirm-delete') {
-		deleteItem.setAttribute('aria-label', 'confirm-delete');
-		return;
-	}
-
-	try {
-		await fetch(`${BASE_URL}${endpoint}/${id}`, { method: 'DELETE' });
-		deleteItem.setAttribute('aria-label', originalLabels.delete); // reset
-		await loadPageContent(endpoint);
-	} catch (err) {
-		console.error('Failed to delete:', err);
-		const intro = document.querySelector('main article > p');
-		if (intro) intro.textContent = '⚠️ Error deleting record.';
-	}
+		// Existing item: delete from server
+		try {
+			await fetch(`${BASE_URL}${endpoint}/${id}`, { method: 'DELETE' });
+			await loadPageContent(endpoint);
+		} catch (err) {
+			console.error('Failed to delete:', err);
+			const intro = document.querySelector('main article > p');
+			if (intro) intro.textContent = '⚠️ Error deleting record.';
+		}
+	});
 };
+
 
 // MARK: CLOSE ASIDE
-closeItem.onclick = () => {
-	if (hasUnsavedChanges()) {
-		submitItem.setAttribute('aria-label', 'confirm-save');
-		deleteItem.setAttribute('aria-label', 'confirm-delete');
-		return;
-	}
-
-	const closeAside = () => {
-		const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
-		if (selected) {
-			const radio = selected.querySelector('input[name="list-item"]');
-			if (radio) radio.checked = false;
-			const toggle = selected.querySelector('input[name="row-toggle"]');
-			if (toggle) toggle.checked = false;
-		}
-
-		clearFieldset(fieldset);
-		form.oninput();
-		removeInlineStyles(mainEl);
-		snapshotForm();
-
-		closeItem.setAttribute('aria-label', originalLabels.close);
-		submitItem.setAttribute('aria-label', originalLabels.save);
-		resetItem.setAttribute('aria-label', originalLabels.reset);
-		deleteItem.setAttribute('aria-label', originalLabels.delete);
+if (closeItem) {
+	closeItem.onclick = () => {
+		unsavedCheck(confirmFlags.close, hasUnsavedChanges, () => {
+			const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
+			if (selected) {
+				const radio = selected.querySelector('input[name="list-item"]');
+				if (radio) radio.checked = false;
+				const toggle = selected.querySelector('input[name="row-toggle"]');
+				if (toggle) toggle.checked = false;
+			}
+			clearFieldset(fieldset);
+			form.oninput();
+			removeInlineStyles(mainEl);
+			snapshotForm();
+		});
 	};
+}
 
-	if (closeItem.getAttribute('aria-label') !== 'confirm-close') {
-		closeItem.setAttribute('aria-label', 'confirm-close');
-		return;
-	}
 
-	closeAside();
-};
 
 // Prompt user to save or delete when page loses focus if there are unsaved changes
 window.onblur = () => {
 	if (hasUnsavedChanges()) {
-		submitItem.setAttribute('aria-label', 'confirm-save');
-		deleteItem.setAttribute('aria-label', 'confirm-delete');
+		confirmFlags.save.value = true;
+		confirmFlags.delete.value = true;
 	}
 };
