@@ -15,3 +15,8 @@ aside form fieldset {
     scrollbar-color: transparent #0000;
   }
 }
+
+/* https://x.com/argyleink/status/1927220175385866387 */
+textarea {
+  scrollbar-width: thin;
+}
