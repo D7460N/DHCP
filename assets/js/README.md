@@ -115,16 +115,16 @@ Example template:
 
 **Order & Flow:**
 
-1. **`loadEndpoints()`** (initial entry point)
+1. **`loadNavItems()`** (initial entry point)
 
-   - Triggered immediately upon page load (`loadEndpoints().then(...)`).
+   - Triggered immediately upon page load (`loadNavItems().then(...)`).
    - Fetches data from:
 
      ```javascript
-     fetchJSON(`${BASE_URL}nav-content`);
+     fetchJSON('navItems');
      ```
 
-   - Populates `NAV_DATA` and dynamically creates navigation items (`<nav>` inputs).
+   - Dynamically creates navigation items (`<nav>` inputs).
 
 2. **Default Tab Load**
 
@@ -136,7 +136,7 @@ Example template:
      if (selected?.onchange) selected.onchange();
      ```
 
-   - Calls `loadEndpoint(endpoint)` for the selected tab.
+   - Calls `loadPageContent(endpoint)` for the selected tab.
 
 ## ② Navigation (Tab Click) Sequence
 
@@ -159,7 +159,7 @@ Example template:
   3. Fetch data from the selected endpoint:
 
      ```javascript
-     loadEndpoint(`${BASE_URL}${endpoint}`);
+     loadPageContent(endpoint);
      ```
 
   - Example endpoint triggered:
@@ -198,7 +198,7 @@ Example template:
 - After successful save, it automatically calls:
 
   ```javascript
-  loadEndpoint(`${BASE_URL}${endpoint}`);
+  loadPageContent(endpoint);
   ```
 
   - Refreshes the table with updated data from the API.
@@ -222,7 +222,7 @@ Example template:
   - Refreshes the table afterward by calling:
 
     ```javascript
-    loadEndpoint(`${BASE_URL}${endpoint}`);
+    loadPageContent(endpoint);
     ```
 
 - If the row is unsaved:
@@ -244,9 +244,9 @@ Example template:
 
 ## Summary of API Calls & Their Triggers
 
-| Call                               | Trigger             | API Endpoint                                  |
-| ---------------------------------- | ------------------- | --------------------------------------------- |
-| Initial Navigation (`nav-content`) | Page load           | `/nav-content`                                |
-| Tab content load                   | Nav input click     | `/manage`, `/faqs`, `/api-registration`, etc. |
-| Save Form (`POST` or `PUT`)        | Form submit         | `/endpoint` or `/endpoint/:id`                |
-| Delete Row (`DELETE`)              | Delete button click | `/endpoint/:id`                               |
+| Call                            | Trigger             | API Endpoint                                  |
+| ------------------------------- | ------------------- | --------------------------------------------- |
+| Initial Navigation (`navItems`) | Page load           | `/navItems`                                   |
+| Tab content load                | Nav input click     | `/manage`, `/faqs`, `/api-registration`, etc. |
+| Save Form (`POST` or `PUT`)     | Form submit         | `/endpoint` or `/endpoint/:id`                |
+| Delete Row (`DELETE`)           | Delete button click | `/endpoint/:id`                               |
