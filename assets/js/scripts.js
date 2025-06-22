@@ -1,7 +1,8 @@
 // MARK: SCRIPTS.JS
 
+import { BASE_URL, OPTIONS } from './config.js';
+
 // Shared fetch utility for all data calls
-const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/';
 
 async function fetchJSON(endpoint = '') {
 	try {
@@ -299,7 +300,7 @@ async function loadAppBanner() {
 	}
 }
 
-loadAppBanner();
+if (OPTIONS.showBanner) loadAppBanner();
 
 // Form State Utilities
 // MARK: TRACK FROM ORIGINAL STATE
@@ -951,9 +952,11 @@ if (closeItem) {
 
 
 // Prompt user to save or delete when page loses focus if there are unsaved changes
-window.onblur = () => {
-	if (hasUnsavedChanges()) {
-		confirmFlags.save.value = true;
-		confirmFlags.delete.value = true;
-	}
-};
+if (OPTIONS.warnOnBlur) {
+	window.onblur = () => {
+		if (hasUnsavedChanges()) {
+			confirmFlags.save.value = true;
+			confirmFlags.delete.value = true;
+		}
+	};
+}

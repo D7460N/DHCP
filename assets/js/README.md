@@ -250,3 +250,14 @@ Example template:
 | Tab content load                | Nav input click     | `/manage`, `/faqs`, `/api-registration`, etc. |
 | Save Form (`POST` or `PUT`)     | Form submit         | `/endpoint` or `/endpoint/:id`                |
 | Delete Row (`DELETE`)           | Delete button click | `/endpoint/:id`                               |
+
+
+## Configuration Module
+
+`config.js` defines deployment settings such as the API base URL and optional feature flags.
+Override this file to customize the host or toggle behaviors when using the scripts in other projects.
+
+```javascript
+export const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/';
+export const OPTIONS = { showBanner: true, warnOnBlur: true };
+```
