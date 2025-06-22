@@ -1,7 +1,8 @@
 // MARK: SCRIPTS.JS
 
+import { BASE_URL, OPTIONS } from './config.js';
+
 // Shared fetch utility for all data calls
-const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/';
 
 async function fetchJSON(endpoint = '') {
 	try {
@@ -299,7 +300,7 @@ async function loadAppBanner() {
 	}
 }
 
-loadAppBanner();
+if (OPTIONS.showBanner) loadAppBanner();
 
 // Form State Utilities
 // MARK: TRACK FROM ORIGINAL STATE
@@ -350,7 +351,6 @@ function restoreForm() {
 	}
 }
 
-
 // Toggle the disabled state of the Reset button based on form changes
 function toggleResetItem() {
 	// Guard clause: ensure the reset button exists before proceeding
@@ -377,7 +377,6 @@ function toggleResetItem() {
 	} else {
 		status.hidden = true;
 	}
-
 }
 
 // Toggle the disabled state of the Submit button based on form validity and changes
@@ -406,7 +405,6 @@ function toggleSubmitItem() {
 	} else {
 		status.hidden = true;
 	}
-
 }
 
 // Confirmation logic utility: guards critical actions based on dirty state
@@ -747,7 +745,6 @@ loadNavItems().then(() => {
 newItem.onclick = async () => {
 	// First, check if there are unsaved form changes
 	unsavedCheck(confirmFlags.save, hasUnsavedChanges, () => {
-
 		// Clear the form's current input fields to prepare for creating a new entry
 		fieldset.innerHTML = '';
 
@@ -831,7 +828,6 @@ newItem.onclick = async () => {
 
 		// Update the reset button state (enabled or disabled) based on current form data state
 		toggleResetItem();
-
 	});
 };
 
@@ -842,7 +838,6 @@ form.onsubmit = async e => {
 	e.preventDefault();
 
 	unsavedCheck(confirmFlags.save, hasUnsavedChanges, async () => {
-
 		const selected = document.querySelector('ul li input[name="list-item"]:checked');
 		const id = selected?.closest('li')?.querySelector('label > id')?.textContent?.trim();
 		const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
@@ -876,10 +871,8 @@ form.onsubmit = async e => {
 			const intro = document.querySelector('main article > p');
 			if (intro) intro.textContent = '⚠️ Error saving record.';
 		}
-
 	});
 };
-
 
 // MARK: FORM RESET
 
@@ -892,7 +885,6 @@ form.onreset = e => {
 		snapshotForm();
 	});
 };
-
 
 // MARK: DELETE HANDLER
 
@@ -928,12 +920,13 @@ deleteItem.onclick = () => {
 	});
 };
 
-
 // MARK: CLOSE ASIDE
 if (closeItem) {
 	closeItem.onclick = () => {
 		unsavedCheck(confirmFlags.close, hasUnsavedChanges, () => {
-			const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
+			const selected = document
+				.querySelector('ul li input[name="list-item"]:checked')
+				?.closest('li');
 			if (selected) {
 				const radio = selected.querySelector('input[name="list-item"]');
 				if (radio) radio.checked = false;
@@ -948,12 +941,12 @@ if (closeItem) {
 	};
 }
 
-
-
 // Prompt user to save or delete when page loses focus if there are unsaved changes
-window.onblur = () => {
-	if (hasUnsavedChanges()) {
-		confirmFlags.save.value = true;
-		confirmFlags.delete.value = true;
-	}
-};
+if (OPTIONS.warnOnBlur) {
+	window.onblur = () => {
+		if (hasUnsavedChanges()) {
+			confirmFlags.save.value = true;
+			confirmFlags.delete.value = true;
+		}
+	};
+}
