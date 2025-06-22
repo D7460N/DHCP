@@ -7,7 +7,7 @@ JavaScript in D7460N handles:
 - Data fetching (via `fetch()`)
 - API interaction (CRUD)
 - Semantic UI state (no direct DOM styling)
-- Event control for forms and navigation
+- Populates custom HTML elements
 
 ## Presentaion Layer
 
