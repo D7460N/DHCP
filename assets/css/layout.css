@@ -48,15 +48,9 @@
 }
 
 
-
-
-
 [hidden] {
   display: none;
 }
-
-
-
 
 
 /* MARK: WRAPPER --------------------------------------------
@@ -96,7 +90,7 @@ app-container {
     }
   }
 
-  app-container>* {
+  app-container > * {
     background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
   }
 
@@ -443,7 +437,7 @@ app-container {
 
         /* MARK: UL TABLE BODY --------------------------------------------
       */
-        &+ul {
+        & + ul {
           overflow: overlay;
           position: relative;
           align-content: start;
@@ -462,11 +456,6 @@ app-container {
             &:has(input:checked) {
               background-color: rgba(from currentcolor r g b / 0.05);
               color: rgba(var(--txt-active), 1);
-            }
-
-            /* Spinner visible when selected */
-            &:has(input:checked) load-data {
-              display: grid;
             }
 
             label {
@@ -491,6 +480,12 @@ app-container {
 
               &:last-child {
                 padding-inline-end: 1rem;
+              }
+
+              > * {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
               }
             }
           }

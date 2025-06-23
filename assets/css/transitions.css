@@ -1,7 +1,7 @@
 /* MARK: DEFINITIONS */
 :root {
   --transition-duration: 250ms;
-  --transition-property: visibility, opacity, display, transform, background, background-color, border-color, color;
+  --transition-property: visibility, opacity, display, transform, background, background-color, border-color, color, min-width;
   --transition-timing-function: ease-in-out;
 
   scroll-behavior: smooth;
@@ -52,6 +52,10 @@
     visibility: hidden;
     opacity: 0;
   }
+}
+
+aside {
+  transition:all;
 }
 
 
