@@ -48,9 +48,15 @@
 }
 
 
+
+
+
 [hidden] {
   display: none;
 }
+
+
+
 
 
 /* MARK: WRAPPER --------------------------------------------
@@ -254,6 +260,9 @@ app-container {
   }
 
 
+
+
+
   /* MARK: BUTTONS
 */
   button,
@@ -344,8 +353,8 @@ app-container {
         margin-block: 1rem;
         background-color: transparent;
         height: 0;
-        border-block-start: solid .125rem rgba(0, 0, 0, 0.3);
-        border-block-end-color: rgba(255, 255, 255, 0.2);
+        border-block-start: solid .125rem rgba(0,0,0,0.3);
+        border-block-end-color: rgba(255,255,255,0.2);
         border-inline: none;
       }
 
@@ -354,20 +363,24 @@ app-container {
         display: grid;
         grid-template-columns: auto auto;
         gap: 1rem;
+        align-items: center;
+        justify-items: center;
         position: absolute;
         align-self: start;
         justify-self: end;
         margin: 1rem;
+
+        &:hover {
+          color: rgba(var(--txt-active), 1);
+        }
       }
 
       p {
-        display: none;
-        /* Hide by default */
+        display: none; /* Hide by default */
         margin-inline: 1rem;
 
         &:not(:empty) {
-          display: grid;
-          /* Show when not empty */
+          display: grid; /* Show when not empty */
         }
       }
 
@@ -456,6 +469,11 @@ app-container {
             &:has(input:checked) {
               background-color: rgba(from currentcolor r g b / 0.05);
               color: rgba(var(--txt-active), 1);
+            }
+
+            /* Spinner visible when selected */
+            &:has(input:checked) load-data {
+              display: grid;
             }
 
             label {
