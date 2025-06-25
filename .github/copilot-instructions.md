@@ -87,6 +87,5 @@ All projects are loosely based on the JAMstack architecture in that all HTML str
 - Output only requested files in code blocks as described above.
 - Audit existing code for possible extension and or reuse. 
 - Always extend `components/list.html` when creating new list variants.
-- UI state logic is always declarative
-- UI must follow the pattern in `css/state.css`.
-- UI state logic must follow the pattern in `css/state.css`.
+- UI logic is always declarative
+- UI state logic is controlled only by CSS. No JS. 
