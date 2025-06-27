@@ -600,7 +600,7 @@ function mirrorToSelectedRow(event) {
 	// Extract the key from the input's "name" attribute for finding the corresponding UI element
 	const key = input.name;
 
-	// Find the currently selected row (<li>) based on the checked radio button
+	// Find the currently selected row (<li>) based on the checked radio input
 	const selectedLi = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
 
 	// Guard clause: exit early if no row is currently selected
@@ -663,11 +663,21 @@ function createInputFromKey(key, value) {
 		element.value = val; // Set the input's initial value
 
 		// Special handling: If the key is 'id' or the value matches a UUID pattern, hide the input
+		// if (key === 'id' || /^[a-f0-9\-]{36}$/.test(val)) {
+		// 	element.type = 'hidden';
+		// 	element.oninput = mirrorToSelectedRow; // Ensure hidden value syncs with UI
+		// 	return element; // Immediately return hidden element as no further processing needed
+		// }
+
+		// Special handling: If the key is 'id' or the value matches a UUID pattern, disable editing
 		if (key === 'id' || /^[a-f0-9\-]{36}$/.test(val)) {
-			element.type = 'hidden';
-			element.oninput = mirrorToSelectedRow; // Ensure hidden value syncs with UI
-			return element; // Immediately return hidden element as no further processing needed
+			element.type = 'text';
+			element.readOnly = true;
+			element.tabIndex = -1;
+			element.ariaDisabled = 'true'; // optional
+			element.oninput = mirrorToSelectedRow;
 		}
+
 
 		// If value matches an ISO date format, use a datetime-local input and set it as read-only
 		if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/.test(val)) {
