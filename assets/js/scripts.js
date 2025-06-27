@@ -269,7 +269,7 @@ function hasUnsavedChanges() {
 }
 
 // MARK: BANNER
-async function loadAppBanner() {
+async function loadBanner() {
 	try {
 		// Retrieve banner data using the shared fetchJSON utility
 		const bannerText = await fetchJSON('app-banner');
@@ -300,7 +300,7 @@ async function loadAppBanner() {
 	}
 }
 
-if (OPTIONS.showBanner) loadAppBanner();
+if (OPTIONS.showBanner) loadBanner();
 
 // Form State Utilities
 // MARK: TRACK FROM ORIGINAL STATE
