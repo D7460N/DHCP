@@ -19,7 +19,11 @@ A lightweight, dependency-free, standards-first UI resource built with:
 1. Download and extract the project.
 2. Open `index.html` in any modern browser (Chrome, Edge, Firefox, Safari).
 
-Done. No build step. No server. No problem.
+DONE!
+
+> _No build step<br>
+> No compliation<br>
+> No problem_
 
 ## 📂 Structure
 
