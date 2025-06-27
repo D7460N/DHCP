@@ -91,7 +91,7 @@ function isValidEndpoint(name) {
 }
 
 // String & Format Utilities
-// function toKebab(str) {
+// function toTagName(str) {
 //   let dashed = str
 //     .replace(/([a-z])([A-Z])/g, "$1-$2")
 //     .replace(/_/g, "-")
@@ -105,7 +105,7 @@ function isValidEndpoint(name) {
 // }
 
 // Convert string to kebab-case for generating valid custom element names
-function toKebab(str) {
+function toTagName(str) {
 	// Converts strings from camelCase or snake_case to kebab-case, ensuring compatibility with HTML custom elements
 	if (!str || typeof str !== 'string') return 'unknown-tag';
 
@@ -180,9 +180,9 @@ async function loadPageContent(endpoint) {
 		// Generate header elements dynamically based on keys from the first item
 		keys.forEach(key => {
 			// Convert the key into a valid custom HTML element tag name (kebab-case)
-			const el = document.createElement(toKebab(key));
+			const el = document.createElement(toTagName(key));
 			// Set readable text for each header item
-			el.textContent = toKebab(key)
+			el.textContent = toTagName(key)
 				.replace(/^item-/, '')
 				.replace(/-/g, ' ')
 				.replace(/\b\w/g, c => c.toUpperCase());
@@ -425,7 +425,7 @@ function initCustomEls(keys) {
 	// Iterate over each key to dynamically create custom elements, ensuring browser recognition
 	keys.forEach(key => {
 		// Convert each key to a kebab-case format appropriate for custom HTML elements
-		const tag = toKebab(key);
+		const tag = toTagName(key);
 
 		// Only attempt to define the custom element if it is a valid HTML custom element (must contain at least one dash)
 		if (tag.includes('-')) {
@@ -466,7 +466,7 @@ function updateFormFromSelectedRow() {
 
 		// Set the label's text, making it user-friendly and readable (e.g., "First Name:")
 		label.textContent =
-			toKebab(key)
+			toTagName(key)
 				.replace(/^item-/, '') // Remove 'item-' prefix if present
 				.replace(/-/g, ' ') // Replace dashes with spaces
 				.replace(/\b\w/g, c => c.toUpperCase()) + ': '; // Capitalize first letters
@@ -546,7 +546,7 @@ function createListItem(item = {}) {
 	// Populate the row dynamically with elements created from the item's key-value pairs
 	for (const [key, value] of Object.entries(item)) {
 		// Convert key into a valid custom element (kebab-case tag name)
-		const el = document.createElement(toKebab(key));
+		const el = document.createElement(toTagName(key));
 
 		// Set the content of this custom element to the corresponding item value
 		el.textContent = value ?? ''; // Default to empty string if value is null or undefined
@@ -582,7 +582,7 @@ function updateHeaderRow(sourceRow) {
 		const clone = el.cloneNode(false);
 
 		// Generate user-friendly, readable text for the header by formatting the element's tag name
-		clone.textContent = toKebab(key)
+		clone.textContent = toTagName(key)
 			.replace(/^item-/, '') // Remove 'item-' prefix if present
 			.replace(/-/g, ' ') // Replace dashes with spaces for readability
 			.replace(/\b\w/g, c => c.toUpperCase()); // Capitalize the first letter of each word
@@ -607,7 +607,7 @@ function mirrorToSelectedRow(event) {
 	if (!selectedLi) return;
 
 	// Find the corresponding element within the selected row using kebab-case conversion of the input name
-	const mirror = selectedLi.querySelector(`label > ${toKebab(key)}`);
+	const mirror = selectedLi.querySelector(`label > ${toTagName(key)}`);
 
 	// If the corresponding element exists and the input is editable, mirror the input's value to it
 	if (mirror && !input.readOnly) {
@@ -781,7 +781,7 @@ newItem.onclick = async () => {
 
 			// Set the label's text content to be human-readable, derived from the field's key
 			formLabel.textContent =
-				toKebab(key)
+				toTagName(key)
 					.replace(/^item-/, '') // Remove 'item-' prefix, if present
 					.replace(/-/g, ' ') // Replace hyphens with spaces for readability
 					.replace(/\b\w/g, c => c.toUpperCase()) + ': '; // Capitalize each word
@@ -810,10 +810,10 @@ newItem.onclick = async () => {
 			// Iterate over each data field key to generate corresponding header elements
 			keys.forEach(key => {
 				// Dynamically create header elements using the kebab-case format of each key
-				const headerEl = document.createElement(toKebab(key));
+				const headerEl = document.createElement(toTagName(key));
 
 				// Generate a user-friendly, readable header text from the key
-				headerEl.textContent = toKebab(key)
+				headerEl.textContent = toTagName(key)
 					.replace(/^item-/, '') // Remove the 'item-' prefix, if present
 					.replace(/-/g, ' ') // Replace dashes with spaces for readability
 					.replace(/\b\w/g, c => c.toUpperCase()); // Capitalize each word for improved presentation
