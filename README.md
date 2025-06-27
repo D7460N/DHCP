@@ -1,6 +1,6 @@
 # D7460N Web UI Architecture
 
-A lightweight, dependency-free, standards-first UI framework built with:
+A lightweight, dependency-free, standards-first UI resource built with:
 - Native HTML, CSS, JS (ES Modules)
 - No build tools, no transpilers, no frameworks
 - Responsive, accessible, and declarative by design
