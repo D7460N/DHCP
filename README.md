@@ -9,7 +9,7 @@ A lightweight, dependency-free, standards-first UI resource built with:
 
 - 🔹 No dependencies: 100% browser-native
 - 🔹 Dynamic JSON data via `fetch()`
-- 🔹 Declarative single-page navigation via `<input type="radio">` + CSS `:has()`
+- 🔹 Declarative single-page application (SPA) conditional navigation and page content via `<input type="radio">` + CSS `:has()`
 - 🔹 No IDs, classes, or custom attributes in markup
 - 🔹 Custom CSS visibility logic (`:empty`, `:has`, `[hidden]`)
 - 🔹 Clean separation of config, UI logic, and API services
