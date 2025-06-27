@@ -180,6 +180,7 @@
     z-index: var(--diagnostic-z);
   }
 
+  [role="button"]:not(:focus-visible)::after,
   button:not(:focus-visible)::after,
   a[href]:not(:focus-visible)::after {
     content: '⚠️ No visible focus';

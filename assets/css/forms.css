@@ -9,128 +9,137 @@
   --after-color: var(--after-color);
 }
 
-article {
-  select {
-    border-color: rgba(var(--input-border-color), 0.1);
-    width: fit-content;
-    padding: .5rem 1rem;
-    border-radius: var(--border-radius);
-    background-color: rgba(var(--input-bg-color), 0.1);
-    justify-self: end;
+main {
+  article {
+    select {
+      border-color: rgba(var(--input-border-color), 0.1);
+      width: fit-content;
+      padding: .5rem 1rem;
+      border-radius: var(--border-radius);
+      background-color: rgba(var(--input-bg-color), 0.1);
+      justify-self: end;
+    }
   }
 }
 
 /* MARK: FORMS */
-aside {
-  form {
-    display: grid;
-    max-width: 45rem;
-    overflow: hidden;
-    position: relative;
-
-    label {
+main {
+  aside {
+    form {
       display: grid;
-      gap: 0.5rem;
-    }
+      max-width: 45rem;
+      overflow: hidden;
+      position: relative;
 
-    input:invalid:not(:placeholder-shown)::placeholder {
-      color: crimson;
-      font-style: italic;
-    }
+      label {
+        display: grid;
+        gap: 0.5rem;
+      }
 
-    input,
-    select {
-      padding: 0.5rem;
-      border-radius: var(--border-radius);
-      width: 100%;
-      border: 0.125rem solid rgba(var(--input-border-color), 0.1);
-      background-color: rgba(var(--input-bg-color), 0.1);
-      font-size: 1rem;
-      font-family: inherit;
-      font-size: 100%;
-    }
+      input:invalid:not(:placeholder-shown)::placeholder {
+        color: crimson;
+        font-style: italic;
+      }
 
-    input:valid,
-    select:valid {
-      border: solid 0.125rem transparent;
-      border-inline-start-color: limegreen;
-    }
+      input,
+      select {
+        padding: 0.5rem;
+        border-radius: var(--border-radius);
+        width: 100%;
+        border: 0.125rem solid rgba(var(--input-border-color), 0.1);
+        background-color: rgba(var(--input-bg-color), 0.1);
+        font-size: 1rem;
+        font-family: inherit;
+        font-size: 100%;
+      }
 
-    input:invalid,
-    select:invalid {
-      border: solid 0.25rem transparent;
-      border-inline-start-color: red;
-    }
+      input:valid,
+      select:valid {
+        border: solid 0.125rem transparent;
+        border-inline-start-color: limegreen;
+      }
 
-    /* https://codepen.io/una/pen/MWMmYxb?editors=1100 */
-    select {
-      appearance: base-select;
-      border: solid 0.0625rem rgba(var(--input-border-color), 0.1);
-      border-radius: var(--border-radius);
-      display: grid;
-      font-family: inherit;
-      font-size: 100%;
+      input:invalid,
+      select:invalid {
+        border: solid 0.25rem transparent;
+        border-inline-start-color: red;
+      }
 
-      option {
+      /* https://codepen.io/una/pen/MWMmYxb?editors=1100 */
+      select {
+        appearance: base-select;
+        border: solid 0.0625rem rgba(var(--input-border-color), 0.1);
+        border-radius: var(--border-radius);
+        display: grid;
         font-family: inherit;
         font-size: 100%;
 
-        &::checkmark {
+        option {
+          font-family: inherit;
+          font-size: 100%;
+
+          &::checkmark {
+            display: none;
+          }
+        }
+
+        &::picker-icon {
           display: none;
         }
       }
 
-      &::picker-icon {
+      ::picker(select) {
+        appearance: base-select;
+      }
+
+      input:invalid:not(:placeholder-shown)::placeholder {
+        color: crimson;
+        font-style: italic;
+      }
+
+      [role="button"],
+      button {
+        background-color: rgba(var(--button-bg-color), 0.25);
+      }
+
+      button:disabled
+      [role="button"]:disabled {
+        background-color: rgba(var(--button-bg-color), 0.1);
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      [role="button"]:hover,
+      [role="button"]:focus-visible,
+      button:hover,
+      button:focus-visible {
+        background-color: rgba(var(--button-bg-color), 0.5);
+        color: rgba(var(--txt-active));
+      }
+
+      &:has([data-dirty="true"]):valid::after {
+        content: '✓ Ready to submit';
+        display: block;
+        color: var(--after-color);
+        margin-top: 0.5rem;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      &:has(:invalid) button[type="submit"],
+      &:has(:invalid) [role="button"][type="submit"] {
+        pointer-events: none;
+        opacity: 0.5;
+      }
+
+      .error {
+        color: red;
+        font-size: 0.85rem;
         display: none;
       }
-    }
 
-    ::picker(select) {
-      appearance: base-select;
-    }
-
-    input:invalid:not(:placeholder-shown)::placeholder {
-      color: crimson;
-      font-style: italic;
-    }
-
-    button {
-      background-color: rgba(var(--button-bg-color), 0.25);
-    }
-
-    button:disabled {
-      background-color: rgba(var(--button-bg-color), 0.1);
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    button:hover,
-    button:focus-visible {
-      background-color: rgba(var(--button-bg-color), 0.5);
-      color: rgba(var(--txt-active));
-    }
-
-    &:has([data-dirty="true"]):valid::after {
-      content: '✓ Ready to submit';
-      display: block;
-      color: var(--after-color);
-      margin-top: 0.5rem;
-      animation: fadeIn 0.5s ease-in-out;
-    }
-
-    &:has(:invalid) button[type="submit"] {
-      pointer-events: none;
-      opacity: 0.5;
-    }
-
-    .error {
-      color: red;
-      font-size: 0.85rem;
-      display: none;
-    }
-
-    input:invalid:not(:placeholder-shown) + .error {
-      display: block;
+      input:invalid:not(:placeholder-shown)+.error {
+        display: block;
+      }
     }
   }
 }
@@ -204,14 +213,18 @@ aside form fieldset label {
   margin-inline: 1rem;
 }
 
-aside form input[type="checkbox"] {
+aside form fieldset label input:disabled {
+  background-color: transparent;
+}
+
+aside form fieldset label input[type="checkbox"] {
   margin-right: 0.5rem;
   vertical-align: middle;
 }
 
 /* MARK: CONFIRMATION
 */
-aside form > p {
+aside form>p {
   display: none;
   font-weight: bold;
   margin-block-end: 0.5rem;

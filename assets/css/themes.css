@@ -122,6 +122,7 @@ app-container > * {
   background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
 }
 
+[role="button"],
 button {
   --bg-panel-opacity: 0.1;
 }

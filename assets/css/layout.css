@@ -82,7 +82,7 @@ app-container {
   /* 3 columns when <aside><fieldset> is not empty */
   &:has(aside form fieldset:not(:empty)) {
     /* --app-container-grid-template-columns: 12rem 1fr minmax(min-content, 1fr); */
-    --app-container-grid-template-columns: 12rem 1fr auto;
+    --app-container-grid-template-columns: 12rem minmax(50rem, 100rem) 1fr;
     grid-template-columns: var(--app-container-grid-template-columns);
 
     /* --min: 30ch;
