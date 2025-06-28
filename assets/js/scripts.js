@@ -1,6 +1,12 @@
 // MARK: SCRIPTS.JS
 
 import { BASE_URL, OPTIONS } from './config.js';
+import { inferFieldRules } from './rules.js';
+
+
+const FIELD_RULES_MAP = new Map(); // key: endpoint, value: rules object
+let FIELD_RULES = {};              // active rules in use
+
 
 // Shared fetch utility for all data calls
 
@@ -173,6 +179,18 @@ async function loadPageContent(endpoint) {
 
 		// Log the loaded data for further verification and debugging
 		console.log('[LOADED]', data);
+
+		FIELD_RULES = FIELD_RULES_MAP.get(endpoint);
+
+		if (!FIELD_RULES) {
+			const inferred = inferFieldRules(data.items);
+			FIELD_RULES_MAP.set(endpoint, inferred);
+			FIELD_RULES = inferred;
+		}
+
+		console.log('[RULES INFERRED]', FIELD_RULES);
+
+
 
 		// Generate and populate table headers
 		const keys = Object.keys(data.items[0] || {});
@@ -622,6 +640,58 @@ function createInputFromKey(key, value) {
 
 	// Safely trim the input value if possible; default to empty string if undefined or null
 	const val = value?.trim?.() ?? '';
+
+	const rule = FIELD_RULES?.[key];
+	if (rule?.type === 'select') {
+		const select = document.createElement('select');
+		select.name = key;
+		select.required = true;
+
+		const optBlank = document.createElement('option');
+		optBlank.value = '';
+		optBlank.textContent = 'Select...';
+		select.appendChild(optBlank);
+
+		for (const opt of rule.options ?? []) {
+			const o = document.createElement('option');
+			o.value = o.textContent = opt;
+			if (opt === value) o.selected = true;
+			select.appendChild(o);
+		}
+
+		select.oninput = mirrorToSelectedRow;
+		return select;
+	}
+
+	if (rule?.type === 'toggle') {
+		const checkbox = document.createElement('input');
+		checkbox.type = 'checkbox';
+		checkbox.name = key;
+		checkbox.checked = value === 'true' || value === true;
+		checkbox.oninput = mirrorToSelectedRow;
+		return checkbox;
+	}
+
+	if (rule?.type === 'textarea') {
+		const textarea = document.createElement('textarea');
+		textarea.name = key;
+		textarea.value = value ?? '';
+		textarea.required = !!value;
+		textarea.oninput = mirrorToSelectedRow;
+		return textarea;
+	}
+
+	if (rule?.type === 'datetime') {
+		const input = document.createElement('input');
+		input.type = 'datetime-local';
+		input.name = key;
+		input.value = formatDateForInput(value);
+		input.readOnly = true;
+		input.tabIndex = -1;
+		input.oninput = mirrorToSelectedRow;
+		return input;
+	}
+
 
 	// Variable to hold the dynamically created form element
 	let element;
