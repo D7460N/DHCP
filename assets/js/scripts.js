@@ -1,36 +1,20 @@
 // MARK: SCRIPTS.JS
 
 import {
-        BASE_URL,
-        OPTIONS,
-        NAV_ITEMS_ENDPOINT,
-        BANNER_ENDPOINT,
-        ENDPOINTS,
-        CONFIRM_FLAGS,
-        JSON_HEADERS,
-        DHCP_TYPES,
+	OPTIONS,
+	NAV_ITEMS_ENDPOINT,
+	BANNER_ENDPOINT,
+	ENDPOINTS,
+	CONFIRM_FLAGS,
+	DHCP_TYPES,
 } from './config.js';
 import { inferFieldRules } from './rules.js';
-
+import { fetchJSON, postJSON, putJSON, deleteJSON } from './fetch.js';
 
 const FIELD_RULES_MAP = new Map(); // key: endpoint, value: rules object
-let FIELD_RULES = {};              // active rules in use
+let FIELD_RULES = {}; // active rules in use
 
-
-// Shared fetch utility for all data calls
-
-async function fetchJSON(endpoint = '') {
-	try {
-		const url = endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`;
-		const res = await fetch(url);
-		const text = await res.text();
-		JSON.parse(text); // validate JSON
-		return text;
-	} catch (err) {
-		console.error('Invalid JSON:', err);
-		return `Error: ${err.message}`;
-	}
-}
+// Shared fetch utilities provided by fetch.js
 
 // Define references to frequently accessed DOM elements for efficient reuse throughout the script
 const headerUl = document.querySelector('main article ul[aria-hidden="true"]');
@@ -48,7 +32,7 @@ const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
 // Load navigation endpoints from API and dynamically populate navigation controls
 function loadNavItems() {
-        return fetchJSON(NAV_ITEMS_ENDPOINT).then(text => {
+	return fetchJSON(NAV_ITEMS_ENDPOINT).then(text => {
 		let parsed;
 		try {
 			parsed = JSON.parse(text);
@@ -189,8 +173,6 @@ async function loadPageContent(endpoint) {
 
 		console.log('[RULES INFERRED]', FIELD_RULES);
 
-
-
 		// Generate and populate table headers
 		const keys = Object.keys(data.items[0] || {});
 
@@ -289,7 +271,7 @@ function hasUnsavedChanges() {
 async function loadBannerContent() {
 	try {
 		// Retrieve banner data using the shared fetchJSON utility
-                const bannerText = await fetchJSON(BANNER_ENDPOINT);
+		const bannerText = await fetchJSON(BANNER_ENDPOINT);
 		const [first] = JSON.parse(bannerText);
 
 		// Trim the banner string (if it exists), or prepare a fallback if empty
@@ -368,7 +350,6 @@ function restoreForm() {
 	}
 }
 
-
 // Toggle the disabled state of the Reset button based on form changes
 function toggleResetItem() {
 	// Guard clause: ensure the reset button exists before proceeding
@@ -395,7 +376,6 @@ function toggleResetItem() {
 	} else {
 		status.hidden = true;
 	}
-
 }
 
 // Toggle the disabled state of the Submit button based on form validity and changes
@@ -424,7 +404,6 @@ function toggleSubmitItem() {
 	} else {
 		status.hidden = true;
 	}
-
 }
 
 // Confirmation logic utility: guards critical actions based on dirty state
@@ -691,15 +670,14 @@ function createInputFromKey(key, value) {
 		return input;
 	}
 
-
 	// Variable to hold the dynamically created form element
 	let element;
 
 	// Convert the value to lowercase to handle case-insensitive comparisons for certain input types
 	const lowercaseVal = val.toLowerCase();
 
-        // Define specific DHCP-related types that should be represented as a select/dropdown
-        const dhcpTypes = DHCP_TYPES;
+	// Define specific DHCP-related types that should be represented as a select/dropdown
+	const dhcpTypes = DHCP_TYPES;
 
 	// If the provided value matches one of the DHCP types, create a dropdown select element
 	if (dhcpTypes.includes(lowercaseVal)) {
@@ -746,7 +724,6 @@ function createInputFromKey(key, value) {
 			element.ariaDisabled = 'true'; // optional
 			element.oninput = mirrorToSelectedRow;
 		}
-
 
 		// If value matches an ISO date format, use a datetime-local input and set it as read-only
 		if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/.test(val)) {
@@ -812,7 +789,7 @@ loadNavItems().then(() => {
 			};
 
 			// Before proceeding, check if there are unsaved form changes
-                    unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, proceed);
+			unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, proceed);
 		};
 	});
 
@@ -826,8 +803,7 @@ loadNavItems().then(() => {
 // Event handler triggered when the "New" button is clicked to create a new form entry
 newItem.onclick = async () => {
 	// First, check if there are unsaved form changes
-    unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, () => {
-
+	unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, () => {
 		// Clear the form's current input fields to prepare for creating a new entry
 		fieldset.innerHTML = '';
 
@@ -911,7 +887,6 @@ newItem.onclick = async () => {
 
 		// Update the reset button state (enabled or disabled) based on current form data state
 		toggleResetItem();
-
 	});
 };
 
@@ -921,8 +896,7 @@ newItem.onclick = async () => {
 form.onsubmit = async e => {
 	e.preventDefault();
 
-    unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, async () => {
-
+	unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, async () => {
 		const selected = document.querySelector('ul li input[name="list-item"]:checked');
 		const id = selected?.closest('li')?.querySelector('label > id')?.textContent?.trim();
 		const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
@@ -933,17 +907,12 @@ form.onsubmit = async e => {
 			if (!el.readOnly) data[el.name] = el.value.trim();
 		});
 
-		const method = id ? 'PUT' : 'POST';
-		const url = id ? `${BASE_URL}${endpoint}/${id}` : `${BASE_URL}${endpoint}`;
-
 		try {
-                        const res = await fetch(url, {
-                                method,
-                                headers: JSON_HEADERS,
-                                body: JSON.stringify(data),
-                        });
-
-			if (!res.ok) throw new Error('Save failed');
+			if (id) {
+				await putJSON(`${endpoint}/${id}`, data);
+			} else {
+				await postJSON(endpoint, data);
+			}
 
 			submitItem.setAttribute('aria-label', 'saved');
 			savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
@@ -956,10 +925,8 @@ form.onsubmit = async e => {
 			const intro = document.querySelector('main article > p');
 			if (intro) intro.textContent = '⚠️ Error saving record.';
 		}
-
 	});
 };
-
 
 // MARK: FORM RESET
 
@@ -967,12 +934,11 @@ form.onsubmit = async e => {
 form.onreset = e => {
 	e.preventDefault();
 
-    unsavedCheck(CONFIRM_FLAGS.reset, hasUnsavedChanges, () => {
+	unsavedCheck(CONFIRM_FLAGS.reset, hasUnsavedChanges, () => {
 		restoreForm();
 		snapshotForm();
 	});
 };
-
 
 // MARK: DELETE HANDLER
 
@@ -984,7 +950,7 @@ deleteItem.onclick = () => {
 	const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
 	if (!endpoint) return;
 
-    unsavedCheck(CONFIRM_FLAGS.delete, hasUnsavedChanges, async () => {
+	unsavedCheck(CONFIRM_FLAGS.delete, hasUnsavedChanges, async () => {
 		if (!id) {
 			// Unsaved item: just remove from UI
 			selected.remove();
@@ -998,7 +964,7 @@ deleteItem.onclick = () => {
 
 		// Existing item: delete from server
 		try {
-			await fetch(`${BASE_URL}${endpoint}/${id}`, { method: 'DELETE' });
+			await deleteJSON(`${endpoint}/${id}`);
 			await loadPageContent(endpoint);
 		} catch (err) {
 			console.error('Failed to delete:', err);
@@ -1008,12 +974,13 @@ deleteItem.onclick = () => {
 	});
 };
 
-
 // MARK: CLOSE ASIDE
 if (closeItem) {
 	closeItem.onclick = () => {
-           unsavedCheck(CONFIRM_FLAGS.close, hasUnsavedChanges, () => {
-			const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
+		unsavedCheck(CONFIRM_FLAGS.close, hasUnsavedChanges, () => {
+			const selected = document
+				.querySelector('ul li input[name="list-item"]:checked')
+				?.closest('li');
 			if (selected) {
 				const radio = selected.querySelector('input[name="list-item"]');
 				if (radio) radio.checked = false;
@@ -1028,14 +995,12 @@ if (closeItem) {
 	};
 }
 
-
-
 // Prompt user to save or delete when page loses focus if there are unsaved changes
 if (OPTIONS.warnOnBlur) {
 	window.onblur = () => {
 		if (hasUnsavedChanges()) {
-                   CONFIRM_FLAGS.save.value = true;
-                   CONFIRM_FLAGS.delete.value = true;
+			CONFIRM_FLAGS.save.value = true;
+			CONFIRM_FLAGS.delete.value = true;
 		}
 	};
 }
