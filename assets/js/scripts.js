@@ -1,19 +1,16 @@
 // MARK: SCRIPTS.JS
 
 import {
-	OPTIONS,
-	NAV_ITEMS_ENDPOINT,
-	BANNER_ENDPOINT,
-	ENDPOINTS,
-	CONFIRM_FLAGS,
-	DHCP_TYPES,
+        OPTIONS,
+        BANNER_ENDPOINT,
+        ENDPOINTS,
+        CONFIRM_FLAGS,
+        DHCP_TYPES,
 } from './config.js';
-import { inferFieldRules } from './rules.js';
 import { fetchJSON, postJSON, putJSON, deleteJSON } from './fetch.js';
-import { normalizeRecord, normalizeItems, denormalizeRecord } from './schema.js';
-
-const FIELD_RULES_MAP = new Map(); // key: endpoint, value: rules object
-let FIELD_RULES = {}; // active rules in use
+import { denormalizeRecord } from './schema.js';
+import { loadNavItems, loadPageContent, getFieldRules } from './loaders.js';
+import { createListItem, toTagName, setRowSelectHandler } from './inject.js';
 
 // Shared fetch utilities provided by fetch.js
 
@@ -32,53 +29,6 @@ const savedMessage = submitItem.nextElementSibling;
 const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
 // Load navigation endpoints from API and dynamically populate navigation controls
-function loadNavItems() {
-	return fetchJSON(NAV_ITEMS_ENDPOINT).then(text => {
-		let parsed;
-		try {
-			parsed = JSON.parse(text);
-			if (!Array.isArray(parsed)) throw new Error('Expected navItems array');
-		} catch (err) {
-			console.error('Malformed navItems:', err);
-			return;
-		}
-
-		const [data] = parsed;
-		const detailEls = document.querySelectorAll('nav details');
-
-		Object.entries(data).forEach(([groupKey, groupValue], index) => {
-			const detail = detailEls[index];
-			if (!detail) return;
-
-			const summary = detail.querySelector('summary');
-			const section = detail.querySelector('section');
-
-			if (summary) summary.textContent = groupKey.charAt(0).toUpperCase() + groupKey.slice(1);
-			if (section) section.innerHTML = '';
-
-			Object.entries(groupValue).forEach(([key, { title }], i) => {
-				const label = document.createElement('label');
-				label.textContent = title || key;
-
-				const input = document.createElement('input');
-				input.type = 'radio';
-				input.name = 'nav';
-				input.value = key;
-				input.hidden = true;
-				if (i === 0 && index === 0) input.checked = true;
-
-				label.appendChild(input);
-				section.appendChild(label);
-			});
-		});
-	});
-}
-
-// Check endpoint validity against predefined endpoint list
-function isValidEndpoint(name) {
-	// Returns true if the provided endpoint name is within the list of valid endpoints
-	return ENDPOINTS.includes(name);
-}
 
 // String & Format Utilities
 // function toTagName(str) {
@@ -94,26 +44,6 @@ function isValidEndpoint(name) {
 //   return dashed
 // }
 
-// Convert string to kebab-case for generating valid custom element names
-function toTagName(str) {
-	// Converts strings from camelCase or snake_case to kebab-case, ensuring compatibility with HTML custom elements
-	if (!str || typeof str !== 'string') return 'unknown-tag';
-
-	// Replace camelCase and snake_case with kebab-case
-	let dashed = str
-		.replace(/([a-z])([A-Z])/g, '$1-$2')
-		.replace(/_/g, '-')
-		.toLowerCase();
-
-	// Handle numeric strings or special characters by prefixing unknown
-	if (!/^[a-z][a-z0-9-]*$/.test(dashed)) {
-		dashed = `unknown-${dashed.replace(/[^a-z0-9-]/g, '')}`;
-	}
-
-	if (!dashed.includes('-')) dashed = `${dashed}-`;
-
-	return dashed;
-}
 
 // Convert kebab-case strings to camelCase
 function toCamel(str) {
@@ -132,115 +62,6 @@ function formatDateForInput(str) {
 }
 
 // Load data from a specific API endpoint and populate the UI elements accordingly
-async function loadPageContent(endpoint) {
-	// Log the endpoint being loaded for debugging purposes
-	console.log('[LOAD]', endpoint);
-
-	// Clear existing UI content to prepare for new data
-	headerUl.querySelectorAll('li').forEach(li => (li.innerHTML = ''));
-	tableUl.innerHTML = '';
-
-	// Clear the header content but keep the header structure intact
-	const headerLi = headerUl.querySelector('li');
-	if (headerLi) {
-		headerLi.innerHTML = ''; // Clears header content while preserving the element
-	}
-
-	try {
-		// Fetch primary data from the given API endpoint
-		const text = await fetchJSON(endpoint);
-		const [raw] = JSON.parse(text);
-
-		const data = normalizeRecord('', raw);
-		data.items = normalizeItems(endpoint, raw.items || []);
-
-		// Ensure `data.items` is a valid array; if not, attempt to re-fetch or default to empty
-		if (!Array.isArray(data.items)) {
-			try {
-				const retry = await fetchJSON(endpoint);
-				const parsed = JSON.parse(retry);
-				data.items = normalizeItems(endpoint, parsed);
-			} catch {
-				data.items = [];
-			}
-		}
-
-		// Log the loaded data for further verification and debugging
-		console.log('[LOADED]', data);
-
-		FIELD_RULES = FIELD_RULES_MAP.get(endpoint);
-
-		if (!FIELD_RULES) {
-			const inferred = inferFieldRules(data.items);
-			FIELD_RULES_MAP.set(endpoint, inferred);
-			FIELD_RULES = inferred;
-		}
-
-		console.log('[RULES INFERRED]', FIELD_RULES);
-
-		// Generate and populate table headers
-		const keys = Object.keys(data.items[0] || {});
-
-		// Generate header elements dynamically based on keys from the first item
-		keys.forEach(key => {
-			// Convert the key into a valid custom HTML element tag name (kebab-case)
-			const el = document.createElement(toTagName(key));
-			// Set readable text for each header item
-			el.textContent = toTagName(key)
-				.replace(/^item-/, '')
-				.replace(/-/g, ' ')
-				.replace(/\b\w/g, c => c.toUpperCase());
-			headerLi.appendChild(el);
-		});
-
-		// Initialize custom elements in the DOM based on fetched keys
-		initCustomEls(keys);
-
-		// Detect duplicate item IDs to ensure data integrity and avoid UI conflicts
-		const seen = new Set();
-		const duplicates = [];
-
-		for (const item of data.items) {
-			if (seen.has(item.id)) duplicates.push(item.id);
-			seen.add(item.id);
-		}
-
-		// If duplicates exist, log an error, inform the user, and halt further processing
-		if (duplicates.length) {
-			console.error('[DUPLICATE ID DETECTED]', duplicates);
-			const intro = document.querySelector('main article > p');
-			if (intro) intro.textContent = `⚠️ Duplicate IDs: ${duplicates.join(', ')}`;
-			return;
-		}
-
-		// Clear the fieldset to prepare for new item inputs or edits
-		fieldset.innerHTML = '';
-
-		// Populate the main article's title and introductory paragraph dynamically from the fetched data
-		const article = document.querySelector('main article');
-		const h1 = article?.querySelector('h1');
-		const intro = article?.querySelector('p');
-		if (h1) h1.textContent = data.title ?? '';
-		if (intro) intro.textContent = data.description ?? '';
-
-		// Populate each item into the UI as individual table rows
-		data.items.forEach(item => {
-			const li = createListItem(item);
-			tableUl.appendChild(li);
-		});
-
-		// Snapshot the current form state for tracking unsaved changes
-		snapshotForm();
-
-		// Update UI buttons based on form state (reset/save button toggling)
-		toggleResetItem();
-	} catch (err) {
-		// Log the error and display an inline message if data loading fails
-		console.error('Failed to load data:', err);
-		const intro = document.querySelector('main article > p');
-		if (intro) intro.textContent = '⚠️ Error loading data.';
-	}
-}
 
 // DOM Manipulation Utilities
 function removeInlineStyles(element) {
@@ -486,8 +307,10 @@ function updateFormFromSelectedRow() {
 	snapshotForm();
 
 	// Update the reset button's enabled/disabled state based on the form's current state
-	toggleResetItem();
+        toggleResetItem();
 }
+
+setRowSelectHandler(updateFormFromSelectedRow);
 
 // MARK: List & Row Utilities
 // Handles the event when a row's toggle checkbox is clicked, ensuring only one row is active at a time
@@ -624,7 +447,7 @@ function createInputFromKey(key, value) {
 	// Safely trim the input value if possible; default to empty string if undefined or null
 	const val = value?.trim?.() ?? '';
 
-	const rule = FIELD_RULES?.[key];
+        const rule = getFieldRules()?.[key];
 	if (rule?.type === 'select') {
 		const select = document.createElement('select');
 		select.name = key;
@@ -782,16 +605,14 @@ loadNavItems().then(() => {
 			if (!input.checked) return;
 
 			// Helper function defining the actions to perform when navigating to a new endpoint
-			const proceed = () => {
-				// Find the label containing the selected input (useful for UI feedback if needed)
-				const label = input.closest('label');
-
-				// Retrieve the endpoint identifier from the selected input's value attribute
-				const endpoint = input.value;
-
-				// Trigger data loading for the chosen endpoint, updating the main content accordingly
-				if (endpoint) loadPageContent(endpoint);
-			};
+                        const proceed = () => {
+                                const endpoint = input.value;
+                                if (!endpoint) return;
+                                loadPageContent(endpoint).then(() => {
+                                        snapshotForm();
+                                        toggleResetItem();
+                                });
+                        };
 
 			// Before proceeding, check if there are unsaved form changes
 			unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, proceed);
@@ -922,7 +743,9 @@ form.onsubmit = async e => {
 
 			submitItem.setAttribute('aria-label', 'saved');
 			savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
-			await loadPageContent(endpoint);
+                        await loadPageContent(endpoint);
+                        snapshotForm();
+                        toggleResetItem();
 			setTimeout(() => {
 				savedMessage.textContent = '';
 			}, 2000);
@@ -970,8 +793,10 @@ deleteItem.onclick = () => {
 
 		// Existing item: delete from server
 		try {
-			await deleteJSON(`${endpoint}/${id}`);
-			await loadPageContent(endpoint);
+                        await deleteJSON(`${endpoint}/${id}`);
+                        await loadPageContent(endpoint);
+                        snapshotForm();
+                        toggleResetItem();
 		} catch (err) {
 			console.error('Failed to delete:', err);
 			const intro = document.querySelector('main article > p');
