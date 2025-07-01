@@ -1,6 +1,15 @@
 // MARK: SCRIPTS.JS
 
-import { BASE_URL, OPTIONS } from './config.js';
+import {
+        BASE_URL,
+        OPTIONS,
+        NAV_ITEMS_ENDPOINT,
+        BANNER_ENDPOINT,
+        ENDPOINTS,
+        CONFIRM_FLAGS,
+        JSON_HEADERS,
+        DHCP_TYPES,
+} from './config.js';
 import { inferFieldRules } from './rules.js';
 
 
@@ -37,19 +46,9 @@ const submitItem = form.querySelector('[aria-label="Save"]');
 const savedMessage = submitItem.nextElementSibling;
 const navInputs = document.querySelectorAll('nav input[name="nav"]');
 
-const confirmFlags = {
-	save: { value: false },
-	delete: { value: false },
-	reset: { value: false },
-	close: { value: false },
-};
-
-// Array containing all valid endpoint identifiers
-const ENDPOINTS = [];
-
 // Load navigation endpoints from API and dynamically populate navigation controls
 function loadNavItems() {
-	return fetchJSON('navItems').then(text => {
+        return fetchJSON(NAV_ITEMS_ENDPOINT).then(text => {
 		let parsed;
 		try {
 			parsed = JSON.parse(text);
@@ -290,7 +289,7 @@ function hasUnsavedChanges() {
 async function loadBannerContent() {
 	try {
 		// Retrieve banner data using the shared fetchJSON utility
-		const bannerText = await fetchJSON('app-banner');
+                const bannerText = await fetchJSON(BANNER_ENDPOINT);
 		const [first] = JSON.parse(bannerText);
 
 		// Trim the banner string (if it exists), or prepare a fallback if empty
@@ -699,8 +698,8 @@ function createInputFromKey(key, value) {
 	// Convert the value to lowercase to handle case-insensitive comparisons for certain input types
 	const lowercaseVal = val.toLowerCase();
 
-	// Define specific DHCP-related types that should be represented as a select/dropdown
-	const dhcpTypes = ['host', 'ip', 'url', 'file', 'service'];
+        // Define specific DHCP-related types that should be represented as a select/dropdown
+        const dhcpTypes = DHCP_TYPES;
 
 	// If the provided value matches one of the DHCP types, create a dropdown select element
 	if (dhcpTypes.includes(lowercaseVal)) {
@@ -813,7 +812,7 @@ loadNavItems().then(() => {
 			};
 
 			// Before proceeding, check if there are unsaved form changes
-			unsavedCheck(confirmFlags.save, hasUnsavedChanges, proceed);
+                    unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, proceed);
 		};
 	});
 
@@ -827,7 +826,7 @@ loadNavItems().then(() => {
 // Event handler triggered when the "New" button is clicked to create a new form entry
 newItem.onclick = async () => {
 	// First, check if there are unsaved form changes
-	unsavedCheck(confirmFlags.save, hasUnsavedChanges, () => {
+    unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, () => {
 
 		// Clear the form's current input fields to prepare for creating a new entry
 		fieldset.innerHTML = '';
@@ -922,7 +921,7 @@ newItem.onclick = async () => {
 form.onsubmit = async e => {
 	e.preventDefault();
 
-	unsavedCheck(confirmFlags.save, hasUnsavedChanges, async () => {
+    unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, async () => {
 
 		const selected = document.querySelector('ul li input[name="list-item"]:checked');
 		const id = selected?.closest('li')?.querySelector('label > id')?.textContent?.trim();
@@ -938,11 +937,11 @@ form.onsubmit = async e => {
 		const url = id ? `${BASE_URL}${endpoint}/${id}` : `${BASE_URL}${endpoint}`;
 
 		try {
-			const res = await fetch(url, {
-				method,
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(data),
-			});
+                        const res = await fetch(url, {
+                                method,
+                                headers: JSON_HEADERS,
+                                body: JSON.stringify(data),
+                        });
 
 			if (!res.ok) throw new Error('Save failed');
 
@@ -968,7 +967,7 @@ form.onsubmit = async e => {
 form.onreset = e => {
 	e.preventDefault();
 
-	unsavedCheck(confirmFlags.reset, hasUnsavedChanges, () => {
+    unsavedCheck(CONFIRM_FLAGS.reset, hasUnsavedChanges, () => {
 		restoreForm();
 		snapshotForm();
 	});
@@ -985,7 +984,7 @@ deleteItem.onclick = () => {
 	const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
 	if (!endpoint) return;
 
-	unsavedCheck(confirmFlags.delete, hasUnsavedChanges, async () => {
+    unsavedCheck(CONFIRM_FLAGS.delete, hasUnsavedChanges, async () => {
 		if (!id) {
 			// Unsaved item: just remove from UI
 			selected.remove();
@@ -1013,7 +1012,7 @@ deleteItem.onclick = () => {
 // MARK: CLOSE ASIDE
 if (closeItem) {
 	closeItem.onclick = () => {
-		unsavedCheck(confirmFlags.close, hasUnsavedChanges, () => {
+           unsavedCheck(CONFIRM_FLAGS.close, hasUnsavedChanges, () => {
 			const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
 			if (selected) {
 				const radio = selected.querySelector('input[name="list-item"]');
@@ -1035,8 +1034,8 @@ if (closeItem) {
 if (OPTIONS.warnOnBlur) {
 	window.onblur = () => {
 		if (hasUnsavedChanges()) {
-			confirmFlags.save.value = true;
-			confirmFlags.delete.value = true;
+                   CONFIRM_FLAGS.save.value = true;
+                   CONFIRM_FLAGS.delete.value = true;
 		}
 	};
 }
