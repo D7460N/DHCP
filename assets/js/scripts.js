@@ -339,52 +339,52 @@ function handleRowToggle(event) {
 }
 
 // Creates and returns a new list item element (<li>) representing a row populated with provided data
-function createListItem(item = {}) {
-	// Create a new list item (<li>) element to represent a single row in the list/table
-	const li = document.createElement('li');
+// function createListItem(item = {}) {
+// 	// Create a new list item (<li>) element to represent a single row in the list/table
+// 	const li = document.createElement('li');
 
-	// Create a hidden checkbox input element for toggling selection state of the row
+// 	// Create a hidden checkbox input element for toggling selection state of the row
 
-	// Make the list item focusable via keyboard for improved accessibility
-	li.tabIndex = 0;
+// 	// Make the list item focusable via keyboard for improved accessibility
+// 	li.tabIndex = 0;
 
-	// Create a label element to group inputs and data fields clearly
-	const label = document.createElement('label');
+// 	// Create a label element to group inputs and data fields clearly
+// 	const label = document.createElement('label');
 
-	// Create a hidden checkbox input element for toggling selection state of the row
-	const toggle = document.createElement('input');
-	toggle.type = 'checkbox';
-	toggle.name = 'row-toggle';
-	toggle.hidden = true; // Keep hidden; can be styled or controlled via other UI triggers
-	toggle.oninput = handleRowToggle; // Attach event handler for row toggling
-	label.appendChild(toggle); // Append the checkbox to the label
+// 	// Create a hidden checkbox input element for toggling selection state of the row
+// 	const toggle = document.createElement('input');
+// 	toggle.type = 'checkbox';
+// 	toggle.name = 'row-toggle';
+// 	toggle.hidden = true; // Keep hidden; can be styled or controlled via other UI triggers
+// 	toggle.oninput = handleRowToggle; // Attach event handler for row toggling
+// 	label.appendChild(toggle); // Append the checkbox to the label
 
-	// Create a hidden radio input element to facilitate exclusive row selection and form updates
-	const input = document.createElement('input');
-	input.type = 'radio';
-	input.name = 'list-item';
-	input.hidden = true; // Hidden as UI interaction is handled through other visible elements
-	input.oninput = () => updateFormFromSelectedRow(); // Load form fields when selected
-	label.appendChild(input); // Append the radio button to the label
+// 	// Create a hidden radio input element to facilitate exclusive row selection and form updates
+// 	const input = document.createElement('input');
+// 	input.type = 'radio';
+// 	input.name = 'list-item';
+// 	input.hidden = true; // Hidden as UI interaction is handled through other visible elements
+// 	input.oninput = () => updateFormFromSelectedRow(); // Load form fields when selected
+// 	label.appendChild(input); // Append the radio button to the label
 
-	// Populate the row dynamically with elements created from the item's key-value pairs
-	for (const [key, value] of Object.entries(item)) {
-		// Convert key into a valid custom element (kebab-case tag name)
-		const el = document.createElement(toTagName(key));
+// 	// Populate the row dynamically with elements created from the item's key-value pairs
+// 	for (const [key, value] of Object.entries(item)) {
+// 		// Convert key into a valid custom element (kebab-case tag name)
+// 		const el = document.createElement(toTagName(key));
 
-		// Set the content of this custom element to the corresponding item value
-		el.textContent = value ?? ''; // Default to empty string if value is null or undefined
+// 		// Set the content of this custom element to the corresponding item value
+// 		el.textContent = value ?? ''; // Default to empty string if value is null or undefined
 
-		// Append the populated element to the label for visual representation of the data
-		label.appendChild(el);
-	}
+// 		// Append the populated element to the label for visual representation of the data
+// 		label.appendChild(el);
+// 	}
 
-	// Append the fully constructed label to the list item (<li>) element
-	li.appendChild(label);
+// 	// Append the fully constructed label to the list item (<li>) element
+// 	li.appendChild(label);
 
-	// Return the fully assembled list item ready to be appended to the table/list UI
-	return li;
-}
+// 	// Return the fully assembled list item ready to be appended to the table/list UI
+// 	return li;
+// }
 
 // Updates the header row elements based on the structure and content of a given source row
 function updateHeaderRow(sourceRow) {
