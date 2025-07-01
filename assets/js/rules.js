@@ -1,37 +1,55 @@
+import { DHCP_TYPES } from './config.js';
+
 export function inferFieldRules(items = []) {
-	if (!items.length) return {};
+	if (!Array.isArray(items) || !items.length) return {};
 
-	const rules = {};
 	const valueMap = {};
-
 	for (const item of items) {
-		for (const [key, value] of Object.entries(item)) {
+		for (const [key, val] of Object.entries(item)) {
 			if (!valueMap[key]) valueMap[key] = new Set();
-			if (typeof value === 'string') valueMap[key].add(value);
+			if (val !== undefined && val !== null) {
+				valueMap[key].add(String(val).trim());
+			}
 		}
 	}
 
+	const rules = {};
 	for (const key of Object.keys(items[0])) {
-		const sampleValue = items[0][key];
-		const values = [...(valueMap[key] ?? [])];
+		const values = [...(valueMap[key] || [])];
+		const sample = values[0];
 
-		if (typeof sampleValue === 'boolean') {
-			rules[key] = { type: 'toggle' };
-		} else if (typeof sampleValue === 'string') {
-			if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(sampleValue)) {
-				rules[key] = { type: 'datetime', readOnly: true };
-			} else if (key === 'id' || /^[a-f0-9\-]{36}$/.test(sampleValue)) {
-				rules[key] = { type: 'text', readOnly: true };
-			} else if (values.length <= 10 && values.every(v => v.length < 20)) {
-				rules[key] = { type: 'select', options: values };
-			} else if (sampleValue.length > 100) {
-				rules[key] = { type: 'textarea' };
-			} else {
-				rules[key] = { type: 'text' };
-			}
+		const rule = {};
+
+		if (values.every(v => v === 'true' || v === 'false')) {
+			rule.type = 'toggle';
+		} else if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(sample)) {
+			rule.type = 'datetime';
+			rule.readOnly = true;
+		} else if (
+			key === 'id' ||
+			(/^[a-f0-9\-]{4,}$/.test(sample) && values.every(v => /^[a-f0-9\-]{4,}$/.test(v)))
+		) {
+			rule.type = 'text';
+			rule.readOnly = true;
+		} else if (/author|modified|created|updated/.test(key)) {
+			rule.type = 'text';
+			rule.readOnly = true;
+		} else if (DHCP_TYPES.includes(String(sample).toLowerCase())) {
+			rule.type = 'select';
+			rule.options = DHCP_TYPES;
+			rule.required = true;
+		} else if (values.length > 1 && values.length <= 10 && values.every(v => v.length < 20)) {
+			rule.type = 'select';
+			rule.options = values;
+		} else if (typeof sample === 'string' && sample.length > 100) {
+			rule.type = 'textarea';
 		} else {
-			rules[key] = { type: 'text' };
+			rule.type = typeof sample === 'number' ? 'number' : 'text';
 		}
+
+		if (items.every(it => String(it[key] ?? '').trim() !== '')) rule.required = true;
+
+		rules[key] = rule;
 	}
 
 	return rules;
