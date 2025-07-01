@@ -10,6 +10,7 @@ import {
 } from './config.js';
 import { inferFieldRules } from './rules.js';
 import { fetchJSON, postJSON, putJSON, deleteJSON } from './fetch.js';
+import { normalizeRecord, normalizeItems, denormalizeRecord } from './schema.js';
 
 const FIELD_RULES_MAP = new Map(); // key: endpoint, value: rules object
 let FIELD_RULES = {}; // active rules in use
@@ -148,15 +149,19 @@ async function loadPageContent(endpoint) {
 	try {
 		// Fetch primary data from the given API endpoint
 		const text = await fetchJSON(endpoint);
-		const [data] = JSON.parse(text);
+		const [raw] = JSON.parse(text);
+
+		const data = normalizeRecord('', raw);
+		data.items = normalizeItems(endpoint, raw.items || []);
 
 		// Ensure `data.items` is a valid array; if not, attempt to re-fetch or default to empty
 		if (!Array.isArray(data.items)) {
 			try {
 				const retry = await fetchJSON(endpoint);
-				data.items = JSON.parse(retry);
+				const parsed = JSON.parse(retry);
+				data.items = normalizeItems(endpoint, parsed);
 			} catch {
-				data.items = []; // Set default empty array if fetch fails again
+				data.items = [];
 			}
 		}
 
@@ -216,7 +221,7 @@ async function loadPageContent(endpoint) {
 		const h1 = article?.querySelector('h1');
 		const intro = article?.querySelector('p');
 		if (h1) h1.textContent = data.title ?? '';
-		if (intro) intro.textContent = data.intro ?? '';
+		if (intro) intro.textContent = data.description ?? '';
 
 		// Populate each item into the UI as individual table rows
 		data.items.forEach(item => {
@@ -906,12 +911,13 @@ form.onsubmit = async e => {
 		fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
 			if (!el.readOnly) data[el.name] = el.value.trim();
 		});
+		const payload = denormalizeRecord(endpoint, data);
 
 		try {
 			if (id) {
-				await putJSON(`${endpoint}/${id}`, data);
+				await putJSON(`${endpoint}/${id}`, payload);
 			} else {
-				await postJSON(endpoint, data);
+				await postJSON(endpoint, payload);
 			}
 
 			submitItem.setAttribute('aria-label', 'saved');
