@@ -10,7 +10,15 @@ import {
 import { fetchJSON, postJSON, putJSON, deleteJSON } from './fetch.js';
 import { denormalizeRecord } from './schema.js';
 import { loadNavItems, loadPageContent, getFieldRules } from './loaders.js';
-import { createListItem, toTagName, setRowSelectHandler } from './inject.js';
+import {
+       createListItem,
+       toTagName,
+       toCamel,
+       setRowSelectHandler,
+       injectFormFields,
+       injectRowValues,
+       injectRowField,
+} from './inject.js';
 
 // Shared fetch utilities provided by fetch.js
 
@@ -44,14 +52,6 @@ const navInputs = document.querySelectorAll('nav input[name="nav"]');
 //   return dashed
 // }
 
-
-// Convert kebab-case strings to camelCase
-function toCamel(str) {
-	// Transforms kebab-case strings into camelCase format
-	let result = str.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
-	if (result.endsWith('-')) result = result.slice(0, -1);
-	return result;
-}
 
 // Format date strings for input elements (YYYY-MM-DDTHH:MM)
 function formatDateForInput(str) {
@@ -158,22 +158,10 @@ function snapshotForm() {
 // Restore form fields to previously captured state stored in `originalData`
 // This function is typically triggered by a form reset action
 function restoreForm() {
-	if (!originalData || !Object.keys(originalData).length) return;
+       if (!originalData || !Object.keys(originalData).length) return;
 
-	fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
-		if (Object.prototype.hasOwnProperty.call(originalData, el.name)) {
-			el.value = originalData[el.name];
-		}
-	});
-
-	if (snapshotLi) {
-		snapshotLi.querySelectorAll('label > *:not(input)').forEach(el => {
-			const key = toCamel(el.tagName.toLowerCase());
-			if (Object.prototype.hasOwnProperty.call(originalData, key)) {
-				el.textContent = originalData[key];
-			}
-		});
-	}
+       injectFormFields(originalData);
+       if (snapshotLi) injectRowValues(snapshotLi, originalData);
 }
 
 // Toggle the disabled state of the Reset button based on form changes
@@ -431,12 +419,9 @@ function mirrorToSelectedRow(event) {
 	if (!selectedLi) return;
 
 	// Find the corresponding element within the selected row using kebab-case conversion of the input name
-	const mirror = selectedLi.querySelector(`label > ${toTagName(key)}`);
-
-	// If the corresponding element exists and the input is editable, mirror the input's value to it
-	if (mirror && !input.readOnly) {
-		mirror.textContent = input.value;
-	}
+       if (!input.readOnly) {
+               injectRowField(selectedLi, key, input.value);
+       }
 }
 
 // Dynamically creates and returns a form input element tailored to the given key-value pair
