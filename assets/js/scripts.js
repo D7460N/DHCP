@@ -1,24 +1,23 @@
 // MARK: SCRIPTS.JS
 
-import {
-        OPTIONS,
-        BANNER_ENDPOINT,
-        ENDPOINTS,
-        CONFIRM_FLAGS,
-        DHCP_TYPES,
-} from './config.js';
+import { OPTIONS, BANNER_ENDPOINT, ENDPOINTS, CONFIRM_FLAGS, DHCP_TYPES } from './config.js';
 import { fetchJSON, postJSON, putJSON, deleteJSON } from './fetch.js';
 import { denormalizeRecord } from './schema.js';
 import { loadNavItems, loadPageContent, getFieldRules } from './loaders.js';
 import {
-       createListItem,
-       toTagName,
-       toCamel,
-       setRowSelectHandler,
-       injectFormFields,
-       injectRowValues,
-       injectRowField,
+	createListItem,
+	toTagName,
+	toCamel,
+	setRowSelectHandler,
+	injectFormFields,
+	injectRowValues,
+	injectRowField,
 } from './inject.js';
+import {
+	formatDateForInput,
+	snapshotForm as captureSnapshot,
+	hasUnsavedChanges as detectChanges,
+} from './utils.js';
 
 // Shared fetch utilities provided by fetch.js
 
@@ -52,15 +51,7 @@ const navInputs = document.querySelectorAll('nav input[name="nav"]');
 //   return dashed
 // }
 
-
-// Format date strings for input elements (YYYY-MM-DDTHH:MM)
-function formatDateForInput(str) {
-	// Formats a date string into ISO format suitable for HTML datetime-local inputs
-	const d = new Date(str);
-	if (isNaN(d)) return '';
-	return d.toISOString().slice(0, 16); // Trims to format: YYYY-MM-DDTHH:MM
-}
-
+// Format date strings for input elements handled by utils.js
 // Load data from a specific API endpoint and populate the UI elements accordingly
 
 // DOM Manipulation Utilities
@@ -87,12 +78,8 @@ function isValid() {
 
 // Detects if there are any unsaved changes compared to the original form data snapshot.
 function hasUnsavedChanges() {
-	// Compares current input/select values to their original snapshot to detect changes.
-	return Array.from(fieldset.querySelectorAll('input[name], select[name]')).some(
-		el => el.value !== originalData[el.name],
-	);
+	return detectChanges(fieldset.querySelectorAll('input[name], select[name]'), originalData);
 }
-
 // MARK: BANNER
 async function loadBannerContent() {
 	try {
@@ -139,18 +126,8 @@ let snapshotLi = null;
 // Capture the current state of form fields into `originalData`
 // This function is called to take a snapshot after loading data or resetting changes
 function snapshotForm() {
-	// Reset `originalData` to empty object to capture fresh snapshot of form state
-	originalData = {};
-
-	// Loop over each form field within the fieldset, recording the current values
-	fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
-		originalData[el.name] = el.value;
-	});
-
-	// Capture reference to currently selected list item, if any
+	originalData = captureSnapshot(fieldset.querySelectorAll('input[name], select[name]'));
 	snapshotLi = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
-
-	// After taking snapshot, update state of Reset and Submit buttons
 	toggleResetItem();
 	toggleSubmitItem();
 }
@@ -158,10 +135,10 @@ function snapshotForm() {
 // Restore form fields to previously captured state stored in `originalData`
 // This function is typically triggered by a form reset action
 function restoreForm() {
-       if (!originalData || !Object.keys(originalData).length) return;
+	if (!originalData || !Object.keys(originalData).length) return;
 
-       injectFormFields(originalData);
-       if (snapshotLi) injectRowValues(snapshotLi, originalData);
+	injectFormFields(originalData);
+	if (snapshotLi) injectRowValues(snapshotLi, originalData);
 }
 
 // Toggle the disabled state of the Reset button based on form changes
@@ -295,7 +272,7 @@ function updateFormFromSelectedRow() {
 	snapshotForm();
 
 	// Update the reset button's enabled/disabled state based on the form's current state
-        toggleResetItem();
+	toggleResetItem();
 }
 
 setRowSelectHandler(updateFormFromSelectedRow);
@@ -419,9 +396,9 @@ function mirrorToSelectedRow(event) {
 	if (!selectedLi) return;
 
 	// Find the corresponding element within the selected row using kebab-case conversion of the input name
-       if (!input.readOnly) {
-               injectRowField(selectedLi, key, input.value);
-       }
+	if (!input.readOnly) {
+		injectRowField(selectedLi, key, input.value);
+	}
 }
 
 // Dynamically creates and returns a form input element tailored to the given key-value pair
@@ -432,7 +409,7 @@ function createInputFromKey(key, value) {
 	// Safely trim the input value if possible; default to empty string if undefined or null
 	const val = value?.trim?.() ?? '';
 
-        const rule = getFieldRules()?.[key];
+	const rule = getFieldRules()?.[key];
 	if (rule?.type === 'select') {
 		const select = document.createElement('select');
 		select.name = key;
@@ -590,14 +567,14 @@ loadNavItems().then(() => {
 			if (!input.checked) return;
 
 			// Helper function defining the actions to perform when navigating to a new endpoint
-                        const proceed = () => {
-                                const endpoint = input.value;
-                                if (!endpoint) return;
-                                loadPageContent(endpoint).then(() => {
-                                        snapshotForm();
-                                        toggleResetItem();
-                                });
-                        };
+			const proceed = () => {
+				const endpoint = input.value;
+				if (!endpoint) return;
+				loadPageContent(endpoint).then(() => {
+					snapshotForm();
+					toggleResetItem();
+				});
+			};
 
 			// Before proceeding, check if there are unsaved form changes
 			unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, proceed);
@@ -728,9 +705,9 @@ form.onsubmit = async e => {
 
 			submitItem.setAttribute('aria-label', 'saved');
 			savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
-                        await loadPageContent(endpoint);
-                        snapshotForm();
-                        toggleResetItem();
+			await loadPageContent(endpoint);
+			snapshotForm();
+			toggleResetItem();
 			setTimeout(() => {
 				savedMessage.textContent = '';
 			}, 2000);
@@ -778,10 +755,10 @@ deleteItem.onclick = () => {
 
 		// Existing item: delete from server
 		try {
-                        await deleteJSON(`${endpoint}/${id}`);
-                        await loadPageContent(endpoint);
-                        snapshotForm();
-                        toggleResetItem();
+			await deleteJSON(`${endpoint}/${id}`);
+			await loadPageContent(endpoint);
+			snapshotForm();
+			toggleResetItem();
 		} catch (err) {
 			console.error('Failed to delete:', err);
 			const intro = document.querySelector('main article > p');
