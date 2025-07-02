@@ -6,6 +6,12 @@ export function setRowSelectHandler(fn) {
   if (typeof fn === 'function') rowSelectHandler = fn;
 }
 
+export function toCamel(str = '') {
+  let result = str.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+  if (result.endsWith('-')) result = result.slice(0, -1);
+  return result;
+}
+
 export function toTagName(str = '') {
   if (!str || typeof str !== 'string') return 'unknown-tag';
   let dashed = str
@@ -142,5 +148,29 @@ export function injectPageContent(endpoint = '', data = {}) {
     const li = createListItem(item);
     tableUl.appendChild(li);
   });
+}
+
+export function injectFormFields(data = {}) {
+  fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+    if (Object.prototype.hasOwnProperty.call(data, el.name)) {
+      el.value = data[el.name];
+    }
+  });
+}
+
+export function injectRowValues(li, data = {}) {
+  if (!li) return;
+  li.querySelectorAll('label > *:not(input)').forEach(el => {
+    const key = toCamel(el.tagName.toLowerCase());
+    if (Object.prototype.hasOwnProperty.call(data, key)) {
+      el.textContent = data[key];
+    }
+  });
+}
+
+export function injectRowField(li, name = '', value = '') {
+  if (!li) return;
+  const target = li.querySelector(`label > ${toTagName(name)}`);
+  if (target) target.textContent = value ?? '';
 }
 
