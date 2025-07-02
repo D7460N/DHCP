@@ -557,16 +557,10 @@ form.oninput = () => {
 // MARK: MAIN APPLICATION LOGIC
 
 // MARK: INITIAL TAB FETCH
-// Fetch initial navigation data, then set up event listeners for navigation inputs
-loadNavItems().then(() => {
-	// Iterate over each navigation radio input element to set its change event listener
+export function setupNavHandlers() {
 	document.querySelectorAll('nav input[name="nav"]').forEach(input => {
-		// Attach an event listener triggered when the input state changes (radio button selection)
 		input.onchange = () => {
-			// Guard clause: only proceed if the current input is checked (selected)
 			if (!input.checked) return;
-
-			// Helper function defining the actions to perform when navigating to a new endpoint
 			const proceed = () => {
 				const endpoint = input.value;
 				if (!endpoint) return;
@@ -575,17 +569,10 @@ loadNavItems().then(() => {
 					toggleResetItem();
 				});
 			};
-
-			// Before proceeding, check if there are unsaved form changes
 			unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, proceed);
 		};
 	});
-
-	// Automatically trigger the onchange event for the initially selected navigation input (if any),
-	// causing the initial endpoint data to load immediately on page load
-	const selected = document.querySelector('nav input[name="nav"]:checked');
-	if (selected?.onchange) selected.onchange();
-});
+}
 
 // MARK: NEW ROW CREATION
 // Event handler triggered when the "New" button is clicked to create a new form entry
