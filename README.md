@@ -1,6 +1,7 @@
 # D7460N Web UI Architecture
 
 A lightweight, dependency-free, standards-first UI resource built with:
+
 - Native HTML, CSS, JS (ES Modules)
 - No build tools, no transpilers, no frameworks
 - Responsive, accessible, and declarative by design
@@ -27,14 +28,14 @@ DONE!
 
 ## 📂 Structure
 
-| Directory | Purpose |
-|----------|---------|
-| `/assets/js/` | Modular JS by concern (`config`, `view`, `api`, `formController`, etc.) |
-| `/assets/css/` | CSS layers for layout, typography, heuristics |
-| `/data/` | Mock JSON APIs for each tab |
-| `/docs/` | Dev guides, presentation decks, accessibility docs |
-| `/assets/images/brand` | SVG brand and PWA PNG assets |
-| `/assets/images/app` | GUI assets |
+| Directory              | Purpose                                                                 |
+| ---------------------- | ----------------------------------------------------------------------- |
+| `/assets/js/`          | Modular JS by concern (`config`, `view`, `api`, `formController`, etc.) |
+| `/assets/css/`         | CSS layers for layout, typography, heuristics                           |
+| `/data/`               | Mock JSON APIs for each tab                                             |
+| `/docs/`               | Dev guides, presentation decks, accessibility docs                      |
+| `/assets/images/brand` | SVG brand and PWA PNG assets                                            |
+| `/assets/images/app`   | GUI assets                                                              |
 
 ## 🛠️ Developer Tips
 

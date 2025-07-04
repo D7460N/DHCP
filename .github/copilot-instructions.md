@@ -6,31 +6,33 @@
 - Focus: Modern, zero-dependency, browser-native UI systems.
 - Prioritize semantic HTML, CSS-driven interaction, and accessibility.
 - All code must be production-ready, maintainable, and standards-compliant.
-- Acuracy and honesty is the most important! Accuracy and honesty is more important than the time it takes to produce accurate code and or answers.
+- Accuracy and honesty is the most important! Accuracy and honesty is more important than the time it takes to produce accurate code and or answers.
 - You must be accurate, because the user must accurately assess why something works or doesn't work.
 - You must be honest, so the user accurately assess why something works or doesn't work.
 - Do not produce more code than what is asked for. No more. No less.
 - All code is modern. Ignore cross-browser compatibility.
 - All answers to questions must be as brief, concise, and accurate as possible.
-- Confirm with yourself the code solution you are about to print actually works in context within the file before printing. 
+- Confirm with yourself the code solution you are about to print actually works in context within the file before printing.
 
 ## Code Structure & Output
 
-All projects are loosely based on the JAMstack architecture in that all HTML structure is pre-delivered. 
+All projects are loosely based on the JAMstack architecture in that all HTML structure is pre-delivered.
 
 **Strict separation of concerns:**
 
 1. **HTML:**
+
    - All vanilla all the time.
    - All HTML structure is pre-delivered up-front.
-   - Always choose minimal HTML element nesting.  
+   - Always choose minimal HTML element nesting.
    - Always use only semantic elements per [WHATWG HTML spec](https://html.spec.whatwg.org/).
-   - Never use classes, IDs, data-*, or inline styles or scripts.
+   - Never use classes, IDs, data-\*, or inline styles or scripts.
    - Structural markup only; no presentational hints or ARIA unless necessary for accessibility.
    - Follow the HTML conventions and patterns found in the root `index.html` file.
    - Follow the HTML guidelines found in the root `README.MD` file.
 
-2. **CSS:**  
+2. **CSS:**
+
    - All vanilla all the time.
    - Place all interactivity (visibility, state, UI behavior) in CSS.
    - Use selectors like `:has()`, `:checked`, and container queries for UI logic.
@@ -47,10 +49,10 @@ All projects are loosely based on the JAMstack architecture in that all HTML str
    - Follow the CSS reset conventions and patterns found in the `assets/css/reset.css` file.
    - Follow the CSS scrollbars conventions and patterns found in the `assets/css/scrollbars.css` file.
    - Follow the CSS themes conventions and patterns found in the `assets/css/themes.css` file.
-   - Follow the CSS transistions conventions and patterns found in the `assets/css/transitions.css` file.
+   - Follow the CSS transitions conventions and patterns found in the `assets/css/transitions.css` file.
    - Follow the CSS guidelines found in the `assets/css/README.MD` file.
 
-4. **JavaScript:**  
+3. **JavaScript:**
    - All vanilla all the time.
    - Only for fetching and injecting data/content.
    - No UI logic or direct DOM manipulation for interactivity.
@@ -85,7 +87,7 @@ All projects are loosely based on the JAMstack architecture in that all HTML str
 - Adhere to these standards.
 - Avoid classes, IDs, frameworks, and custom attributes.
 - Output only requested files in code blocks as described above.
-- Audit existing code for possible extension and or reuse. 
+- Audit existing code for possible extension and or reuse.
 - Always extend `components/list.html` when creating new list variants.
 - UI logic is always declarative
-- UI state logic is controlled only by CSS. No JS. 
+- UI state logic is controlled only by CSS. No JS.

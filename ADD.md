@@ -770,17 +770,8 @@ Offsite link HTML example : :
 
 ```html
 <p>
-  This
-  is
-  a
-  paragraph
-  with
-  an
-  <a
-    href="https://off-site-list.html"
-    target="_blank"
-    >off-site-link</a
-  >.
+	This is a paragraph with an
+	<a href="https://off-site-list.html" target="_blank">off-site-link</a>.
 </p>
 ```
 
@@ -1451,39 +1442,39 @@ HTML : :
 
 ```html
 <html lang="EN">
-  <head>
-    <title></title>
-  </head>
-  <body>
-    <app-container>
-      <!-- start custom HTML wrapper tag -->
-      <header></header>
-      <main>
-        <article>
-          <h1></h1>
-          <desc></desc>
-          <section>
-            <h2></h2>
-            <p></p>
-          </section>
-          <section>
-            <h2></h2>
-            <ul>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-          </section>
-        </article>
-      </main>
-      <aside>
-        <h3></h3>
-        <p></p>
-      </aside>
-      <footer></footer>
-    </app-container>
-    <!-- end custom HTML wrapper tag -->
-  </body>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<app-container>
+			<!-- start custom HTML wrapper tag -->
+			<header></header>
+			<main>
+				<article>
+					<h1></h1>
+					<desc></desc>
+					<section>
+						<h2></h2>
+						<p></p>
+					</section>
+					<section>
+						<h2></h2>
+						<ul>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+					</section>
+				</article>
+			</main>
+			<aside>
+				<h3></h3>
+				<p></p>
+			</aside>
+			<footer></footer>
+		</app-container>
+		<!-- end custom HTML wrapper tag -->
+	</body>
 </html>
 ```
 
@@ -1511,121 +1502,31 @@ HTML : :
 
 ```html
 <app-container>
-  <app-panel>
-    <panel-list>
-      <list-item>
-        <list-cell
-          >List
-          item
-          01
-          column
-          01</list-cell
-        >
-        <list-cell
-          >List
-          item
-          01
-          column
-          02</list-cell
-        >
-        <list-cell
-          >List
-          item
-          01
-          column
-          03</list-cell
-        >
-        <list-cell
-          >List
-          item
-          01
-          column
-          04</list-cell
-        >
-        <list-cell
-          >List
-          item
-          01
-          column
-          05</list-cell
-        >
-      </list-item>
-      <list-item>
-        <list-cell
-          >List
-          item
-          02
-          column
-          01</list-cell
-        >
-        <list-cell
-          >List
-          item
-          02
-          column
-          02</list-cell
-        >
-        <list-cell
-          >List
-          item
-          02
-          column
-          03</list-cell
-        >
-        <list-cell
-          >List
-          item
-          02
-          column
-          04</list-cell
-        >
-        <list-cell
-          >List
-          item
-          02
-          column
-          05</list-cell
-        >
-      </list-item>
-      <list-item>
-        <list-cell
-          >List
-          item
-          03
-          column
-          01</list-cell
-        >
-        <list-cell
-          >List
-          item
-          03
-          column
-          02</list-cell
-        >
-        <list-cell
-          >List
-          item
-          03
-          column
-          03</list-cell
-        >
-        <list-cell
-          >List
-          item
-          03
-          column
-          04</list-cell
-        >
-        <list-cell
-          >List
-          item
-          03
-          column
-          05</list-cell
-        >
-      </list-item>
-    </panel-list>
-  </app-panel>
+	<app-panel>
+		<panel-list>
+			<list-item>
+				<list-cell>List item 01 column 01</list-cell>
+				<list-cell>List item 01 column 02</list-cell>
+				<list-cell>List item 01 column 03</list-cell>
+				<list-cell>List item 01 column 04</list-cell>
+				<list-cell>List item 01 column 05</list-cell>
+			</list-item>
+			<list-item>
+				<list-cell>List item 02 column 01</list-cell>
+				<list-cell>List item 02 column 02</list-cell>
+				<list-cell>List item 02 column 03</list-cell>
+				<list-cell>List item 02 column 04</list-cell>
+				<list-cell>List item 02 column 05</list-cell>
+			</list-item>
+			<list-item>
+				<list-cell>List item 03 column 01</list-cell>
+				<list-cell>List item 03 column 02</list-cell>
+				<list-cell>List item 03 column 03</list-cell>
+				<list-cell>List item 03 column 04</list-cell>
+				<list-cell>List item 03 column 05</list-cell>
+			</list-item>
+		</panel-list>
+	</app-panel>
 </app-container>
 ```
 
@@ -1725,47 +1626,25 @@ For example, in D7460N Template's case, that would be : :
 HTML : :
 
 ```html
-<html
-  lang="en"
->
-  <!-- set to overflow: hidden; -->
-  <body>
-    <!-- set to overflow: hidden; -->
-    <app-container>
-      <!-- set to overflow: hidden; -->
-      <main>
-        <!-- set to overflow: hidden; -->
-        <ul>
-          <!-- set to overflow: auto; -->
-          <li>
-            List
-            item
-            one
-          </li>
-          <li>
-            List
-            item
-            two
-          </li>
-          <li>
-            List
-            item
-            three
-          </li>
-          <li>
-            List
-            item
-            four
-          </li>
-          <li>
-            List
-            item
-            five
-          </li>
-        </ul>
-      </main>
-    </app-container>
-  </body>
+<html lang="en">
+	<!-- set to overflow: hidden; -->
+	<body>
+		<!-- set to overflow: hidden; -->
+		<app-container>
+			<!-- set to overflow: hidden; -->
+			<main>
+				<!-- set to overflow: hidden; -->
+				<ul>
+					<!-- set to overflow: auto; -->
+					<li>List item one</li>
+					<li>List item two</li>
+					<li>List item three</li>
+					<li>List item four</li>
+					<li>List item five</li>
+				</ul>
+			</main>
+		</app-container>
+	</body>
 </html>
 ```
 
@@ -1780,11 +1659,11 @@ html,
 body,
 app-container,
 main {
-  overflow: hidden;
+	overflow: hidden;
 }
 
 ul {
-  overflow: auto;
+	overflow: auto;
 }
 ```
 

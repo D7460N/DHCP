@@ -6,11 +6,10 @@ Introduce a simple, structured documentation method to streamline developer comm
 
 ### ⚠️ Current Challenges
 
-* **💬 Two Way SDLC Communication Gaps:**
+- **💬 Two Way SDLC Communication Gaps:**
 
-* Non-technical stakeholder/management requirements need consistent translation into clear technical criterion.
-* Technical engineer reporting need consistent translation into clear non-technical reporting.
-
+- Non-technical stakeholder/management requirements need consistent translation into clear technical criterion.
+- Technical engineer reporting need consistent translation into clear non-technical reporting.
 
 ```
  _________________________
@@ -31,13 +30,14 @@ Engineers be like...   (| o O |)
                       _ooO_u_Ooo_
 ```
 
-* **📚 Manual Documentation Overhead:**
+- **📚 Manual Documentation Overhead:**
 
-  * Frequent manual documentation updates consume developer time.
-  * Potential for inconsistent or outdated information.
-* **👀 Limited Visibility:**
+  - Frequent manual documentation updates consume developer time.
+  - Potential for inconsistent or outdated information.
 
-  * Disconnected documentation from management and stakeholder tools (Jira, GitHub, ServiceNow).
+- **👀 Limited Visibility:**
+
+  - Disconnected documentation from management and stakeholder tools (Jira, GitHub, ServiceNow).
 
 ### 🚀 Proposed Solution
 
@@ -45,46 +45,51 @@ Adopt Markdown files enriched with concise YAML metadata, maintained within exis
 
 ### ⚙️ Technical Approach
 
-* **📝 Structured Markdown:**
+- **📝 Structured Markdown:**
 
-  * Lightweight documentation with simple YAML front-matter specifying feature details and role-specific impacts.
-* **🤖 Minimal Automation:**
+  - Lightweight documentation with simple YAML front-matter specifying feature details and role-specific impacts.
 
-  * Use existing GitHub Actions to automatically update:
+- **🤖 Minimal Automation:**
 
-    * Documentation matrices.
-    * Jira, GitHub, and ServiceNow tracking data.
+  - Use existing GitHub Actions to automatically update:
+
+    - Documentation matrices.
+    - Jira, GitHub, and ServiceNow tracking data.
 
 ### 📈 Benefits
 
-* **🗣️ Efficient Communication:**
+- **🗣️ Efficient Communication:**
 
-  * Clearer, more consistent translation of technical developments into language stakeholders understand.
-* **⏳ Reduced Effort:**
+  - Clearer, more consistent translation of technical developments into language stakeholders understand.
 
-  * Decreased manual documentation effort, enhancing developer productivity.
-* **🔗 Improved Alignment:**
+- **⏳ Reduced Effort:**
 
-  * Direct linkage of technical activities to management and stakeholder priorities.
+  - Decreased manual documentation effort, enhancing developer productivity.
+
+- **🔗 Improved Alignment:**
+
+  - Direct linkage of technical activities to management and stakeholder priorities.
 
 ### ⏲️ Level of Effort (LOE) & Timeline (TTL)
 
-* **📌 LOE:**
+- **📌 LOE:**
 
-  * Initial setup: 8-16 hours (minimal effort)
-  * Ongoing maintenance: <1 hour/week
-* **🗓️ TTL:**
+  - Initial setup: 8-16 hours (minimal effort)
+  - Ongoing maintenance: <1 hour/week
 
-  * Operational within days of initiation
+- **🗓️ TTL:**
+
+  - Operational within days of initiation
 
 ### 💰 Cost-Benefit Consideration
 
-* **⏱️ Short-Term:**
+- **⏱️ Short-Term:**
 
-  * Quick wins through immediate reduction in manual tasks.
-* **🌱 Long-Term:**
+  - Quick wins through immediate reduction in manual tasks.
 
-  * Sustainable improvements in clarity, team alignment, and efficiency, directly supporting stakeholder and management objectives.
+- **🌱 Long-Term:**
+
+  - Sustainable improvements in clarity, team alignment, and efficiency, directly supporting stakeholder and management objectives.
 
 ### 📌 Conclusion
 
