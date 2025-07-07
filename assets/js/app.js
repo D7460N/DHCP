@@ -1,13 +1,15 @@
-import { loadNavItems, loadPageContent } from './loaders.js';
-import { setupNavHandlers } from './scripts.js';
+import { loadNavItems, loadPageContent, loadBannerContent } from './loaders.js';
+import { OPTIONS } from './config.js';
 
 export async function initApp() {
-	await loadNavItems();
-	setupNavHandlers();
-	const selected = document.querySelector('nav input[name="nav"]:checked');
-	if (selected) {
-		await loadPageContent(selected.value);
-	}
+  if (OPTIONS.showBanner) {
+    await loadBannerContent();
+  }
+  await loadNavItems();
+  const selected = document.querySelector('nav input[name="nav"]:checked');
+  if (selected) {
+    await loadPageContent(selected.value);
+  }
 }
 
 initApp();
