@@ -1,4 +1,5 @@
 // MARK: INJECT.JS
+import { logError } from './errors.js';
 
 export let rowSelectHandler = () => {};
 
@@ -130,7 +131,7 @@ export function injectPageContent(endpoint = '', data = {}) {
   }
 
   if (duplicates.length) {
-    console.error('[DUPLICATE ID DETECTED]', duplicates);
+    logError('[DUPLICATE ID DETECTED]', duplicates);
     const intro = document.querySelector('main article > p');
     if (intro) intro.textContent = `⚠️ Duplicate IDs: ${duplicates.join(', ')}`;
     return;

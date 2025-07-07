@@ -261,3 +261,8 @@ Override this file to customize the host or toggle behaviors when using the scri
 export const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/';
 export const OPTIONS = { showBanner: true, warnOnBlur: true };
 ```
+
+## Additional Modules
+
+- `errors.js` – centralized error logging via `logError()`
+- `env.js` – runtime environment detection (`isDev`, `isTest`, `isProd`)
