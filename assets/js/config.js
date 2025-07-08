@@ -6,7 +6,7 @@ export const OPTIONS = {
 };
 
 // API endpoint paths
-export const NAV_ITEMS_ENDPOINT = 'navItems';
+export const NAV_ENDPOINT = 'navItems';
 export const BANNER_ENDPOINT = 'app-banner';
 
 // Valid data endpoints referenced in scripts
