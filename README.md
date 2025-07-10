@@ -1,8 +1,16 @@
 # D7460N Architecture
 
-D7460N is a browser-native, lightweight, dependency-free, standards-first, fully declarative, fully accessible, fully responsive UI resrouce for quickly building scalable, maintainable front-end systems. 
+D7460N is a decoupled UI resource for quickly building scalable, maintainable fron-end systems that are OUT OF THE BOX:
 
-It eliminates runtime dependencies and avoids complex JavaScript-driven UI logic by embracing modern standards: semantic HTML, CSS state management, and data-only JavaScript modules.
+- lightweight
+- browser-native
+- dependency-free
+- standards-first
+- fully declarative
+- fully accessible
+- fully responsive 
+
+D7460N eliminates runtime dependencies and avoids complex JavaScript-driven UI logic by embracing modern standards: semantic HTML, CSS state management, and data-only JavaScript modules.
 
 - Native HTML, CSS, JS (ES Modules)
 - No build tools, no transpilers, no frameworks
@@ -12,10 +20,10 @@ It eliminates runtime dependencies and avoids complex JavaScript-driven UI logic
 
 - 🔹 No dependencies: 100% browser-native
 - 🔹 Dynamic JSON data via `fetch()`
-- 🔹 Declarative single-page-application (SPA) navigation and layout via modern best-practices `<input type="radio">` + CSS `:has()`
-- 🔹 No IDs, classes, or custom attributes in markup
-- 🔹 Custom CSS visibility logic (`:empty`, `:has`, `[hidden]`)
-- 🔹 Clean separation of config, UI logic, and API services
+- 🔹 Declarative single-page-application (SPA) navigation and layout via modern best-practices `<input type="radio">` + CSS `:has()` + `@property` + container queries
+- 🔹 Minimal nesting, no IDs, classes, or custom attributes in markup
+- 🔹 CSS visibility logic based on dynamic (`:empty`, `:has`, `[hidden]`)
+- 🔹 Clean separation of concerns, UI logic, and API services
 
 ## 🚀 To Run
 
