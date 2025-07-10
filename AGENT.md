@@ -68,6 +68,9 @@ JavaScript only handles pure data concerns
 * Unit tests cover JavaScript modules that handle data logic only—no UI or event code is tested
 * Integration tests to verify data flow and outputs
 * No UI testing in JS; UI is CSS/HTML-only—verify manually or via visual testing tools
+* When testing JS modules:
+  * Test that only data is transformed (not styles or UI logic)
+  * Ensure separation of concern is preserved
 
 ---
 
@@ -75,9 +78,13 @@ JavaScript only handles pure data concerns
 
 * Must be able to work with JS turned off
 * Must remain data-agnostic
+* Input fields validated via native constraints (no JS validation)
+* No inline JS = no XSS vector via HTML
 * No sensitive data in code or config
 * Validate all data inputs in JS modules
+* Use HTTPS for all remote API calls
 * Follow least-privilege principle in data handling
+* Never commit .env or credentials
 
 ---
 
