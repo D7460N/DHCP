@@ -1,6 +1,8 @@
-# D7460N Web UI Architecture
+# D7460N Architecture
 
-A lightweight, dependency-free, standards-first UI resource built with:
+D7460N is a browser-native, lightweight, dependency-free, standards-first, fully declarative, fully accessible, fully responsive UI resrouce for quickly building scalable, maintainable front-end systems. 
+
+It eliminates runtime dependencies and avoids complex JavaScript-driven UI logic by embracing modern standards: semantic HTML, CSS state management, and data-only JavaScript modules.
 
 - Native HTML, CSS, JS (ES Modules)
 - No build tools, no transpilers, no frameworks
