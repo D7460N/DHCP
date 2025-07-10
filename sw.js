@@ -1,6 +1,15 @@
 // Service Worker for D7460N Project (SPA-friendly, Minimal, Project-Agnostic)
-// Version: v3 (update to invalidate and refresh cache as needed)
-const CACHE_NAME = 'cache-v3'
+// Version: v4 (update to invalidate and refresh cache as needed)
+const CACHE_NAME = 'cache-v4'
+
+// Service Worker Update Configuration (consolidated here)
+const SW_UPDATE_CONFIG = {
+  enabled: false, // Disabled since version is now internal constant
+  checkOnLoad: false,
+  checkInterval: 0,
+  forceUpdate: false,
+  notifyUser: false
+};
 
 // List of assets to cache immediately during installation
 const ASSETS = [
@@ -9,7 +18,6 @@ const ASSETS = [
   './assets/css/themes.css',
   './assets/css/layout.css',
   './assets/css/reset.css',
-  './assets/css/styles.css',
   './assets/css/loading.css',
   './assets/css/scrollbars.css',
   './assets/css/transitions.css',
@@ -18,7 +26,17 @@ const ASSETS = [
   './assets/css/a11y.css',
   './assets/css/forms.css',
   './assets/css/fonts.css',
-  './assets/js/scripts.js',
+  './assets/js/app.js',
+  './assets/js/config.js',
+  './assets/js/env.js',
+  './assets/js/forms.js',
+  './assets/js/fetch.js',
+  './assets/js/inject.js',
+  './assets/js/loaders.js',
+  './assets/js/utils.js',
+  './assets/js/schema.js',
+  './assets/js/rules.js',
+  './assets/js/errors.js',
   './assets/images/brand/logos/logo.svg'
 ]
 
@@ -27,11 +45,24 @@ const ASSETS = [
 self.addEventListener('install', evt => {
   evt.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache =>
-        cache.addAll(ASSETS).catch(err => {
-          console.error('Asset caching failed:', err)
+      .then(cache => {
+        console.log('Caching assets:', ASSETS.length, 'files')
+        return cache.addAll(ASSETS)
+      })
+      .catch(err => {
+        console.error('Asset caching failed:', err)
+        // Try to cache assets individually to identify which ones fail
+        return caches.open(CACHE_NAME).then(cache => {
+          return Promise.allSettled(
+            ASSETS.map(asset =>
+              cache.add(asset).catch(error => {
+                console.error(`Failed to cache ${asset}:`, error)
+                return Promise.reject(error)
+              })
+            )
+          )
         })
-      )
+      })
   )
 })
 

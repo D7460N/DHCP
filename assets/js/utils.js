@@ -30,3 +30,54 @@ export function unsavedCheck(flagRef, condition, proceed) {
   flagRef.value = false;
   proceed();
 }
+
+// DOM utility functions
+export function removeInlineStyles(element) {
+	if (element && element instanceof HTMLElement) {
+		element.removeAttribute('style');
+	}
+}
+
+export function clearFieldset(fieldsetElement) {
+	if (fieldsetElement && fieldsetElement instanceof HTMLElement) {
+		fieldsetElement.innerHTML = '';
+	}
+}
+
+// Form validation utilities
+export function isFormValid(form) {
+	return form.checkValidity();
+}
+
+// Form state management utilities
+export function restoreFormFields(fieldset, data = {}) {
+	fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+		if (Object.prototype.hasOwnProperty.call(data, el.name)) {
+			el.value = data[el.name];
+		}
+	});
+}
+
+export function toggleFormButton(button, shouldEnable = false) {
+	if (button) {
+		button.disabled = !shouldEnable;
+	}
+}
+
+export function updateFormStatus(form, isDirty = false, isValid = true) {
+	if (form) {
+		form.dataset.dirty = isDirty ? 'true' : 'false';
+		const status = form.querySelector('output');
+		if (status) {
+			if (!isDirty) {
+				status.textContent = 'ℹ️ Nothing to save or reset.';
+				status.hidden = false;
+			} else if (!isValid) {
+				status.textContent = '⚠️ Please complete required fields.';
+				status.hidden = false;
+			} else {
+				status.hidden = true;
+			}
+		}
+	}
+}

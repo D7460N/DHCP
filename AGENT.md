@@ -9,6 +9,8 @@
 
 This file gives any AI-powered coding agent a unified understanding of this codebase—structure, commands, conventions—so you don't need scattered config files.
 
+**🎯 QUICK START FOR AI ASSISTANTS: Read `docs/PROJECT-STATE.md` first for complete project understanding and current status.**
+
 **D7460N** is a browser-native, fully declarative architecture for building scalable, maintainable front-end systems. It follows JAMstack principles, operates as a Single Page Application (SPA), and is implemented as a Progressive Web App (PWA). It eliminates runtime dependencies and avoids JavaScript-driven UI logic by embracing modern standards: semantic HTML, CSS state management, and data-only JavaScript modules.
 
 ---

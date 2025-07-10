@@ -1,4 +1,4 @@
-import { NAV_ENDPOINT, BANNER_ENDPOINT } from './config.js';
+import { NAV_ENDPOINT, BANNER_ENDPOINT, OPTIONS, VERSION } from './config.js';
 import { fetchJSON } from './fetch.js';
 import { normalizeRecord, normalizeItems } from './schema.js';
 import { inferFieldRules } from './rules.js';
@@ -52,3 +52,13 @@ export async function loadPageContent(endpoint = '') {
   injectPageContent(endpoint, data);
 }
 
+export function loadVersionInfo() {
+  try {
+    const appVersionElement = document.querySelector('app-version');
+    if (appVersionElement) {
+      appVersionElement.textContent = `v${VERSION.version}`;
+    }
+  } catch (err) {
+    console.warn('Could not load version info:', err);
+  }
+}
