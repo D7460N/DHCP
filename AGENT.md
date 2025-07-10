@@ -71,7 +71,7 @@ JavaScript only handles pure data concerns
 
 ---
 
-## 7. Security Considerations
+## 7. Security
 
 * Must be able to work with JS turned off
 * Must remain data-agnostic
