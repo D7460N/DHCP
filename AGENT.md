@@ -65,7 +65,9 @@ JavaScript only handles pure data concerns
 
 ## 6. Testing Guidelines
 
+* Validate structural integrity using HTML validators
 * Unit tests cover JavaScript modules that handle data logic only—no UI or event code is tested
+* Use `fallbacks.css` to catch missing content areas
 * Integration tests to verify data flow and outputs
 * No UI testing in JS; UI is CSS/HTML-only—verify manually or via visual testing tools
 * When testing JS modules:
@@ -88,9 +90,34 @@ JavaScript only handles pure data concerns
 
 ---
 
-## 8. Configuration & Migration
+## 8. Git Workflow
 
-### 8.1. Legacy Config Migration
+- Create atomic, descriptive commits
+- Avoid force-pushes to main
+- Use git push --force-with-lease on branches if rebasing
+- Always run HTML/CSS/JS validators before PRs
+- Keep `AGENT.md` in sync when modifying structure or behavior
+
+---
+
+
+## 9. Configuration
+
+- All dynamic config keys stored in `config.js`
+- Form behavior and input generation defined via `rules.js` + `schema.js`
+- Always update .env.example when adding API keys or endpoints
+- Reference supporting docs as needed: `@rules.js`, `@schema.js`, `@fallbacks`
+
+## 10. Subproject Documentation
+
+- Subsystem-specific configuration may be found in:
+- `/assets/js/AGENT.md`
+- `/assets/css/AGENT.md`
+- `~/.config/AGENT.md` (personal overrides)
+
+All sub-AGENT.md files must follow the same format as this root version.
+
+This file is machine-readable and designed for agentic tools to parse.
 
 Use:
 
@@ -105,18 +132,13 @@ mv .replit.md AGENT.md && ln -s AGENT.md .replit.md
 
 ---
 
-## 9. Tool Integration
+## 11. Tool Integration
 
 * Native support: Amp (since 2025-05-07), multiple AGENT.md (since 2025-07-07)
 * Symlink-based support: Claude Code, Cursor, Gemini CLI, OpenAI Codex, Replit, Windsurf
 
 ---
 
-## 10. File References
+## 12. File References
 
 Agent tooling MAY include other files via `@filename.md` for additional context.
-
----
-
-*Author: Geoffrey Huntley (Sourcegraph, Inc.)*
-*Status: Informational*
