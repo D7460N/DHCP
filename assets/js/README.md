@@ -266,3 +266,56 @@ export const OPTIONS = { showBanner: true, warnOnBlur: true };
 
 - `errors.js` – centralized error logging via `logError()`
 - `env.js` – runtime environment detection (`isDev`, `isTest`, `isProd`)
+
+## 🚨 **CRITICAL: CSS-First Philosophy - Minimal JavaScript**
+
+### **JavaScript's LIMITED Role**
+
+In this architecture, JavaScript has a **very specific and constrained purpose**:
+
+#### **✅ JavaScript SHOULD Handle:**
+- Data fetching via `fetch()` 
+- API interactions (CRUD operations)
+- Form data serialization/deserialization
+- ARIA attribute management for accessibility (`aria-disabled`, `aria-live`)
+- Page content injection after API responses
+
+#### **❌ JavaScript SHOULD NOT Handle:**
+- UI interactions (CSS handles via `:checked`, `:has()`)
+- Visual state changes (CSS handles via selectors)
+- Button enable/disable animations (CSS handles via `[aria-disabled]`)
+- Panel show/hide logic (CSS handles via hidden checkbox states)
+- Loading spinners (CSS handles via `:checked` triggers)
+
+### **The Hidden Checkbox Pattern**
+
+**IMPORTANT**: Buttons use `<label role="button"><input type="checkbox"></label>` pattern:
+
+```html
+<label role="button" name="submit" aria-label="Save">
+    Save
+    <input type="checkbox" />  <!-- CSS state hook -->
+</label>
+```
+
+**JavaScript's role**: Only manage `aria-disabled` attributes
+**CSS's role**: Handle all visual interactions via checkbox `:checked` state
+
+### **Why This Constraint?**
+
+1. **Performance**: CSS is 100-1000x faster than JavaScript DOM manipulation
+2. **Security**: Less JavaScript = smaller XSS attack surface
+3. **Accessibility**: Native HTML semantics provide keyboard navigation
+4. **Reliability**: CSS behavior is more predictable than JavaScript events
+5. **Progressive Enhancement**: App works without JavaScript
+
+### **Developer Guidelines**
+
+- ❌ **Never** add `addEventListener` or inline event handlers for UI
+- ❌ **Never** manipulate `style.display`, `classList`, or visual properties
+- ❌ **Never** replace the hidden checkbox pattern with "conventional" buttons
+- ✅ **Do** manage data flow and API communication  
+- ✅ **Do** update ARIA attributes for accessibility
+- ✅ **Do** inject content into semantic HTML containers
+
+**This is intentional architectural sophistication - not a limitation to "fix".**

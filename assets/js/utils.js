@@ -60,14 +60,18 @@ export function restoreFormFields(fieldset, data = {}) {
 
 export function toggleFormButton(button, shouldEnable = false) {
 	if (button) {
-		button.disabled = !shouldEnable;
+		if (shouldEnable) {
+			button.removeAttribute('aria-disabled');
+		} else {
+			button.setAttribute('aria-disabled', 'true');
+		}
 	}
 }
 
 export function updateFormStatus(form, isDirty = false, isValid = true) {
 	if (form) {
 		form.dataset.dirty = isDirty ? 'true' : 'false';
-		const status = form.querySelector('output');
+		const status = form.querySelector('p[aria-live="polite"]');
 		if (status) {
 			if (!isDirty) {
 				status.textContent = 'ℹ️ Nothing to save or reset.';

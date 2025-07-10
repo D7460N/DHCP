@@ -16,15 +16,13 @@ import {
 	updateHeaderRow,
 } from './inject.js';
 import {
-	snapshotForm as captureSnapshot,
-	hasUnsavedChanges as detectChanges,
+	snapshotForm,
+	hasUnsavedChanges,
 	unsavedCheck,
 	removeInlineStyles,
 	clearFieldset,
 	isFormValid,
 	restoreFormFields,
-	toggleFormButton,
-	updateFormStatus,
 } from './utils.js';
 
 // Form DOM element references
@@ -35,25 +33,24 @@ const fieldset = form.querySelector('fieldset');
 const mainEl = document.querySelector('main');
 const newItem = document.querySelector('main article [aria-label*="new item"]');
 const closeItem = document.querySelector('aside [aria-label="Close"]');
-const deleteItem = form.querySelector('[aria-label="Delete"]');
-const resetItem = form.querySelector('[aria-label="Reset"]');
-const submitItem = form.querySelector('[aria-label="Save"]');
-const savedMessage = submitItem.nextElementSibling;
+const deleteItem = form.querySelector('[name="delete"]');
+const resetItem = form.querySelector('[name="reset"]');
+const submitItem = form.querySelector('[name="submit"]');
+const savedMessage = form.querySelector('p[aria-live="polite"]');
 
 // Form State Management
 let originalData = {};
 let snapshotLi = null;
 
 // Form state functions
-function hasUnsavedChanges() {
-	return detectChanges(fieldset.querySelectorAll('input[name], select[name]'), originalData);
+function checkUnsavedChanges() {
+	return hasUnsavedChanges(fieldset.querySelectorAll('input[name], select[name]'), originalData);
 }
 
-function snapshotForm() {
-	originalData = captureSnapshot(fieldset.querySelectorAll('input[name], select[name]'));
+function captureFormSnapshot() {
+	originalData = snapshotForm(fieldset.querySelectorAll('input[name], select[name]'));
 	snapshotLi = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
-	toggleResetItem();
-	toggleSubmitItem();
+	updateButtonStates();
 }
 
 function restoreForm() {
@@ -62,19 +59,30 @@ function restoreForm() {
 	if (snapshotLi) injectRowValues(snapshotLi, originalData);
 }
 
-function toggleResetItem() {
-	if (!resetItem) return;
-	const dirty = hasUnsavedChanges();
-	toggleFormButton(resetItem, dirty);
-	updateFormStatus(form, dirty, isFormValid(form));
-}
-
-function toggleSubmitItem() {
-	if (!submitItem) return;
-	const dirty = hasUnsavedChanges();
+// Consolidated button state management
+function updateButtonStates() {
+	const dirty = checkUnsavedChanges();
 	const valid = isFormValid(form);
-	toggleFormButton(submitItem, dirty && valid);
-	updateFormStatus(form, dirty, valid);
+	const hasSelection = document.querySelector('ul li input[name="list-item"]:checked');
+
+	// Update form dataset for CSS styling
+	form.dataset.dirty = dirty ? 'true' : 'false';
+	form.dataset.valid = valid ? 'true' : 'false';
+
+	// Reset button: enabled when dirty
+	if (resetItem) {
+		resetItem.toggleAttribute('aria-disabled', !dirty);
+	}
+
+	// Submit button: enabled when dirty AND valid
+	if (submitItem) {
+		submitItem.toggleAttribute('aria-disabled', !(dirty && valid));
+	}
+
+	// Delete button: enabled when selection exists
+	if (deleteItem) {
+		deleteItem.toggleAttribute('aria-disabled', !hasSelection);
+	}
 }
 
 // Form coordination
@@ -87,7 +95,7 @@ function updateFormFromSelectedRow() {
 
 	if (!selectedRow) {
 		removeInlineStyles(mainEl);
-		snapshotForm();
+		captureFormSnapshot();
 		form.oninput();
 		return;
 	}
@@ -109,21 +117,17 @@ function updateFormFromSelectedRow() {
 		fieldset.appendChild(label);
 	});
 
-	snapshotForm();
-	toggleResetItem();
+	captureFormSnapshot();
 }
 
 setRowSelectHandler(updateFormFromSelectedRow);
 
 // Form event assignments
-form.oninput = () => {
-	toggleResetItem();
-	toggleSubmitItem();
-};
+form.oninput = updateButtonStates;
 
 // New item creation
 newItem.onclick = async () => {
-	unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, () => {
+	unsavedCheck(CONFIRM_FLAGS.save, checkUnsavedChanges, () => {
 		clearFieldset(fieldset);
 
 		const existingLi = tableUl.querySelector('li');
@@ -159,8 +163,7 @@ newItem.onclick = async () => {
 		updateHeaderRow(li, headerUl, toCamel, toTagName);
 
 		li.querySelector('input[name="list-item"]').checked = true;
-		snapshotForm();
-		toggleResetItem();
+		captureFormSnapshot();
 	});
 };
 
@@ -168,7 +171,7 @@ newItem.onclick = async () => {
 form.onsubmit = async e => {
 	e.preventDefault();
 
-	unsavedCheck(CONFIRM_FLAGS.save, hasUnsavedChanges, async () => {
+	unsavedCheck(CONFIRM_FLAGS.save, checkUnsavedChanges, async () => {
 		const selected = document.querySelector('ul li input[name="list-item"]:checked');
 		const id = selected?.closest('li')?.querySelector('label > id')?.textContent?.trim();
 		const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
@@ -190,8 +193,7 @@ form.onsubmit = async e => {
 			submitItem.setAttribute('aria-label', 'saved');
 			savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
 			await loadPageContent(endpoint);
-			snapshotForm();
-			toggleResetItem();
+			captureFormSnapshot();
 			setTimeout(() => {
 				savedMessage.textContent = '';
 			}, 2000);
@@ -207,9 +209,9 @@ form.onsubmit = async e => {
 form.onreset = e => {
 	e.preventDefault();
 
-	unsavedCheck(CONFIRM_FLAGS.reset, hasUnsavedChanges, () => {
+	unsavedCheck(CONFIRM_FLAGS.reset, checkUnsavedChanges, () => {
 		restoreForm();
-		snapshotForm();
+		captureFormSnapshot();
 	});
 };
 
@@ -222,22 +224,19 @@ deleteItem.onclick = () => {
 	const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
 	if (!endpoint) return;
 
-	unsavedCheck(CONFIRM_FLAGS.delete, hasUnsavedChanges, async () => {
+	unsavedCheck(CONFIRM_FLAGS.delete, checkUnsavedChanges, async () => {
 		if (!id) {
 			selected.remove();
 			clearFieldset(fieldset);
 			headerUl.querySelector('li').innerHTML = '';
-			snapshotForm();
-			toggleResetItem();
-			toggleSubmitItem();
+			captureFormSnapshot();
 			return;
 		}
 
 		try {
 			await deleteJSON(`${endpoint}/${id}`);
 			await loadPageContent(endpoint);
-			snapshotForm();
-			toggleResetItem();
+			captureFormSnapshot();
 		} catch (err) {
 			console.error('Failed to delete:', err);
 			const intro = document.querySelector('main article > p');
@@ -249,7 +248,7 @@ deleteItem.onclick = () => {
 // Close form
 if (closeItem) {
 	closeItem.onclick = () => {
-		unsavedCheck(CONFIRM_FLAGS.close, hasUnsavedChanges, () => {
+		unsavedCheck(CONFIRM_FLAGS.close, checkUnsavedChanges, () => {
 			const selected = document
 				.querySelector('ul li input[name="list-item"]:checked')
 				?.closest('li');
@@ -262,7 +261,7 @@ if (closeItem) {
 			clearFieldset(fieldset);
 			form.oninput();
 			removeInlineStyles(mainEl);
-			snapshotForm();
+			captureFormSnapshot();
 		});
 	};
 }
@@ -270,9 +269,13 @@ if (closeItem) {
 // Save confirmation on page blur
 if (OPTIONS.warnOnBlur) {
 	window.onblur = () => {
-		if (hasUnsavedChanges()) {
+		if (checkUnsavedChanges()) {
 			CONFIRM_FLAGS.save.value = true;
 			CONFIRM_FLAGS.delete.value = true;
 		}
 	};
 }
+
+// Initialize button states on load
+console.log('Initializing buttons:', { resetItem, submitItem, deleteItem });
+updateButtonStates();

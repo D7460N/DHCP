@@ -4,10 +4,35 @@
   "tabWidth": 2,
   "trailingComma": "all",
   "printWidth": 100,
-  "useTabs": true,
+  "useTabs": false,
   "bracketSpacing": true,
   "arrowParens": "avoid",
   "endOfLine": "lf",
-  "jsxBracketSameLine": true,
-  "htmlWhitespaceSensitivity": "css"
+  "bracketSameLine": true,
+  "htmlWhitespaceSensitivity": "css",
+  "quoteProps": "as-needed",
+  "embeddedLanguageFormatting": "auto",
+  "singleAttributePerLine": false,
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "printWidth": 80,
+        "proseWrap": "always"
+      }
+    },
+    {
+      "files": "*.json",
+      "options": {
+        "printWidth": 120
+      }
+    },
+    {
+      "files": "*.css",
+      "options": {
+        "printWidth": 120,
+        "singleQuote": false
+      }
+    }
+  ]
 }

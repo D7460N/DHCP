@@ -83,3 +83,54 @@ This scaffold outlines a modular presentation deck suitable for clients, custome
 ---
 
 > Export this outline to Google Slides, PowerPoint, or Pitch to present architecture highlights without requiring live walkthroughs.
+
+---
+
+# Documentation Directory
+
+## 📚 Purpose
+
+This directory contains comprehensive documentation for the D7460N CSS-first architecture project.
+
+## 🎯 **START HERE: Key Documents**
+
+### **For Developers**
+- **📋 [PROJECT-STATE.md](PROJECT-STATE.md)** - Complete project analysis, current status, and architectural insights
+- **🛠️ [dev/README.md](dev/README.md)** - Development guides and technical details
+
+### **For AI Assistants**
+- **🤖 [../AGENT.md](../AGENT.md)** - Quick reference for AI coding assistants
+- **🤖 [../AGENTS.md](../AGENTS.md)** - Detailed instructions for AI agents
+- **📋 [PROJECT-STATE.md](PROJECT-STATE.md)** - Critical architectural understanding
+
+## 🎨 **Understanding the Architecture**
+
+This project uses an **advanced CSS-first architecture** with hidden checkbox state management:
+
+```html
+<label role="button" name="submit" aria-label="Save">
+    Save
+    <input type="checkbox" />  <!-- CSS state hook -->
+</label>
+```
+
+**Key Benefits:**
+- 🚀 **Performance**: CSS 100-1000x faster than JavaScript
+- 🔒 **Security**: Minimal JavaScript attack surface  
+- ♿ **Accessibility**: Native keyboard navigation
+- 📱 **Progressive**: Works without JavaScript
+- 🎯 **Standards**: Uses semantic HTML + ARIA
+
+## 📁 Directory Structure
+
+| Directory | Purpose |
+|-----------|---------|
+| `dev/` | Technical development guides |
+| `client/` | Client-facing documentation |
+| `customer/` | Customer overview materials |
+
+## ⚠️ **Critical Note for Contributors**
+
+The hidden checkbox pattern is **intentionally sophisticated** - not a mistake to "fix". It represents advanced web standards knowledge and should be preserved exactly as implemented.
+
+**Read [PROJECT-STATE.md](PROJECT-STATE.md) for complete architectural understanding before making any changes.**

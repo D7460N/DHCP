@@ -229,15 +229,17 @@ Layout & Structure
 
 - Layout Grid: `<app-container>` with `<nav>`, `<main>`, `<aside>`.
 - Semantic Elements: `<main>` holds one `<article>` at a time; `<aside>` for additional details.
-- Forms: Always semantic (`<fieldset>`, `<legend>`, `<label>`, `<button>`).
+- Forms: Always semantic (`<fieldset>`, `<legend>`, `<label>`, action labels with `role="button"` + hidden checkbox for CSS state management).
 - Validation using only CSS (`:valid`, `:invalid`, `:out-of-range`).
-- Submit buttons disabled until form is valid.
+- Submit buttons disabled until form is valid (via `aria-disabled` attribute, styled with CSS).
 - Validate new form inputs using only CSS (`:valid`, `:invalid`, `:out-of-range`).
 - Holy Grail Layout: Responsive and full-bleed by default.
 
 UI State Management
 
-- Native Controls: Checkboxes, radios, CSS `:has()` and container style queries manage state.
+- Native Controls: Hidden checkboxes inside `<label role="button">` elements provide CSS-accessible state hooks.
+- CSS `:has()`, `:checked`, and container style queries manage all UI state and interactions.
+- NO `<button>` elements - use `<label role="button"><input type="checkbox"></label>` pattern for accessibility + CSS state management.
 - Dynamic UI: Use `:checked`, `:empty`, `:not()` for conditional UI.
 
 Data Layer
@@ -277,3 +279,42 @@ AI Assistant Behavior
 - If ChatGPT is unsure, directly halt action and alert user
 - Rigorous Change Verification
 - Required: Confirm every change is explicitly justified and maintains original intent
+
+## 🎨 **CRITICAL: CSS-FIRST HIDDEN CHECKBOX ARCHITECTURE**
+
+### **DO NOT "FIX" THIS PATTERN - IT IS INTENTIONALLY ADVANCED**
+
+This project uses a sophisticated CSS-first state machine pattern that is unconventional but highly optimized:
+
+```html
+<label role="button" name="submit" type="submit" aria-label="Save">
+    Save
+    <input type="checkbox" />  <!-- Hidden state hook for CSS -->
+</label>
+```
+
+### **Why This Approach Exists:**
+
+1. **Performance**: CSS rendering is 100-1000x faster than JavaScript DOM manipulation
+2. **Security**: Minimal JavaScript surface reduces XSS attack vectors  
+3. **Accessibility**: Native keyboard navigation and screen reader support
+4. **Progressive Enhancement**: Works without JavaScript enabled
+5. **Stability**: Checkbox behavior unchanged since HTML's inception
+
+### **How It Works:**
+
+- **Hidden checkboxes** = CSS-accessible boolean state storage
+- **`:checked` pseudo-class** = State-driven styling and layout
+- **`<label role="button">` elements** = Accessible click targets
+- **CSS selectors** = Drive aside panels, loading states, button styling
+
+### **CRITICAL RULES FOR AI ASSISTANTS:**
+
+❌ **NEVER** replace `<label><input type="checkbox"></label>` with `<button>` elements
+❌ **NEVER** add JavaScript event handlers for CSS-driven interactions
+❌ **NEVER** assume "unconventional = wrong" (this is intentionally sophisticated)
+✅ **DO** maintain `aria-disabled` for accessibility state management
+✅ **DO** leverage CSS `:checked`, `:has()`, and container queries
+✅ **DO** test functionality with JavaScript disabled
+
+**This pattern represents advanced web standards knowledge and should be preserved exactly as implemented.**

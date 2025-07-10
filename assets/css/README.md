@@ -260,10 +260,6 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 
 <br>
 
----
-
-<br>
-
 ## SMALL SCREEN LAYOUT
 
 ```txt
@@ -281,6 +277,7 @@ Only the `<section>` element may scroll, unless explicitly justified. All ancest
 |                                                  |  /   : Scrollable
 |                                                  | /
 |                                                  |/
+|                                                  |
 |                                                  |
 |                                                  |
 |                                                  |

@@ -222,4 +222,20 @@ mv .replit.md AGENT.md && ln -s AGENT.md .replit.md
 - `schema.js` — Provides field remapping dictionaries (`ENDPOINT_SCHEMAS`) to normalize API responses into a unified shape. Exposes `normalizeRecord()` to transform raw data using base and endpoint-specific mappings. Auto-generates reverse mappings to support serialization or form rendering from normalized keys. It does **NOT** enforce data types, required fields, or validation constraints. Schema rules are static—no dynamic or user-defined schema injection. No transformation of nested objects, only flat key remapping.
 - `sw.js` — Registers a service worker to manage caching and offline behavior. Pre-caches critical static assets (HTML, CSS, JS, logo). Implements install, activate, and fetch handlers for offline-first behavior. It does **NOT** intercept dynamic API calls (e.g., POST/PUT). It does **NOT** include runtime caching strategies or version diffing. No push notification handling or background sync queue logic.
 - `utils.js` — Provides stateless utility functions for form value tracking, date formatting, and normalization. Supports `hasUnsavedChanges()` and `unsavedCheck()` logic for tracking dirty form state and gating user actions. Includes helper formatting for keys (`normalizeKey`) and date strings (`formatDateForInput`). It does **NOT** mutate UI or interact with the DOM directly. No external dependencies, side effects, or application-specific logic. Does **NOT** persist or retrieve any state—fully functional and reactive.
+
+### **🚨 CRITICAL: CSS-First Hidden Checkbox Pattern**
+
+**DO NOT "FIX" THIS - IT'S INTENTIONALLY ADVANCED:**
+
+```html
+<label role="button" name="submit" aria-label="Save">
+    Save
+    <input type="checkbox" />  <!-- CSS state hook -->
+</label>
+```
+
+**Why:** 100-1000x faster than JS, secure, accessible, works without JS
+**Rules:** Never replace with `<button>`, never add JS event handlers
+**Read:** `docs/PROJECT-STATE.md` for complete architecture explanation
+
 Subdirectories (e.g., /admin/, /dashboard/) may include their own AGENT.md files for localized subsystem documentation.

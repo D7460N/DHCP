@@ -8,7 +8,7 @@
 		<meta name="description" content="DHCP Portal" />
 		<meta name="robots" content="index, archive" />
 		<meta name="color-scheme" content="dark light" />
-		<!-- <link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials"> -->
+		<link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials">
 		<link rel="canonical" href="https://d7460n.dev/" />
 		<link rel="icon" type="image/svg+xml" href="./assets/images/brand/logos/logo.svg" />
 		<link rel="stylesheet" type="text/css" href="./assets/css/loading.css" />
@@ -121,5 +121,11 @@
 		<script type="module" src="./assets/js/forms.js"></script>
 		<script type="module" src="./assets/js/app.js"></script>
 		<script type="module" src="./assets/js/rules.js"></script>
+		<script>
+			// Minimal service worker registration
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('./sw.js');
+			}
+		</script>
 	</body>
 </html>

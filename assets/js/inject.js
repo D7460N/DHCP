@@ -1,5 +1,6 @@
 // MARK: INJECT.JS
 import { logError } from './errors.js';
+import { formatDateForInput } from './utils.js';
 
 export let rowSelectHandler = () => {};
 
@@ -231,11 +232,6 @@ export function createInputFromKey(key, value, fieldRules = {}) {
 		const input = document.createElement('input');
 		input.type = 'datetime-local';
 		input.name = key;
-		// Format the datetime value for input display
-		const formatDateForInput = (str = '') => {
-			const d = new Date(str);
-			return Number.isNaN(d) ? '' : d.toISOString().slice(0, 16);
-		};
 		input.value = formatDateForInput(value);
 		input.readOnly = true;
 		input.tabIndex = -1;
@@ -257,11 +253,6 @@ export function createInputFromKey(key, value, fieldRules = {}) {
 		element.type = 'datetime-local';
 		element.readOnly = true;
 		element.tabIndex = -1;
-		// Format ISO date appropriately for input display
-		const formatDateForInput = (str = '') => {
-			const d = new Date(str);
-			return Number.isNaN(d) ? '' : d.toISOString().slice(0, 16);
-		};
 		element.value = formatDateForInput(val);
 	} else if (/author|modified|created|updated/.test(key)) {
 		element.type = 'text';

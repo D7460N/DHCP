@@ -2,28 +2,33 @@
 
 ## Purpose
 
-Holds static mock JSON data for each tab/page in the SPA interface.
+Contains static mock JSON data files that populate the D7460N CSS-first architecture interface.
 
-## Usage
+## 🎯 **Data-Driven Architecture**
 
-- All JSON files are fetched using `fetch()`
-- Data must be triggered by tab change or user interaction (no polling)
+This project follows strict separation of concerns:
 
-## Format Rules
+- **HTML**: Semantic structure only
+- **CSS**: UI logic and state management (via hidden checkbox pattern)  
+- **JavaScript**: Data layer only (fetch, inject, ARIA management)
+- **JSON**: Content and configuration data
 
-- Flat or shallow object structures only
-- Use `kebab-case` for keys
-- Collections = arrays of objects
-- Single item views = object
+## 🔄 **Data Flow Pattern**
 
-## Sample File
+1. User interacts with UI (CSS-driven via checkbox states)
+2. JavaScript detects state changes via form events (`oninput`, `onchange`)
+3. JavaScript fetches appropriate JSON endpoint
+4. JavaScript injects data into semantic HTML containers
+5. CSS automatically styles and shows/hides content based on presence
 
-```json
-[
-  {
-    "id": "001",
-    "item-name": "Subnet Mask",
-    "item-type": "option",
-    "item-author": "D7460N"
-  }
-]
+**No JavaScript DOM manipulation for UI - CSS handles all visual logic!**
+
+## 📁 **File Structure**
+
+| File | Purpose |
+|------|---------|
+| `nav-content.json` | Navigation structure and page titles |
+| `manage.json` | Main DHCP management records |
+| `servers.json` | Server inventory data |
+| `faqs.json` | FAQ content |
+| `*.json` | Other endpoint mock data |
