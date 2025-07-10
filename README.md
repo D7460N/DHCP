@@ -1,6 +1,8 @@
 # D7460N Architecture
 
-D7460N is a decoupled UI resource for quickly building scalable, maintainable fron-end systems that are OUT OF THE BOX:
+D7460N is a browser-native, fully declarative architecture for quickly building scalable, maintainable front-end systems. It follows JAMstack principles, operates as a Single Page Application (SPA), and is implemented as a Progressive Web App (PWA).
+
+OUT OF THE BOX:
 
 - lightweight
 - browser-native
