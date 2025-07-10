@@ -16,14 +16,18 @@ D7460N eliminates runtime dependencies and avoids complex JavaScript-driven UI l
 - No build tools, no transpilers, no frameworks
 - Responsive, accessible, and declarative by design
 
+<br>
+
 ## ✨ Highlights
 
-- 🔹 No dependencies: 100% browser-native
-- 🔹 Dynamic JSON data via `fetch()`
-- 🔹 Declarative single-page-application (SPA) navigation and layout via modern best-practices `<input type="radio">` + CSS `:has()` + `@property` + container queries
-- 🔹 Minimal nesting, no IDs, classes, or custom attributes in markup
-- 🔹 CSS visibility logic based on dynamic (`:empty`, `:has`, `[hidden]`)
-- 🔹 Clean separation of concerns, UI logic, and API services
+🔹 No dependencies: 100% browser-native<br>
+🔹 Dynamic JSON data via `fetch()`<br>
+🔹 Declarative single-page-application (SPA) navigation and layout via modern best-practices `<input type="radio">` + CSS `:has()` + `@property` + container queries<br>
+🔹 Minimal nesting, no IDs, classes, or custom attributes in markup<br>
+🔹 CSS visibility logic based on dynamic (`:empty`, `:has`, `[hidden]`)<br>
+🔹 Clean separation of concerns, UI logic, and API services
+
+<br>
 
 ## 🚀 To Run
 
@@ -36,6 +40,8 @@ DONE!
 > No compliation<br>
 > No problem_
 
+<br>
+
 ## 📂 Structure
 
 | Directory              | Purpose                                                                 |
@@ -47,11 +53,15 @@ DONE!
 | `/assets/images/brand` | SVG brand and PWA PNG assets                                            |
 | `/assets/images/app`   | GUI assets                                                              |
 
+<br>
+
 ## 🛠️ Developer Tips
 
 - Clear cache with `Ctrl+Shift+R` to avoid stale module loads
 - Confirm service worker in DevTools → Application → Unregister if testing fresh state
 - Ensure all scripts load in order: config → utils → refs → api → view → form → app
+
+<br>
 
 ## 🙋 Need Help?
 
