@@ -49,5 +49,5 @@ export const CONFIRM_FLAGS = {
 // Standard JSON request headers
 export const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
-// DHCP type options used for dropdowns
-export const DHCP_TYPES = ['host', 'ip', 'url', 'file', 'service'];
+// DHCP type options used for dropdowns (matches actual data casing)
+export const DHCP_TYPES = ['Host', 'IP', 'URL', 'File', 'Service'];

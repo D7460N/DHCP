@@ -104,6 +104,10 @@ export function injectNavItems(data = {}) {
       // Add onchange event handler directly to the input (minimal JS per project philosophy)
       input.onchange = () => {
         if (!input.checked) return;
+        // Clear the aside panel when switching tabs
+        import('./forms.js').then(({ clearAsidePanel }) => {
+          clearAsidePanel();
+        });
         // Import loadPageContent dynamically to avoid circular dependencies
         import('./loaders.js').then(({ loadPageContent }) => {
           loadPageContent(key);

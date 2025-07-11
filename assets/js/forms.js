@@ -1,6 +1,6 @@
 // MARK: FORMS.JS
 
-import { OPTIONS, CONFIRM_FLAGS } from './config.js';
+import { OPTIONS } from './config.js';
 import { postJSON, putJSON, deleteJSON } from './fetch.js';
 import { denormalizeRecord } from './schema.js';
 import { loadPageContent, getFieldRules } from './loaders.js';
@@ -18,7 +18,6 @@ import {
 import {
 	snapshotForm,
 	hasUnsavedChanges,
-	unsavedCheck,
 	removeInlineStyles,
 	clearFieldset,
 	isFormValid,
@@ -42,6 +41,26 @@ const savedMessage = form.querySelector('p[aria-live="polite"]');
 let originalData = {};
 let snapshotLi = null;
 
+// Reusable function to clear the aside panel completely
+export function clearAsidePanel() {
+	// Clear any selected row
+	const selected = document
+		.querySelector('ul li input[name="list-item"]:checked')
+		?.closest('li');
+	if (selected) {
+		const radio = selected.querySelector('input[name="list-item"]');
+		if (radio) radio.checked = false;
+		const toggle = selected.querySelector('input[name="row-toggle"]');
+		if (toggle) toggle.checked = false;
+	}
+
+	// Clear the form and reset styles
+	clearFieldset(fieldset);
+	removeInlineStyles(mainEl);
+	captureFormSnapshot();
+	form.oninput();
+}
+
 // Form state functions
 function checkUnsavedChanges() {
 	return hasUnsavedChanges(fieldset.querySelectorAll('input[name], select[name]'), originalData);
@@ -63,26 +82,10 @@ function restoreForm() {
 function updateButtonStates() {
 	const dirty = checkUnsavedChanges();
 	const valid = isFormValid(form);
-	const hasSelection = document.querySelector('ul li input[name="list-item"]:checked');
 
-	// Update form dataset for CSS styling
+	// Update form dataset for CSS styling - CSS handles button states
 	form.dataset.dirty = dirty ? 'true' : 'false';
 	form.dataset.valid = valid ? 'true' : 'false';
-
-	// Reset button: enabled when dirty
-	if (resetItem) {
-		resetItem.toggleAttribute('aria-disabled', !dirty);
-	}
-
-	// Submit button: enabled when dirty AND valid
-	if (submitItem) {
-		submitItem.toggleAttribute('aria-disabled', !(dirty && valid));
-	}
-
-	// Delete button: enabled when selection exists
-	if (deleteItem) {
-		deleteItem.toggleAttribute('aria-disabled', !hasSelection);
-	}
 }
 
 // Form coordination
@@ -125,154 +128,155 @@ setRowSelectHandler(updateFormFromSelectedRow);
 // Form event assignments
 form.oninput = updateButtonStates;
 
-// New item creation
-newItem.onclick = async () => {
-	unsavedCheck(CONFIRM_FLAGS.save, checkUnsavedChanges, () => {
+// New item creation - CSS-first pattern: listen to checkbox change
+const newItemCheckbox = newItem?.querySelector('input[type="checkbox"]');
+if (newItemCheckbox) {
+	newItemCheckbox.onchange = async (e) => {
+		if (!e.target.checked) return; // Only act on check, not uncheck
+
+		// Reset checkbox after user action
+		e.target.checked = false;
+
 		clearFieldset(fieldset);
 
-		const existingLi = tableUl.querySelector('li');
-		let keys;
+			const existingLi = tableUl.querySelector('li');
+			let keys;
 
-		if (existingLi) {
-			keys = Array.from(existingLi.querySelectorAll('label > *:not(input)')).map(el =>
-				toCamel(el.tagName.toLowerCase()),
-			);
-		} else {
-			keys = ['id', 'name', 'description', 'created', 'updated'];
-		}
+			if (existingLi) {
+				keys = Array.from(existingLi.querySelectorAll('label > *:not(input)')).map(el =>
+					toCamel(el.tagName.toLowerCase()),
+				);
+			} else {
+				keys = ['id', 'name', 'description', 'created', 'updated'];
+			}
 
-		const item = {};
-		keys.forEach(key => {
-			item[key] = '';
-			const formLabel = document.createElement('label');
-			formLabel.textContent =
-				toTagName(key)
-					.replace(/^item-/, '')
-					.replace(/-/g, ' ')
-					.replace(/\b\w/g, c => c.toUpperCase()) + ': ';
+			const item = {};
+			keys.forEach(key => {
+				item[key] = '';
+				const formLabel = document.createElement('label');
+				formLabel.textContent =
+					toTagName(key)
+						.replace(/^item-/, '')
+						.replace(/-/g, ' ')
+						.replace(/\b\w/g, c => c.toUpperCase()) + ': ';
 
-			const input = createInputFromKey(key, '', getFieldRules());
-			input.oninput = (e) => mirrorToSelectedRow(e, injectRowField);
-			formLabel.appendChild(input);
-			fieldset.appendChild(formLabel);
-		});
+				const input = createInputFromKey(key, '', getFieldRules());
+				input.oninput = (e) => mirrorToSelectedRow(e, injectRowField);
+				formLabel.appendChild(input);
+				fieldset.appendChild(formLabel);
+			});
 
-		const li = createListItem(item);
-		tableUl.prepend(li);
+			const li = createListItem(item);
+			tableUl.prepend(li);
 
-		updateHeaderRow(li, headerUl, toCamel, toTagName);
-
+			updateHeaderRow(li, headerUl, toCamel, toTagName);
 		li.querySelector('input[name="list-item"]').checked = true;
 		captureFormSnapshot();
-	});
-};
-
-// Form submission
-form.onsubmit = async e => {
-	e.preventDefault();
-
-	unsavedCheck(CONFIRM_FLAGS.save, checkUnsavedChanges, async () => {
-		const selected = document.querySelector('ul li input[name="list-item"]:checked');
-		const id = selected?.closest('li')?.querySelector('label > id')?.textContent?.trim();
-		const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
-		if (!endpoint) return;
-
-		const data = {};
-		fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
-			if (!el.readOnly) data[el.name] = el.value.trim();
-		});
-		const payload = denormalizeRecord(endpoint, data);
-
-		try {
-			if (id) {
-				await putJSON(`${endpoint}/${id}`, payload);
-			} else {
-				await postJSON(endpoint, payload);
-			}
-
-			submitItem.setAttribute('aria-label', 'saved');
-			savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
-			await loadPageContent(endpoint);
-			captureFormSnapshot();
-			setTimeout(() => {
-				savedMessage.textContent = '';
-			}, 2000);
-		} catch (err) {
-			console.error('Failed to save:', err);
-			const intro = document.querySelector('main article > p');
-			if (intro) intro.textContent = '⚠️ Error saving record.';
-		}
-	});
-};
-
-// Form reset
-form.onreset = e => {
-	e.preventDefault();
-
-	unsavedCheck(CONFIRM_FLAGS.reset, checkUnsavedChanges, () => {
-		restoreForm();
-		captureFormSnapshot();
-	});
-};
-
-// Delete operation
-deleteItem.onclick = () => {
-	const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
-	if (!selected) return;
-
-	const id = selected.querySelector('label > id')?.textContent?.trim();
-	const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
-	if (!endpoint) return;
-
-	unsavedCheck(CONFIRM_FLAGS.delete, checkUnsavedChanges, async () => {
-		if (!id) {
-			selected.remove();
-			clearFieldset(fieldset);
-			headerUl.querySelector('li').innerHTML = '';
-			captureFormSnapshot();
-			return;
-		}
-
-		try {
-			await deleteJSON(`${endpoint}/${id}`);
-			await loadPageContent(endpoint);
-			captureFormSnapshot();
-		} catch (err) {
-			console.error('Failed to delete:', err);
-			const intro = document.querySelector('main article > p');
-			if (intro) intro.textContent = '⚠️ Error deleting record.';
-		}
-	});
-};
-
-// Close form
-if (closeItem) {
-	closeItem.onclick = () => {
-		unsavedCheck(CONFIRM_FLAGS.close, checkUnsavedChanges, () => {
-			const selected = document
-				.querySelector('ul li input[name="list-item"]:checked')
-				?.closest('li');
-			if (selected) {
-				const radio = selected.querySelector('input[name="list-item"]');
-				if (radio) radio.checked = false;
-				const toggle = selected.querySelector('input[name="row-toggle"]');
-				if (toggle) toggle.checked = false;
-			}
-			clearFieldset(fieldset);
-			form.oninput();
-			removeInlineStyles(mainEl);
-			captureFormSnapshot();
-		});
 	};
 }
 
-// Save confirmation on page blur
-if (OPTIONS.warnOnBlur) {
-	window.onblur = () => {
-		if (checkUnsavedChanges()) {
-			CONFIRM_FLAGS.save.value = true;
-			CONFIRM_FLAGS.delete.value = true;
+// Form submission - CSS-first pattern: listen to checkbox change
+const submitCheckbox = submitItem?.querySelector('input[type="checkbox"]');
+if (submitCheckbox) {
+	submitCheckbox.onchange = async (e) => {
+		if (!e.target.checked) return; // Only act on check, not uncheck
+
+		// Reset checkbox after user action
+		e.target.checked = false;
+
+		const selected = document.querySelector('ul li input[name="list-item"]:checked');
+			const id = selected?.closest('li')?.querySelector('label > id')?.textContent?.trim();
+			const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
+			if (!endpoint) return;
+
+			const data = {};
+			fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+				if (!el.readOnly) data[el.name] = el.value.trim();
+			});
+			const payload = denormalizeRecord(endpoint, data);
+
+			try {
+				if (id) {
+					await putJSON(`${endpoint}/${id}`, payload);
+				} else {
+					await postJSON(endpoint, payload);
+				}
+
+				submitItem.setAttribute('aria-label', 'saved');
+				savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
+				await loadPageContent(endpoint);
+				captureFormSnapshot();
+				setTimeout(() => {
+					savedMessage.textContent = '';
+				}, 2000);
+			} catch (err) {
+				console.error('Failed to save:', err);
+				const intro = document.querySelector('main article > p');			if (intro) intro.textContent = '⚠️ Error saving record.';
 		}
+	};
+}
+
+// Form reset - CSS-first pattern: listen to checkbox change
+const resetCheckbox = resetItem?.querySelector('input[type="checkbox"]');
+if (resetCheckbox) {
+	resetCheckbox.onchange = (e) => {
+		if (!e.target.checked) return; // Only act on check, not uncheck
+
+		// Reset checkbox after user action
+		e.target.checked = false;
+
+		restoreForm();
+		captureFormSnapshot();
+	};
+}
+
+// Delete operation - CSS-first pattern: listen to checkbox change
+const deleteCheckbox = deleteItem?.querySelector('input[type="checkbox"]');
+if (deleteCheckbox) {
+	deleteCheckbox.onchange = async (e) => {
+		if (!e.target.checked) return; // Only act on check, not uncheck
+
+		// Reset checkbox after user action
+		e.target.checked = false;
+
+		const selected = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
+		if (!selected) return;
+
+		const id = selected.querySelector('label > id')?.textContent?.trim();
+		const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
+		if (!endpoint) return;
+
+			// For new items without ID, just remove from DOM
+			if (!id) {
+				selected.remove();
+				clearFieldset(fieldset);
+				headerUl.querySelector('li').innerHTML = '';
+				captureFormSnapshot();
+				return;
+			}
+
+			try {
+				await deleteJSON(`${endpoint}/${id}`);
+				await loadPageContent(endpoint);
+				captureFormSnapshot();
+			} catch (err) {
+				console.error('Failed to delete:', err);
+				const intro = document.querySelector('main article > p');			if (intro) intro.textContent = '⚠️ Error deleting record.';
+		}
+	};
+}
+
+// Close form - CSS-first pattern: listen to checkbox change
+const closeCheckbox = closeItem?.querySelector('input[type="checkbox"]');
+if (closeCheckbox) {
+	closeCheckbox.onchange = (e) => {
+		if (!e.target.checked) return; // Only act on check, not uncheck
+
+		// Reset checkbox after user action
+		e.target.checked = false;
+
+		// Use the reusable clear function
+		clearAsidePanel();
 	};
 }
 

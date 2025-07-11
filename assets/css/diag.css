@@ -70,11 +70,25 @@
     z-index: var(--diagnostic-z);
   }
 
-  header::before { content: '🧭 SR: Header'; }
-  nav::before    { content: '🧭 SR: Nav'; }
-  main::before   { content: '🧭 SR: Main'; }
-  aside::before  { content: '🧭 SR: Aside'; }
-  footer::before { content: '🧭 SR: Footer'; }
+  header::before {
+    content: '🧭 SR: Header';
+  }
+
+  nav::before {
+    content: '🧭 SR: Nav';
+  }
+
+  main::before {
+    content: '🧭 SR: Main';
+  }
+
+  aside::before {
+    content: '🧭 SR: Aside';
+  }
+
+  footer::before {
+    content: '🧭 SR: Footer';
+  }
 
   /* 🧊 3D Isometric Mode (auto) */
   @media (prefers-contrast: more) {

@@ -1,6 +1,6 @@
 // Service Worker for D7460N Project (SPA-friendly, Minimal, Project-Agnostic)
-// Version: v4 (update to invalidate and refresh cache as needed)
-const CACHE_NAME = 'cache-v4'
+// Version: v5 (update to invalidate and refresh cache as needed)
+const CACHE_NAME = 'cache-v6'
 
 // Service Worker Update Configuration (consolidated here)
 const SW_UPDATE_CONFIG = {

@@ -81,9 +81,13 @@ app-container {
 
   /* 3 columns when <aside><fieldset> is not empty */
   &:has(aside form fieldset:not(:empty)) {
+    --app-container-grid-template-columns: 12rem 55% 1fr;
     /* --app-container-grid-template-columns: 12rem 1fr minmax(min-content, 1fr); */
-    --app-container-grid-template-columns: 12rem minmax(50rem, 100rem) 1fr;
+    /* --app-container-grid-template-columns: 12rem auto minmax(min(10rem, 100%), 1fr); */
     grid-template-columns: var(--app-container-grid-template-columns);
+    /* Gold
+                            12rem minmax(min(10rem, 100%), auto) minmax(min(10rem, 100%), 1fr)
+    grid-template-columns: 12rem auto minmax(min(10rem, 100%), 1fr); */
 
     /* --min: 30ch;
 
@@ -313,7 +317,7 @@ app-container {
     min-width: 20rem;
 
     &:has(~ aside fieldset:not(:empty)) {
-      resize: horizontal;
+      /* resize: horizontal; */
       /* Show when <aside><fieldset> is not empty */
     }
 
@@ -353,8 +357,8 @@ app-container {
         margin-block: 1rem;
         background-color: transparent;
         height: 0;
-        border-block-start: solid .125rem rgba(0,0,0,0.3);
-        border-block-end-color: rgba(255,255,255,0.2);
+        border-block-start: solid .125rem rgba(0, 0, 0, 0.3);
+        border-block-end-color: rgba(255, 255, 255, 0.2);
         border-inline: none;
       }
 
@@ -376,11 +380,13 @@ app-container {
       }
 
       p {
-        display: none; /* Hide by default */
+        display: none;
+        /* Hide by default */
         margin-inline: 1rem;
 
         &:not(:empty) {
-          display: grid; /* Show when not empty */
+          display: grid;
+          /* Show when not empty */
         }
       }
 
@@ -533,6 +539,7 @@ app-container {
       grid-template-rows: auto 1fr;
     }
 
+    button,
     [role="button"] {
       cursor: pointer;
       user-select: none;
@@ -549,26 +556,30 @@ app-container {
     }
 
     [aria-label="Delete"] {
-      position: absolute;
       align-self: end;
-      justify-self: start;
+      justify-self: end;
       margin-inline-start: 1rem;
+      background-color: rgba(var(--error-color), 0.2);
+
+      &:hover {
+        background-color: rgba(var(--error-color), 0.4);
+      }
     }
 
     [aria-label="Reset"] {
-      position: absolute;
-      align-self: end;
       justify-self: center;
+      align-self: end;
     }
 
     [aria-label="Save"] {
       position: absolute;
-      justify-self: end;
+      justify-self: start;
       align-self: end;
-      margin-inline-end: 1rem;
+      margin-inline-start: 1rem;
     }
 
     form {
+      display: grid;
       grid-template-columns: 1fr;
       grid-template-rows: auto 1fr auto auto;
       gap: 1rem;
@@ -614,4 +625,12 @@ app-container {
   :is(h1, h2, h3, h4) {
     padding: 2rem;
   }
+}
+
+fieldset {
+  display: grid;
+  overflow: auto;
+  border: none;
+  margin: 0;
+  padding: 0;
 }

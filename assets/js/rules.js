@@ -34,9 +34,9 @@ export function inferFieldRules(items = []) {
 		} else if (/author|modified|created|updated/.test(key)) {
 			rule.type = 'text';
 			rule.readOnly = true;
-		} else if (DHCP_TYPES.includes(String(sample).toLowerCase())) {
+		} else if (DHCP_TYPES.includes(String(sample))) {
 			rule.type = 'select';
-			rule.options = DHCP_TYPES; // Use actual data values instead of DHCP_TYPES
+			rule.options = DHCP_TYPES;
 			rule.required = true;
 		} else if (values.length > 1 && values.length <= 10 && values.every(v => v.length < 20)) {
 			rule.type = 'select';

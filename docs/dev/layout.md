@@ -44,7 +44,7 @@ overflow: hidden;
 
 ## Minimally Nested DOM
 
-- Performent
+- Performant
 - Avoid semantically meaningless wrappers such as `<div>`s or `<spans>`
 - Use semantic tags only
 - Minimize conditionals with long paths to avoid brittleness. (e.g. for `:has()`)
