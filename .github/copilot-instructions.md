@@ -1,93 +1,80 @@
 # Copilot Instructions
 
-## Role & Context
+## 🎯 Quick Context
 
-- You are an expert UI/UX engineer.
-- Focus: Modern, zero-dependency, browser-native UI systems.
-- Prioritize semantic HTML, CSS-driven interaction, and accessibility.
-- All code must be production-ready, maintainable, and standards-compliant.
-- Accuracy and honesty is the most important! Accuracy and honesty is more important than the time it takes to produce accurate code and or answers.
-- You must be accurate, because the user must accurately assess why something works or doesn't work.
-- You must be honest, so the user accurately assess why something works or doesn't work.
-- Do not produce more code than what is asked for. No more. No less.
-- All code is modern. Ignore cross-browser compatibility.
-- All answers to questions must be as brief, concise, and accurate as possible.
-- Confirm with yourself the code solution you are about to print actually works in context within the file before printing.
+**READ `docs/PROJECT-STATE.md` FIRST** for complete project understanding and current status.
 
-## Code Structure & Output
+This is a **zero-dependency DHCP management portal** using D7460N architecture - a sophisticated CSS-first system where UI logic lives entirely in CSS, not JavaScript.
 
-All projects are loosely based on the JAMstack architecture in that all HTML structure is pre-delivered.
+## 🚨 Critical Architecture Warnings
+
+**NEVER "FIX" THE CSS-FIRST PATTERN!** The sophisticated hidden checkbox state management using `<label role="button"><input type="checkbox"></label>` is **intentional**. This provides:
+- Performance: CSS rendering 100-1000x faster than JavaScript DOM manipulation
+- Security: Minimal JavaScript surface reduces XSS attack vectors
+- Accessibility: Native keyboard navigation and ARIA compliance
+- Progressive enhancement: Fully functional without JavaScript
+
+## Core Architecture
 
 **Strict separation of concerns:**
 
-1. **HTML:**
+1. **HTML**: Semantic structure only, pre-delivered. No classes, IDs, or data-* attributes. Use `<label role="button"><input type="checkbox" /></label>` for interactive buttons.
 
-   - All vanilla all the time.
-   - All HTML structure is pre-delivered up-front.
-   - Always choose minimal HTML element nesting.
-   - Always use only semantic elements per [WHATWG HTML spec](https://html.spec.whatwg.org/).
-   - Never use classes, IDs, data-\*, or inline styles or scripts.
-   - Structural markup only; no presentational hints or ARIA unless necessary for accessibility.
-   - Follow the HTML conventions and patterns found in the root `index.html` file.
-   - Follow the HTML guidelines found in the root `README.MD` file.
+2. **CSS**: ALL UI logic via `:has()`, `:checked`, container queries. State management through hidden checkboxes. CSS variables in `assets/css/themes.css`.
 
-2. **CSS:**
+3. **JavaScript**: Data layer ONLY. Fetch from `API_URL` (MockAPI), inject into DOM, manage form state via `dataset.dirty`. Use `oninput`/`onchange`, never `addEventListener`.
 
-   - All vanilla all the time.
-   - Place all interactivity (visibility, state, UI behavior) in CSS.
-   - Use selectors like `:has()`, `:checked`, and container queries for UI logic.
-   - No framework, preprocessor, or custom property dependencies.
-   - Ensure [WCAG 2.2 AA](https://www.w3.org/WAI/standards-guidelines/wcag/) and [508](https://www.section508.gov/) compliance.
-   - Prefer modern container and style queries for responsiveness.
-   - Follow the CSS layout conventions and patterns found in the `assets/css/layout.css` file.
-   - Follow the CSS typography conventions and patterns found in the `assets/css/typography.css` file.
-   - Follow the CSS accessibility conventions and patterns found in the `assets/css/a11y.css` file.
-   - Follow the CSS responsive conventions and patterns found in the `assets/css/responsive.css` file.
-   - Follow the CSS fonts conventions and patterns found in the `assets/css/fonts.css` file.
-   - Follow the CSS forms conventions and patterns found in the `assets/css/forms.css` file.
-   - Follow the CSS loading conventions and patterns found in the `assets/css/loading.css` file.
-   - Follow the CSS reset conventions and patterns found in the `assets/css/reset.css` file.
-   - Follow the CSS scrollbars conventions and patterns found in the `assets/css/scrollbars.css` file.
-   - Follow the CSS themes conventions and patterns found in the `assets/css/themes.css` file.
-   - Follow the CSS transitions conventions and patterns found in the `assets/css/transitions.css` file.
-   - Follow the CSS guidelines found in the `assets/css/README.MD` file.
+## Key Patterns
 
-3. **JavaScript:**
-   - All vanilla all the time.
-   - Only for fetching and injecting data/content.
-   - No UI logic or direct DOM manipulation for interactivity.
-   - No frameworks, libraries, or build tools.
-   - Use [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), and browser-native APIs.
-   - Follow the JavaScript function and feature conventions and patterns found in the `assets/js/scripts.js` and the `assets/js/config.js` file.
-   - Follow the JavaScript guidelines found in the `assets/js/README.MD` file.
+### CSS-First State Machine
+```html
+<label role="button" aria-label="Save">Save<input type="checkbox" /></label>
+```
+```css
+form:has([data-dirty="true"]):valid::after { content: '✓ Ready to submit'; }
+```
+
+### Modular JavaScript Structure
+- `config.js`: API endpoints, feature flags, constants
+- `forms.js`: Form CRUD operations, button state management
+- `inject.js`: DOM injection utilities (`createInputFromKey`, `mirrorToSelectedRow`)
+- `utils.js`: DOM utilities (`clearFieldset`, `isFormValid`, `snapshotForm`)
+- `schema.js`: Data normalization between API and internal structure
+- `fetch.js`: HTTP operations using native Fetch API
+
+### Data Flow
+1. User interacts → CSS state change via `:checked`
+2. JavaScript detects via `form.oninput` → updates `form.dataset.dirty`
+3. Fetch JSON from external API → normalize via `schema.js`
+4. Inject into semantic HTML → CSS handles visibility/styling
+
+## File Organization
+
+**CSS Load Order** (critical for cascade):
+`loading.css` → `themes.css` → `layout.css` → `forms.css` → `typography.css`
+
+**Key Directories**:
+- `assets/css/`: Modular CSS (layout, forms, themes, a11y)
+- `assets/js/`: ES6 modules (no build step required)
+- `data/`: Local JSON for development (not used in production)
+
+## Development Workflow
+
+**No build tools**: Run directly in browser via `file://` or local server. External API at `https://67d944ca00348dd3e2aa65f4.mockapi.io/`
+
+**Form Button Pattern**: Use `aria-label` selectors (e.g., `form.querySelector('[aria-label="Save"]')`) not `name` attributes.
+
+**Debugging**: Check `form.dataset.dirty`, `CONFIRM_FLAGS` state, and CSS `:has()` selector support.
 
 ## Output Format
 
-- Provide each file in a separate fenced code block with the filename in the header.
-- Use `name=filename.ext` syntax, e.g., `name=index.html`.
-- For Markdown files, use quadruple backticks.
-- No extra explanation unless explicitly requested.
-
-## UX & Accessibility
-
-- Use native elements (e.g., `<button>`, `<details>`, `<summary>`) whenever possible.
-- Ensure all interactive controls are keyboard-accessible.
-- Favor progressive enhancement and graceful fallback.
+- Separate fenced code blocks: ` ```css name=filename.css`
+- No explanations unless requested
+- Follow existing patterns in target files
+- Extend `components/list.html` for new list variants
 
 ## References
 
-- [MDN Web Docs](https://developer.mozilla.org/)
-- [WHATWG HTML Standard](https://html.spec.whatwg.org/)
-- [CSS Selectors Level 4](https://drafts.csswg.org/selectors-4/)
-
----
-
-**When generating code, always:**
-
-- Adhere to these standards.
-- Avoid classes, IDs, frameworks, and custom attributes.
-- Output only requested files in code blocks as described above.
-- Audit existing code for possible extension and or reuse.
-- Always extend `components/list.html` when creating new list variants.
-- UI logic is always declarative
-- UI state logic is controlled only by CSS. No JS.
+- [Modern CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [WHATWG HTML](https://html.spec.whatwg.org/)
+- [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)

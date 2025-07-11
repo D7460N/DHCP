@@ -33,9 +33,9 @@ const fieldset = form.querySelector('fieldset');
 const mainEl = document.querySelector('main');
 const newItem = document.querySelector('main article [aria-label*="new item"]');
 const closeItem = document.querySelector('aside [aria-label="Close"]');
-const deleteItem = form.querySelector('[name="delete"]');
-const resetItem = form.querySelector('[name="reset"]');
-const submitItem = form.querySelector('[name="submit"]');
+const deleteItem = form.querySelector('[aria-label="Delete"]');
+const resetItem = form.querySelector('[aria-label="Reset"]');
+const submitItem = form.querySelector('[aria-label="Save"]');
 const savedMessage = form.querySelector('p[aria-live="polite"]');
 
 // Form State Management

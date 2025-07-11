@@ -9,7 +9,7 @@ Contains static mock JSON data files that populate the D7460N CSS-first architec
 This project follows strict separation of concerns:
 
 - **HTML**: Semantic structure only
-- **CSS**: UI logic and state management (via hidden checkbox pattern)  
+- **CSS**: UI logic and state management (via hidden checkbox pattern)
 - **JavaScript**: Data layer only (fetch, inject, ARIA management)
 - **JSON**: Content and configuration data
 

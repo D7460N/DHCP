@@ -116,7 +116,7 @@ This project uses an **advanced CSS-first architecture** with hidden checkbox st
 
 **Key Benefits:**
 - 🚀 **Performance**: CSS 100-1000x faster than JavaScript
-- 🔒 **Security**: Minimal JavaScript attack surface  
+- 🔒 **Security**: Minimal JavaScript attack surface
 - ♿ **Accessibility**: Native keyboard navigation
 - 📱 **Progressive**: Works without JavaScript
 - 🎯 **Standards**: Uses semantic HTML + ARIA

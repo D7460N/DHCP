@@ -296,7 +296,7 @@ This project uses a sophisticated CSS-first state machine pattern that is unconv
 ### **Why This Approach Exists:**
 
 1. **Performance**: CSS rendering is 100-1000x faster than JavaScript DOM manipulation
-2. **Security**: Minimal JavaScript surface reduces XSS attack vectors  
+2. **Security**: Minimal JavaScript surface reduces XSS attack vectors
 3. **Accessibility**: Native keyboard navigation and screen reader support
 4. **Progressive Enhancement**: Works without JavaScript enabled
 5. **Stability**: Checkbox behavior unchanged since HTML's inception

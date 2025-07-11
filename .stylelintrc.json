@@ -1,0 +1,50 @@
+{
+  "extends": [
+    "stylelint-config-standard"
+  ],
+  "plugins": [
+    "stylelint-declaration-use-variable"
+  ],
+  "rules": {
+    "sh-waqar/declaration-use-variable": [
+      [
+        "/color/",
+        "z-index",
+        "font-size",
+        "font-family",
+        "border-radius",
+        "line-height",
+        "margin",
+        "padding"
+      ],
+      {
+        "ignoreValues": [
+          "transparent",
+          "inherit",
+          "initial",
+          "unset",
+          "0",
+          "1",
+          "100%",
+          "auto"
+        ]
+      }
+    ],
+    "custom-property-pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+    "selector-class-pattern": null,
+    "selector-id-pattern": null,
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "container",
+          "layer"
+        ]
+      }
+    ]
+  },
+  "ignoreFiles": [
+    "**/*.min.css",
+    "**/vendor/**/*.css"
+  ]
+}

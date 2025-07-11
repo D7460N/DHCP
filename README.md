@@ -10,7 +10,7 @@ OUT OF THE BOX:
 - standards-first
 - fully declarative
 - fully accessible
-- fully responsive 
+- fully responsive
 
 D7460N eliminates runtime dependencies and avoids complex JavaScript-driven UI logic by embracing modern standards: semantic HTML, CSS state management, and data-only JavaScript modules.
 

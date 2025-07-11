@@ -1,7 +1,7 @@
-import { BASE_URL, JSON_HEADERS as HEADERS } from './config.js';
+import { API_URL, JSON_HEADERS as HEADERS } from './config.js';
 
 function toUrl(endpoint = '') {
-	return endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`;
+	return endpoint.startsWith('http') ? endpoint : `${API_URL}${endpoint}`;
 }
 
 async function handle(res) {

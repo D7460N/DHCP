@@ -264,8 +264,8 @@ export const OPTIONS = { showBanner: true, warnOnBlur: true };
 
 ## Additional Modules
 
-- `errors.js` – centralized error logging via `logError()`
-- `env.js` – runtime environment detection (`isDev`, `isTest`, `isProd`)
+- `errors.js` - centralized error logging via `logError()`
+- `env.js` - runtime environment detection (`isDev`, `isTest`, `isProd`)
 
 ## 🚨 **CRITICAL: CSS-First Philosophy - Minimal JavaScript**
 
@@ -274,7 +274,7 @@ export const OPTIONS = { showBanner: true, warnOnBlur: true };
 In this architecture, JavaScript has a **very specific and constrained purpose**:
 
 #### **✅ JavaScript SHOULD Handle:**
-- Data fetching via `fetch()` 
+- Data fetching via `fetch()`
 - API interactions (CRUD operations)
 - Form data serialization/deserialization
 - ARIA attribute management for accessibility (`aria-disabled`, `aria-live`)
@@ -314,7 +314,7 @@ In this architecture, JavaScript has a **very specific and constrained purpose**
 - ❌ **Never** add `addEventListener` or inline event handlers for UI
 - ❌ **Never** manipulate `style.display`, `classList`, or visual properties
 - ❌ **Never** replace the hidden checkbox pattern with "conventional" buttons
-- ✅ **Do** manage data flow and API communication  
+- ✅ **Do** manage data flow and API communication
 - ✅ **Do** update ARIA attributes for accessibility
 - ✅ **Do** inject content into semantic HTML containers
 
