@@ -100,7 +100,7 @@ app-container {
     }
   }
 
-  app-container > * {
+  app-container>* {
     background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
   }
 
@@ -456,7 +456,7 @@ app-container {
 
         /* MARK: UL TABLE BODY --------------------------------------------
       */
-        & + ul {
+        &+ul {
           overflow: overlay;
           position: relative;
           align-content: start;
@@ -506,7 +506,7 @@ app-container {
                 padding-inline-end: 1rem;
               }
 
-              > * {
+              >* {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -539,45 +539,6 @@ app-container {
       grid-template-rows: auto 1fr;
     }
 
-    button,
-    [role="button"] {
-      cursor: pointer;
-      user-select: none;
-      position: absolute;
-      align-self: start;
-      justify-self: end;
-      margin-block-start: 1rem;
-      margin-inline-end: 1rem;
-      padding: 0.5rem;
-
-      input[type="checkbox"] {
-        display: none;
-      }
-    }
-
-    [aria-label="Delete"] {
-      align-self: end;
-      justify-self: end;
-      margin-inline-start: 1rem;
-      background-color: rgba(var(--error-color), 0.2);
-
-      &:hover {
-        background-color: rgba(var(--error-color), 0.4);
-      }
-    }
-
-    [aria-label="Reset"] {
-      justify-self: center;
-      align-self: end;
-    }
-
-    [aria-label="Save"] {
-      position: absolute;
-      justify-self: start;
-      align-self: end;
-      margin-inline-start: 1rem;
-    }
-
     form {
       display: grid;
       grid-template-columns: 1fr;
@@ -598,7 +559,44 @@ app-container {
   }
 
 
+  button,
+  [role="button"] {
+    cursor: pointer;
+    user-select: none;
+    position: absolute;
+    align-self: start;
+    justify-self: end;
+    margin-block-start: 1rem;
+    margin-inline-end: 1rem;
+    padding: 0.5rem;
 
+    input[type="checkbox"] {
+      display: none;
+    }
+  }
+
+  [role="button"][aria-label="Delete"] {
+    align-self: end;
+    justify-self: end;
+    margin-inline-start: 1rem;
+    background-color: rgba(var(--error-color), 0.2);
+
+    &:hover {
+      background-color: rgba(var(--error-color), 0.4);
+    }
+  }
+
+  [aria-label="Reset"] {
+    justify-self: center;
+    align-self: end;
+  }
+
+  [aria-label="Save"] {
+    position: absolute;
+    justify-self: start;
+    align-self: end;
+    margin-inline-start: 1rem;
+  }
 
 
   /* MARK: FOOTER --------------------------------------------
