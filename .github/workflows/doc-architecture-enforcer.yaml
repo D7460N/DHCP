@@ -111,6 +111,10 @@ jobs:
     needs: [lint-docs, doc-drift]
     runs-on: ubuntu-latest
     if: failure()
+    permissions:
+      issues: write
+      contents: none
+      pull-requests: none
     steps:
       - name: Create Issue for Drift/Lint Failure
         uses: dacbd/create-issue-action@v1
