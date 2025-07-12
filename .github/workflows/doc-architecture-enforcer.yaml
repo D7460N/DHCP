@@ -84,6 +84,8 @@ jobs:
   doc-drift:
     name: Detect Doc Drift (Architecture/AI Context)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - name: Check for doc drift
