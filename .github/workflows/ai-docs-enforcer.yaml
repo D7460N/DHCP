@@ -1,0 +1,94 @@
+# .github/workflows/ai-docs-enforcer.yml
+name: AI Doc Consistency & Lint
+
+on:
+  pull_request:
+    paths:
+      - '**/*.js'
+      - '**/*.css'
+      - '**/*.html'
+      - '.github/copilot-instructions.md'
+      - 'PROJECT-STATE.md'
+      - 'README.md'
+      - 'AGENT.md'
+      - 'AGENTS.md'
+  schedule:
+    - cron: "0 3 * * 1" # Weekly, Mondays at 03:00 UTC
+
+jobs:
+
+  lint-docs:
+    name: Lint Docs for Forbidden Patterns
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint docs for forbidden patterns
+        run: |
+          # List of forbidden patterns in this repo's context
+          BAD_PATTERNS='class=|id=|data-|onclick|onchange|oninput|<button'
+          # Only check doc files, not code
+          DOCS="README.md PROJECT-STATE.md AGENT.md AGENTS.md .github/copilot-instructions.md"
+          # Grep for forbidden patterns
+          set +e
+          grep -nE "$BAD_PATTERNS" $DOCS
+          STATUS=$?
+          set -e
+          if [ $STATUS -eq 0 ]; then
+            echo "❌ Forbidden pattern found in docs. Please update docs to match repo standards." >&2
+            exit 1
+          else
+            echo "✅ Docs lint clean."
+          fi
+
+  doc-drift:
+    name: Detect Doc Drift (AI Context)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for doc drift
+        run: |
+          #!/usr/bin/env bash
+          # List all architectural patterns found in code (HTML/CSS/JS)
+          # Compare to patterns listed in copilot-instructions.md and PROJECT-STATE.md
+
+          CODE_PATTERNS=$(grep -Ero '(input type="checkbox"|:has\(|@container|fieldset|aria-label|role="button")' . --include=*.html --include=*.css --include=*.js | sort | uniq)
+          DOC_PATTERNS=$(grep -Ero '(input type="checkbox"|:has\(|@container|fieldset|aria-label|role="button")' README.md PROJECT-STATE.md .github/copilot-instructions.md AGENT.md AGENTS.md | sort | uniq)
+
+          # Look for patterns present in code but missing in docs
+          MISSING_DOCS=""
+          for pat in $CODE_PATTERNS; do
+            echo "$DOC_PATTERNS" | grep -q "$pat" || MISSING_DOCS="$MISSING_DOCS $pat"
+          done
+
+          if [ -n "$MISSING_DOCS" ]; then
+            echo "❌ The following architectural patterns are present in code but not mentioned in docs:"
+            echo "$MISSING_DOCS"
+            echo "Please update documentation to reflect all architectural patterns."
+            exit 1
+          else
+            echo "✅ No doc drift detected."
+          fi
+
+  notify-on-failure:
+    name: Notify on Failure
+    needs: [lint-docs, doc-drift]
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+      - name: Create Issue for Drift or Lint Failure
+        uses: dacbd/create-issue-action@v1
+        with:
+          title: "AI Doc Drift or Lint Failure Detected"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            One or more architectural documentation files have drifted out of sync or contain forbidden patterns (class, id, inline JS, etc).
+
+            Please review:
+            - .github/copilot-instructions.md
+            - PROJECT-STATE.md
+            - README.md
+            - AGENT.md
+            - AGENTS.md
+
+            **Action Required:**  
+            Align documentation with code patterns and repo standards before merging.
