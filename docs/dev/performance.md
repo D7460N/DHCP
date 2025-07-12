@@ -2,7 +2,10 @@
 
 ## Architectural Performance Goals
 
-This architecture emphasizes native browser capabilities to reduce load time, memory usage, and runtime dependencies. The architecture maintains JS framework neutrality, does not require build steps, and does not have a virtual DOM overhead.
+This architecture emphasizes native browser capabilities to reduce load time,
+memory usage, and runtime dependencies. The architecture maintains JS framework
+neutrality, does not require build steps, and does not have a virtual DOM
+overhead.
 
 ---
 

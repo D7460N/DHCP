@@ -19,16 +19,16 @@ export function snapshotForm(elements = []) {
 }
 
 export function hasUnsavedChanges(elements = [], original = {}) {
-        return Array.from(elements).some(el => el.value !== original[el.name]);
+	return Array.from(elements).some(el => el.value !== original[el.name]);
 }
 
 export function unsavedCheck(flagRef, condition, proceed) {
-  if (!flagRef.value && condition()) {
-    flagRef.value = true;
-    return;
-  }
-  flagRef.value = false;
-  proceed();
+	if (!flagRef.value && condition()) {
+		flagRef.value = true;
+		return;
+	}
+	flagRef.value = false;
+	proceed();
 }
 
 // DOM utility functions

@@ -55,7 +55,7 @@
 }
 
 aside {
-  transition:all;
+  transition: all;
 }
 
 
@@ -71,7 +71,7 @@ main article ul:last-of-type {
   overflow-x: auto;
   scroll-snap-type: y mandatory;
 
-  >* {
+  > * {
     grid-template-columns: auto;
     scroll-snap-align: start;
   }

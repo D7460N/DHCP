@@ -81,7 +81,7 @@ app-container {
 
   /* 3 columns when <aside><fieldset> is not empty */
   &:has(aside form fieldset:not(:empty)) {
-    --app-container-grid-template-columns: 12rem 55% 1fr;
+    --app-container-grid-template-columns: 12rem 60% 1fr;
     /* --app-container-grid-template-columns: 12rem 1fr minmax(min-content, 1fr); */
     /* --app-container-grid-template-columns: 12rem auto minmax(min(10rem, 100%), 1fr); */
     grid-template-columns: var(--app-container-grid-template-columns);
@@ -100,7 +100,7 @@ app-container {
     }
   }
 
-  app-container>* {
+  app-container > * {
     background-color: rgba(var(--bg-panel-color), var(--bg-panel-opacity));
   }
 
@@ -456,7 +456,7 @@ app-container {
 
         /* MARK: UL TABLE BODY --------------------------------------------
       */
-        &+ul {
+        & + ul {
           overflow: overlay;
           position: relative;
           align-content: start;
@@ -506,7 +506,7 @@ app-container {
                 padding-inline-end: 1rem;
               }
 
-              >* {
+              > * {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;

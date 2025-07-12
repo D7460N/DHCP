@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en-us">
+
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -64,12 +65,7 @@
 						New Item
 						<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
 							<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
-							<path
-								d="M12 8v8m-4-4h8"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-							/>
+							<path d="M12 8v8m-4-4h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
 						</svg>
 					</label>
 					<hr />
@@ -106,10 +102,8 @@
 				</form>
 			</aside>
 			<footer>
-				<powered-by
-					>Powered by : :
-					<a href="https://github.com/D7460N/" target="_blank" rel="noopener">D7460N</a></powered-by
-				>
+				<powered-by>Powered by : :
+					<a href="https://github.com/D7460N/" target="_blank" rel="noopener">D7460N</a></powered-by>
 				<app-version>v.0.00001</app-version>
 			</footer>
 			<app-banner>
@@ -122,10 +116,10 @@
 		<script type="module" src="./assets/js/app.js"></script>
 		<script type="module" src="./assets/js/rules.js"></script>
 		<script>
-			// Minimal service worker registration
 			if ('serviceWorker' in navigator) {
 				navigator.serviceWorker.register('./sw.js');
 			}
 		</script>
 	</body>
+
 </html>

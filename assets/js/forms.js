@@ -139,37 +139,37 @@ if (newItemCheckbox) {
 
 		clearFieldset(fieldset);
 
-			const existingLi = tableUl.querySelector('li');
-			let keys;
+		const existingLi = tableUl.querySelector('li');
+		let keys;
 
-			if (existingLi) {
-				keys = Array.from(existingLi.querySelectorAll('label > *:not(input)')).map(el =>
-					toCamel(el.tagName.toLowerCase()),
-				);
-			} else {
-				keys = ['id', 'name', 'description', 'created', 'updated'];
-			}
+		if (existingLi) {
+			keys = Array.from(existingLi.querySelectorAll('label > *:not(input)')).map(el =>
+				toCamel(el.tagName.toLowerCase()),
+			);
+		} else {
+			keys = ['id', 'name', 'description', 'created', 'updated'];
+		}
 
-			const item = {};
-			keys.forEach(key => {
-				item[key] = '';
-				const formLabel = document.createElement('label');
-				formLabel.textContent =
-					toTagName(key)
-						.replace(/^item-/, '')
-						.replace(/-/g, ' ')
-						.replace(/\b\w/g, c => c.toUpperCase()) + ': ';
+		const item = {};
+		keys.forEach(key => {
+			item[key] = '';
+			const formLabel = document.createElement('label');
+			formLabel.textContent =
+				toTagName(key)
+					.replace(/^item-/, '')
+					.replace(/-/g, ' ')
+					.replace(/\b\w/g, c => c.toUpperCase()) + ': ';
 
-				const input = createInputFromKey(key, '', getFieldRules());
-				input.oninput = (e) => mirrorToSelectedRow(e, injectRowField);
-				formLabel.appendChild(input);
-				fieldset.appendChild(formLabel);
-			});
+			const input = createInputFromKey(key, '', getFieldRules());
+			input.oninput = (e) => mirrorToSelectedRow(e, injectRowField);
+			formLabel.appendChild(input);
+			fieldset.appendChild(formLabel);
+		});
 
-			const li = createListItem(item);
-			tableUl.prepend(li);
+		const li = createListItem(item);
+		tableUl.prepend(li);
 
-			updateHeaderRow(li, headerUl, toCamel, toTagName);
+		updateHeaderRow(li, headerUl, toCamel, toTagName);
 		li.querySelector('input[name="list-item"]').checked = true;
 		captureFormSnapshot();
 	};
@@ -185,33 +185,33 @@ if (submitCheckbox) {
 		e.target.checked = false;
 
 		const selected = document.querySelector('ul li input[name="list-item"]:checked');
-			const id = selected?.closest('li')?.querySelector('label > id')?.textContent?.trim();
-			const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
-			if (!endpoint) return;
+		const id = selected?.closest('li')?.querySelector('label > id')?.textContent?.trim();
+		const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
+		if (!endpoint) return;
 
-			const data = {};
-			fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
-				if (!el.readOnly) data[el.name] = el.value.trim();
-			});
-			const payload = denormalizeRecord(endpoint, data);
+		const data = {};
+		fieldset.querySelectorAll('input[name], select[name]').forEach(el => {
+			if (!el.readOnly) data[el.name] = el.value.trim();
+		});
+		const payload = denormalizeRecord(endpoint, data);
 
-			try {
-				if (id) {
-					await putJSON(`${endpoint}/${id}`, payload);
-				} else {
-					await postJSON(endpoint, payload);
-				}
+		try {
+			if (id) {
+				await putJSON(`${endpoint}/${id}`, payload);
+			} else {
+				await postJSON(endpoint, payload);
+			}
 
-				submitItem.setAttribute('aria-label', 'saved');
-				savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
-				await loadPageContent(endpoint);
-				captureFormSnapshot();
-				setTimeout(() => {
-					savedMessage.textContent = '';
-				}, 2000);
-			} catch (err) {
-				console.error('Failed to save:', err);
-				const intro = document.querySelector('main article > p');			if (intro) intro.textContent = '⚠️ Error saving record.';
+			submitItem.setAttribute('aria-label', 'saved');
+			savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
+			await loadPageContent(endpoint);
+			captureFormSnapshot();
+			setTimeout(() => {
+				savedMessage.textContent = '';
+			}, 2000);
+		} catch (err) {
+			console.error('Failed to save:', err);
+			const intro = document.querySelector('main article > p'); if (intro) intro.textContent = '⚠️ Error saving record.';
 		}
 	};
 }
@@ -246,22 +246,22 @@ if (deleteCheckbox) {
 		const endpoint = document.querySelector('nav input[name="nav"]:checked')?.value;
 		if (!endpoint) return;
 
-			// For new items without ID, just remove from DOM
-			if (!id) {
-				selected.remove();
-				clearFieldset(fieldset);
-				headerUl.querySelector('li').innerHTML = '';
-				captureFormSnapshot();
-				return;
-			}
+		// For new items without ID, just remove from DOM
+		if (!id) {
+			selected.remove();
+			clearFieldset(fieldset);
+			headerUl.querySelector('li').innerHTML = '';
+			captureFormSnapshot();
+			return;
+		}
 
-			try {
-				await deleteJSON(`${endpoint}/${id}`);
-				await loadPageContent(endpoint);
-				captureFormSnapshot();
-			} catch (err) {
-				console.error('Failed to delete:', err);
-				const intro = document.querySelector('main article > p');			if (intro) intro.textContent = '⚠️ Error deleting record.';
+		try {
+			await deleteJSON(`${endpoint}/${id}`);
+			await loadPageContent(endpoint);
+			captureFormSnapshot();
+		} catch (err) {
+			console.error('Failed to delete:', err);
+			const intro = document.querySelector('main article > p'); if (intro) intro.textContent = '⚠️ Error deleting record.';
 		}
 	};
 }

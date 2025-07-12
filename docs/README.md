@@ -2,7 +2,8 @@
 
 (For Presentation Export)
 
-This scaffold outlines a modular presentation deck suitable for clients, customers, or internal briefings. Each section below maps to 1-2 slides.
+This scaffold outlines a modular presentation deck suitable for clients,
+customers, or internal briefings. Each section below maps to 1-2 slides.
 
 ---
 
@@ -23,13 +24,13 @@ This scaffold outlines a modular presentation deck suitable for clients, custome
 
 ## Slide 3: Why It Matters
 
-| Value Area      | Outcome                             |
-|-----------------|--------------------------------------|
-| Speed           | <`0.12s` paint, no hydration delays     |
-| Security        | Minimal JS, low surface              |
-| Accessibility   | No dependencies, screen-reader ready |
-| Flexibility      | Works with any backend/API           |
-| Cost Control     | Zero licenses, easier to maintain    |
+| Value Area    | Outcome                              |
+| ------------- | ------------------------------------ |
+| Speed         | <`0.12s` paint, no hydration delays  |
+| Security      | Minimal JS, low surface              |
+| Accessibility | No dependencies, screen-reader ready |
+| Flexibility   | Works with any backend/API           |
+| Cost Control  | Zero licenses, easier to maintain    |
 
 ---
 
@@ -54,13 +55,13 @@ This scaffold outlines a modular presentation deck suitable for clients, custome
 
 ## Slide 6: Current Status
 
-| Area        | Status       |
-|-------------|--------------|
-| Layout      | ✅ Complete   |
-| Forms       | ✅ Complete   |
-| Routing     | ✅ Complete   |
-| Integration | ⬜ In Progress|
-| Reporting   | ⬜ Next Phase |
+| Area        | Status         |
+| ----------- | -------------- |
+| Layout      | ✅ Complete    |
+| Forms       | ✅ Complete    |
+| Routing     | ✅ Complete    |
+| Integration | ⬜ In Progress |
+| Reporting   | ⬜ Next Phase  |
 
 ---
 
@@ -82,7 +83,8 @@ This scaffold outlines a modular presentation deck suitable for clients, custome
 
 ---
 
-> Export this outline to Google Slides, PowerPoint, or Pitch to present architecture highlights without requiring live walkthroughs.
+> Export this outline to Google Slides, PowerPoint, or Pitch to present
+> architecture highlights without requiring live walkthroughs.
 
 ---
 
@@ -90,31 +92,40 @@ This scaffold outlines a modular presentation deck suitable for clients, custome
 
 ## 📚 Purpose
 
-This directory contains comprehensive documentation for the D7460N CSS-first architecture project.
+This directory contains comprehensive documentation for the D7460N CSS-first
+architecture project.
 
 ## 🎯 **START HERE: Key Documents**
 
 ### **For Developers**
-- **📋 [PROJECT-STATE.md](PROJECT-STATE.md)** - Complete project analysis, current status, and architectural insights
-- **🛠️ [dev/README.md](dev/README.md)** - Development guides and technical details
+
+- **📋 [PROJECT-STATE.md](PROJECT-STATE.md)** - Complete project analysis,
+  current status, and architectural insights
+- **🛠️ [dev/README.md](dev/README.md)** - Development guides and technical
+  details
 
 ### **For AI Assistants**
+
 - **🤖 [../AGENT.md](../AGENT.md)** - Quick reference for AI coding assistants
 - **🤖 [../AGENTS.md](../AGENTS.md)** - Detailed instructions for AI agents
-- **📋 [PROJECT-STATE.md](PROJECT-STATE.md)** - Critical architectural understanding
+- **📋 [PROJECT-STATE.md](PROJECT-STATE.md)** - Critical architectural
+  understanding
 
 ## 🎨 **Understanding the Architecture**
 
-This project uses an **advanced CSS-first architecture** with hidden checkbox state management:
+This project uses an **advanced CSS-first architecture** with hidden checkbox
+state management:
 
 ```html
 <label role="button" name="submit" aria-label="Save">
-    Save
-    <input type="checkbox" />  <!-- CSS state hook -->
+  Save
+  <input type="checkbox" />
+  <!-- CSS state hook -->
 </label>
 ```
 
 **Key Benefits:**
+
 - 🚀 **Performance**: CSS 100-1000x faster than JavaScript
 - 🔒 **Security**: Minimal JavaScript attack surface
 - ♿ **Accessibility**: Native keyboard navigation
@@ -123,14 +134,17 @@ This project uses an **advanced CSS-first architecture** with hidden checkbox st
 
 ## 📁 Directory Structure
 
-| Directory | Purpose |
-|-----------|---------|
-| `dev/` | Technical development guides |
-| `client/` | Client-facing documentation |
-| `customer/` | Customer overview materials |
+| Directory   | Purpose                      |
+| ----------- | ---------------------------- |
+| `dev/`      | Technical development guides |
+| `client/`   | Client-facing documentation  |
+| `customer/` | Customer overview materials  |
 
 ## ⚠️ **Critical Note for Contributors**
 
-The hidden checkbox pattern is **intentionally sophisticated** - not a mistake to "fix". It represents advanced web standards knowledge and should be preserved exactly as implemented.
+The hidden checkbox pattern is **intentionally sophisticated** - not a mistake
+to "fix". It represents advanced web standards knowledge and should be preserved
+exactly as implemented.
 
-**Read [PROJECT-STATE.md](PROJECT-STATE.md) for complete architectural understanding before making any changes.**
+**Read [PROJECT-STATE.md](PROJECT-STATE.md) for complete architectural
+understanding before making any changes.**

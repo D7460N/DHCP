@@ -5,8 +5,7 @@
 Starts with a single root wrapper:
 
 ```html
-<app-container>
-
+<app-container> </app-container>
 ```
 
 This container is styled with:
@@ -23,11 +22,16 @@ overflow: hidden;
 ```html
 <app-container>
   <header>
-  <nav>
-  <main>
-    <article>
-  <aside>
-  <footer>
+    <nav>
+      <main>
+        <article>
+          <aside>
+            <footer></footer>
+          </aside>
+        </article>
+      </main>
+    </nav></header
+></app-container>
 ```
 
 - **Header**: banner, branding, UI controls, account name
@@ -47,11 +51,14 @@ overflow: hidden;
 - Performant
 - Avoid semantically meaningless wrappers such as `<div>`s or `<spans>`
 - Use semantic tags only
-- Minimize conditionals with long paths to avoid brittleness. (e.g. for `:has()`)
+- Minimize conditionals with long paths to avoid brittleness. (e.g. for
+  `:has()`)
 
 ## Intrinsic Layout
 
-- Padding and margin are on data elements (e.g. `<label>`, `<p>`, `<h2>`) not on containers
-- Layout resizes based on content; no fixed heights or widths (except `app-container`)
+- Padding and margin are on data elements (e.g. `<label>`, `<p>`, `<h2>`) not on
+  containers
+- Layout resizes based on content; no fixed heights or widths (except
+  `app-container`)
 - Allow the browser to do all the work
 - Scroll logic is never scripted

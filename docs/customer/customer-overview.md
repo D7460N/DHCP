@@ -1,16 +1,22 @@
 # Customer Overview: Architecture at a Glance
 
-This document is for decision-makers, product owners, and business stakeholders who are interested in what the architecture offers in terms of value, cost control, and future readiness.
+This document is for decision-makers, product owners, and business stakeholders
+who are interested in what the architecture offers in terms of value, cost
+control, and future readiness.
 
 ---
 
 ## What It Is
 
-This is a front-end web architecture designed to reduce project complexity, cost, and delivery time — while improving accessibility, security, and performance.
+This is a front-end web architecture designed to reduce project complexity,
+cost, and delivery time — while improving accessibility, security, and
+performance.
 
-- It uses only native browser features — no frameworks necessary, no runtime dependencies needed
+- It uses only native browser features — no frameworks necessary, no runtime
+  dependencies needed
 - Built with HTML (structure), CSS (heuristics), and JavaScript (data)
-- Designed for government, accessibility, and security requirements from the ground up
+- Designed for government, accessibility, and security requirements from the
+  ground up
 
 ---
 
@@ -29,7 +35,8 @@ This is a front-end web architecture designed to reduce project complexity, cost
 
 ## Key Metrics (Typical Deployment)
 
-- ✅ **Largest Contentful Paint (LCP)**: under 0.12s (typical network conditions)
+- ✅ **Largest Contentful Paint (LCP)**: under 0.12s (typical network
+  conditions)
 - ✅ **Total Payload**: < 100 KB
 - ✅ **Time to Interactive**: immediate on load
 - ✅ **Accessibility**: 100% Lighthouse a11y compliance, no JS required
@@ -46,19 +53,22 @@ This is a front-end web architecture designed to reduce project complexity, cost
 
 ## Common Questions
 
-**Q: Can developers I already have use this?**<br>
-Yes. It requires no new tools. All devs familiar with HTML, CSS, and JS can be productive immediately.
+**Q: Can developers I already have use this?**<br> Yes. It requires no new
+tools. All devs familiar with HTML, CSS, and JS can be productive immediately.
 
-**Q: Can this integrate with what we already have?**<br>
-Yes. It complements backend frameworks and can wrap around existing APIs or services.
+**Q: Can this integrate with what we already have?**<br> Yes. It complements
+backend frameworks and can wrap around existing APIs or services.
 
-**Q: Is this scalable for future features?**<br>
-Yes. It is modular, declarative, and built for growth — without increasing complexity.
+**Q: Is this scalable for future features?**<br> Yes. It is modular,
+declarative, and built for growth — without increasing complexity.
 
 ---
 
 ## Need More?
 
-See the [Developer Guide](../dev/index.md) or request a demo with working examples.
+See the [Developer Guide](../dev/index.md) or request a demo with working
+examples.
 
-> This architecture helps teams ship faster, stay compliant, and reduce long-term risk — using only the capabilities already built into every modern browser.
+> This architecture helps teams ship faster, stay compliant, and reduce
+> long-term risk — using only the capabilities already built into every modern
+> browser.

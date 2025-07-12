@@ -61,7 +61,8 @@ Single Page Application [ SPA ]
   - An array where the first object contains those same fields
 - This allows plug-and-play with diverse back-end implementations
 - On success, `items`, `h1`, and `p` are updated, then `render()` is called
-- On failure, `items` is cleared, text content is reset, and `render()` ensures fallback state
+- On failure, `items` is cleared, text content is reset, and `render()` ensures
+  fallback state
 
 ## Rendering Strategy
 
@@ -75,18 +76,18 @@ Example template:
 
 ```html
 <template>
-	<li tabindex="0">
-		<input type="radio" name="list-item" hidden />
-		<item-name></item-name>
-		<item-hostname></item-hostname>
-		<item-ip></item-ip>
-		<item-os></item-os>
-		<item-type></item-type>
-		<item-created></item-created>
-		<item-updated></item-updated>
-		<item-author></item-author>
-		<item-modified></item-modified>
-	</li>
+  <li tabindex="0">
+    <input type="radio" name="list-item" hidden />
+    <item-name></item-name>
+    <item-hostname></item-hostname>
+    <item-ip></item-ip>
+    <item-os></item-os>
+    <item-type></item-type>
+    <item-created></item-created>
+    <item-updated></item-updated>
+    <item-author></item-author>
+    <item-modified></item-modified>
+  </li>
 </template>
 ```
 
@@ -128,7 +129,8 @@ Example template:
 
 2. **Default Tab Load**
 
-   - Automatically triggers the first tab's data fetch after populating the navigation.
+   - Automatically triggers the first tab's data fetch after populating the
+     navigation.
    - Specifically:
 
      ```javascript
@@ -146,7 +148,8 @@ Example template:
 
 **Order & Flow:**
 
-- Each `<nav>` radio input has an `onchange` event bound at the end of the initial load:
+- Each `<nav>` radio input has an `onchange` event bound at the end of the
+  initial load:
 
   ```javascript
   input.onchange = () => { ... }
@@ -177,8 +180,10 @@ Example template:
 **Order & Flow:**
 
 - Check for unsaved changes.
-- Clears the form and table headers, then initializes a new row based on existing row keys or default keys.
-- Does **not** trigger a new fetch from API—uses existing UI structure to create a new blank entry locally.
+- Clears the form and table headers, then initializes a new row based on
+  existing row keys or default keys.
+- Does **not** trigger a new fetch from API—uses existing UI structure to create
+  a new blank entry locally.
 
 ## ④ Form Submission Sequence
 
@@ -189,7 +194,8 @@ Example template:
 **Order & Flow:**
 
 - Shows a confirmation modal to confirm saving changes.
-- Submits either a `POST` (for new entries) or a `PUT` (for existing entries) to:
+- Submits either a `POST` (for new entries) or a `PUT` (for existing entries)
+  to:
 
   ```javascript
   `${BASE_URL}${endpoint}`; // or `${BASE_URL}${endpoint}/${id}`
@@ -251,11 +257,11 @@ Example template:
 | Save Form (`POST` or `PUT`)     | Form submit         | `/endpoint` or `/endpoint/:id`                |
 | Delete Row (`DELETE`)           | Delete button click | `/endpoint/:id`                               |
 
-
 ## Configuration Module
 
-`config.js` defines deployment settings such as the API base URL and optional feature flags.
-Override this file to customize the host or toggle behaviors when using the scripts in other projects.
+`config.js` defines deployment settings such as the API base URL and optional
+feature flags. Override this file to customize the host or toggle behaviors when
+using the scripts in other projects.
 
 ```javascript
 export const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/';
@@ -271,9 +277,11 @@ export const OPTIONS = { showBanner: true, warnOnBlur: true };
 
 ### **JavaScript's LIMITED Role**
 
-In this architecture, JavaScript has a **very specific and constrained purpose**:
+In this architecture, JavaScript has a **very specific and constrained
+purpose**:
 
 #### **✅ JavaScript SHOULD Handle:**
+
 - Data fetching via `fetch()`
 - API interactions (CRUD operations)
 - Form data serialization/deserialization
@@ -281,6 +289,7 @@ In this architecture, JavaScript has a **very specific and constrained purpose**
 - Page content injection after API responses
 
 #### **❌ JavaScript SHOULD NOT Handle:**
+
 - UI interactions (CSS handles via `:checked`, `:has()`)
 - Visual state changes (CSS handles via selectors)
 - Button enable/disable animations (CSS handles via `[aria-disabled]`)
@@ -289,17 +298,19 @@ In this architecture, JavaScript has a **very specific and constrained purpose**
 
 ### **The Hidden Checkbox Pattern**
 
-**IMPORTANT**: Buttons use `<label role="button"><input type="checkbox"></label>` pattern:
+**IMPORTANT**: Buttons use
+`<label role="button"><input type="checkbox"></label>` pattern:
 
 ```html
 <label role="button" name="submit" aria-label="Save">
-    Save
-    <input type="checkbox" />  <!-- CSS state hook -->
+  Save
+  <input type="checkbox" />
+  <!-- CSS state hook -->
 </label>
 ```
 
-**JavaScript's role**: Only manage `aria-disabled` attributes
-**CSS's role**: Handle all visual interactions via checkbox `:checked` state
+**JavaScript's role**: Only manage `aria-disabled` attributes **CSS's role**:
+Handle all visual interactions via checkbox `:checked` state
 
 ### **Why This Constraint?**
 
@@ -318,4 +329,5 @@ In this architecture, JavaScript has a **very specific and constrained purpose**
 - ✅ **Do** update ARIA attributes for accessibility
 - ✅ **Do** inject content into semantic HTML containers
 
-**This is intentional architectural sophistication - not a limitation to "fix".**
+**This is intentional architectural sophistication - not a limitation to
+"fix".**

@@ -2,9 +2,12 @@
 
 ## Goal
 
-Navigation is handled using native HTML inputs (`<input type="radio">`) and CSS `:has()` logic. This enables view switching in a Single Page App without JavaScript or hash/URL routing.
+Navigation is handled using native HTML inputs (`<input type="radio">`) and CSS
+`:has()` logic. This enables view switching in a Single Page App without
+JavaScript or hash/URL routing.
 
-`#`hash rounting is a native browser feature for "deep linking" or "within document linking".<br>
+`#`hash routing is a native browser feature for "deep linking" or "within
+document linking".<br>
 [HTML Deep Linking: A Comprehensive Guide](https://www.byteplus.com/en/topic/496693?title=html-deep-link-a-comprehensive-guide)
 
 ---
@@ -15,13 +18,13 @@ Navigation is handled using native HTML inputs (`<input type="radio">`) and CSS 
 <nav>
   <details open>
     <summary>Scope</summary>
-    <label><input type="radio" name="nav" checked>Manage</label>
-    <label><input type="radio" name="nav">FAQs</label>
+    <label><input type="radio" name="nav" checked />Manage</label>
+    <label><input type="radio" name="nav" />FAQs</label>
   </details>
   <details open>
     <summary>Admin</summary>
-    <label><input type="radio" name="nav" checked>API Registration</label>
-    <label><input type="radio" name="nav">Audit</label>
+    <label><input type="radio" name="nav" checked />API Registration</label>
+    <label><input type="radio" name="nav" />Audit</label>
   </details>
 </nav>
 
@@ -33,21 +36,24 @@ Navigation is handled using native HTML inputs (`<input type="radio">`) and CSS 
 
 ## Data Logic (JS Only)
 
-Page init `oninput` fetches and dynamically generates `<label>`s for each key and injects them with radio `<input>`s and the `value` for each `<label>`.
+Page init `oninput` fetches and dynamically generates `<label>`s for each key
+and injects them with radio `<input>`s and the `value` for each `<label>`.
 
 Example:
+
 ```html
-<label>   <-- JSON key
-  Manage  <-- JSON value
-  <input type="radio" name="nav" checked>
+<label>
+  <-- JSON key Manage <-- JSON value
+  <input type="radio" name="nav" checked />
 </label>
 ```
 
-
 ## Visibility Logic (CSS Only)
 
-- CSS is presetup to watch for this HTML pattern and use the `<label>` `oninput` event to fectch page content.
-- When certain elements are populated with content, their parent wrapper element is rendered.
+- CSS is presetup to watch for this HTML pattern and use the `<label>` `oninput`
+  event to fetch page content.
+- When certain elements are populated with content, their parent wrapper element
+  is rendered.
 
 ```css
 article {
@@ -65,7 +71,9 @@ article {
 
 ## Loading State
 
-- Allows for a natural `loading data` state between when the data is fetched (user initiated `oninput` event), and when the data arives in the targeted DOM element.
+- Allows for a natural `loading data` state between when the data is fetched
+  (user initiated `oninput` event), and when the data arrives in the targeted DOM
+  element.
 - CSS shows a loading indicator between two booleans states.
 
 ```css
@@ -96,5 +104,6 @@ nav:has(input:checked) ~ loading-data:has(+ main article h1:empty) {
 - No JS required
 
 ## Related
+
 - `layout.md` - layout regions and structure
 - `styles/readme.md` - `:has()` logic and visibility rules

@@ -2,7 +2,7 @@
 import { logError } from './errors.js';
 import { formatDateForInput } from './utils.js';
 
-export let rowSelectHandler = () => {};
+export let rowSelectHandler = () => { };
 
 export function setRowSelectHandler(fn) {
   if (typeof fn === 'function') rowSelectHandler = fn;
@@ -192,110 +192,110 @@ export function injectRowField(li, name = '', value = '') {
 
 // Form field creation utilities
 export function createInputFromKey(key, value, fieldRules = {}) {
-	const inputName = key;
-	const val = value?.trim?.() ?? '';
+  const inputName = key;
+  const val = value?.trim?.() ?? '';
 
-	const rule = fieldRules[key];
-	if (rule?.type === 'select') {
-		const select = document.createElement('select');
-		select.name = key;
-		select.required = true;
+  const rule = fieldRules[key];
+  if (rule?.type === 'select') {
+    const select = document.createElement('select');
+    select.name = key;
+    select.required = true;
 
-		const optBlank = document.createElement('option');
-		optBlank.value = '';
-		optBlank.textContent = 'Select...';
-		select.appendChild(optBlank);
+    const optBlank = document.createElement('option');
+    optBlank.value = '';
+    optBlank.textContent = 'Select...';
+    select.appendChild(optBlank);
 
-		for (const opt of rule.options ?? []) {
-			const o = document.createElement('option');
-			o.value = o.textContent = opt;
-			if (opt === value) o.selected = true;
-			select.appendChild(o);
-		}
+    for (const opt of rule.options ?? []) {
+      const o = document.createElement('option');
+      o.value = o.textContent = opt;
+      if (opt === value) o.selected = true;
+      select.appendChild(o);
+    }
 
-		return select;
-	}
+    return select;
+  }
 
-	if (rule?.type === 'toggle') {
-		const checkbox = document.createElement('input');
-		checkbox.type = 'checkbox';
-		checkbox.name = key;
-		checkbox.checked = value === 'true' || value === true;
-		return checkbox;
-	}
+  if (rule?.type === 'toggle') {
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.name = key;
+    checkbox.checked = value === 'true' || value === true;
+    return checkbox;
+  }
 
-	if (rule?.type === 'textarea') {
-		const textarea = document.createElement('textarea');
-		textarea.name = key;
-		textarea.value = value ?? '';
-		textarea.required = !!value;
-		return textarea;
-	}
+  if (rule?.type === 'textarea') {
+    const textarea = document.createElement('textarea');
+    textarea.name = key;
+    textarea.value = value ?? '';
+    textarea.required = !!value;
+    return textarea;
+  }
 
-	if (rule?.type === 'datetime') {
-		const input = document.createElement('input');
-		input.type = 'datetime-local';
-		input.name = key;
-		input.value = formatDateForInput(value);
-		input.readOnly = true;
-		input.tabIndex = -1;
-		return input;
-	}
+  if (rule?.type === 'datetime') {
+    const input = document.createElement('input');
+    input.type = 'datetime-local';
+    input.name = key;
+    input.value = formatDateForInput(value);
+    input.readOnly = true;
+    input.tabIndex = -1;
+    return input;
+  }
 
-	// Default to text input
-	const element = document.createElement('input');
-	element.name = inputName;
-	element.value = val;
+  // Default to text input
+  const element = document.createElement('input');
+  element.name = inputName;
+  element.value = val;
 
-	// Special handling for read-only fields
-	if (key === 'id' || /^[a-f0-9\-]{36}$/.test(val)) {
-		element.type = 'text';
-		element.readOnly = true;
-		element.tabIndex = -1;
-		element.ariaDisabled = 'true';
-	} else if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/.test(val)) {
-		element.type = 'datetime-local';
-		element.readOnly = true;
-		element.tabIndex = -1;
-		element.value = formatDateForInput(val);
-	} else if (/author|modified|created|updated/.test(key)) {
-		element.type = 'text';
-		element.readOnly = true;
-		element.tabIndex = -1;
-	} else {
-		element.type = 'text';
-		element.required = val !== '';
-		element.pattern = '.+';
-	}
+  // Special handling for read-only fields
+  if (key === 'id' || /^[a-f0-9\-]{36}$/.test(val)) {
+    element.type = 'text';
+    element.readOnly = true;
+    element.tabIndex = -1;
+    element.ariaDisabled = 'true';
+  } else if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/.test(val)) {
+    element.type = 'datetime-local';
+    element.readOnly = true;
+    element.tabIndex = -1;
+    element.value = formatDateForInput(val);
+  } else if (/author|modified|created|updated/.test(key)) {
+    element.type = 'text';
+    element.readOnly = true;
+    element.tabIndex = -1;
+  } else {
+    element.type = 'text';
+    element.required = val !== '';
+    element.pattern = '.+';
+  }
 
-	return element;
+  return element;
 }
 
 export function mirrorToSelectedRow(event, injectRowField) {
-	const input = event.target;
-	const key = input.name;
-	const selectedLi = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
+  const input = event.target;
+  const key = input.name;
+  const selectedLi = document.querySelector('ul li input[name="list-item"]:checked')?.closest('li');
 
-	if (!selectedLi) return;
+  if (!selectedLi) return;
 
-	if (!input.readOnly) {
-		injectRowField(selectedLi, key, input.value);
-	}
+  if (!input.readOnly) {
+    injectRowField(selectedLi, key, input.value);
+  }
 }
 
 export function updateHeaderRow(sourceRow, headerUl, toCamel, toTagName) {
-	const headerLi = headerUl?.querySelector('li');
-	if (!headerLi || !sourceRow) return;
+  const headerLi = headerUl?.querySelector('li');
+  if (!headerLi || !sourceRow) return;
 
-	headerLi.innerHTML = '';
+  headerLi.innerHTML = '';
 
-	sourceRow.querySelectorAll('label > *:not(input)').forEach(el => {
-		const key = toCamel(el.tagName.toLowerCase());
-		const clone = el.cloneNode(false);
-		clone.textContent = toTagName(key)
-			.replace(/^item-/, '')
-			.replace(/-/g, ' ')
-			.replace(/\b\w/g, c => c.toUpperCase());
-		headerLi.appendChild(clone);
-	});
+  sourceRow.querySelectorAll('label > *:not(input)').forEach(el => {
+    const key = toCamel(el.tagName.toLowerCase());
+    const clone = el.cloneNode(false);
+    clone.textContent = toTagName(key)
+      .replace(/^item-/, '')
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase());
+    headerLi.appendChild(clone);
+  });
 }

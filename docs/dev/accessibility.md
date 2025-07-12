@@ -2,7 +2,10 @@
 
 ## Design Assumptions
 
-All interfaces must meet or exceed [WCAG 2.1 AA](https://www.w3.org/WAI/WCAG21/quickref/) and [Section 508](https://www.section508.gov/) without JavaScript. Accessibility is handled using semantic HTML and CSS only.
+All interfaces must meet or exceed
+[WCAG 2.1 AA](https://www.w3.org/WAI/WCAG21/quickref/) and
+[Section 508](https://www.section508.gov/) without JavaScript. Accessibility is
+handled using semantic HTML and CSS only.
 
 ---
 
@@ -29,7 +32,8 @@ All interfaces must meet or exceed [WCAG 2.1 AA](https://www.w3.org/WAI/WCAG21/q
 ### 4. ARIA Labeling (Only When Needed)
 
 - Use `aria-label` for custom elements like `<app-user>`
-- Use `role="navigation"`, `role="main"`, `role="complementary"` where applicable
+- Use `role="navigation"`, `role="main"`, `role="complementary"` where
+  applicable
 - Avoid overuse — native semantics are preferred
 
 ---
@@ -51,20 +55,13 @@ Use `:has()`, `[hidden]`, `:empty`, and `aria-expanded` to manage visibility:
 aside {
   display: none;
 }
-main:has(
-    aside
-      section:has(
-        div:not(
-            :empty
-          )
-      )
-  )
-  aside {
+main:has(aside section:has(div:not(:empty))) aside {
   display: block;
 }
 ```
 
-This allows screen readers to perceive the DOM state naturally without needing JavaScript-driven toggles.
+This allows screen readers to perceive the DOM state naturally without needing
+JavaScript-driven toggles.
 
 ---
 

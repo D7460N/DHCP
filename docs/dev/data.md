@@ -2,7 +2,10 @@
 
 ## Data Model
 
-All data is sourced from static or dynamic JSON files. JavaScript is only used to `fetch()` the data and inject it into semantic HTML custom elements. A small helper `fetchJSON(endpoint)` centralizes the fetch-and-parse logic and automatically prefixes the base API URL.
+All data is sourced from static or dynamic JSON files. JavaScript is only used
+to `fetch()` the data and inject it into semantic HTML custom elements. A small
+helper `fetchJSON(endpoint)` centralizes the fetch-and-parse logic and
+automatically prefixes the base API URL.
 
 ## JSON Format
 
@@ -14,12 +17,12 @@ All data is sourced from static or dynamic JSON files. JavaScript is only used t
 
 ```json
 [
-	{
-		"id": "1",
-		"ip-address": "192.168.1.10",
-		"status": "active",
-		"assigned-to": "Workstation A"
-	}
+  {
+    "id": "1",
+    "ip-address": "192.168.1.10",
+    "status": "active",
+    "assigned-to": "Workstation A"
+  }
 ]
 ```
 
@@ -27,9 +30,9 @@ All data is sourced from static or dynamic JSON files. JavaScript is only used t
 
 ```json
 {
-	"ip-address": "192.168.1.10",
-	"subnet-mask": "255.255.255.0",
-	"lease-duration": "1 day"
+  "ip-address": "192.168.1.10",
+  "subnet-mask": "255.255.255.0",
+  "lease-duration": "1 day"
 }
 ```
 
@@ -41,11 +44,11 @@ The HTML is pre-structured with semantic custom tags:
 
 ```html
 <ul>
-	<li>
-		<item-ip></item-ip>
-		<item-status></item-status>
-		<item-assigned-to></item-assigned-to>
-	</li>
+  <li>
+    <item-ip></item-ip>
+    <item-status></item-status>
+    <item-assigned-to></item-assigned-to>
+  </li>
 </ul>
 ```
 
@@ -67,14 +70,15 @@ Detail views use the same pattern:
 
 ```html
 <aside>
-	<section>
-		<detail-ip></detail-ip>
-		<detail-subnet-mask></detail-subnet-mask>
-	</section>
+  <section>
+    <detail-ip></detail-ip>
+    <detail-subnet-mask></detail-subnet-mask>
+  </section>
 </aside>
 ```
 
-When populated, CSS `:has(section:has(div:not(:empty)))` toggles `<aside>` to become visible.
+When populated, CSS `:has(section:has(div:not(:empty)))` toggles `<aside>` to
+become visible.
 
 ---
 

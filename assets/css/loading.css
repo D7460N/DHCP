@@ -39,15 +39,27 @@ nav details label input[type="radio"]:checked ~ main:not(:has(article))::after {
 }
 
 @keyframes spin01 {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(720deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(720deg);
+  }
 }
 
 @keyframes spin02 {
-  0% { transform: rotate(720deg); }
-  100% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(720deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 @keyframes fadeIn {
-  to { opacity: 0.3; }
+  to {
+    opacity: 0.3;
+  }
 }

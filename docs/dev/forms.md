@@ -2,7 +2,8 @@
 
 ## Form Structure
 
-All forms live inside a `<section>` element, scoped within `<article>` under `<main>`.
+All forms live inside a `<section>` element, scoped within `<article>` under
+`<main>`.
 
 ```html
 <main>
@@ -12,7 +13,7 @@ All forms live inside a `<section>` element, scoped within `<article>` under `<m
         <fieldset>
           <legend></legend>
           <label>
-            <input>
+            <input />
           </label>
         </fieldset>
       </form>
@@ -28,11 +29,11 @@ All forms live inside a `<section>` element, scoped within `<article>` under `<m
 - Feedback states controlled using:
 
 ```css
-form:has(:invalid) button[type=submit] {
+form:has(:invalid) button[type='submit'] {
   opacity: 0.5;
   pointer-events: none;
 }
-form:has(:valid) button[type=submit] {
+form:has(:valid) button[type='submit'] {
   opacity: 1;
   pointer-events: auto;
 }
@@ -43,7 +44,8 @@ form:has(:valid) button[type=submit] {
 - Each input **must** be labeled
 - Inputs in groups must use `<fieldset>` and `<legend>`
 - Help text should be linked via `aria-describedby`
-- Use input `type` attributes for constraint enforcement (e.g., `type="email"`, `type="number"`)
+- Use input `type` attributes for constraint enforcement (e.g., `type="email"`,
+  `type="number"`)
 
 ## Feedback Strategy
 
@@ -59,7 +61,7 @@ form:has(:valid) button[type=submit] {
     <legend>Assign IP</legend>
     <label>
       IP Address:
-      <input type="text" required pattern="\d+\.\d+\.\d+\.\d+">
+      <input type="text" required pattern="\d+\.\d+\.\d+\.\d+" />
     </label>
     <p id="ipHelp" aria-live="polite">Must be a valid IPv4 address.</p>
   </fieldset>

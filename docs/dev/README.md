@@ -2,16 +2,17 @@
 
 ## Purpose
 
-Central location for internal resources, architecture notes, and developer onboarding.
+Central location for internal resources, architecture notes, and developer
+onboarding.
 
 ## Files (expected)
 
-| Files              | Content                                     |
-|--------------------|---------------------------------------------|
-| `index.md`         | Developer onboarding, coding standards      |
-| `accessibility.md` | WCAG compliance notes and test scripts      |
-| `/docs/customer`   | Customer presentation decks (PPT, PDF, etc.)|
-| `/docs/client`     | Client presentation decks (PPT, PDF, etc.)  |
+| Files              | Content                                      |
+| ------------------ | -------------------------------------------- |
+| `index.md`         | Developer onboarding, coding standards       |
+| `accessibility.md` | WCAG compliance notes and test scripts       |
+| `/docs/customer`   | Customer presentation decks (PPT, PDF, etc.) |
+| `/docs/client`     | Client presentation decks (PPT, PDF, etc.)   |
 
 ## Style Guide
 

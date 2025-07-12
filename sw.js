@@ -2,6 +2,21 @@
 // Version: v5 (update to invalidate and refresh cache as needed)
 const CACHE_NAME = 'cache-v6'
 
+// Check if running in local development environment
+const isLocalDev = () => {
+  return location.hostname === 'localhost' ||
+    location.hostname === '127.0.0.1' ||
+    location.hostname === '0.0.0.0' ||
+    location.protocol === 'file:';
+};
+
+// If in local development, unregister this service worker and exit
+if (isLocalDev()) {
+  console.log('Service worker disabled for local development');
+  self.registration.unregister();
+  // Exit early - no caching or other SW functionality in local dev
+}
+
 // Service Worker Update Configuration (consolidated here)
 const SW_UPDATE_CONFIG = {
   enabled: false, // Disabled since version is now internal constant

@@ -1,14 +1,18 @@
 # Developer Guide: Index
 
-Welcome to the developer implementation guide for the architecture. This guide is designed for fast, practical onboarding. It assumes no build tools, no frameworks, and no prior exposure to the architecture.
+Welcome to the developer implementation guide for the architecture. This guide
+is designed for fast, practical onboarding. It assumes no build tools, no
+frameworks, and no prior exposure to the architecture.
 
 ---
 
 ## Quick Start
 
 1. Clone the repo and open in VS Code
-2. All UI elements are native HTML, styled via modern CSS using selectors like `:has()` and container queries
-3. JavaScript is only used to fetch JSON data and inject it into semantic custom tags
+2. All UI elements are native HTML, styled via modern CSS using selectors like
+   `:has()` and container queries
+3. JavaScript is only used to fetch JSON data and inject it into semantic custom
+   tags
 4. Forms, layout, and routing are all CSS-driven and declarative
 5. No build steps, no dependencies, no runtime toolchains
 
@@ -16,7 +20,8 @@ Welcome to the developer implementation guide for the architecture. This guide i
 
 ## Sections
 
-- [`layout.md`](layout.md) - How layout is scaffolded using Holy Grail pattern and scroll containment
+- [`layout.md`](layout.md) - How layout is scaffolded using Holy Grail pattern
+  and scroll containment
 - [`forms.md`](forms.md) - CSS-only validation and accessible forms
 - [`routing.md`](routing.md) - Navigation using radio buttons and `:has()`
 - [`data.md`](data.md) - JSON structure and fetch logic
@@ -35,6 +40,8 @@ Welcome to the developer implementation guide for the architecture. This guide i
 - Declarative validation using native input logic
 - Fetching local JSON data into static HTML structure
 
-For details, see the full [ADD Document](../ADD.md) or open `/docs/` for project-wide guidance.
+For details, see the full [ADD Document](../ADD.md) or open `/docs/` for
+project-wide guidance.
 
-> This guide is designed to get you building right away — not to explain why. If you're here to ship fast, you're in the right place.
+> This guide is designed to get you building right away — not to explain why. If
+> you're here to ship fast, you're in the right place.

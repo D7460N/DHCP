@@ -6,12 +6,12 @@ Contains all static image assets used in the UI or documentation.
 
 ## Guidelines
 
-| Type     | Usage                                  |
-|----------|-----------------------------------------|
-| `.svg`   | Preferred for UI icons and logos        |
-| `.png`   | Used only when transparency or bitmaps needed |
-| `.jpg`   | Avoid unless photo content is required  |
-| `.webp`  | Acceptable if performance is critical   |
+| Type    | Usage                                         |
+| ------- | --------------------------------------------- |
+| `.svg`  | Preferred for UI icons and logos              |
+| `.png`  | Used only when transparency or bitmaps needed |
+| `.jpg`  | Avoid unless photo content is required        |
+| `.webp` | Acceptable if performance is critical         |
 
 ## Naming
 

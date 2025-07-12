@@ -2,7 +2,8 @@
 
 ## Purpose
 
-Contains static mock JSON data files that populate the D7460N CSS-first architecture interface.
+Contains static mock JSON data files that populate the D7460N CSS-first
+architecture interface.
 
 ## 🎯 **Data-Driven Architecture**
 
@@ -25,10 +26,10 @@ This project follows strict separation of concerns:
 
 ## 📁 **File Structure**
 
-| File | Purpose |
-|------|---------|
+| File               | Purpose                              |
+| ------------------ | ------------------------------------ |
 | `nav-content.json` | Navigation structure and page titles |
-| `manage.json` | Main DHCP management records |
-| `servers.json` | Server inventory data |
-| `faqs.json` | FAQ content |
-| `*.json` | Other endpoint mock data |
+| `manage.json`      | Main DHCP management records         |
+| `servers.json`     | Server inventory data                |
+| `faqs.json`        | FAQ content                          |
+| `*.json`           | Other endpoint mock data             |
