@@ -1,8 +1,11 @@
-# D7460N/DHCP AI Docs Enforcement Workflow
+# DOC/ARCHITECTURE CONSISTENCY ENFORCER WORKFLOW
 #
-# CSS-FIRST, ZERO-DEPENDENCY, BROWSER-NATIVE ARCHITECTURE ENFORCER
+# HTML-CSS-FIRST, ZERO-DEPENDENCY, BROWSER-NATIVE ARCHITECTURE ENFORCER
 #
-# CRITICAL: CSS-First Hidden Checkbox Pattern
+# Checks ALL README.md, PROJECT-STATE.md, AGENT.md, AGENTS.md, .github/copilot-instructions.md
+# ... (rest of your top-level rationale comments)
+#
+# CRITICAL: HTML-CSS-First Hidden Checkbox Pattern
 # NEVER "fix" this - it's intentionally advanced:
 # <label role="button" name="submit" aria-label="Save">
 #     Save
@@ -66,7 +69,7 @@ jobs:
         run: |
           # Enforce D7460N/DHCP doc architecture: no classes, IDs, data-*, <button>, event listeners, or inline scripts/styles
           BAD_PATTERNS='class=|id=|data-|<button|addEventListener|on(click|focus|blur|keydown|keyup|mousedown|mouseup|mouseenter|mouseleave|touchstart|touchend|touchmove)|style='
-          DOCS="README.md PROJECT-STATE.md AGENT.md AGENTS.md .github/copilot-instructions.md"
+          DOCS="$(find . -type f -iname 'README.md' -o -name 'PROJECT-STATE.md' -o -name 'AGENT.md' -o -name 'AGENTS.md' -o -path './.github/copilot-instructions.md')"
           set +e
           grep -nE "$BAD_PATTERNS" $DOCS
           STATUS=$?
