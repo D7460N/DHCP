@@ -1,3 +1,45 @@
+# D7460N/DHCP AI Docs Enforcement Workflow
+#
+# CSS-FIRST, ZERO-DEPENDENCY, BROWSER-NATIVE ARCHITECTURE ENFORCER
+#
+# CRITICAL: CSS-First Hidden Checkbox Pattern
+# NEVER "fix" this - it's intentionally advanced:
+# <label role="button" name="submit" aria-label="Save">
+#     Save
+#     <input type="checkbox" />  <!-- CSS state hook -->
+# </label>
+# Why: 100-1000x faster than JS, secure, accessible, works without JS.
+# Rules: Never replace with <button>, never add JS event handlers.
+#
+# Architecture Rules:
+# - HTML: Semantic only. No classes, IDs, data-*, inline styles/scripts. Action labels need role="button".
+# - CSS: ALL UI logic via :has(), :checked, :valid, :empty, @container. Hidden checkboxes = state machines for CSS.
+# - JS: Data-only (fetch/inject/ARIA). NO DOM manipulation, event listeners, or UI logic. Use oninput/onchange only.
+#
+# Code Patterns:
+# - Progressive enhancement (works JS-off)
+# - Holy Grail layout via <app-container>
+# - Forms in <fieldset> with schema/rules
+# - Custom elements from JSON (toTagName())
+# - aria-disabled for accessibility (CSS styles it)
+# - Checkbox :checked drives panel visibility, loading states, complex UI
+#
+# JS Constraints:
+# - Must be idempotent/stateless
+# - Reuse existing functions before creating new
+# - Use schema.js for data consistency
+# - No global state, side effects, or DOM styling
+# - Only manage data flow + ARIA attributes
+#
+# File Roles:
+# - forms.js: form state + ARIA management
+# - inject.js: DOM content injection from JSON
+# - loaders.js: fetch + inject using schema/rules
+# - utils.js: stateless helpers only
+# - config.js: constants only
+#
+# Key: This is advanced web standards, not "outdated" patterns. Preserve exactly as implemented.
+
 name: AI Doc Consistency & Lint
 
 on:
@@ -22,8 +64,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Lint for forbidden patterns
         run: |
-          # Forbidden patterns for this repo's CSS-first, no-framework rules
-          BAD_PATTERNS='class=|id=|data-|onclick=|onchange=|oninput=|<button'
+          # Enforce D7460N/DHCP doc architecture: no classes, IDs, data-*, <button>, event listeners, or inline scripts/styles
+          BAD_PATTERNS='class=|id=|data-|<button|addEventListener|on(click|focus|blur|keydown|keyup|mousedown|mouseup|mouseenter|mouseleave|touchstart|touchend|touchmove)|style='
           DOCS="README.md PROJECT-STATE.md AGENT.md AGENTS.md .github/copilot-instructions.md"
           set +e
           grep -nE "$BAD_PATTERNS" $DOCS
@@ -43,8 +85,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check for doc drift
         run: |
-          # Patterns to enforce (expand as architecture grows)
-          PATTERNS='input type="checkbox"|:has\(|@container|fieldset|aria-label|role="button"|Holy Grail|progressive enhancement'
+          # Patterns that define the architecture (expand as needed)
+          PATTERNS='input type="checkbox"|:has\(|@container|fieldset|aria-label|role="button"|Holy Grail|progressive enhancement|toTagName\(\)|aria-disabled|:empty|:valid'
           CODE_PATTERNS=$(grep -Ero "$PATTERNS" . --include=*.html --include=*.css --include=*.js | sed 's/.*://g' | sort | uniq)
           DOC_PATTERNS=$(grep -Ero "$PATTERNS" README.md PROJECT-STATE.md .github/copilot-instructions.md AGENT.md AGENTS.md | sed 's/.*://g' | sort | uniq)
 
@@ -76,6 +118,12 @@ jobs:
             One or more AI documentation files have failed lint or drift detection.
             **Action Required:**  
             - Align `.github/copilot-instructions.md`, `PROJECT-STATE.md`, `README.md`, `AGENT.md`, and `AGENTS.md` with current repo architecture (HTML, CSS, JS patterns).
-            - Remove forbidden patterns (class/id/data-*, inline handlers, <button>, etc).
+            - Remove forbidden patterns (classes, IDs, data-*, <button>, event listeners, inline styles/scripts, etc).
             - Document all new or modified architecture patterns.
             - Review and re-run workflow before merging.
+
+# Reference:
+# - https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox
+# - https://developer.mozilla.org/en-US/docs/Web/CSS/:has
+# - https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role
+# - https://html.spec.whatwg.org/
