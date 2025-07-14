@@ -202,7 +202,6 @@ if (submitCheckbox) {
 				await postJSON(endpoint, payload);
 			}
 
-			submitItem.setAttribute('aria-label', 'saved');
 			savedMessage.textContent = `Saved ${new Date().toLocaleTimeString()}`;
 			await loadPageContent(endpoint);
 			captureFormSnapshot();
