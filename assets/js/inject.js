@@ -189,8 +189,6 @@ export function injectRowField(li, name = '', value = '') {
   const target = li.querySelector(`label > ${toTagName(name)}`);
   if (target) target.textContent = value ?? '';
 }
-
-// Form field creation utilities
 export function createInputFromKey(key, value, fieldRules = {}) {
   const inputName = key;
   const val = value?.trim?.() ?? '';
