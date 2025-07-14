@@ -119,7 +119,7 @@ jobs:
       pull-requests: none
     steps:
       - name: Create Issue for Drift/Lint Failure
-        uses: dacbd/create-issue-action@v1
+        uses: dacbd/create-issue-action@v2
         with:
           title: "AI Doc Consistency/Lint Failure"
           token: ${{ secrets.GITHUB_TOKEN }}
