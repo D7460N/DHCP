@@ -45,6 +45,22 @@ export async function loadPageContent(endpoint = '') {
   let rules = RULES_CACHE.get(endpoint);
   if (!rules) {
     rules = inferFieldRules(data.items);
+
+    // // Load ManageScope rules only for scope-type tab
+    // if (endpoint === 'scope-type') {
+    //   try {
+    //     const manageScopeText = await fetchJSON('ManageScope');
+    //     const [manageScopeData] = JSON.parse(manageScopeText);
+    //     if (manageScopeData?.rules) {
+    //       // Merge ManageScope rules with inferred rules
+    //       rules = { ...rules, ...manageScopeData.rules };
+    //     }
+    //   } catch (err) {
+    //     // Continue with inferred rules if ManageScope fetch fails
+    //     console.warn('ManageScope rules not available:', err.message);
+    //   }
+    // }
+
     RULES_CACHE.set(endpoint, rules);
   }
   ACTIVE_RULES = rules;
