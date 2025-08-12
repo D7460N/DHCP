@@ -64,7 +64,7 @@ jobs:
     name: Lint AI Docs for Forbidden Patterns
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Lint for forbidden patterns
         run: |
           # Enforce D7460N/DHCP doc architecture: no classes, IDs, data-*, <button>, event listeners, or inline scripts/styles
@@ -87,7 +87,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Check for doc drift
         run: |
           # Patterns that define the architecture (expand as needed)
