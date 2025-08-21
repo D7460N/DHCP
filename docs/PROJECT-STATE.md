@@ -103,7 +103,7 @@ functions to appropriate modules, causing loss of functionality.
 #### **JavaScript Modules** (`assets/js/`)
 
 - `app.js` - Application initialization (calls loaders, sets up initial state)
-- `config.js` - Configuration constants (BASE_URL, endpoints, feature flags)
+- `config.js` - Configuration constants (API_URL, endpoints, feature flags)
 - `forms.js` - Form state management and DOM event handlers (replaces
   scripts.js)
 - `loaders.js` - Data loading orchestration (nav, banner, page content, version
