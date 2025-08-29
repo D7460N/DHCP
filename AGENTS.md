@@ -399,5 +399,13 @@ sophisticated) ✅ **DO** maintain `aria-disabled` for accessibility state
 management ✅ **DO** leverage CSS `:checked`, `:has()`, and container queries ✅
 **DO** test functionality with JavaScript disabled
 
+### 🔍 Front-End Pagination, Search and Search Results, & Data Volume Guidance
+
+- **No Disabled Search Controls**: Never present a disabled search field or button by default. From a UX perspective, this appears broken and places unnecessary burden on the user.
+- **Default Scoped Queries**: On page entry, always run an initial query with safe default filters (e.g., recent time window, limited scope). This ensures the user sees results immediately.
+- **Progressive Filtering**: Provide filter tools prominently so the user can refine results rather than start from scratch.
+- **Broadening Queries**: Allow expansion but enforce caps. If a user broadens too far, warn gracefully (“Too many results, please refine”).
+- **Rule of Thumb**: *Never start blank, never block interaction. Always preload scoped results, and let filters guide refinement.*
+
 **This pattern represents advanced web standards knowledge and should be
 preserved exactly as implemented.**
