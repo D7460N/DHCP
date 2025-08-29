@@ -82,7 +82,7 @@ JavaScript only handles pure data concerns
 
 ### HTML
 
-- No inline classes, IDs, data-\*, styles, scripts, or data
+- No inline classes, IDs, minimal data-\* (only `form.dataset.dirty`), styles, scripts, or data
 - Structure-only: semantic elements (`<header>`, `<nav>`, `<details>`,
   `<summary>`, `<main>`, `<article>`, `<form>`, `<fieldset>`, etc.)
 - Inputs use attributes only; values injected from JS
@@ -295,7 +295,7 @@ mv .replit.md AGENT.md && ln -s AGENT.md .replit.md
   levels—just raw console output.
 - `fetch.js` — Provides wrapper functions for RESTful HTTP requests:
   `fetchJSON`, `postJSON`, `putJSON`, and `deleteJSON`. Normalizes endpoint
-  formatting via `BASE_URL`. Validates response status and parses payloads (with
+  formatting via `API_URL`. Validates response status and parses payloads (with
   an implicit parse check via `JSON.parse`). It does **NOT** retry, cache, or
   batch requests. Does **NOT** expose error messages beyond thrown status-based
   `Error()`. No timeout, abort handling, or schema validation on responses.
@@ -345,7 +345,7 @@ mv .replit.md AGENT.md && ln -s AGENT.md .replit.md
 **DO NOT "FIX" THIS - IT'S INTENTIONALLY ADVANCED:**
 
 ```html
-<label role="button" name="submit" aria-label="Save">
+<label role="button" aria-label="Save">
   Save
   <input type="checkbox" />
   <!-- CSS state hook -->

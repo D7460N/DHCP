@@ -25,7 +25,7 @@ management using `<label role="button"><input type="checkbox"></label>` is
 **Strict separation of concerns:**
 
 1. **HTML**: Semantic structure only, pre-delivered. No classes, IDs, or data-\*
-   attributes. Use `<label role="button"><input type="checkbox" /></label>` for
+   attributes (except `form.dataset.dirty` for state). Use `<label role="button"><input type="checkbox" /></label>` for
    interactive buttons.
 
 2. **CSS**: ALL UI logic via `:has()`, `:checked`, container queries. State
