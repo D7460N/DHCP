@@ -1,0 +1,19 @@
+# Exclude node_modules and package-lock from git
+node_modules/
+package-lock.json
+
+# Exclude log files
+*.log
+.npm
+
+# Exclude OS files
+.DS_Store
+Thumbs.db
+
+# Exclude IDE files
+.vscode/
+.idea/
+
+# Exclude temporary files
+*.tmp
+*.temp
