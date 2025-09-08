@@ -52,7 +52,7 @@ It's way easier than you're used too with frameworks.<br>
 > - You can make all the changes you want of course, _it's just standard modern vanilla HTML, CSS, and JS_, but it is recommend to first try out the default config to get a feeling for how it works. 
 > - You will be surprised at how fast it is!
 
-> No need to build pages anymore<br>
+No need to build pages anymore<br>
 > - Just deliver your content via the given API and JavaScript modules (see examples)
 > - Content renders in place, styled and ready to go - 
 > - _"Like turning on the lights on a Christmas tree!"_
