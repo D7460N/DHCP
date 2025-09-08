@@ -55,6 +55,17 @@ DONE!
 
 <br>
 
+SPEED BUILDING
+
+DEVs - **Don't over think it.** It is easier than you're used too. The presentation layer andnstate logic is already done for you. 
+
+> No need to build pages anymore<br>
+Just deliver your content via given API and JavaScript modules and the content renders in place and ready to go - _like turning on the lights of a Christmas tree!_<br>
+_That's it!_<br>
+_You're done!_
+
+<br>
+
 ## 📂 Structure
 
 | Directory              | Purpose                                                                 |
