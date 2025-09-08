@@ -1,4 +1,4 @@
-# D7460N Architecture
+# D7460N ARCHITECTURE 
 
 **D7460N** is a browser-native, fully declarative **architecture** for _speed building_
 scalable, maintainable, future proof, front-end systems. **D7460N Architecture** is loosely based JAMstack principles, operates as a Single Page Application (SPA), and is implemented as a Progressive Web App (PWA).
@@ -23,7 +23,7 @@ data-only JavaScript modules.
 
 <br>
 
-## ✨ Highlights
+## ✨ HIGHLIGHTS 
 
 🔹 **CSS-First Architecture**: Advanced state management using hidden checkboxes + CSS `:checked`, `:has()` selectors<br> 
 🔹 **Performance Optimized**: CSS rendering 100-1000x faster than JavaScript DOM manipulation equivalents<br>
@@ -47,17 +47,16 @@ data-only JavaScript modules.
 ## SPEED BUILD CONTENT 
 
 DEVs - **Don't over think it.**<br>
-It is easier than you're used too. The presentation layer andnstate logic is already done for you. 
+It is easier than you're used too with frameworks. Presentation layer and state logic (including all loading and error states) _is already done_. 
 
 > No need to build pages anymore<br>
-Just deliver your content via given API and JavaScript modules and the content renders in place and ready to go - _like turning on the lights of a Christmas tree!_<br>
+Just deliver your content via the given API and JavaScript modules (see examples) and the content renders in place, styled and ready to go - _like turning on the lights of a Christmas tree!_<br>
 _That's it!_<br>
 _You're done!_
 
 <br>
 
-
-## 🚀 To Run
+## 🚀 TO RUN
 
 1. Download and extract the project.
 2. Open `index.html` in any modern browser (Chrome, Edge, Firefox, Safari).
@@ -68,7 +67,7 @@ DONE!
 
 <br>
 
-## 📂 Structure
+## 📂 STRUCTURE 
 
 | Directory              | Purpose                                                                 |
 | ---------------------- | ----------------------------------------------------------------------- |
@@ -81,7 +80,7 @@ DONE!
 
 <br>
 
-## 🛠️ Developer Tips
+## 🛠️ DEVELOPER TIPS 
 
 - Clear cache with `Ctrl+Shift+R` to avoid stale module loads
 - Confirm service worker in DevTools → Application → Unregister if testing fresh
@@ -91,7 +90,7 @@ DONE!
 
 <br>
 
-## 🙋 Need Help?
+## 🙋 NEED HELP?
 
 See the internal guide under `/docs/dev/` or open an issue in your team GitHub
 repo.
