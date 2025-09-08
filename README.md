@@ -87,10 +87,10 @@ DONE!
 
 ## 🛠️ DEVELOPER TIPS 
 
-- Clear cache with `Ctrl+Shift+R` to avoid stale module loads
-- Confirm service worker in DevTools → Application → Unregister if testing fresh
+> - Clear cache with `Ctrl+Shift+R` to avoid stale module loads
+> - Confirm service worker in DevTools → Application → Unregister if testing fresh
   state
-- Ensure all scripts load in order: config → utils → refs → api → view → form →
+> - Ensure all scripts load in order: config → utils → refs → api → view → form →
   app
 
 <br>
