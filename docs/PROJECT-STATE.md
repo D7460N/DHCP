@@ -61,7 +61,7 @@ functions to appropriate modules, causing loss of functionality.
 
 **Functions remaining in `scripts.js`:**
 
-- Main application logic and event handlers
+- Main application logic is handled 
 - DOM element references
 - Form state management wrappers
 - Application initialization
@@ -104,8 +104,7 @@ functions to appropriate modules, causing loss of functionality.
 
 - `app.js` - Application initialization (calls loaders, sets up initial state)
 - `config.js` - Configuration constants (BASE_URL, endpoints, feature flags)
-- `forms.js` - Form state management and DOM event handlers (replaces
-  scripts.js)
+- `forms.js` - Form CRUD and data delivery only. All states management is handled via modern CSS.
 - `loaders.js` - Data loading orchestration (nav, banner, page content, version
   info)
 - `inject.js` - DOM manipulation utilities (creates list items, injects content)
@@ -211,9 +210,9 @@ The application uses modern CSS selectors for ALL interactivity:
 ### **Navigation System**
 
 - Radio inputs with `name="nav"` control tab switching
-- CSS `:has()` selectors show/hide content based on checked state
-- JavaScript handles data loading when tabs change
-- **BROKEN**: Event handlers not initialized!
+- CSS `:has()` selectors show/hide content based on checked state and data presense 
+- JavaScript handles data call when tabs change (not onclick)
+- There are no event handlers **EVER*!
 
 ---
 
@@ -361,8 +360,9 @@ deleteItem.querySelector('input[type="checkbox"]').onchange = e => {
 
 - CSS `:has(input:checked)` selectors expect checkbox state changes
 - Label clicks trigger checkbox changes naturally (HTML behavior)
-- JavaScript should respond to checkbox `change` events, not label `click`
-  events
+- JavaScript only handles data calls `onchange`.
+- CSS responds to checkbox change state + data presense after call from JavaScript
+- No event handlers for `change` events, no label JavaScript `click` events
 - This preserves the CSS-first state machine pattern
 
 ### **🎯 TYPE COLUMN DISCONNECT**
@@ -396,9 +396,7 @@ handling.
 
 ### **🔧 ADDITIONAL TECHNICAL ISSUES**
 
-1. **Form Event Handler Binding**: `form.onsubmit` conflicts with CSS-first
-   checkbox submission pattern
-2. **Button State Management**: ARIA attributes should be updated by checkbox
+1. **Button State Management**: ARIA attributes should be updated by checkbox
    state, not JavaScript logic
 3. **Data Normalization**: `schema.js` may need case-insensitive field matching
 
@@ -452,12 +450,12 @@ correctly and render as select dropdowns instead of text inputs
 
 ## 🚀 IMMEDIATE NEXT STEPS - UPDATED STATUS
 
+#### **Priority 1: Fix CSS-First Button Pattern
+
+- ✅ **Remove button event handlers** to adhere to the CSS-first architecture. CSS listens via `:has()`, `:empty`, and `[hidden]`. JavaScript is reserved for CRUD and data delivery and removal only. 
+
 ### **✅ COMPLETED - Critical Issues Resolved**
 
-#### **Priority 1: Fix CSS-First Button Pattern - COMPLETED ✅**
-
-- ✅ **Rewritten button event handlers** to listen to checkbox `change` events
-  instead of label `click` events
 - ✅ **Updated forms.js**: Replaced all `deleteItem.onclick` with
   `deleteItem.querySelector('input').onchange` pattern
 - ✅ **Implemented checkbox state management** with proper reset pattern
@@ -483,7 +481,7 @@ correctly and render as select dropdowns instead of text inputs
 
 ### **Priority 4: Architecture Compliance (ONGOING)**
 
-1. **Audit all event handlers** for CSS-first pattern compliance
+1. **Audit all event handlers** for CSS-first pattern compliance - there should NEVER be ANY event listeners
 2. **Remove JavaScript UI manipulation** that conflicts with CSS state
    management
 3. **Test functionality with JavaScript disabled** to ensure progressive
