@@ -37,7 +37,7 @@ data-only JavaScript modules.
 🔹 Component visibility logic (`:empty`, `:has`, `[hidden]`) based on data delivery **JavaScript CRUD**.<br>
 🔹 Clean separation of concerns: UI boolean logic, and JavaScript/API services.
 
-**⚠️ Architecture Note**:**<br>
+**⚠️ Architecture Note**:<br>
 This project uses an intentionally sophisticated<br>
 > - CSS-first pattern with `<label role="button"><input type="checkbox"></label>` for state management. _This is NOT a mistake_ - **it's an advanced optimization technique**. See `docs/PROJECT-STATE.md` for complete architectural analysis.
 
