@@ -48,8 +48,9 @@ data-only JavaScript modules.
 
 DEVs - **Don't over think it.**<br>
 It's way easier than you're used too with frameworks.<br>
-Presentation layer and state logic (including all loading and error states) _is already done_.
-You can make all the changes you want of course, _it's just standard modern vanilla HTML, CSS, and JS_, but I recommend first trying out the defaults to get a feeling for how it works. You will be surprised at how fast it is.
+> - Presentation layer and state logic defauls (including all loading and error states) _are already done for you_.
+> - You can make all the changes you want of course, _it's just standard modern vanilla HTML, CSS, and JS_, but it is recommend to first try out the default config to get a feeling for how it works. 
+> - You will be surprised at how fast it is!
 
 > No need to build pages anymore<br>
 > - Just deliver your content via the given API and JavaScript modules (see examples)
