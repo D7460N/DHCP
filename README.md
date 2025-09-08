@@ -1,9 +1,7 @@
 # D7460N Architecture
 
-D7460N is a browser-native, fully declarative architecture for quickly building
-scalable, maintainable front-end systems. It follows JAMstack principles,
-operates as a Single Page Application (SPA), and is implemented as a Progressive
-Web App (PWA).
+**D7460N** is a browser-native, fully declarative **architecture** for _speed building_
+scalable, maintainable, future proof, front-end systems. **D7460N Architecture** is loosely based JAMstack principles, operates as a Single Page Application (SPA), and is implemented as a Progressive Web App (PWA).
 
 OUT OF THE BOX:
 
@@ -12,33 +10,32 @@ OUT OF THE BOX:
 - dependency-free
 - standards-first
 - fully declarative
-- fully accessible
+- fully 508 accessible
 - fully responsive
 
 D7460N eliminates runtime dependencies and avoids complex JavaScript-driven UI
-logic by embracing modern standards: semantic HTML, CSS state management, and
+logic by embracing **modern standards**: semantic HTML, CSS state management, and
 data-only JavaScript modules.
 
 - Native HTML, CSS, JS (ES Modules)
 - No build tools, no transpilers, no frameworks
-- Responsive, accessible, and declarative by design
+- Responsive, accessible, and declarative _**by design**_
 
 <br>
 
 ## ✨ Highlights
 
-🔹 **CSS-First Architecture**: Advanced state management using hidden
-checkboxes + CSS `:checked`, `:has()` selectors<br> 🔹 **Performance
-Optimized**: CSS rendering 100-1000x faster than JavaScript DOM manipulation<br>
-🔹 **Security Hardened**: Minimal JavaScript surface reduces XSS attack
-vectors<br> 🔹 **Progressive Enhancement**: Fully functional with JavaScript
-disabled<br> 🔹 **Accessibility Native**: Uses semantic HTML + ARIA for 508/WCAG
-compliance<br> 🔹 No dependencies: 100% browser-native<br> 🔹 Dynamic JSON data
-via `fetch()`<br> 🔹 Declarative single-page-application (SPA) navigation via
-`<input type="radio">` + CSS `:has()` + container queries<br> 🔹 Minimal
-nesting, no IDs, classes, or custom attributes in markup<br> 🔹 CSS visibility
-logic based on dynamic selectors (`:empty`, `:has`, `[hidden]`)<br> 🔹 Clean
-separation of concerns, UI logic, and API services
+🔹 **CSS-First Architecture**: Advanced state management using hidden checkboxes + CSS `:checked`, `:has()` selectors<br> 
+🔹 **Performance Optimized**: CSS rendering 100-1000x faster than JavaScript DOM manipulation equivalents<br>
+🔹 **Security Hardened**: Minimal JavaScript surface reduces XSS attack vectors<br>
+🔹 **Progressive Enhancement**: Fully functional with JavaScript disabled<br>
+🔹 **Accessibility Native**: Uses semantic HTML + ARIA for 508/WCAG compliance<br>
+🔹 No dependencies: 100% browser-native<br>
+🔹 Dynamic JSON data via `fetch()`<br>
+🔹 Declarative single-page-application (SPA) navigation via `<input type="radio">` + CSS `:has()` + container queries<br>
+🔹 **Easily Overriden**: Minimal nesting, no IDs, classes, or custom attributes in markup, CSS Layers<br>
+🔹 Component visibility logic (`:empty`, `:has`, `[hidden]`) based on data delivery **JavaScript CRUD**.<br>
+🔹 Clean separation of concerns: UI boolean logic, and JavaScript/API services.
 
 > **⚠️ Architecture Note**: This project uses an intentionally sophisticated
 > CSS-first pattern with `<label role="button"><input type="checkbox"></label>`
