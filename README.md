@@ -5,21 +5,21 @@ scalable, maintainable, future proof, front-end systems. **D7460N Architecture**
 
 OUT OF THE BOX:
 
-- lightweight
-- browser-native
-- dependency-free
-- standards-first
-- fully declarative
-- fully 508 accessible
-- fully responsive
+> - lightweight
+> - browser-native
+> - dependency-free
+> - standards-first
+> - fully declarative
+> - fully 508 accessible
+> - fully responsive
 
 D7460N eliminates runtime dependencies and avoids complex JavaScript-driven UI
 logic by embracing **modern standards**: semantic HTML, CSS state management, and
 data-only JavaScript modules.
 
-- Native HTML, CSS, JS (ES Modules)
-- No build tools, no transpilers, no frameworks
-- Responsive, accessible, and declarative _**by design**_
+> - Native HTML, CSS, JS (ES Modules)
+> - No build tools, no transpilers, no frameworks
+> - Responsive, accessible, and declarative _**by design**_
 
 <br>
 
