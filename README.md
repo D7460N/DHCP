@@ -47,10 +47,15 @@ data-only JavaScript modules.
 ## SPEED BUILD CONTENT 
 
 DEVs - **Don't over think it.**<br>
-It is easier than you're used too with frameworks. Presentation layer and state logic (including all loading and error states) _is already done_. 
+It's way easier than you're used too with frameworks.<br>
+Presentation layer and state logic (including all loading and error states) _is already done_.
+You can make all the changes you want of course, _it's just standard modern vanilla HTML, CSS, and JS_, but I recommend first trying out the defaults to get a feeling for how it works. You will be surprised at how fast it is.
 
 > No need to build pages anymore<br>
-Just deliver your content via the given API and JavaScript modules (see examples) and the content renders in place, styled and ready to go - _like turning on the lights of a Christmas tree!_<br>
+> - Just deliver your content via the given API and JavaScript modules (see examples)
+> - Content renders in place, styled and ready to go - 
+> - _"Like turning on the lights on a Christmas tree!"_
+
 _That's it!_<br>
 _You're done!_
 
