@@ -36,8 +36,7 @@ management using `<label role="button"><input type="checkbox"></label>` is **by 
 - State management (including data loading, success, and error states) is through a combination of user initiated interactions with hidden checkboxes, conditional element visibility is through a combination of CSS conditionals and CSS variables in `assets/css/layout.css`, `assets/css/themes.css` and others CSS files and system environmental factors.
 - JavaScript is reserved for and restrict to data delivery for CRUD operations **ONLY**!
 
-3. **JavaScript**:
-- Just like the CSS, each JavaScript file is purposely written generically as seperate and independent drop-in plung-n-play modules.
+3. **JavaScript**: Just like the CSS, each JavaScript file is purposely written generically as seperate and independent drop-in plung-n-play modules.
 - There is NEVER any JavaScript inline. 
 - All JavaScript is vanilla ONLY (zero dependencies),
 - Data layer ONLY.
