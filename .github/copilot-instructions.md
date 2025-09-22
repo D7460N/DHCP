@@ -6,14 +6,16 @@
 current status.
 
 This is a **zero-dependency DHCP management portal** using D7460N architecture -
-a sophisticated declarative, CSS-first system where UI logic lives **entirely in modern CSS**, _not
+a sophisticated, JAMStack, declarative, CSS-first system where UI logic lives **entirely in modern CSS**, _not
 JavaScript_.
 
 ## 🚨 Critical Architecture Warnings
 
-**NEVER "FIX" THE DECLARATIVE CSS-FIRST PATTERN!** The sophisticated hidden checkbox state
-management using `<label role="button"><input type="checkbox"></label>` is **by design** and is
-**intentional**. This provides:
+**NEVER "FIX" THE JAMSTACK DECLARATIVE CSS-FIRST PATTERN!**<br>
+The sophisticated hidden checkbox state management using `<label role="button"><input type="checkbox"></label>` is **by design** and is
+**intentional**. 
+
+This provides:
 
 - **Performance**: CSS rendering 100-1000x faster than JavaScript DOM manipulation
 - **Security**: Minimal JavaScript surface reduces XSS attack vectors
@@ -23,26 +25,26 @@ management using `<label role="button"><input type="checkbox"></label>` is **by 
 
 ## Core Architecture
 
-**Strict separation of concerns:**
+**STRICT SEPARATION OF CONCERNS:**
 
 1. **HTML**: Semantic structure only, pre-delivered. No classes, IDs, or data-\*
    attributes. Use `<label role="button"><input type="checkbox" /></label>` for
    interactive buttons.
 
 2. **CSS**: Each CSS file is purposely writtin generically as seperate and independent drop-in plug-n-play CSS modules. Thus do not use nor depend on classes, ID's or `data-*` attributes for selectors. They depend solely on standard 508 compliant semantic mark-up anchors and or combinations with other available user-agent and OS conditions and variables. Nothing else, EVER! This allows the CSS to work independent of data source and or framework or CMS being used.
-- There is NEVER any inline CSS.
-- All CSS is vanilla ONLY (zero dependencies).
-- ALL UI logic via `:has()`, `:checked`, `:empty`, container/style queries.
-- State management (including data loading, success, and error states) is through a combination of user initiated interactions with hidden checkboxes, conditional element visibility is through a combination of CSS conditionals and CSS variables in `assets/css/layout.css`, `assets/css/themes.css` and others CSS files and system environmental factors.
-- JavaScript is reserved for and restrict to data delivery for CRUD operations **ONLY**!
+  - There is NEVER any inline CSS.
+  - All CSS is vanilla ONLY (zero dependencies).
+  - ALL UI logic via `:has()`, `:checked`, `:empty`, container/style queries.
+  - State management (including data loading, success, and error states) is through a combination of user initiated interactions with hidden checkboxes, conditional element visibility is through a combination of CSS conditionals and CSS variables in `assets/css/layout.css`, `assets/css/themes.css` and others CSS files and system environmental factors.
+  - JavaScript is reserved for and restrict to data delivery for CRUD operations **ONLY**!
 
 3. **JavaScript**: Just like the CSS, each JavaScript file is purposely written generically as seperate and independent drop-in plung-n-play modules.
-- There is NEVER any JavaScript inline. 
-- All JavaScript is vanilla ONLY (zero dependencies),
-- Data layer ONLY.
-- Fetch from `API_URL` (MockAPI), inject into DOM.
-- User initiated data change states in forms are managed and maintain  via `dataset.dirty`.
-- Fetching and or calling data is done strictly via `oninput` and / or `onchange`. _**NEVER use**_ **`onclick`!** This allows data to be initially loaded into the app without requireing user interaction.
+  - There is NEVER any JavaScript inline.
+  - All JavaScript is vanilla ONLY (zero dependencies),
+  - Data layer ONLY.
+  - Fetch from `API_URL` (MockAPI), inject into DOM.
+  - User initiated data change states in forms are managed and maintain  via `dataset.dirty`.
+  - Fetching and or calling data is done strictly via `oninput` and / or `onchange`. _**NEVER use**_ **`onclick`!** This allows data to be initially loaded into the app without requireing user interaction.
 
 THIS IS A VERY IMPORTANT NUANCE TO COMMIT TO MEMORY!
   - Clicking on a button (the button is really a hidden checkbox label with the role of button) does nothing!
@@ -54,14 +56,18 @@ THIS IS A VERY IMPORTANT NUANCE TO COMMIT TO MEMORY!
 
 ## Key Patterns
 
-### CSS-First State Machine
+### CSS-FIRST STATE MACHINE
 
 ```html
 <label role="button" aria-label="Save">Save<input type="checkbox" /></label>
 ```
 
-/* TODO: Needs changing */
 ```css
+/*
+TODO: Needs changing to conform to JAMStack declarative pattern
+- JS is needed only for `undo` and clean state restoration. 
+- The rest can be done with hiding/showing pure CSS conditionals.
+*/
 form:has([data-dirty='true']):valid::after {
   content: '✓ Ready to submit';
 }
