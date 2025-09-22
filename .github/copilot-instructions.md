@@ -6,19 +6,20 @@
 current status.
 
 This is a **zero-dependency DHCP management portal** using D7460N architecture -
-a sophisticated CSS-first system where UI logic lives entirely in CSS, not
-JavaScript.
+a sophisticated declarative, CSS-first system where UI logic lives **entirely in modern CSS**, _not
+JavaScript_.
 
 ## 🚨 Critical Architecture Warnings
 
-**NEVER "FIX" THE CSS-FIRST PATTERN!** The sophisticated hidden checkbox state
-management using `<label role="button"><input type="checkbox"></label>` is
+**NEVER "FIX" THE DECLARATIVE CSS-FIRST PATTERN!** The sophisticated hidden checkbox state
+management using `<label role="button"><input type="checkbox"></label>` is **by design** and is
 **intentional**. This provides:
 
-- Performance: CSS rendering 100-1000x faster than JavaScript DOM manipulation
-- Security: Minimal JavaScript surface reduces XSS attack vectors
-- Accessibility: Native keyboard navigation and ARIA compliance
-- Progressive enhancement: Fully functional without JavaScript
+- **Performance**: CSS rendering 100-1000x faster than JavaScript DOM manipulation
+- **Security**: Minimal JavaScript surface reduces XSS attack vectors
+- **Accessibility**: Native keyboard navigation, ARIA, and Section 508 compliance - templated and out of the box
+- **Strict Separation of Concerns**:  GUI logic (modern CSS only) and data delivery (JS) allows for new, more efficient possibilities, fewer dependencies, and more defined development swim-lanes
+- **Progressive enhancement**: Fully functional without JavaScript
 
 ## Core Architecture
 
@@ -28,13 +29,29 @@ management using `<label role="button"><input type="checkbox"></label>` is
    attributes. Use `<label role="button"><input type="checkbox" /></label>` for
    interactive buttons.
 
-2. **CSS**: ALL UI logic via `:has()`, `:checked`, container queries. State
-   management through hidden checkboxes. CSS variables in
-   `assets/css/themes.css`.
+2. **CSS**: Each CSS file is purposely writtin generically as seperate and independent drop-in plug-n-play CSS modules. Thus do not use nor depend on classes, ID's or `data-*` attributes for selectors. They depend solely on standard 508 compliant semantic mark-up anchors and or combinations with other available user-agent and OS conditions and variables. Nothing else, EVER! This allows the CSS to work independent of data source and or framework or CMS being used.
+- There is NEVER any inline CSS.
+- All CSS is vanilla ONLY (zero dependencies).
+- ALL UI logic via `:has()`, `:checked`, `:empty`, container/style queries.
+- State management (including data loading, success, and error states) is through a combination of user initiated interactions with hidden checkboxes, conditional element visibility is through a combination of CSS conditionals and CSS variables in `assets/css/layout.css`, `assets/css/themes.css` and others CSS files and system environmental factors.
+- JavaScript is reserved for and restrict to data delivery for CRUD operations **ONLY**!
 
-3. **JavaScript**: Data layer ONLY. Fetch from `API_URL` (MockAPI), inject into
-   DOM, manage form state via `dataset.dirty`. Use `oninput`/`onchange`, never
-   `addEventListener`.
+3. **JavaScript**:
+- Just like the CSS, each JavaScript file is purposely written generically as seperate and independent drop-in plung-n-play modules.
+- There is NEVER any JavaScript inline. 
+- All JavaScript is vanilla ONLY (zero dependencies),
+- Data layer ONLY.
+- Fetch from `API_URL` (MockAPI), inject into DOM.
+- User initiated data change states in forms are managed and maintain  via `dataset.dirty`.
+- Fetching and or calling data is done strictly via `oninput` and / or `onchange`. _**NEVER use**_ **`onclick`!** This allows data to be initially loaded into the app without requireing user interaction.
+
+THIS IS A VERY IMPORTANT NUANCE TO COMMIT TO MEMORY!
+  - Clicking on a button (the button is really a hidden checkbox label with the role of button) does nothing!
+  - **The action and trigger is the `oninput` and / or `onchange` that comes after the user clicks the button that calls the data.**
+
+> _**NEVER use `addEventListener` or `eventListener` of any kind at any time for any reason!
+> Doing so reduces performance and increases maintenance of the overall page.**_
+
 
 ## Key Patterns
 
@@ -44,6 +61,7 @@ management using `<label role="button"><input type="checkbox"></label>` is
 <label role="button" aria-label="Save">Save<input type="checkbox" /></label>
 ```
 
+/* TODO: Needs changing */
 ```css
 form:has([data-dirty='true']):valid::after {
   content: '✓ Ready to submit';
