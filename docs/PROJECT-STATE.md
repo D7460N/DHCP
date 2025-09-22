@@ -14,10 +14,14 @@ Reading this will bring you to expert-level understanding immediately.
 
 ## 📋 PROJECT OVERVIEW
 
-**Architecture**: D7460N - Zero-dependency, browser-native Single Page
-Application (SPA) **Type**: DHCP Management Portal **Tech Stack**: Vanilla
-HTML5, CSS3, ES6 Modules (NO frameworks, NO build tools) **API**: MockAPI
-endpoints (`https://67d944ca00348dd3e2aa65f4.mockapi.io/`)
+- **Architecture**: D7460N - Modified JAMStack, zero-dependency, browser-native Single Page Application (SPA)<br>
+- **Type**: Triage/Management Portal<br>
+- **Layout**: Holy Grail
+- **Workflow**: Master/Detail/Triage
+- **Writing-Mode**: Horizontal (default)
+- **Responsive**: Yes
+- **Tech Stack**: Standard vanilla HTML5, CSS3, JavaScript/ES6 Modules - NO frameworks, NO build tools required
+- **API**: MockAPI - endpoints (`https://67d944ca00348dd3e2aa65f4.mockapi.io/`)
 
 **Core Philosophy**:
 
