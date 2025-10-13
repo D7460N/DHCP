@@ -45,15 +45,15 @@ This project uses an intentionally sophisticated<br>
 
 ## SPEED BUILD CONTENT 
 
-DEVs - **Don't over think it.**<br>
-It's way easier than you're used too with frameworks.<br>
-> - Presentation layer and state logic defauls (including all loading and error states) _are already done for you_.
-> - You can make all the changes you want of course, _it's just standard modern vanilla HTML, CSS, and JS_, but it is recommend to first try out the default config to get a feeling for how it works. 
+**DEVs** - _Don't over think it._<br>
+_It's way easier than you're used too . . ._<br>
+> - Presentation layer and state logic defaults (_including all loading and error states_) **are already done for you**.
+> - You can make all the changes you want of course, _it's just standard modern vanilla HTML, CSS, and JS_, but it is recommended to first try out the default config to get a feeling for how it works. 
 > - You will be surprised at how fast it is!
 
 No need to build pages anymore<br>
 > - Just deliver your content via the given API and JavaScript modules (see examples)
-> - Content renders in place, styled and ready to go - 
+> - Content renders in place, styled and ready to go - by default 
 > - _"Like turning on the lights on a Christmas tree!"_
 
 _That's it!_<br>
