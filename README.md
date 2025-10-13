@@ -45,8 +45,10 @@ This project uses an intentionally sophisticated<br>
 
 ## SPEED BUILD CONTENT 
 
-**DEVs** - _Don't over think it._<br>
-_It's way easier than you're used too . . ._<br>
+**DEVs**
+
+> _Don't over think it._<br>
+> _It's way easier than you're used too . . ._<br>
 > - Presentation layer and state logic defaults (_including all loading and error states_) **are already done for you**.
 > - You can make all the changes you want of course, _it's just standard modern vanilla HTML, CSS, and JS_, but it is recommended to first try out the default config to get a feeling for how it works. 
 > - You will be surprised at how fast it is!
