@@ -70,9 +70,9 @@ _You're done!_
 
 DONE!
 
-> - No build step<br>
-> - No compliation<br>
-> - No problem
+- No build step<br>
+- No compliation<br>
+- No problem
 
 <br>
 
