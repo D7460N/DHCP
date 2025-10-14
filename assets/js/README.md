@@ -26,6 +26,8 @@ Single Page Application [ SPA ]
 - JS = delivers/removes data
 - Default layout = Holy Grail Triage
 
+DESKTOP
+
 -   -   -   -   -   -   - <APP-CONTAINER>   -   -   -   -   -   -   -
 -                                                                ___<APP-BANNER>
 -     __  __  __  __  __  __  __  __  __  __  __  __  __  __  __/   -
@@ -48,6 +50,7 @@ Single Page Application [ SPA ]
 -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
 
+MOBILE 
 
 -   -   -   -<APP-CONTAINER>   -   -   _____<APP-BANNER>
 -   __  __  __  __  __  __  __  __  __/   -
