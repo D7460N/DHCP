@@ -94,7 +94,7 @@ MOBILE [ responsive ]
 
 **Minimal semantic markup** == clean, perfomant, intuitive, overridable
 
-- Ally foundation
+- A11y foundation
 - Minimal nesting
 - Zero CSS classes, IDs, or `data-*`
 - Zero inline scripts or styles
