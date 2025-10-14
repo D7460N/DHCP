@@ -50,7 +50,7 @@ DESKTOP
 +  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  +
 
 
-MOBILE 
+MOBILE [ responsive ]
 
 +  .  .  .  . <APP-CONTAINER> .  .  .  .  +
 .                                      _____<APP-BANNER>
