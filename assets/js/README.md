@@ -24,6 +24,7 @@ Single Page Application [ SPA ]
 - HTML = front-loaded, empty, hidden
 - CSS = hides elements withput data
 - JS = delivers/removes data
+- Default layout = Holy Grail Triage
 
 -   -   -   -   -   -   - <APP-CONTAINER>   -   -   -   -   -   -   -
 -                                                               _____<APP-BANNER>
