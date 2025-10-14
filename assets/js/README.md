@@ -23,7 +23,8 @@ ARCHITECTURE ::
 Single Page Application [ SPA ]
 - HTML = front-loaded, empty, hidden
 - CSS = hides elements withput data
-- JS = delivers/removes data                                _ _ _ [ <APP-BANNER> - always visible ]
+- JS = delivers/removes data
+                                                            _ _ _ [ <APP-BANNER> - always visible ]
                                                            / _ _ _ [ <HEADER> - always visible ]
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ / / _ _ _ [ <ASIDE> - hidden/empty by default ]
               \___________________________________________\/ /
@@ -37,6 +38,31 @@ Single Page Application [ SPA ]
                       \______\____________________________\_______\/ /
                        \___________________________________________\/
                         \_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\
+
+```
+
+
+```
+
+                                   ______[ <APP-CONTAINER> ]
+                                 /                              ______[ <APP-BANNER> ]
+.   .   .   .   .   .   .   .   /   .   .   .   .   .   .   . / .______[ <HEADER> ]
+.   __  __  __  __  __  __  __  __  __  __  __  __  __  __ __/ /.
+.  |__  __  __  __  __  __  __  __  __  __  __  __  __  __ __|/ .
+.  |                                                         |  .
+.  |__  __  __  __  __  __  __  __  __  __  __  __  __  __ __|  .
+.  |          |                                  |           |  .
+.  |          |                                  |           |  .
+.  |          |                                  |           |  .
+.  |          |                                  |           |  .
+.  |          |                                  |           |  .
+.  |          |                                  |           |  .
+.  |          |                                  |           |  .
+.  |          |                                  |           |  .
+.  |__  __  __  __  __  __  __  __  __  __  __  __  __  __ __|  .______[ <FOOTER> ]
+.  |                                                         | /.
+.  |__  __  __  __  __  __  __  __  __  __  __  __  __  __ __|/ .
+.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
 
 ```
 
