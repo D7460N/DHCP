@@ -219,7 +219,7 @@ Single Page Application [ SPA ]
 
 DESKTOP
 
-```txt
+```prolog
 +  .  .  .  .  .  .  .  .  <APP-CONTAINER>.  .  .  .  .  .  .  .  +
 .                                                                ___<APP-BANNER>
 .   __  __  __  __  __  __  __  __  __  __  __  __  __  __  __/   .
@@ -244,7 +244,7 @@ DESKTOP
 
 MOBILE [ responsive ]
 
-```txt
+```prolog
 +  .  .  .  . <APP-CONTAINER> .  .  .  .  +
 .                                      _____<APP-BANNER>
 .   __  __  __  __  __  __  __  __  __/   .
@@ -281,7 +281,7 @@ MOBILE [ responsive ]
 
 DETAILS
 
-```txt
+```prolog
                                                                     : <app-container>                                           : <viewport>
                                                                  ___: - - - - -                                              ___: - - - - -
                                                                 /   : Pushes header and footer                              /   : Overflow hidden
@@ -333,7 +333,7 @@ DETAILS
 
 ## MOBILE DETAILS
 
-```txt
+```prolog
 
  __________________________________________________
 |                   <app-banner>                   |
