@@ -98,8 +98,8 @@ MOBILE [ responsive ]
 - Minimal nesting
 - Zero CSS classes, IDs, or `data-*`
 - Zero inline scripts or styles
-- Zerp dependencies
-- Zerp compiling
+- Zero dependencies
+- Zero compiling
 - Zero build tools
 - Preserves browser compatibility (future proof)
 - Reduces erros to data/business logic
