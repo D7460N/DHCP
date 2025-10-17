@@ -11,84 +11,11 @@ JavaScript in D7460N handles:
 
 ## Presentaion Layer
 
-| Layer | Role                                                                           |
-| ----- | ------------------------------------------------------------------------------ |
-| HTML  | Structure only - intuitive semantic markup, A11y foundation                    |
-| CSS   | Heuristics only - themes, conditional visual state via `:has()`, style queries |
-| JS    | Data only - handling and delivery                                              |
-
-```prolog
-ARCHITECTURE ::
-
-Single Page Application [ SPA ]
-- HTML = front-loaded, empty, hidden
-- CSS = hides elements withput data
-- JS = delivers/removes data
-- Default layout = Holy Grail Triage
-
-DESKTOP
-
-+  .  .  .  .  .  .  .  .  <APP-CONTAINER>.  .  .  .  .  .  .  .  +
-.                                                                ___<APP-BANNER>
-.   __  __  __  __  __  __  __  __  __  __  __  __  __  __  __/   .
-.  |__  __  __  __  __  __  __  __  __  __  __  __  __  __  __|   .
-.  |                         <HEADER>                         |   .
-.  |__  __  __  __  __  __  __  __  __  __  __  __  __  __  __|   .
-.  |          |                                  |            |   .
-.  |  <NAV>   |               <MAIN>             |  <ASIDE>   |   .
-.  |          |                                  |            |   .
-.  |          |                                  |            |   .
-.  |          |                                  |            |   .
-.  |          |                                  |            |   .
-.  |          |                                  |            |   .
-.  |          |                                  |            |   .
-.  |__  __  __| __  __  __  __  __  __  __  __  _|  __  __  __|   .
-.  |                         <FOOTER>                         |   .
-.  |__  __  __  __  __  __  __  __  __  __  __  __  __  __  __|   .
-.  |__  __  __  __  __  __  __  __  __  __  __  __  __  __  __|   .
-.                                                                 .
-+  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  +
-
-
-MOBILE [ responsive ]
-
-+  .  .  .  . <APP-CONTAINER> .  .  .  .  +
-.                                      _____<APP-BANNER>
-.   __  __  __  __  __  __  __  __  __/   .
-.  |__  __  __  __  __  __  __  __  __|   .
-.  |             <HEADER>             |   .
-.  |__  __  __  __  __  __  __  __  __|   .
-.  |              <NAV>               |   .
-.  |__  __  __  __  __  __  __  __  __|   .
-.  |              <MAIN>              |   .
-.  |                                  |   .
-.  |                                  |   .
-.  |                                  |   .
-.  |                                  |   .
-.  |                                  |   .
-.  |                                  |   .
-.  |                                  |   .
-.  |                                  |   .
-.  |                                  |   .
-.  |                                  |   .
-.  |__  __  __  __  __  __  __  __  __¡   .
-.  |              <ASIDE>             |   .
-.  |                                  |   .
-.  |                                  |   .
-.  |                                  |   .
-.  |                                  |   .
-.  |__  __  __  __  __  __  __  __  __|   .
-.  |             <FOOTER>             |   .
-.  |__  __  __  __  __  __  __  __  __|   .
-.  |__  __  __  __  __  __  __  __  __|   .
-.                                         .
-+  .  .  .  .  .  .  .  .  .  .  .  .  .  +
-
-
-
-
-
-```
+| Layer | Role                                                                           | URL |
+| ----- | ------------------------------------------------------------------------------ | --- 
+| HTML  | Structure only - intuitive semantic markup, A11y foundation                    | See [HTML README](https://github.com/D7460N/DHCP/blob/main/assets/css/README.md)
+| CSS   | Heuristics only - themes, conditional visual state via `:has()`, style queries | See [CSS README](https://github.com/D7460N/DHCP/blob/main/assets/css/README.md)
+| JS    | Data only - handling and delivery                                              | You are here
 
 ## Markup
 
