@@ -12,7 +12,9 @@
   margin: 0;
 }
 
-/* Specificity == 0 */
+/* https://drafts.csswg.org/selectors-4/#typedef-forgiving-selector-list
+- Forgiving selector list
+- Specificity == 0 */
 :where(
   img,
   picture,
@@ -23,7 +25,9 @@
   max-inline-size: 100%;
 }
 
-/* Specificity == 0 */
+/* https://drafts.csswg.org/selectors-4/#typedef-forgiving-selector-list
+- Forgiving selector list
+- Specificity == 0 */
 :where(
   button,
   input,
