@@ -29,3 +29,8 @@ select {
   word-spacing: inherit;
   color: currentColor;
 }
+
+:where(button, input, select, textarea) {
+  font-family: inherit;
+  font-size: inherit;
+}
