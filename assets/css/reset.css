@@ -12,7 +12,7 @@
   margin: 0;
 }
 
-/* reduce specificity to 0 */
+/* Specificity == 0 */
 :where(
   img,
   picture,
@@ -23,7 +23,7 @@
   max-inline-size: 100%;
 }
 
-/* reduce specificity to 0 */
+/* Specificity == 0 */
 :where(
   button,
   input,
