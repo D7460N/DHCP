@@ -11,26 +11,26 @@
   margin: 0;
 }
 
-img,
-picture,
-video,
-canvas,
-svg {
+/* reduce specificity to 0 */
+:where(
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
   display: block;
   max-inline-size: 100%;
 }
 
-input,
-button,
-textarea,
-select {
-  font: inherit;
+/* reduce specificity to 0 */
+:where(
+  button,
+  input,
+  select,
+  textarea) {
+  font-family: inherit;
+  font-size: inherit;
   letter-spacing: inherit;
   word-spacing: inherit;
   color: currentColor;
-}
-
-:where(button, input, select, textarea) {
-  font-family: inherit;
-  font-size: inherit;
 }
