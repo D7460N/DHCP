@@ -1,0 +1,51 @@
+/* MARK: RADII.css 
+https://chatgpt.com/c/692cce8f-0a4c-832c-837f-88c9be030539
+*/
+
+/* single control knob */
+:root {
+  --radius-base: 0.75rem;
+
+  /* derived tokens – do NOT edit, they follow --radius-base */
+  --radius-panel: var(--radius-base);
+  --radius-control: calc(var(--radius-base) * 0.75);
+  --radius-media: calc(var(--radius-base) * 0.5);
+
+  /* for the li/figure relationship */
+  --radius-inner: var(--radius-base);
+  --radius-padding: calc(var(--radius-base) * 1);
+  --radius-outer: calc(var(--radius-inner) + var(--radius-padding));
+}
+
+/* layout regions */
+:where(header, nav, main, aside, footer) {
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+}
+
+/* carousel outer card */
+:where(ul > li) {
+  padding: var(--radius-padding);
+  border-radius: var(--radius-outer);
+  overflow: hidden;
+}
+
+/* carousel inner block */
+:where(ul > li > figure) {
+  border-radius: var(--radius-inner);
+}
+
+/* ensure image contours with figure */
+:where(ul > li > figure > a > img) {
+  border-radius: inherit;
+}
+
+/* generic media */
+:where(img, video, picture) {
+  border-radius: var(--radius-media);
+}
+
+/* controls */
+:where(button, [role="button"]) {
+  border-radius: var(--radius-control);
+}
