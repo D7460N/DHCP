@@ -22,6 +22,18 @@ jobs:
       - uses: actions/checkout@v4
       - name: Lint for forbidden patterns
         run: |
+        BAD_PATTERNS='class=|id=|data-|<button|addEventListener|eventListener|event listener|on(click|focus|blur|keydown|keyup|mousedown|mouseup|mouseenter|mouseleave|touchstart|touchend|touchmove)|style='
+        EXCEPTIONS='^\\s*-|^\\s*\\*[\\s\\S]*|^\\s*#|Never use|Never add|Do not use|must not|forbidden pattern|ban|rule|guideline|architecture rule|key point|Reference'
+
+        DOCS="$(find . -type f -iname 'README.md' -o -name 'PROJECT-STATE.md' -o -name 'AGENT.md' -o -name 'AGENTS.md' -o -path './.github/copilot-instructions.md')"
+
+        LINT_OUTPUT=$(mktemp)
+        set +e
+        grep -nE "$BAD_PATTERNS" $DOCS \
+        | grep -Ev "$EXCEPTIONS" \
+        > "$LINT_OUTPUT" 2>&1
+        STATUS=$?
+        set -e
           BAD_PATTERNS='class=|id=|data-|<button|addEventListener|eventListener|event listener|on(click|focus|blur|keydown|keyup|mousedown|mouseup|mouseenter|mouseleave|touchstart|touchend|touchmove)|style='
           DOCS="$(find . -type f -iname 'README.md' -o -name 'PROJECT-STATE.md' -o -name 'AGENT.md' -o -name 'AGENTS.md' -o -path './.github/copilot-instructions.md')"
           # Create temporary file to capture detailed output
