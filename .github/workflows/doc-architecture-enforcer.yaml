@@ -23,7 +23,7 @@ jobs:
       - name: Lint for forbidden patterns
         run: |
           BAD_PATTERNS='class=|id=|data-|<button|addEventListener|eventListener|event listener|on(click|focus|blur|keydown|keyup|mousedown|mouseup|mouseenter|mouseleave|touchstart|touchend|touchmove)|style='
-          EXCEPTIONS='Never use|Never add|Do not use|must not|forbidden pattern|ban|rule|guideline|architecture rule|key point|Reference'
+          EXCEPTIONS='Never use|Never add|Do not use|Do NOT|must not|forbidden pattern|ban|banned|banlist|prohibit|prohibited|disallow|disallowed|rule|ruleset|guideline|guidance|architecture rule|key point|Reference|forbidden in D7460N|never allowed|not permitted|not allowed|strictly prohibited|requirement|should never|should not|do not add|do not permit|limitation|constraint|proscription|mandate|must never|restrictions|proscription|exception:|listed as forbidden'
           DOCS="$(find . -type f -iname 'README.md' -o -name 'PROJECT-STATE.md' -o -name 'AGENT.md' -o -name 'AGENTS.md' -o -path './.github/copilot-instructions.md')"
           LINT_OUTPUT=$(mktemp)
           set +e
