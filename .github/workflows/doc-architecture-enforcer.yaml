@@ -16,7 +16,6 @@ on:
 
 jobs:
   lint-docs:
-    lint-docs:
     name: Lint AI Docs for Forbidden Patterns
     runs-on: ubuntu-latest
     steps:
