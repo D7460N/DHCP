@@ -275,6 +275,10 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
+# MCP Server artifacts (but keep the code)
+mcp-server/node_modules/
+mcp-server/package-lock.json
+
 # Visual Studio 6 build log
 *.plg
 

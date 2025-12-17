@@ -1,0 +1,100 @@
+/*
+https://chatgpt.com/c/692cce8f-0a4c-832c-837f-88c9be030539
+
+- radii.css is a drop-in engine
+- --border-radius is the public API
+- Only elements in the :where(...) list get rounded
+- Internals can use cqi/cqmin, aspect hints, and padding-aware math
+*/
+
+/* -----------------------------
+   1. ENGINE INPUTS (KNOBS)
+   ----------------------------- */
+
+:root {
+  /* base inner radius (like the “16” in the image) */
+  --border-radius-base: 0.75rem;
+
+  /* how much padding should contribute by default (0 = ignore) */
+  --border-radius-padding-default: 0px;
+
+  /* responsive scaling bounds (numbers only) */
+  --border-radius-scale-min: 0.6;  /* tighter corners */
+  --border-radius-scale-max: 1.4;  /* looser corners */
+}
+
+/* -----------------------------
+   2. GLOBAL OPT-IN LIST
+   Add/remove elements here.
+   ----------------------------- */
+
+:where(
+  header,
+  nav,
+  main,
+  aside,
+  footer,
+  img,
+  button,
+  [role="button"]
+) {
+  /* if an element defines --border-radius-padding locally, use it;
+     otherwise fall back to the global default (handles “no padding”). */
+  --border-radius-padding-effective: var(
+    --border-radius-padding,
+    var(--border-radius-padding-default)
+  );
+
+  /* inner radius + padding contribution (matches the Practical UI rule) */
+  --border-radius-size: calc(
+    var(--border-radius-base) + var(--border-radius-padding-effective)
+  );
+
+  /* responsive corner using container units:
+     - cqmin makes corners respond to container size
+     - clamp keeps them within a sensible min/max range        */
+  --border-radius: clamp(
+    calc(var(--border-radius-base) * var(--border-radius-scale-min)),
+    0.6cqmin,
+    calc(var(--border-radius-size) * var(--border-radius-scale-max))
+  );
+
+  /* public API: every opt-in element uses this */
+  border-radius: var(--border-radius);
+}
+
+/* -----------------------------
+   3. IMAGE ORIENTATION TUNING
+   (optional, aspect-ratio aware)
+   ----------------------------- */
+
+/* neutral factor if nothing else is set */
+img {
+  --border-radius-orientation-factor: 1;
+}
+
+/* portrait images → smoother corners */
+img[aria-orientation="portrait"] {
+  --border-radius-orientation-factor: 1.25;
+}
+
+/* landscape images → tighter corners */
+img[aria-orientation="landscape"] {
+  --border-radius-orientation-factor: 0.75;
+}
+
+/* plug orientation into the same engine, but only for img */
+:where(img) {
+  --border-radius-size: calc(
+    (var(--border-radius-base) + var(--border-radius-padding-effective))
+    * var(--border-radius-orientation-factor)
+  );
+
+  --border-radius: clamp(
+    calc(var(--border-radius-base) * var(--border-radius-scale-min)),
+    0.6cqmin,
+    calc(var(--border-radius-size) * var(--border-radius-scale-max))
+  );
+
+  border-radius: var(--border-radius);
+}

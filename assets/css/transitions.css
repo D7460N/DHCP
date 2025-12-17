@@ -1,8 +1,9 @@
-/* MARK: DEFINITIONS */
+/* MARK: TRANSITIONS */
+
 :root {
-  --transition-duration: 250ms;
+  --transition-duration: 500ms;
   --transition-property: visibility, opacity, display, transform, background, background-color, border-color, color, min-width;
-  --transition-timing-function: ease-in-out;
+  --transition-timing-function: ease-in;
 
   scroll-behavior: smooth;
 
@@ -56,9 +57,9 @@
   }
 }
 
-aside {
+/* aside {
   transition: all;
-}
+} */
 
 
 /* a,

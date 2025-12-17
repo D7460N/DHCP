@@ -1,5 +1,6 @@
 /* MARK: RESET
 */
+
 *,
 * *,
 *:before,
@@ -9,4 +10,34 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+/* https://drafts.csswg.org/selectors-4/#typedef-forgiving-selector-list
+- Forgiving selector list
+- Specificity == 0 */
+:where(
+  img,
+  picture,
+  video,
+  canvas,
+  svg
+) {
+  display: block;
+  max-inline-size: 100%;
+}
+
+/* https://drafts.csswg.org/selectors-4/#typedef-forgiving-selector-list
+- Forgiving selector list
+- Specificity == 0 */
+:where(
+  button,
+  input,
+  select,
+  textarea
+) {
+  font-family: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+  color: currentColor;
 }

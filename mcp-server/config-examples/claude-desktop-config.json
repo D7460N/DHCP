@@ -1,0 +1,13 @@
+{
+  "globalShortcut": "Cmd+Shift+Space",
+  "mcpServers": {
+    "d7460n-dhcp": {
+      "command": "node",
+      "args": ["/absolute/path/to/DHCP/mcp-server/index.js"],
+      "cwd": "/absolute/path/to/DHCP",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+/*
+Time to bring CSS into modern architecture. 
+
+Introducing "CSS API"
+*/
+
+/*
+Loading order:
+- Directly controlled via index.html include order.
+- Ensures unique CSS performance defaults.
+*/
+
+/*
+PRESET DEFAULTS
+
+:root {
+  --font-size: 1.1rem;
+  --transitions: 250ms;
+  --border-radius: .75rem;
+  --color-scheme: system; 
+    JSON: {
+           [
+            options: "light-only, dark-only, system"
+           ]
+          }
+  --brand-color: ;
+}
+*/

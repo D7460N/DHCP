@@ -209,10 +209,79 @@ responsive scroll performance.
 
 ## HOLY GRAIL LAYOUT
 
-- Minimally nested layout
+ARCHITECTURE ::
 
-```txt
+Single Page Application [ SPA ]
+- HTML = front-loaded, empty, hidden
+- CSS = hides elements withput data
+- JS = delivers/removes data
+- Default layout = Holy Grail Triage
 
+DESKTOP
+
+```prolog
++  .  .  .  .  .  .  .  .  <APP-CONTAINER>.  .  .  .  .  .  .  .  +
+.                                                                ___<APP-BANNER>
+.   __  __  __  __  __  __  __  __  __  __  __  __  __  __  __/   .
+.  |__  __  __  __  __  __  __  __  __  __  __  __  __  __  __|   .
+.  |                         <HEADER>                         |   .
+.  |__  __  __  __  __  __  __  __  __  __  __  __  __  __  __|   .
+.  |          |                                  |            |   .
+.  |  <NAV>   |               <MAIN>             |  <ASIDE>   |   .
+.  |          |                                  |            |   .
+.  |          |                                  |            |   .
+.  |          |                                  |            |   .
+.  |          |                                  |            |   .
+.  |          |                                  |            |   .
+.  |          |                                  |            |   .
+.  |__  __  __| __  __  __  __  __  __  __  __  _|  __  __  __|   .
+.  |                         <FOOTER>                         |   .
+.  |__  __  __  __  __  __  __  __  __  __  __  __  __  __  __|   .
+.  |__  __  __  __  __  __  __  __  __  __  __  __  __  __  __|   .
+.                                                                 .
++  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  +
+```
+
+MOBILE [ responsive ]
+
+```prolog
++  .  .  .  . <APP-CONTAINER> .  .  .  .  +
+.                                      _____<APP-BANNER>
+.   __  __  __  __  __  __  __  __  __/   .
+.  |__  __  __  __  __  __  __  __  __|   .
+.  |             <HEADER>             |   .
+.  |__  __  __  __  __  __  __  __  __|   .
+.  |              <NAV>               |   .
+.  |__  __  __  __  __  __  __  __  __|   .
+.  |              <MAIN>              |   .
+.  |                                  |   .
+.  |                                  |   .
+.  |                                  |   .
+.  |                                  |   .
+.  |                                  |   .
+.  |                                  |   .
+.  |                                  |   .
+.  |                                  |   .
+.  |                                  |   .
+.  |                                  |   .
+.  |__  __  __  __  __  __  __  __  __¡   .
+.  |              <ASIDE>             |   .
+.  |                                  |   .
+.  |                                  |   .
+.  |                                  |   .
+.  |                                  |   .
+.  |__  __  __  __  __  __  __  __  __|   .
+.  |             <FOOTER>             |   .
+.  |__  __  __  __  __  __  __  __  __|   .
+.  |__  __  __  __  __  __  __  __  __|   .
+.                                         .
++  .  .  .  .  .  .  .  .  .  .  .  .  .  +
+
+```
+
+DETAILS
+
+```prolog
                                                                     : <app-container>                                           : <viewport>
                                                                  ___: - - - - -                                              ___: - - - - -
                                                                 /   : Pushes header and footer                              /   : Overflow hidden
@@ -260,15 +329,11 @@ responsive scroll performance.
                                                               \    : <footer>
                                                                \___: - - - -
                                                                    : Sticks to bottom of view port
-
-
 ```
 
-<br>
+## MOBILE DETAILS
 
-## SMALL SCREEN LAYOUT
-
-```txt
+```prolog
 
  __________________________________________________
 |                   <app-banner>                   |

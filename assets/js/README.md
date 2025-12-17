@@ -11,45 +11,22 @@ JavaScript in D7460N handles:
 
 ## Presentaion Layer
 
-| Layer | Role                                                                           |
-| ----- | ------------------------------------------------------------------------------ |
-| HTML  | Structure only - intuitive semantic markup, A11y foundation                    |
-| CSS   | Heuristics only - themes, conditional visual state via `:has()`, style queries |
-| JS    | Data only - handling and delivery                                              |
-
-```prolog
-ARCHITECTURE ::
-
-Single Page Application [ SPA ]
-- HTML = front-loaded, empty, hidden
-- CSS = hides elements withput data
-- JS = delivers/removes data                                _ _ _ [ <APP-BANNER> - always visible ]
-                                                           / _ _ _ [ <HEADER> - always visible ]
-              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ / / _ _ _ [ <ASIDE> - hidden/empty by default ]
-              \___________________________________________\/ /
-               \___________________________________________\/
-   [ <NAV> ]   /\      \                            \       \
-   _ _ _ _ _ _/  \      \                     _ _ _ [ Page content - <h1>, <p>, <ul>, etc. - hidden/empty by default ]
-   Hidden/        \      \                   /        \       \
-   empty by        \      \                 /          \       \
-   default          \      \                            \       \    _ _ _ [ <FOOTER> -  always visible ]
-                     \      \                            \       \  / _ _ _ [ <APP-BANNER> - always visible ]
-                      \______\____________________________\_______\/ /
-                       \___________________________________________\/
-                        \_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\
-
-```
+| Layer | Role                                                                           | URL |
+| ----- | ------------------------------------------------------------------------------ | --- 
+| HTML  | Structure only - intuitive semantic markup, A11y foundation                    | See [HTML README](https://github.com/D7460N/DHCP/blob/main/assets/css/README.md)
+| CSS   | Heuristics only - themes, conditional visual state via `:has()`, style queries | See [CSS README](https://github.com/D7460N/DHCP/blob/main/assets/css/README.md)
+| JS    | Data only - handling and delivery                                              | You are here
 
 ## Markup
 
 **Minimal semantic markup** == clean, perfomant, intuitive, overridable
 
-- Ally foundation
+- A11y foundation
 - Minimal nesting
 - Zero CSS classes, IDs, or `data-*`
 - Zero inline scripts or styles
-- Zerp dependencies
-- Zerp compiling
+- Zero dependencies
+- Zero compiling
 - Zero build tools
 - Preserves browser compatibility (future proof)
 - Reduces erros to data/business logic

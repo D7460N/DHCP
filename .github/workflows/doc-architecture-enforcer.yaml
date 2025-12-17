@@ -70,15 +70,35 @@ jobs:
           # Enforce D7460N/DHCP doc architecture: no classes, IDs, data-*, <button>, event listeners, or inline scripts/styles
           BAD_PATTERNS='class=|id=|data-|<button|addEventListener|on(click|focus|blur|keydown|keyup|mousedown|mouseup|mouseenter|mouseleave|touchstart|touchend|touchmove)|style='
           DOCS="$(find . -type f -iname 'README.md' -o -name 'PROJECT-STATE.md' -o -name 'AGENT.md' -o -name 'AGENTS.md' -o -path './.github/copilot-instructions.md')"
+          
+          # Create temporary file to capture detailed output
+          LINT_OUTPUT=$(mktemp)
+          
           set +e
-          grep -nE "$BAD_PATTERNS" $DOCS
+          grep -nE "$BAD_PATTERNS" $DOCS > "$LINT_OUTPUT" 2>&1
           STATUS=$?
           set -e
+          
           if [ $STATUS -eq 0 ]; then
-            echo "❌ Forbidden pattern found in docs. See lint output above." >&2
+            echo "❌ Forbidden pattern found in docs. Details:" >&2
+            cat "$LINT_OUTPUT" >&2
+            
+            # Save detailed output for issue creation
+            echo "LINT_FAILURES<<EOF" >> $GITHUB_ENV
+            cat "$LINT_OUTPUT" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+            
+            # Count of failures for summary
+            FAILURE_COUNT=$(wc -l < "$LINT_OUTPUT")
+            echo "LINT_FAILURE_COUNT=$FAILURE_COUNT" >> $GITHUB_ENV
+            
+            rm "$LINT_OUTPUT"
             exit 1
           else
             echo "✅ Docs lint clean."
+            echo "LINT_FAILURES=" >> $GITHUB_ENV
+            echo "LINT_FAILURE_COUNT=0" >> $GITHUB_ENV
+            rm "$LINT_OUTPUT"
           fi
 
   doc-drift:
@@ -103,9 +123,26 @@ jobs:
           if [ -n "$MISSING_DOCS" ]; then
             echo "❌ Architectural patterns present in code but not in docs:"
             echo "$MISSING_DOCS"
+            
+            # Save detailed drift information for issue creation
+            echo "DRIFT_FAILURES<<EOF" >> $GITHUB_ENV
+            echo "Missing architectural patterns in documentation:" >> $GITHUB_ENV
+            for pat in $MISSING_DOCS; do
+              echo "• $pat" >> $GITHUB_ENV
+              # Show where the pattern appears in code
+              echo "  Found in code:" >> $GITHUB_ENV
+              grep -rn "$pat" . --include=*.html --include=*.css --include=*.js | head -3 | sed 's/^/    /' >> $GITHUB_ENV
+            done
+            echo "EOF" >> $GITHUB_ENV
+            
+            DRIFT_COUNT=$(echo "$MISSING_DOCS" | wc -w)
+            echo "DRIFT_FAILURE_COUNT=$DRIFT_COUNT" >> $GITHUB_ENV
+            
             exit 1
           else
             echo "✅ No doc drift detected."
+            echo "DRIFT_FAILURES=" >> $GITHUB_ENV
+            echo "DRIFT_FAILURE_COUNT=0" >> $GITHUB_ENV
           fi
 
   notify-on-failure:
@@ -125,11 +162,49 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
             One or more AI documentation files have failed lint or drift detection.
-            **Action Required:**  
-            - Align `.github/copilot-instructions.md`, `PROJECT-STATE.md`, `README.md`, `AGENT.md`, and `AGENTS.md` with current repo architecture (HTML, CSS, JS patterns).
-            - Remove forbidden patterns (classes, IDs, data-*, <button>, event listeners, inline styles/scripts, etc).
-            - Document all new or modified architecture patterns.
-            - Review and re-run workflow before merging.
+            
+            ## 📊 Failure Summary
+            
+            - **Forbidden Pattern Violations**: ${{ env.LINT_FAILURE_COUNT || '0' }}
+            - **Documentation Drift Issues**: ${{ env.DRIFT_FAILURE_COUNT || '0' }}
+            
+            ## 🚨 Forbidden Pattern Violations
+            
+            ${{ env.LINT_FAILURES && format('The following forbidden patterns were found in documentation files:
+            
+            ```
+            {0}
+            ```
+            
+            **Common fixes:**
+            - Replace `<button>` with `<label role="button"><input type="checkbox" /></label>`
+            - Remove `class=`, `id=`, and `data-*` attributes  
+            - Replace `addEventListener` and `onclick` with `oninput`/`onchange`
+            - Remove inline `style=` attributes
+            ', env.LINT_FAILURES) || 'No forbidden pattern violations detected.' }}
+            
+            ## 📋 Documentation Drift Issues
+            
+            ${{ env.DRIFT_FAILURES || 'No documentation drift detected.' }}
+            
+            ## ✅ Action Required
+            
+            **For Forbidden Patterns:**
+            - Review the specific files and line numbers listed above
+            - Align `.github/copilot-instructions.md`, `PROJECT-STATE.md`, `README.md`, `AGENT.md`, and `AGENTS.md` with current repo architecture
+            - Remove forbidden patterns (classes, IDs, data-*, `<button>`, event listeners, inline styles/scripts, etc)
+            
+            **For Documentation Drift:**
+            - Document all architectural patterns found in code within the documentation files
+            - Ensure consistency between implementation and documentation
+            
+            **Before closing this issue:**
+            - Review and re-run workflow to verify all issues are resolved
+            - Ensure changes maintain D7460N architecture principles
+            
+            ---
+            
+            *This issue was automatically created by the doc-architecture-enforcer workflow.*
 
 # Reference:
 # - https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox

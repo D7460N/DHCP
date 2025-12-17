@@ -327,6 +327,13 @@ Project Philosophy
 - Avoid blank initial loads.
 - Simplicity & Maintainability is a priority
 - Keep everything explainable and maintainable
+- Front-end pagination only
+  - Search and Search Results page & Data Volume
+    - **No Disabled Search Controls**: Never present a disabled search field or button by default. From a UX perspective, this appears broken and places unnecessary burden on the user.
+    - **Default Scoped Queries**: On page entry, always run an initial query with safe default filters (e.g., recent time window, limited scope). This ensures the user sees results immediately.
+    - **Progressive Filtering**: Provide filter tools prominently so the user can refine results rather than start from scratch.
+    - **Broadening Queries**: Allow expansion but enforce caps. If a user broadens too far, warn gracefully (“Too many results, please refine”).
+    - **Rule of Thumb**: *Never start blank, never block interaction. Always preload scoped results, and let filters guide refinement.*
 
 Organizational Strategy
 

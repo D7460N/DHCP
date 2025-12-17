@@ -1,64 +1,82 @@
-# D7460N Architecture
+# D7460N ARCHITECTURE 
 
-D7460N is a browser-native, fully declarative architecture for quickly building
-scalable, maintainable front-end systems. It follows JAMstack principles,
-operates as a Single Page Application (SPA), and is implemented as a Progressive
-Web App (PWA).
+**D7460N** is a browser-native, fully declarative **architecture** for _speed building_
+scalable, maintainable, future proof, front-end systems. **D7460N Architecture** is loosely based JAMstack principles, operates as a Single Page Application (SPA), and is implemented as a Progressive Web App (PWA).
 
 OUT OF THE BOX:
 
-- lightweight
-- browser-native
-- dependency-free
-- standards-first
-- fully declarative
-- fully accessible
-- fully responsive
+> - lightweight
+> - browser-native
+> - dependency-free
+> - standards-first
+> - fully declarative
+> - fully 508 accessible
+> - fully responsive
 
 D7460N eliminates runtime dependencies and avoids complex JavaScript-driven UI
-logic by embracing modern standards: semantic HTML, CSS state management, and
+logic by embracing **modern standards**: semantic HTML, CSS state management, and
 data-only JavaScript modules.
 
-- Native HTML, CSS, JS (ES Modules)
-- No build tools, no transpilers, no frameworks
-- Responsive, accessible, and declarative by design
+> - Native HTML, CSS, JS (ES Modules)
+> - No build tools, no transpilers, no frameworks
+> - Responsive, accessible, and declarative _**by design**_
 
 <br>
 
-## ✨ Highlights
+## ✨ HIGHLIGHTS 
 
-🔹 **CSS-First Architecture**: Advanced state management using hidden
-checkboxes + CSS `:checked`, `:has()` selectors<br> 🔹 **Performance
-Optimized**: CSS rendering 100-1000x faster than JavaScript DOM manipulation<br>
-🔹 **Security Hardened**: Minimal JavaScript surface reduces XSS attack
-vectors<br> 🔹 **Progressive Enhancement**: Fully functional with JavaScript
-disabled<br> 🔹 **Accessibility Native**: Uses semantic HTML + ARIA for 508/WCAG
-compliance<br> 🔹 No dependencies: 100% browser-native<br> 🔹 Dynamic JSON data
-via `fetch()`<br> 🔹 Declarative single-page-application (SPA) navigation via
-`<input type="radio">` + CSS `:has()` + container queries<br> 🔹 Minimal
-nesting, no IDs, classes, or custom attributes in markup<br> 🔹 CSS visibility
-logic based on dynamic selectors (`:empty`, `:has`, `[hidden]`)<br> 🔹 Clean
-separation of concerns, UI logic, and API services
+🔹 **CSS-First Architecture**: Advanced state management using hidden checkboxes + CSS `:checked`, `:has()` selectors<br> 
+🔹 **Performance Optimized**: CSS rendering 100-1000x faster than JavaScript DOM manipulation equivalents<br>
+🔹 **Security Hardened**: Minimal JavaScript surface reduces XSS attack vectors<br>
+🔹 **Progressive Enhancement**: Fully functional with JavaScript disabled<br>
+🔹 **Accessibility Native**: Uses semantic HTML + ARIA for 508/WCAG compliance<br>
+🔹 No dependencies: 100% browser-native<br>
+🔹 Dynamic JSON data via `fetch()`<br>
+🔹 Declarative single-page-application (SPA) navigation via `<input type="radio">` + CSS `:has()` + container queries<br>
+🔹 **Easily Overriden**: Minimal nesting, no IDs, classes, or custom attributes in markup, CSS Layers<br>
+🔹 Component visibility logic (`:empty`, `:has`, `[hidden]`) based on data delivery **JavaScript CRUD**.<br>
+🔹 Clean separation of concerns: UI boolean logic, and JavaScript/API services.
 
-> **⚠️ Architecture Note**: This project uses an intentionally sophisticated
-> CSS-first pattern with `<label role="button"><input type="checkbox"></label>`
-> for state management. This is NOT a mistake - it's an advanced optimization
-> technique. See `docs/PROJECT-STATE.md` for complete architectural analysis.
+**⚠️ Architecture Note**:<br>
+This project uses an intentionally sophisticated<br>
+> - CSS-first pattern with `<label role="button"><input type="checkbox"></label>` for state management. _This is NOT a mistake_ - **it's an advanced optimization technique**. See `docs/PROJECT-STATE.md` for complete architectural analysis.
 
 <br>
 
-## 🚀 To Run
+## SPEED BUILD CONTENT 
+
+**DEVs**
+
+Don't over think it.<br>
+_It's way easier than you're used too . . ._<br>
+> - Presentation layer and state logic defaults (_including all loading and error states_) **are already done for you**.
+> - You can make all the changes you want of course, _it's just standard modern vanilla HTML, CSS, and JS_, but it is recommended to first try out the default config to get a feeling for how it works. 
+> - You will be surprised at how fast it is!
+
+No need to build pages anymore<br>
+> - Just deliver your content via the given API and JavaScript modules (see examples)
+> - Content renders in place, styled and ready to go - by default 
+> - _"Like turning on the lights on a Christmas tree!"_
+
+_That's it!_<br>
+_You're done!_
+
+<br>
+
+## 🚀 TO RUN
 
 1. Download and extract the project.
 2. Open `index.html` in any modern browser (Chrome, Edge, Firefox, Safari).
 
 DONE!
 
-> _No build step<br> No compliation<br> No problem_
+- No build step<br>
+- No compliation<br>
+- No problem
 
 <br>
 
-## 📂 Structure
+## 📂 STRUCTURE 
 
 | Directory              | Purpose                                                                 |
 | ---------------------- | ----------------------------------------------------------------------- |
@@ -71,17 +89,17 @@ DONE!
 
 <br>
 
-## 🛠️ Developer Tips
+## 🛠️ DEVELOPER TIPS 
 
-- Clear cache with `Ctrl+Shift+R` to avoid stale module loads
-- Confirm service worker in DevTools → Application → Unregister if testing fresh
+> - Clear cache with `Ctrl+Shift+R` to avoid stale module loads
+> - Confirm service worker in DevTools → Application → Unregister if testing fresh
   state
-- Ensure all scripts load in order: config → utils → refs → api → view → form →
+> - Ensure all scripts load in order: config → utils → refs → api → view → form →
   app
 
 <br>
 
-## 🙋 Need Help?
+## 🙋 NEED HELP?
 
 See the internal guide under `/docs/dev/` or open an issue in your team GitHub
 repo.
