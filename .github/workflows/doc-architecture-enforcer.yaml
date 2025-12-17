@@ -16,46 +16,33 @@ on:
 
 jobs:
   lint-docs:
+    lint-docs:
     name: Lint AI Docs for Forbidden Patterns
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Lint for forbidden patterns
         run: |
-        BAD_PATTERNS='class=|id=|data-|<button|addEventListener|eventListener|event listener|on(click|focus|blur|keydown|keyup|mousedown|mouseup|mouseenter|mouseleave|touchstart|touchend|touchmove)|style='
-        EXCEPTIONS='^\\s*-|^\\s*\\*[\\s\\S]*|^\\s*#|Never use|Never add|Do not use|must not|forbidden pattern|ban|rule|guideline|architecture rule|key point|Reference'
-
-        DOCS="$(find . -type f -iname 'README.md' -o -name 'PROJECT-STATE.md' -o -name 'AGENT.md' -o -name 'AGENTS.md' -o -path './.github/copilot-instructions.md')"
-
-        LINT_OUTPUT=$(mktemp)
-        set +e
-        grep -nE "$BAD_PATTERNS" $DOCS \
-        | grep -Ev "$EXCEPTIONS" \
-        > "$LINT_OUTPUT" 2>&1
-        STATUS=$?
-        set -e
           BAD_PATTERNS='class=|id=|data-|<button|addEventListener|eventListener|event listener|on(click|focus|blur|keydown|keyup|mousedown|mouseup|mouseenter|mouseleave|touchstart|touchend|touchmove)|style='
+          EXCEPTIONS='Never use|Never add|Do not use|must not|forbidden pattern|ban|rule|guideline|architecture rule|key point|Reference'
           DOCS="$(find . -type f -iname 'README.md' -o -name 'PROJECT-STATE.md' -o -name 'AGENT.md' -o -name 'AGENTS.md' -o -path './.github/copilot-instructions.md')"
-          # Create temporary file to capture detailed output
           LINT_OUTPUT=$(mktemp)
           set +e
-          grep -nE "$BAD_PATTERNS" $DOCS > "$LINT_OUTPUT" 2>&1
+          grep -nE "$BAD_PATTERNS" $DOCS | grep -Ev "$EXCEPTIONS" > "$LINT_OUTPUT" 2>&1
           STATUS=$?
           set -e
-          
-          if [ $STATUS -eq 0 ]; then
+
+          if [ -s "$LINT_OUTPUT" ]; then
             echo "❌ Forbidden pattern found in docs. Details:" >&2
             cat "$LINT_OUTPUT" >&2
-            
-            # Save detailed output for issue creation
+
             echo "LINT_FAILURES<<EOF" >> $GITHUB_ENV
             cat "$LINT_OUTPUT" >> $GITHUB_ENV
             echo "EOF" >> $GITHUB_ENV
-            
-            # Count of failures for summary
+
             FAILURE_COUNT=$(wc -l < "$LINT_OUTPUT")
             echo "LINT_FAILURE_COUNT=$FAILURE_COUNT" >> $GITHUB_ENV
-            
+
             rm "$LINT_OUTPUT"
             exit 1
           else
