@@ -175,7 +175,7 @@ Example template:
   to:
 
   ```javascript
-  `${BASE_URL}${endpoint}`; // or `${BASE_URL}${endpoint}/${id}`
+  `${API_URL}${endpoint}`; // or `${API_URL}${endpoint}/${id}`
   ```
 
 - After successful save, it automatically calls:
@@ -199,7 +199,7 @@ Example template:
   - Confirms deletion, then sends a `DELETE` request to:
 
     ```javascript
-    `${BASE_URL}${endpoint}/${id}`;
+    `${API_URL}${endpoint}/${id}`;
     ```
 
   - Refreshes the table afterward by calling:
@@ -241,7 +241,7 @@ feature flags. Override this file to customize the host or toggle behaviors when
 using the scripts in other projects.
 
 ```javascript
-export const BASE_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/';
+export const API_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/';
 export const OPTIONS = { showBanner: true, warnOnBlur: true };
 ```
 

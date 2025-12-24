@@ -28,7 +28,7 @@ This provides:
 **STRICT SEPARATION OF CONCERNS:**
 
 1. **HTML**: Semantic structure only, pre-delivered. No classes, IDs, or data-\*
-   attributes. Use `<label role="button"><input type="checkbox" /></label>` for
+   attributes (except `form.dataset.dirty` for state). Use `<label role="button"><input type="checkbox" /></label>` for
    interactive buttons.
 
 2. **CSS**: Each CSS file is purposely writtin generically as seperate and independent drop-in plug-n-play CSS modules. Thus do not use nor depend on classes, ID's or `data-*` attributes for selectors. They depend solely on standard 508 compliant semantic mark-up anchors and or combinations with other available user-agent and OS conditions and variables. Nothing else, EVER! This allows the CSS to work independent of data source and or framework or CMS being used.

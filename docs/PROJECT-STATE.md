@@ -107,10 +107,9 @@ functions to appropriate modules, causing loss of functionality.
 #### **JavaScript Modules** (`assets/js/`)
 
 - `app.js` - Application initialization (calls loaders, sets up initial state)
-- `config.js` - Configuration constants (BASE_URL, endpoints, feature flags)
-- `forms.js` - Form CRUD and data delivery only. All states management is handled via modern CSS.
-- `loaders.js` - Data loading orchestration (nav, banner, page content, version
-  info)
+- `config.js` - Configuration constants (API_URL, endpoints, feature flags)
+- `forms.js` - Form CRUD and data delivery only. All state management is handled via modern CSS.
+- `loaders.js` - Data loading orchestration (nav, banner, page content, version info)
 - `inject.js` - DOM manipulation utilities (creates list items, injects content)
 - `fetch.js` - HTTP utilities (fetchJSON, postJSON, putJSON, deleteJSON)
 - `schema.js` - Data normalization (converts between API and internal formats)

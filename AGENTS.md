@@ -39,27 +39,18 @@ scripts) when assisting with or analyzing the D7460N Architecture.
 - USE meaningful semantic HTML markup over generic meaningless `<div>` and or
   `<span>` elements
 
-## `data-hooks`
+## Custom Element Generation
 
 > _"Where the rubber meets the road."_
 
-- `data-hooks` is a line. The actual divide. The point at which "Separation of
-  Concerns" actually happens. It is where scripting, JavaScript, and the
-  data-side itself ends and the design, heuristics engineering, CSS rules logic,
-  and UI side begins. It's the hand-off. Where the baton is passed. Where the
-  rubber meets the road.
-- JavaScript fetches the API endpoint JSON keys and creates and array.
-- From there it creates standard non-shadow-DOM custom HTML elements or "UI
-  endpoints" or hooks for the data to be populated or `data-hooks`.
-- It does this by creating `data-hooks`
-- They are non web-component, non-shadow-DOM, custom HTML elements created by
-  fetching API endpoint JSON keys and adding the required dash. W3C
-  specification do not specify where the dash should go. Only that it should
-  include at least one dash. For JSON keys that are two or more words joined,
-  example "dataitem", the dash is inserted between the two natural words. When
-  there is a single word, example "item", the dash is appended to the end of the
-  word.
-- Use the custom
+JavaScript creates custom HTML elements dynamically from API JSON keys:
+
+- API endpoint JSON keys → custom HTML elements (e.g., `ip-address`, `mac-address`)
+- These follow W3C custom element naming (requires at least one dash)
+- For single words: append dash (`item` → `item-`)
+- For compound words: insert dash between natural word boundaries (`dataitem` → `data-item`)
+- These elements serve as semantic containers for injected content
+- No shadow DOM - standard custom elements only
 
 ## 🌐 HTML Standards
 
@@ -173,7 +164,7 @@ CODE_STYLE=compact
 PREFERS_BREVITY=true
 PREFERS_ACCURACY=true
 PREFERS_SEPARATION_OF_CONCERNS=true
-HTML_POLICY=no-divs,no-classes,no-ids,no-data-attrs
+HTML_POLICY=no-divs,no-classes,no-ids,minimal-data-attrs
 CSS_POLICY=layered,heuristics-only,accessibility-first
 JS_POLICY=data-only,no-ui-logic,no-eventlisteners,no-addEventListener
 FRAMEWORKS=none
@@ -198,8 +189,8 @@ D7460N_MODE=true
 
 ## Core Rules
 
-- **HTML**: Semantic only. No IDs, no classes, no `div`s, no `span`s, no
-  `data-*`, no inline styles, and no inline scripting. Use native/custom
+- **HTML**: Semantic only. No IDs, no classes, no `div`s, no `span`s, minimal
+  `data-*` (only `form.dataset.dirty` for state tracking), no inline styles, and no inline scripting. Use native/custom
   elements only. This is to localize, scope, and minimize contributing error and
   or performance factors, maintain separation of concerns (pure project agnostic
   UI logic from project specific data/business logic), maximum performance
@@ -374,7 +365,7 @@ This project uses a sophisticated CSS-first state machine pattern that is
 unconventional but highly optimized:
 
 ```html
-<label role="button" name="submit" type="submit" aria-label="Save">
+<label role="button" aria-label="Save">
   Save
   <input type="checkbox" />
   <!-- Hidden state hook for CSS -->
