@@ -7,7 +7,7 @@ no classes, no IDs, no `data-*`, no inline styles.
 
 ## Strategy
 
-CSS is organized using `@layer`:
+CSS is organized via global funtionality per file and by `@layer`:
 
 - `reset` — Normalize browser defaults
 - `layout` — Grid system and containers
