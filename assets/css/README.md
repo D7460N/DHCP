@@ -19,7 +19,7 @@ CSS is organized using `@layer`:
 ## Visibility Logic
 
 - `:has()` leverages CSS's native live nature to watch for data, render elements, and manage visibility - live and in real-timee
-- `:empty` hides empty tags
+- `:empty` one of many native conditionals that CSS uses to hide/show empty/non-empty elements
 - No class toggling or JS-controlled `style.display`
 
 ## Layout
