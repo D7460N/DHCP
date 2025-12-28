@@ -2,8 +2,8 @@
 
 ## Purpose
 
-Controls all layout, visual state, responsiveness, and accessibility behavior —
-no classes, no IDs, no inline styles.
+Controls all layout, visual state, responsiveness, themes, and accessibility behavior —
+no classes, no IDs, no `data-*`, no inline styles.
 
 ## Strategy
 
