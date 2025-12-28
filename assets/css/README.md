@@ -11,6 +11,7 @@ CSS is organized using `@layer`:
 
 - `reset` — Normalize browser defaults
 - `layout` — Grid system and containers
+- `themes` - Look/feel/branding
 - `typography` — Element styling (`h1`, `p`, etc.)
 - `heuristics` — Visual logic (`:has()`, `:empty`)
 - `diagnostics` — Optional dev overlays
