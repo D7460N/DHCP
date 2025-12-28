@@ -18,7 +18,7 @@ CSS is organized via global funtionality per file and by `@layer`:
 
 ## Visibility Logic
 
-- `:has()` leverages CSS's native live nature to watch for data, render elements, and manage visibility - live and in real-timee
+- `:has()` leverages CSS's native live nature to watch for dynamic data, render elements, and manage visibility - live and in real-timee
 - `:empty` one of many native conditionals that CSS uses to hide/show empty/non-empty elements
 - ZERO class toggling
 - No JS-controlled `style.display`
@@ -39,7 +39,7 @@ and heuristics **without using classes, IDs, or inline styles**.
 
 **CSS** = UI logic<br>
 
-**JS** = Data transmission, API, and fetch calls.
+**JS** = Data transmission (CRUD), API calls
 
 ## Style Architecture
 
