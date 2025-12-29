@@ -104,6 +104,10 @@ export function injectNavItems(data = {}) {
       // Add onchange event handler directly to the input (minimal JS per project philosophy)
       input.onchange = () => {
         if (!input.checked) return;
+        // Stop polling when switching tabs
+        import('./loaders.js').then(({ stopPolling }) => {
+          stopPolling();
+        });
         // Clear the aside panel when switching tabs
         import('./forms.js').then(({ clearAsidePanel }) => {
           clearAsidePanel();
@@ -162,8 +166,84 @@ export function injectPageContent(endpoint = '', data = {}) {
 
   (data.items || []).forEach(item => {
     const li = createListItem(item);
+    // Store item ID on the li element for later updates
+    li.dataset.itemId = item.id || '';
     tableUl.appendChild(li);
   });
+}
+
+// Update existing page content without full reload
+// Only updates values that have changed
+export function updatePageContent(endpoint = '', data = {}) {
+  const article = document.querySelector('main article');
+  const h1 = article?.querySelector('h1');
+  const intro = article?.querySelector('p');
+  
+  // Update title and description if changed
+  if (h1 && h1.textContent !== (data.title ?? '')) {
+    h1.textContent = data.title ?? '';
+  }
+  if (intro && !intro.textContent.startsWith('⚠️') && intro.textContent !== (data.description ?? '')) {
+    intro.textContent = data.description ?? '';
+  }
+
+  // Create a map of items by ID for quick lookup
+  const itemsById = new Map();
+  (data.items || []).forEach(item => {
+    if (item.id) itemsById.set(item.id, item);
+  });
+
+  // Get all existing list items
+  const existingItems = Array.from(tableUl.querySelectorAll('li[data-item-id]'));
+  const existingIds = new Set(existingItems.map(li => li.dataset.itemId));
+  
+  // Update existing items
+  existingItems.forEach(li => {
+    const itemId = li.dataset.itemId;
+    const newData = itemsById.get(itemId);
+    
+    if (newData) {
+      // Item still exists, update its values
+      updateListItem(li, newData);
+    } else {
+      // Item was deleted from server
+      li.remove();
+    }
+  });
+  
+  // Add new items that don't exist yet
+  (data.items || []).forEach(item => {
+    if (item.id && !existingIds.has(item.id)) {
+      const li = createListItem(item);
+      li.dataset.itemId = item.id || '';
+      tableUl.appendChild(li);
+    }
+  });
+}
+
+// Update a single list item's values if they've changed
+function updateListItem(li, newData = {}) {
+  const label = li.querySelector('label');
+  if (!label) return;
+  
+  // Update each custom element's text content
+  for (const [key, value] of Object.entries(newData)) {
+    const tagName = toTagName(key);
+    const element = label.querySelector(tagName);
+    
+    if (element && element.textContent !== (value ?? '')) {
+      element.textContent = value ?? '';
+      
+      // Also update the form if this item is selected
+      const radio = li.querySelector('input[name="list-item"]');
+      if (radio?.checked) {
+        const formInput = fieldset.querySelector(`[name="${key}"]`);
+        if (formInput && !formInput.readOnly) {
+          formInput.value = value ?? '';
+        }
+      }
+    }
+  }
 }
 
 export function injectFormFields(data = {}) {

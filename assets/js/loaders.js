@@ -7,8 +7,57 @@ import { injectNavItems, injectPageContent } from './inject.js';
 const RULES_CACHE = new Map();
 let ACTIVE_RULES = {};
 
+// Live update state
+let currentEndpoint = null;
+let pollInterval = null;
+let lastDataHash = null;
+
 export function getFieldRules() {
   return ACTIVE_RULES;
+}
+
+// Simple hash function to detect data changes
+function hashData(data) {
+  return JSON.stringify(data);
+}
+
+// Stop polling when switching pages or no longer needed
+export function stopPolling() {
+  if (pollInterval) {
+    clearInterval(pollInterval);
+    pollInterval = null;
+    currentEndpoint = null;
+    lastDataHash = null;
+  }
+}
+
+// Start polling for data changes on the current endpoint
+function startPolling(endpoint) {
+  stopPolling(); // Clear any existing polling
+  currentEndpoint = endpoint;
+  
+  // Poll every 5 seconds for changes
+  pollInterval = setInterval(async () => {
+    try {
+      const text = await fetchJSON(currentEndpoint);
+      const [raw] = JSON.parse(text);
+      const data = normalizeRecord('', raw);
+      data.items = normalizeItems(currentEndpoint, raw.items || []);
+      
+      const newHash = hashData(data);
+      
+      // Only update if data has changed
+      if (lastDataHash !== null && newHash !== lastDataHash) {
+        // Import updatePageContent dynamically to avoid issues
+        const { updatePageContent } = await import('./inject.js');
+        updatePageContent(currentEndpoint, data);
+      }
+      
+      lastDataHash = newHash;
+    } catch (err) {
+      console.warn('Polling error:', err);
+    }
+  }, 5000);
 }
 
 export async function loadBannerContent() {
@@ -66,6 +115,10 @@ export async function loadPageContent(endpoint = '') {
   ACTIVE_RULES = rules;
 
   injectPageContent(endpoint, data);
+  
+  // Start live polling for this endpoint
+  lastDataHash = hashData(data);
+  startPolling(endpoint);
 }
 
 export function loadVersionInfo() {
