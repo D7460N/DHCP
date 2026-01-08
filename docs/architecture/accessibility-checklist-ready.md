@@ -1,4 +1,6 @@
-# Accessibility Checklist
+# Accessibility Checklist Ready 
+
+Concise accessibility checklist ready — covers semantic HTML, color contrast, focus, ARIA, keyboard navigation, and verification steps.
 
 Below is a **practical, modern accessibility checklist** focused on **HTML + CSS first**, with ARIA only where necessary. It aligns with WCAG principles and real-world audits.
 
