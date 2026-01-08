@@ -1,5 +1,7 @@
 # Practical Guide For-Concise Docs
 
+Practical, copy‑ready guidance for concise technical docs: structure, tone, formatting, clarity, examples, and maintenance.
+
 Below is **practical, field-tested guidance** for writing technical documentation that is **concise, accurate, and useful** for both **developers** and **end users**.
 
 ---
