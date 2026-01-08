@@ -1,5 +1,7 @@
 # New CSS‑Only UI Guidance
 
+Concise, enforceable CSS‑only architecture: layered patterns, naming rules, layout strategy, state model, and an audit checklist you can apply immediately.
+
 Below is **CSS‑only, scalable UI architecture guidance** that is **data‑agnostic, framework‑agnostic, and platform‑agnostic**, designed to work **without JavaScript** and to scale from static documents to server‑rendered systems.
 
 ---
