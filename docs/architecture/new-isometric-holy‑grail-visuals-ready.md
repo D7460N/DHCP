@@ -1,4 +1,4 @@
-# Isometric Holy‑Grail Visuals Ready
+# New Isometric Holy‑Grail Visuals Ready
 
 Concise CSS and visuals for isometric 3D holy‑grail layouts — Grid baseline, isometric transforms, exploded views, and progressive‑enhancement fallbacks.
 
