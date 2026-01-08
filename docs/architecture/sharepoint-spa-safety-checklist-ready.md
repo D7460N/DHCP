@@ -1,5 +1,7 @@
 # SharePoint SPA : : Safety Checklist-Ready
 
+Failure‑proof patterns, migration priorities, CSS/HTML rules, and a kill‑switch checklist to add a SPA overlay while preserving SharePoint content, nav, and permissions.
+
 Below are **practical, production‑safe best practices** for converting a **SharePoint 2016 SE** site into a **Single‑Page Application (SPA)** **without breaking existing content, URLs, or navigation**. This approach is designed for **incremental migration**, **low risk**, and **long‑term maintainability**.
 
 ---
