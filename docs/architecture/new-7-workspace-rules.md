@@ -1,5 +1,7 @@
 # New : : 7 Workspace Rules 
 
+Seven practical rules to declutter files, fix window zones, and lock in deep focus—ready to apply now.
+
 Below are **practical, low-friction strategies** to organize your digital workspace for a **seamless, distraction‑free workflow**. The focus is on *reducing cognitive load*, *making the right thing obvious*, and *eliminating decision fatigue*.
 
 ---
