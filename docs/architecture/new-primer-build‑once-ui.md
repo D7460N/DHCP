@@ -1,5 +1,7 @@
 # New Primer : : Build‑once UI
 
+Draft summary ready: sustainable UI architecture emphasizing semantic HTML, CSS-as-logic, and GUI-as-a-service.
+
 ![Image](https://gtcsys.com/wp-content/uploads/2025/07/Web-browser.png)
 
 ![Image](https://media.geeksforgeeks.org/wp-content/uploads/20240212163758/What-is-SOC-.webp)
