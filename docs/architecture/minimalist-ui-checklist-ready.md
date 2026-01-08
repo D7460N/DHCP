@@ -1,5 +1,7 @@
 # Minimalist UI Checklist Ready
 
+Clear, practical minimalist UI principles — hierarchy, whitespace, typography, responsiveness, and accessibility.
+
 ![Image](https://miro.medium.com/1%2AI3PbDMBEsJcYB-lgK6_YBg.jpeg)
 
 ![Image](https://miro.medium.com/v2/da%3Atrue/resize%3Afit%3A600/1%2AupM3Z4hnWWIsqHtfIZDtqA.gif)
