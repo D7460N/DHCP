@@ -11,8 +11,9 @@ Below is a **practical, modern accessibility checklist** focused on **HTML + CSS
 * Use **native elements for their purpose**:
 
   * `<header> <nav> <main> <section> <article> <aside> <footer>`
-  * `<button>` for actions, `<a>` for navigation
-  * `<label>` explicitly associated with `<input>`
+  * `<a>` for offshore links
+  * `<label>` with nested `<input type="checkbox">` enable full state control and actions that `<button>` alone cannot natively do.
+* One `<app-container>` per page
 * One `<main>` per page
 * Use **heading levels in order** (`h1 → h2 → h3`, no skipping)
 * Lists for lists (`<ul>`, `<ol>`, `<li>`), not styled divs
