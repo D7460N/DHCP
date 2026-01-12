@@ -6,6 +6,8 @@ import { injectNavItems, injectPageContent } from './inject.js';
 
 const RULES_CACHE = new Map();
 let ACTIVE_RULES = {};
+let pollInterval = null;
+let currentEndpoint = null;
 
 export function getFieldRules() {
   return ACTIVE_RULES;
@@ -36,7 +38,7 @@ export async function loadNavItems() {
   injectNavItems(data);
 }
 
-export async function loadPageContent(endpoint = '') {
+export async function loadPageContent(endpoint = '', startPolling = true) {
   const text = await fetchJSON(endpoint);
   const [raw] = JSON.parse(text);
   const data = normalizeRecord('', raw);
@@ -66,6 +68,13 @@ export async function loadPageContent(endpoint = '') {
   ACTIVE_RULES = rules;
 
   injectPageContent(endpoint, data);
+  
+  // Start polling for this endpoint (only on initial load)
+  if (startPolling && currentEndpoint !== endpoint) {
+    if (pollInterval) clearInterval(pollInterval);
+    currentEndpoint = endpoint;
+    pollInterval = setInterval(() => loadPageContent(endpoint, false), 5000);
+  }
 }
 
 export function loadVersionInfo() {
