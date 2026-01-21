@@ -70,7 +70,7 @@ Legend:
 This document exists to:
 - Prevent architectural drift
 - Reduce unnecessary rebuilds
-- Enable safe modernization of inflight systems
+- Enable safe modernization of pre and inflight systems
 - Keep UI concerns decoupled from backend volatility
 
 The UI is treated as a **long-lived asset**, not a framework-bound artifact.
