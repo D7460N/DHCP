@@ -28,10 +28,10 @@ Reading this will bring you to expert-level understanding immediately.
 
 SEPARATION OF CONCERNS
 
-- HTML = Structure only (semantic, accessible, testable without CSS)
-- CSS = ALL UI logic (visibility, state, interactions via `:has()`, `:empty`, container, and style queries)
-- ZERO JavaScript (unless otherwise instructed) - example: API CRUD operations with `oninput` (see assets/js/README.md)
-- ZERO JavaScript eventListeners - functions are called through `oninput` only
+- HTML = Pre-loaded structure only (semantic, baked-in accessibility, testable without CSS)
+- CSS = Replaces JS for ALL UI logic (visibility, states (including loading state), interactions and heuristics via `:has()`, `:empty`, container, and style queries)
+- ZERO JavaScript (unless otherwise explicitely instructed) - Example: API CRUD operations via `oninput` (see assets/js/README.md)
+- ZERO JavaScript eventListeners - All JS functions are invoded via `oninput`
 - ZERO JS and or CSS in the HTML
 - ZERO HTML and or CSS in the JS
 - ZERO IDs, classes, and or data-* in the HTML
