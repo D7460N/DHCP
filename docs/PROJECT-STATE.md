@@ -14,21 +14,31 @@ Reading this will bring you to expert-level understanding immediately.
 
 ## 📋 PROJECT OVERVIEW
 
-- **Architecture**: D7460N - Modified JAMStack, zero-dependency, browser-native Single Page Application (SPA)<br>
+- **Architecture**: D7460N - Modified JAMStack, zero-dependency, browser-native, Single Page Application (SPA)<br>
 - **Type**: Triage/Management Portal<br>
 - **Layout**: Holy Grail
-- **Workflow**: Master/Detail/Triage
+- **Workflow**: Master -> Detail -> Triage
 - **Writing-Mode**: Horizontal (default)
 - **Responsive**: Yes
-- **Tech Stack**: Standard vanilla HTML5, CSS3, JavaScript/ES6 Modules - NO frameworks, NO build tools required
-- **API**: MockAPI - endpoints (`https://67d944ca00348dd3e2aa65f4.mockapi.io/`)
+- **Multi-themed**: Yes
+- **Tech Stack**: Standard vanilla HTML5, CSS3, JavaScript ES6+ - NO frameworks, NO build tools required
+- **API**: MockAPI - endpoints (`https://697b63070e6ff62c3c5bec7e.mockapi.io/`)
 
-**Core Philosophy**:
+**Core Philosophies**:
 
-- HTML = Structure only (semantic, accessible)
-- CSS = ALL UI logic (visibility, state, interactions via `:has()`, container
-  queries)
-- JavaScript = Data layer only (fetch, inject, CRUD operations)
+SEPARATION OF CONCERNS
+
+- HTML = Structure only (semantic, accessible, testable without CSS)
+- CSS = ALL UI logic (visibility, state, interactions via `:has()`, `:empty`, container, and style queries)
+- ZERO JavaScript (unless otherwise instructed) - example: API CRUD operations with `oninput` (see assets/js/README.md)
+- ZERO JavaScript eventListeners - functions are called through `oninput` only
+- ZERO JS and or CSS in the HTML
+- ZERO HTML and or CSS in the JS
+- ZERO IDs, classes, and or data-* in the HTML
+
+SINGLE SOURCE OF TRUTH
+
+- This is a SPA - index.html is the single and only html file
 
 ---
 
