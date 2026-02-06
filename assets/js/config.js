@@ -1,6 +1,7 @@
 import { isDev, isTest, isProd, FEATURES } from './env.js';
 
-export const API_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/';
+// export const API_URL = 'https://67d944ca00348dd3e2aa65f4.mockapi.io/';
+export const API_URL = 'https://697b63070e6ff62c3c5bec7e.mockapi.io/';
 
 // App version information
 export const VERSION = {
