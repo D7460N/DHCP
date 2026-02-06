@@ -2,22 +2,31 @@
 
 ## Purpose
 
-JavaScript in D7460N handles:
+JavaScript in the D7460N Architecure is prohibited - except for the following:
 
-- Data fetching (via `fetch()`)
 - API interaction (CRUD)
-- Semantic UI state (no direct DOM styling)
-- Populates custom HTML elements
+- API CRUD operations must only be invoked via `oninput`
+- Never use `eventlisteners`
+- API calls must only use `fetch()`
+- Unless otherwise instructed, JS is data transit only
 
 ## Presentaion Layer
 
 | Layer | Role                                                                           | URL |
 | ----- | ------------------------------------------------------------------------------ | --- 
-| HTML  | Structure only - intuitive semantic markup, A11y foundation                    | See [HTML README](https://github.com/D7460N/DHCP/blob/main/assets/css/README.md)
-| CSS   | Heuristics only - themes, conditional visual state via `:has()`, style queries | See [CSS README](https://github.com/D7460N/DHCP/blob/main/assets/css/README.md)
-| JS    | Data only - handling and delivery                                              | You are here
+| HTML  | Pre-loaded structure only - intuitive semantic markup, A11y foundation         | See [HTML README](https://github.com/D7460N/DHCP/blob/main/assets/css/README.md)
+| CSS   | Heuristics, themes, conditional visual states via `:has()`, `:empty()`, style queries | See [CSS README](https://github.com/D7460N/DHCP/blob/main/assets/css/README.md)
+| JS    | Prohibited other than expressly instructed, such as data transit               | You are here
+
+## DETALS
+
+- Prohibited = `eventlisteners`
+- Accepted = `oninput`
 
 ## Markup
+
+- This is a Single Page Application (SPA)
+- One single index.html
 
 **Minimal semantic markup** == clean, perfomant, intuitive, overridable
 
@@ -37,14 +46,20 @@ JavaScript in D7460N handles:
   - An object with `title`, `intro`, and `items[]`
   - An array where the first object contains those same fields
 - This allows plug-and-play with diverse back-end implementations
-- On success, `items`, `h1`, and `p` are updated, then `render()` is called
+<!-- - On success, `items`, `h1`, and `p` are updated, then `render()` is called
 - On failure, `items` is cleared, text content is reset, and `render()` ensures
-  fallback state
+  fallback state -->
 
 ## Rendering Strategy
 
-- A single universal `<template>` is used to render all tab content lists.
-- The `<template>` contains a complete set of possible `<item-*>` fields.
+1. HTML structure is pre-loaded to render elements if/when they have data/content
+2. CSS hides data/content level HTML elements if/when they are `:empty()`
+3. Some data loads on initial page load - example: `<nav>` `<label>`
+4. User invokes `oninput` through UI interaction
+5. `oninput` invokes a JS function that conducts API CRUD operations (the data layer)
+6. Data/content is delivered to target HTML element
+7. CSS unhides target element because it now is not `:empty()`
+<!-- - The `<template>` contains a complete set of possible `<item-*>` fields. -->
 - JS clones and fills the template for each row.
 - Visibility is entirely handled by CSS — hidden if content is empty.
 - The radio input uses `name="list-item"` across all rows.
