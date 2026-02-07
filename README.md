@@ -1,3 +1,5 @@
+![My GitHub Game](game.gif)
+
 # D7460N ARCHITECTURE 
 
 **D7460N** is a browser-native, fully declarative **architecture** for _speed building_
