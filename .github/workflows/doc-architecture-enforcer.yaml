@@ -69,7 +69,7 @@ jobs:
     name: Lint AI Docs for Forbidden Patterns
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Lint for forbidden patterns
         run: |
           BAD_PATTERNS='class=|id=|data-|<button|addEventListener|eventListener|event listener|on(click|focus|blur|keydown|keyup|mousedown|mouseup|mouseenter|mouseleave|touchstart|touchend|touchmove)|style='
@@ -107,7 +107,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Check for doc drift
         run: |
           # Patterns that define the architecture (expand as needed)
