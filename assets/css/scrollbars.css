@@ -20,3 +20,19 @@ aside form fieldset {
 textarea {
   scrollbar-width: thin;
 }
+
+/* MARK: SCROLL-SNAP (parked)
+   Table row-list scroll-snapping. Moved here from transitions.css — it is a
+   scrolling concern, not a transition. Commented out for now: it is part of a
+   larger effort that has not come together yet.
+
+   main article ul:last-of-type {
+     overflow-x: auto;
+     scroll-snap-type: y mandatory;
+
+     > * {
+       grid-template-columns: auto;
+       scroll-snap-align: start;
+     }
+   }
+*/
