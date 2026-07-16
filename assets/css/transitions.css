@@ -70,16 +70,6 @@ button,
   transition: background-color var(--transition-duration), color var(--transition-duration);
 } */
 
-main article ul:last-of-type {
-  overflow-x: auto;
-  scroll-snap-type: y mandatory;
-
-  > * {
-    grid-template-columns: auto;
-    scroll-snap-align: start;
-  }
-}
-
 /* @keyframes fadeIn {
   from {
     opacity: 0;
