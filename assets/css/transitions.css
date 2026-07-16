@@ -26,30 +26,6 @@
   }
 }
 
-/* https://adactio.com/journal/21896 */
-/*https://webkit.org/blog/7551/responsive-design-for-motion/ */
-@media (prefers-reduced-motion: no-preference) {
-  /* https://webkit.org/blog/16967/two-lines-of-cross-document-view-transitions-code-you-can-use-on-every-website-today/ */
-  @view-transition {
-    navigation: auto;
-  }
-}
-
-/* https://www.bram.us/2025/01/29/view-transitions-page-interactivity/ */
-@layer view-transitions {
-
-  /* Don’t capture the root, allowing pointer interaction while elements are animating */
-  @layer no-root {
-    :root {
-      view-transition-name: none;
-    }
-
-    ::view-transition {
-      pointer-events: none;
-    }
-  }
-}
-
 @starting-style {
   * {
     visibility: hidden;
